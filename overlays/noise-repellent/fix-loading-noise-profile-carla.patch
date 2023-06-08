@@ -1,0 +1,49 @@
+From 86afcc1d543a6abecb2048d8f39ec462b49afe41 Mon Sep 17 00:00:00 2001
+From: Moritz Vogel <moritzv7@gmail.com>
+Date: Thu, 8 Jun 2023 17:47:05 +0200
+Subject: [PATCH] Fix loading noise profile from Carla #114 by @TekMiikka
+
+---
+ plugins/nrepellent.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/plugins/nrepellent.c b/plugins/nrepellent.c
+index d5743bf..2fce3a4 100644
+--- a/plugins/nrepellent.c
++++ b/plugins/nrepellent.c
+@@ -414,12 +414,14 @@ static LV2_State_Status restore(LV2_Handle instance,
+   if (fftsize == NULL || type != self->uris.atom_Int) {
+     return LV2_STATE_ERR_NO_PROPERTY;
+   }
++  const uint32_t permanent_fftsize = *fftsize;    // NEW
+ 
+   const uint32_t *averagedblocks = (const uint32_t *)retrieve(
+       handle, self->state.property_averaged_blocks, &size, &type, &valflags);
+   if (averagedblocks == NULL || type != self->uris.atom_Int) {
+     return LV2_STATE_ERR_NO_PROPERTY;
+   }
++  const uint32_t permanent_averagedblocks = *averagedblocks;    // NEW
+ 
+   const void *saved_noise_profile_1 = retrieve(
+       handle, self->state.property_noise_profile_1, &size, &type, &valflags);
+@@ -432,7 +434,7 @@ static LV2_State_Status restore(LV2_Handle instance,
+          sizeof(float) * self->profile_size);
+ 
+   specbleach_load_noise_profile(self->lib_instance_1, self->noise_profile_1,
+-                                *fftsize, *averagedblocks);
++                                permanent_fftsize, permanent_averagedblocks);    // CHANGED
+ 
+   if (strstr(self->plugin_uri, NOISEREPELLENT_STEREO_URI)) {
+     const void *saved_noise_profile_2 = retrieve(
+@@ -446,7 +448,7 @@ static LV2_State_Status restore(LV2_Handle instance,
+            sizeof(float) * self->profile_size);
+ 
+     specbleach_load_noise_profile(self->lib_instance_2, self->noise_profile_2,
+-                                  *fftsize, *averagedblocks);
++                                  permanent_fftsize, permanent_averagedblocks);    // CHANGED
+   }
+ 
+   return LV2_STATE_SUCCESS;
+-- 
+2.40.1
+

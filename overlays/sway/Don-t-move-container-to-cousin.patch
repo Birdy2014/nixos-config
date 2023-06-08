@@ -1,0 +1,30 @@
+From 6fd8027fd0382a0dd64a5506a83c0e9dd062769a Mon Sep 17 00:00:00 2001
+From: Moritz Vogel <moritzv7@gmail.com>
+Date: Thu, 1 Jun 2023 21:58:52 +0200
+Subject: [PATCH] Don't move container to cousin
+
+---
+ sway/commands/move.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
+
+diff --git a/sway/commands/move.c b/sway/commands/move.c
+index 7bd1fe3e..20d59fc9 100644
+--- a/sway/commands/move.c
++++ b/sway/commands/move.c
+@@ -372,12 +372,7 @@ static bool container_move_in_direction(struct sway_container *container,
+ 		ancestor = current;
+ 	}
+ 
+-	if (target) {
+-		// Container will move in with its cousin
+-		container_move_to_container_from_direction(container,
+-				target, move_dir);
+-		return true;
+-	} else if (!wrapped && !container->pending.parent->pending.parent &&
++	if (!wrapped && !container->pending.parent->pending.parent &&
+ 			container->pending.parent->pending.children->length == 1) {
+ 		// Treat singleton children as if they are at workspace level like i3
+ 		// https://github.com/i3/i3/blob/1d9160f2d247dbaa83fb62f02fd7041dec767fc2/src/move.c#L367
+-- 
+2.40.1
+
