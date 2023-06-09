@@ -14,5 +14,9 @@
     tmux
     psmisc
     libqalculate
+    unrar
+    unzip
+    p7zip
+    zip
   ];
 }
