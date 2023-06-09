@@ -96,8 +96,8 @@
     polkit_gnome
 
     pavucontrol
-    carla
-    noise-repellent
+    easyeffects
+    pw-viz
     obsidian
     keepassxc
     mpv
@@ -105,6 +105,9 @@
     zathura
     flameshot
     dolphin
+
+    gnupg
+    pinentry-qt
 
     discord
     thunderbird
@@ -118,8 +121,4 @@
     f3d
     jq
   ];
-
-  environment.variables = {
-    LV2_PATH = "${pkgs.noise-repellent}/lib/lv2";
-  };
 }

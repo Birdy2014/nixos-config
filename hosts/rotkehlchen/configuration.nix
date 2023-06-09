@@ -28,6 +28,8 @@
 
   boot.extraModprobeConfig = "options snd_hda_intel power_save=0";
 
+  boot.tmp.useTmpfs = true;
+
   services.btrfs.autoScrub.enable = true;
 
   networking = {

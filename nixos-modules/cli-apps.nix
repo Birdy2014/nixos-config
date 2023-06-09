@@ -13,5 +13,6 @@
     nvtop-amd
     tmux
     psmisc
+    libqalculate
   ];
 }
