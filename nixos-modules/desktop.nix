@@ -106,9 +106,6 @@
     flameshot
     dolphin
 
-    gnupg
-    pinentry-qt
-
     discord
     thunderbird
     mumble
