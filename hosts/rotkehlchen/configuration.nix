@@ -14,8 +14,11 @@
     ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    systemd-boot.enable = true;
+    timeout = 2;
+  };
 
   boot.extraModprobeConfig = "options snd_hda_intel power_save=0";
 
