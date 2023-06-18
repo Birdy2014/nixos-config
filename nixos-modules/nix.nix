@@ -19,7 +19,10 @@
     (inputs.self.overlays.noise-repellent)
   ];
 
-  nix.registry.nixpkgs.flake = inputs.nixpkgs;
+  nix.registry = {
+    nixpkgs.flake = inputs.nixpkgs;
+    config.flake = inputs.self;
+  };
 
   # disable channels
   nix.nixPath = [];

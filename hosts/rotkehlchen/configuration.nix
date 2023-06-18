@@ -11,6 +11,7 @@
       ../../nixos-modules/desktop.nix
       ../../nixos-modules/cli-apps.nix
       ../../nixos-modules/gaming.nix
+      ../../nixos-modules/virtualisation.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -38,11 +39,17 @@
   environment.systemPackages = with pkgs; [
     vim
     ddcutil
+    corectrl
+    sidequest
   ];
 
   services.udisks2.enable = true;
 
+  # FIXME: kdeconnect can't find default web browser
   programs.kdeconnect.enable = true;
+
+  programs.adb.enable = true;
+  users.users.moritz.extraGroups = [ "adbusers" ];
 
   # Needed for ddcutil
   hardware.i2c.enable = true;

@@ -20,6 +20,7 @@
 
           home-manager.nixosModules.home-manager
           {
+            home-manager.useUserPackages = true;
             home-manager.useGlobalPkgs = true;
             home-manager.users.moritz = import ./hosts/rotkehlchen/home.nix;
           }
@@ -31,5 +32,13 @@
 
     overlays.sway = import ./overlays/sway;
     overlays.noise-repellent = import ./overlays/noise-repellent;
+
+    devShells.x86_64-linux =
+      let
+        pkgs = import nixpkgs { system = "x86_64-linux"; };
+      in
+        {
+          rust-cpp = import ./devshells/rust-cpp.nix { inherit pkgs; };
+        };
   };
 }
