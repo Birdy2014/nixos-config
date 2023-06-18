@@ -1,11 +1,8 @@
-# FIXME: GUI application compile but don't run
-# FIXME: clangd can't find headers
-
 { pkgs, ... }:
 
-pkgs.mkShell.override { stdenv = pkgs.clang16Stdenv; } {
+pkgs.mkShell.override { stdenv = pkgs.clang16Stdenv; } rec {
   name = "rust-cpp";
-  packages = [
+  packages = with pkgs; [
     perf-tools
     hotspot
   ];
@@ -25,7 +22,6 @@ pkgs.mkShell.override { stdenv = pkgs.clang16Stdenv; } {
     fontconfig
     wayland
     wayland-protocols
-
     xorg.libX11
     libglvnd
     libxkbcommon
@@ -35,17 +31,18 @@ pkgs.mkShell.override { stdenv = pkgs.clang16Stdenv; } {
     xorg.libXi
     xorg.libXinerama
 
-    # Needed?
-    #vulkan-headers
+    libGL
+    vulkan-headers
     vulkan-loader
-    #vulkan-tools
-    udev
+    vulkan-tools
 
     assimp
+    libffi
   ];
   NIX_HARDENING_ENABLE = "";
   NIX_ENFORCE_PURITY = 0;
   RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
   RUST_BACKTRACE = 1;
+  LD_LIBRARY_PATH = with pkgs; lib.makeLibraryPath buildInputs;
   shellHook = "exec zsh";
 }
