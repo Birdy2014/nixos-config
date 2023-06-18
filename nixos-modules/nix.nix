@@ -16,7 +16,6 @@
 
   nixpkgs.overlays = [
     (inputs.self.overlays.sway)
-    (inputs.self.overlays.noise-repellent)
   ];
 
   nix.registry = {

@@ -31,7 +31,6 @@
     packages.x86_64-linux.gruvbox-material-gtk = nixpkgs.legacyPackages.x86_64-linux.callPackage ./packages/gruvbox-material-gtk.nix {};
 
     overlays.sway = import ./overlays/sway;
-    overlays.noise-repellent = import ./overlays/noise-repellent;
 
     devShells.x86_64-linux =
       let
