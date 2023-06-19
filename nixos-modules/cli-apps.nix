@@ -18,5 +18,8 @@
     unzip
     p7zip
     zip
+
+    cifs-utils
+    keyutils
   ];
 }

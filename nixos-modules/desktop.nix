@@ -105,6 +105,11 @@
     zathura
     flameshot
     dolphin
+    kio-admin
+    kio-fuse
+    libsForQt5.kio
+    libsForQt5.kio-admin
+    libsForQt5.kio-extras
 
     discord
     thunderbird
