@@ -18,6 +18,7 @@
     unzip
     p7zip
     zip
+    nil # nix language server
 
     cifs-utils
     keyutils

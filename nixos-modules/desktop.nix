@@ -21,6 +21,9 @@
     ln -f -s "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1" "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
   '';
 
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.moritz.enableGnomeKeyring = true;
+
   xdg.portal = {
     enable = true;
     wlr.enable = true;

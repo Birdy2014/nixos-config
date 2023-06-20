@@ -20,7 +20,7 @@
 
   nix.registry = {
     nixpkgs.flake = inputs.nixpkgs;
-    config.flake = inputs.self;
+    system.flake = inputs.self;
   };
 
   # disable channels
