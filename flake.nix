@@ -8,9 +8,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    spicetify-nix.url = "github:the-argus/spicetify-nix";
   };
 
-  outputs = { self, nixpkgs, home-manager }@inputs: {
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations = {
       rotkehlchen = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -22,6 +24,7 @@
           {
             home-manager.useUserPackages = true;
             home-manager.useGlobalPkgs = true;
+            home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.moritz = import ./hosts/rotkehlchen/home.nix;
           }
         ];
