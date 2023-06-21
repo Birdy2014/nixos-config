@@ -8,6 +8,7 @@
 
   services.xserver = {
     layout = "de";
+    xkbVariant = "nodeadkeys";
     xkbOptions = "caps:escape";
   };
 }
