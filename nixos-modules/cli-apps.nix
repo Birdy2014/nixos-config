@@ -18,7 +18,10 @@
     unzip
     p7zip
     zip
+    yt-dlp
+    socat
     nil # nix language server
+    neofetch
 
     cifs-utils
     keyutils
