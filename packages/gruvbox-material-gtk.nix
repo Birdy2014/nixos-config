@@ -1,6 +1,6 @@
-{ stdenv, fetchFromGitHub, lib }:
+{ stdenv, fetchFromGitHub }:
 
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   pname = "gruvbox-material-gtk";
   version = "20230425";
 

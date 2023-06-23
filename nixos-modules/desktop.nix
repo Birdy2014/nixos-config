@@ -45,10 +45,6 @@
       glib # for gsettings in sway config
       libnotify # for notify-send
       wl-clipboard
-
-      qt5ct
-      libsForQt5.qtstyleplugin-kvantum
-      inputs.self.packages.x86_64-linux.gruvbox-material-gtk
     ];
   };
 

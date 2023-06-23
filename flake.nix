@@ -31,7 +31,15 @@
       };
     };
 
-    packages.x86_64-linux.gruvbox-material-gtk = nixpkgs.legacyPackages.x86_64-linux.callPackage ./packages/gruvbox-material-gtk.nix {};
+    packages.x86_64-linux =
+      let
+        callPackage = nixpkgs.legacyPackages.x86_64-linux.callPackage;
+      in
+        {
+          gruvbox-kvantum-themes = callPackage ./packages/gruvbox-kvantum-themes.nix {};
+          gruvbox-material-gtk = callPackage ./packages/gruvbox-material-gtk.nix {};
+          lyrax-cursors = callPackage ./packages/lyrax-cursors.nix {};
+        };
 
     overlays.sway = import ./overlays/sway;
 
