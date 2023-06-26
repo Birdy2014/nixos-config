@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ../../home-modules/common.nix
     ../../home-modules/xdg.nix
     ../../home-modules/gpg.nix
     ../../home-modules/spotify.nix
