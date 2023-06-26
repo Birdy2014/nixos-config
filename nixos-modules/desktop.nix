@@ -121,5 +121,6 @@
     ffmpegthumbnailer
     f3d
     jq
+    playerctl
   ];
 }

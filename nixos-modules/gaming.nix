@@ -12,6 +12,7 @@
     prismlauncher
     yuzu-mainline
     dolphin-emu
+    mangohud
   ];
 
   boot.blacklistedKernelModules = [
