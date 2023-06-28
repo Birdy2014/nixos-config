@@ -50,6 +50,7 @@
         {
           rust-cpp = import ./devshells/rust-cpp.nix { inherit pkgs; };
           js = import ./devshells/js.nix { inherit pkgs; };
+          python = import ./devshells/python.nix { inherit pkgs; };
         };
   };
 }
