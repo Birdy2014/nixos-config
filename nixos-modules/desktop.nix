@@ -122,5 +122,6 @@
     f3d
     jq
     playerctl
+    gnome-epub-thumbnailer
   ];
 }
