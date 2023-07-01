@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_4;
 
   boot.kernel.sysctl = {
     # Make system more responsive in case of OOM
