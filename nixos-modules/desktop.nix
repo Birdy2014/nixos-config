@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 
 {
   security.rtkit.enable = true;
@@ -56,7 +56,8 @@
 
       defaultFonts.serif = [ "NotoSerif Nerd Font" "Noto Serif CJK JP" ];
       defaultFonts.sansSerif = [ "NotoSans Nerd Font" "Noto Sans CJK JP" ];
-      defaultFonts.monospace = [ "JetBrainsMono Nerd Font" "Noto Sans Mono CJK JP" ];
+      defaultFonts.monospace =
+        [ "JetBrainsMono Nerd Font" "Noto Sans Mono CJK JP" ];
       defaultFonts.emoji = [ "Noto Color Emoji" ];
     };
 
@@ -70,10 +71,7 @@
 
   i18n.inputMethod = {
     enabled = "fcitx5";
-    fcitx5.addons = with pkgs; [
-      fcitx5-mozc
-      fcitx5-gtk
-    ];
+    fcitx5.addons = with pkgs; [ fcitx5-mozc fcitx5-gtk ];
   };
 
   programs.firefox = {
@@ -99,9 +97,7 @@
     pw-viz
     obsidian
     keepassxc
-    (mpv.override {
-      scripts = [ mpvScripts.mpris ];
-    })
+    (mpv.override { scripts = [ mpvScripts.mpris ]; })
     imv
     zathura
     flameshot

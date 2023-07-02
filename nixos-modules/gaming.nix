@@ -15,7 +15,5 @@
     mangohud
   ];
 
-  boot.blacklistedKernelModules = [
-    "hid_nintendo"
-  ];
+  boot.blacklistedKernelModules = [ "hid_nintendo" ];
 }

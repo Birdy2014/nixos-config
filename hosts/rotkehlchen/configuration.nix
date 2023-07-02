@@ -1,18 +1,17 @@
-{ config, pkgs, inputs, ... }:
+{ pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../nixos-modules/boot.nix
-      ../../nixos-modules/nix.nix
-      ../../nixos-modules/console.nix
-      ../../nixos-modules/user.nix
-      ../../nixos-modules/desktop.nix
-      ../../nixos-modules/cli-apps.nix
-      ../../nixos-modules/gaming.nix
-      ../../nixos-modules/virtualisation.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../../nixos-modules/boot.nix
+    ../../nixos-modules/nix.nix
+    ../../nixos-modules/console.nix
+    ../../nixos-modules/user.nix
+    ../../nixos-modules/desktop.nix
+    ../../nixos-modules/cli-apps.nix
+    ../../nixos-modules/gaming.nix
+    ../../nixos-modules/virtualisation.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader = {
@@ -41,12 +40,7 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
-  environment.systemPackages = with pkgs; [
-    vim
-    ddcutil
-    corectrl
-    sidequest
-  ];
+  environment.systemPackages = with pkgs; [ vim ddcutil corectrl sidequest ];
 
   services.udisks2.enable = true;
 

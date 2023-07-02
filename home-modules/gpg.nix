@@ -1,9 +1,7 @@
 { config, ... }:
 
 {
-  imports = [
-    ./xdg.nix
-  ];
+  imports = [ ./xdg.nix ];
 
   services.gpg-agent = {
     enable = true;

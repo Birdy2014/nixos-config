@@ -1,9 +1,7 @@
-{ home, ... }:
+{ ... }:
 
 {
   home.homeDirectory = "/home/moritz";
 
-  xdg = {
-    enable = true;
-  };
+  xdg = { enable = true; };
 }

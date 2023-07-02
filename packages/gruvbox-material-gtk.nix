@@ -23,6 +23,7 @@ stdenv.mkDerivation {
 
   meta = {
     homepage = "https://github.com/TheGreatMcPain/gruvbox-material-gtk";
-    description = "Gruvbox Material for GTK, Gnome, Cinnamon, XFCE, Unity, Plank and Icons ";
+    description =
+      "Gruvbox Material for GTK, Gnome, Cinnamon, XFCE, Unity, Plank and Icons ";
   };
 }

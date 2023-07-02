@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ inputs, ... }:
 
 {
   nix.settings = {
@@ -14,9 +14,7 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  nixpkgs.overlays = [
-    (inputs.self.overlays.sway)
-  ];
+  nixpkgs.overlays = [ (inputs.self.overlays.sway) ];
 
   nix.registry = {
     nixpkgs.flake = inputs.nixpkgs;
@@ -24,5 +22,5 @@
   };
 
   # disable channels
-  nix.nixPath = [];
+  nix.nixPath = [ ];
 }

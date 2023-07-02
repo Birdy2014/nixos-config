@@ -31,26 +31,26 @@
       };
     };
 
+    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
+
     packages.x86_64-linux =
-      let
-        callPackage = nixpkgs.legacyPackages.x86_64-linux.callPackage;
-      in
-        {
-          gruvbox-kvantum-themes = callPackage ./packages/gruvbox-kvantum-themes.nix {};
-          gruvbox-material-gtk = callPackage ./packages/gruvbox-material-gtk.nix {};
-          lyrax-cursors = callPackage ./packages/lyrax-cursors.nix {};
-        };
+      let callPackage = nixpkgs.legacyPackages.x86_64-linux.callPackage;
+      in {
+        gruvbox-kvantum-themes =
+          callPackage ./packages/gruvbox-kvantum-themes.nix { };
+        gruvbox-material-gtk =
+          callPackage ./packages/gruvbox-material-gtk.nix { };
+        lyrax-cursors = callPackage ./packages/lyrax-cursors.nix { };
+      };
 
     overlays.sway = import ./overlays/sway;
 
     devShells.x86_64-linux =
-      let
-        pkgs = import nixpkgs { system = "x86_64-linux"; };
-      in
-        {
-          rust-cpp = import ./devshells/rust-cpp.nix { inherit pkgs; };
-          js = import ./devshells/js.nix { inherit pkgs; };
-          python = import ./devshells/python.nix { inherit pkgs; };
-        };
+      let pkgs = import nixpkgs { system = "x86_64-linux"; };
+      in {
+        rust-cpp = import ./devshells/rust-cpp.nix { inherit pkgs; };
+        js = import ./devshells/js.nix { inherit pkgs; };
+        python = import ./devshells/python.nix { inherit pkgs; };
+      };
   };
 }

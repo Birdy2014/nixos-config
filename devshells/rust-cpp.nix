@@ -2,10 +2,7 @@
 
 pkgs.mkShell.override { stdenv = pkgs.clang16Stdenv; } rec {
   name = "rust-cpp";
-  packages = with pkgs; [
-    perf-tools
-    hotspot
-  ];
+  packages = with pkgs; [ perf-tools hotspot ];
   buildInputs = with pkgs; [
     cargo
     rustc

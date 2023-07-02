@@ -1,9 +1,7 @@
 { inputs, pkgs, config, ... }:
 
 {
-  imports = [
-    ./xdg.nix
-  ];
+  imports = [ ./xdg.nix ];
 
   home.pointerCursor = {
     name = "LyraX-cursors";
@@ -54,7 +52,8 @@
       theme=Gruvbox-Dark-Green
     '';
 
-    "Kvantum/Gruvbox-Dark-Green".source = "${inputs.self.packages.x86_64-linux.gruvbox-kvantum-themes}/share/Kvantum/Gruvbox-Dark-Green";
+    "Kvantum/Gruvbox-Dark-Green".source =
+      "${inputs.self.packages.x86_64-linux.gruvbox-kvantum-themes}/share/Kvantum/Gruvbox-Dark-Green";
 
     "gtk-4.0/gtk.css".text = ''
       @define-color accent_color #d4be98;
