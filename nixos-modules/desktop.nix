@@ -99,7 +99,9 @@
     pw-viz
     obsidian
     keepassxc
-    mpv
+    (mpv.override {
+      scripts = [ mpvScripts.mpris ];
+    })
     imv
     zathura
     flameshot
