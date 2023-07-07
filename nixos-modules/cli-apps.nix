@@ -18,10 +18,14 @@
     unzip
     p7zip
     zip
+    atool
     yt-dlp
     socat
     nil # nix language server
     neofetch
+    pciutils
+    usbutils
+    alsaUtils
 
     cifs-utils
     keyutils
