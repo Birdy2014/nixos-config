@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   virtualisation.podman = {
@@ -7,4 +7,6 @@
     # Required for containers under podman-compose to be able to talk to each other.
     defaultNetwork.settings.dns_enabled.enable = true;
   };
+
+  environment.systemPackages = [ pkgs.distrobox ];
 }
