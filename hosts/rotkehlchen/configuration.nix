@@ -53,6 +53,21 @@
   # Needed for ddcutil
   hardware.i2c.enable = true;
 
+  # Workaround for Creative Sound BlasterX G6
+  systemd.services.soundblaster-reset-usb = {
+    script =
+      "${pkgs.usb-modeswitch}/bin/usb_modeswitch -v 0x041e -p 0x3256 --reset-usb";
+    wantedBy = [ "multi-user.target" ];
+  };
+
+  systemd.user.services.soundblaster-set-capture-source = {
+    script =
+      "${pkgs.alsaUtils}/bin/amixer -D hw:G6 sset 'PCM Capture Source' 'External Mic'";
+    preStart = "${pkgs.coreutils-full}/bin/sleep 2";
+    wantedBy = [ "pipewire.service" ];
+    after = [ "pipewire.service" "wireplumber.service" ];
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It's perfectly fine and recommended to leave
