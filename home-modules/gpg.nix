@@ -7,6 +7,8 @@
     enable = true;
     pinentryFlavor = "qt";
     enableSshSupport = true;
+    defaultCacheTtl = 3600;
+    maxCacheTtl = 36000;
   };
 
   programs.gpg = {
