@@ -8,5 +8,9 @@
     defaultNetwork.settings.dns_enabled.enable = true;
   };
 
-  environment.systemPackages = [ pkgs.distrobox ];
+  virtualisation.libvirtd.enable = true;
+  programs.dconf.enable = true;
+  users.users.moritz.extraGroups = [ "libvirtd" ];
+
+  environment.systemPackages = with pkgs; [ distrobox virt-manager ];
 }
