@@ -58,11 +58,15 @@
     script =
       "${pkgs.usb-modeswitch}/bin/usb_modeswitch -v 0x041e -p 0x3256 --reset-usb";
     wantedBy = [ "multi-user.target" ];
+    restartIfChanged = false;
   };
 
-  systemd.user.services.soundblaster-set-capture-source = {
-    script =
-      "${pkgs.alsaUtils}/bin/amixer -D hw:G6 sset 'PCM Capture Source' 'External Mic'";
+  systemd.user.services.soundblaster-set-alsa-options = {
+    script = ''
+      ${pkgs.alsaUtils}/bin/amixer -D hw:G6 sset 'PCM Capture Source' 'External Mic'
+      ${pkgs.alsaUtils}/bin/amixer -D hw:G6 sset 'External Mic',0 Capture cap
+      ${pkgs.alsaUtils}/bin/amixer -D hw:G6 sset 'External Mic',0 Capture 9dB
+    '';
     preStart = "${pkgs.coreutils-full}/bin/sleep 2";
     wantedBy = [ "pipewire.service" ];
     after = [ "pipewire.service" "wireplumber.service" ];
