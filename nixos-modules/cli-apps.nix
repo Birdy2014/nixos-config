@@ -30,4 +30,9 @@
     cifs-utils
     keyutils
   ];
+
+  documentation.man = {
+    enable = true;
+    generateCaches = true;
+  };
 }
