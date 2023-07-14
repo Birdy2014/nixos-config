@@ -46,7 +46,7 @@
     overlays.sway = import ./overlays/sway;
 
     devShells.x86_64-linux =
-      let pkgs = import nixpkgs { system = "x86_64-linux"; };
+      let pkgs = nixpkgs.legacyPackages."x86_64-linux";
       in {
         rust-cpp = import ./devshells/rust-cpp.nix { inherit pkgs; };
         js = import ./devshells/js.nix { inherit pkgs; };
