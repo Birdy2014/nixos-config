@@ -11,6 +11,7 @@
     ../../nixos-modules/cli-apps.nix
     ../../nixos-modules/gaming.nix
     ../../nixos-modules/virtualisation.nix
+    ../../nixos-modules/scan.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
