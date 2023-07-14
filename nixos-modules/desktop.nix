@@ -107,6 +107,7 @@
     libsForQt5.kio
     libsForQt5.kio-admin
     libsForQt5.kio-extras
+    libreoffice
 
     discord
     thunderbird
