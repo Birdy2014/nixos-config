@@ -51,6 +51,11 @@
     fsType = "ext4";
   };
 
+  fileSystems."/run/media/moritz/500GBSSD" = {
+    device = "/dev/disk/by-uuid/eeb62038-60d0-4c6b-ba90-1258728b8f66";
+    fsType = "ext4";
+  };
+
   swapDevices = [{ device = "/swap/swapfile"; }];
 
   boot.resumeDevice = "/dev/mapper/nixos-root";
