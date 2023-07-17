@@ -146,7 +146,7 @@
     plugins = [
       {
         name = "per-directory-history";
-        file = "zsh-per-directory-history.zsh";
+        file = "per-directory-history.zsh";
         src = pkgs.fetchFromGitHub {
           owner = "jimhester";
           repo = "per-directory-history";
