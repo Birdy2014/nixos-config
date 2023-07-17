@@ -5,7 +5,7 @@
 
   services.gpg-agent = {
     enable = true;
-    pinentryFlavor = "qt";
+    pinentryFlavor = "gnome3";
     enableSshSupport = true;
     defaultCacheTtl = 3600;
     maxCacheTtl = 36000;
