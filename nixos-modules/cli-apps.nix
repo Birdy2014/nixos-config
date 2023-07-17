@@ -35,4 +35,7 @@
     enable = true;
     generateCaches = true;
   };
+
+  # Needed for zsh completions
+  environment.pathsToLink = [ "/share/zsh" ];
 }
