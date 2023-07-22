@@ -56,7 +56,6 @@
 
   services.udisks2.enable = true;
 
-  # FIXME: kdeconnect can't find default web browser
   programs.kdeconnect.enable = true;
 
   programs.adb.enable = true;
