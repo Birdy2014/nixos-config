@@ -13,6 +13,9 @@
     # https://github.com/swaywm/sway/issues/6292
     "net.core.wmem_default" = 21299200;
     "net.core.wmem_max" = 21299200;
+
+    # Enable SysRq
+    "kernel.sysrq" = 1;
   };
 
   boot.kernelParams = [ "nowatchdog" ];
