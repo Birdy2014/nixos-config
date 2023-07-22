@@ -22,6 +22,9 @@
       useOSProber = true;
       device = "nodev";
       efiSupport = true;
+      splashMode = "normal";
+      gfxmodeEfi = "3440x1440,auto";
+      gfxpayloadEfi = "keep";
     };
   };
 
