@@ -40,7 +40,6 @@
       waybar
       wlsunset
       rofi-wayland
-      dunst
       glib # for gsettings in sway config
       libnotify # for notify-send
       wl-clipboard

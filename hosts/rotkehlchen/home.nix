@@ -9,6 +9,7 @@
     ../../home-modules/themes.nix
     ../../home-modules/zsh.nix
     ../../home-modules/kitty.nix
+    ../../home-modules/dunst.nix
   ];
 
   home.stateVersion = "23.05";
