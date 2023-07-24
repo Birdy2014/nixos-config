@@ -10,6 +10,7 @@
     ../../home-modules/zsh.nix
     ../../home-modules/kitty.nix
     ../../home-modules/dunst.nix
+    ../../home-modules/rofi
   ];
 
   home.stateVersion = "23.05";
