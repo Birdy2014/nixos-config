@@ -40,7 +40,6 @@
       waybar
       wlsunset
       rofi-wayland
-      kitty
       dunst
       glib # for gsettings in sway config
       libnotify # for notify-send
