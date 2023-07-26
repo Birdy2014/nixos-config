@@ -1,0 +1,155 @@
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "monospace";
+    font-size: 10pt;
+    min-width: 0;
+}
+
+@define-color color-bg #1d2021;
+@define-color color-fg #d4be98;
+@define-color color-blue #7daea3;
+@define-color color-aqua #89b482;
+@define-color color-purple #d3869b;
+@define-color color-orange #e78a4e;
+@define-color color-yellow #d8a657;
+@define-color color-yellow-dark #b47109;
+@define-color color-green #a9b665;
+@define-color color-red #ea6962;
+@define-color color-red-dark #c14a4a;
+
+window#waybar {
+    background-color: @color-bg;
+    color: #ffffff;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+/* --- Workspaces --- */
+
+#workspaces {
+    margin-bottom: 4px;
+}
+
+#workspaces button {
+    padding: 4px 0;
+    background-color: transparent;
+    color: @color-aqua;
+}
+
+#workspaces button:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#workspaces button.focused {
+    color: @color-yellow-dark;
+}
+
+#workspaces button.urgent {
+    color: @color-red;
+}
+
+#workspaces button.persistent {
+    color: @color-fg;
+}
+
+#clock,
+#battery,
+#memory,
+#backlight,
+#network,
+#pulseaudio,
+#custom-powerdraw,
+#tray,
+#mode,
+#idle_inhibitor {
+    padding: 10px 0;
+    color: @color-fg;
+}
+
+#mode {
+    font-weight: bold;
+    background-color: @color-red;
+    color: @color-bg;
+}
+
+#clock {
+    color: @color-blue;
+}
+
+#battery {
+    color: @color-fg;
+}
+
+#battery.charging, #battery.plugged, #battery.good {
+    color: @color-green;
+}
+
+#battery.ok:not(.charging) {
+    color: @color-yellow-dark;
+}
+
+#battery.warning:not(.charging) {
+    color: @color-red;
+}
+
+@keyframes blink {
+    to {
+        color: @color-fg;
+    }
+}
+
+#battery.critical:not(.charging) {
+    color: @color-red;
+
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+label:focus {
+    background-color: #000000;
+}
+
+#backlight {
+    color: @color-blue;
+}
+
+#network {
+    color: @color-green;
+}
+
+#network.disconnected {
+    color: @color-red;
+}
+
+#pulseaudio {
+    color: @color-yellow;
+}
+
+#pulseaudio.muted {
+    color: @color-yellow-dark;
+}
+
+#custom-powerdraw {
+    color: @color-purple;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    color: @color-red;
+}
+
+#idle_inhibitor.activated {
+    color: @color-red;
+}

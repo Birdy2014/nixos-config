@@ -11,6 +11,7 @@
     ../../home-modules/kitty.nix
     ../../home-modules/dunst.nix
     ../../home-modules/rofi
+    ../../home-modules/waybar
   ];
 
   home.stateVersion = "23.05";
