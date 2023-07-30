@@ -46,7 +46,7 @@
   };
 
   fonts = {
-    enableDefaultFonts = true;
+    enableDefaultPackages = true;
 
     fontconfig = {
       enable = true;
@@ -58,7 +58,7 @@
       defaultFonts.emoji = [ "Noto Color Emoji" ];
     };
 
-    fonts = with pkgs; [
+    packages = with pkgs; [
       (nerdfonts.override { fonts = [ "JetBrainsMono" "Noto" ]; })
       noto-fonts
       noto-fonts-cjk
