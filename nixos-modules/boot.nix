@@ -3,6 +3,8 @@
 {
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_4;
 
+  powerManagement.cpuFreqGovernor = "schedutil";
+
   programs.cfs-zen-tweaks.enable = true;
 
   boot.kernel.sysctl = {
