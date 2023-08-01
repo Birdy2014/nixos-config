@@ -13,7 +13,6 @@
       l = "ls -lAh";
       tm = "tmux new-session -A -s main";
       config = "git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME";
-      tetris = "etriscurse";
       gap = "git add -p";
       rm = "rm -I";
       cp = "cp -i";
