@@ -101,7 +101,9 @@
 
     loginExtra = ''
       if [ "$TTY" = "/dev/tty1" ]; then
-        exec start-sway
+        systemd-cat sway
+        systemctl --user stop graphical-session.target
+        exit
       fi
     '';
 

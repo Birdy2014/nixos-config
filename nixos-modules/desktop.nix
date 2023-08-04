@@ -15,34 +15,14 @@
 
   security.polkit.enable = true;
 
-  # Ugly way to make the call to "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1" in sway config work.
-  system.activationScripts.symlinkPolkitGnomeAuthenticationAgent = ''
-    mkdir -p  "/usr/lib/polkit-gnome"
-    ln -f -s "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1" "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
-  '';
-
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.moritz.enableGnomeKeyring = true;
+  security.pam.services.swaylock = { };
 
   xdg.portal = {
     enable = true;
     wlr.enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  };
-
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-    extraPackages = with pkgs; [
-      swaylock
-      swayidle
-      swaybg
-      waybar
-      wlsunset
-      glib # for gsettings in sway config
-      libnotify # for notify-send
-      wl-clipboard
-    ];
   };
 
   fonts = {
