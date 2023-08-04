@@ -13,6 +13,7 @@
     ../../home-modules/rofi
     ../../home-modules/waybar
     ../../home-modules/sway.nix
+    ../../home-modules/git.nix
   ];
 
   home.stateVersion = "23.05";
