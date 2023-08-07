@@ -20,7 +20,6 @@
     timeout = 2;
     grub = {
       enable = true;
-      useOSProber = true;
       device = "nodev";
       efiSupport = true;
       splashMode = "normal";
