@@ -13,22 +13,9 @@
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {
-    nixosConfigurations = {
-      rotkehlchen = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/rotkehlchen/configuration.nix
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useUserPackages = true;
-            home-manager.useGlobalPkgs = true;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.users.moritz = import ./hosts/rotkehlchen/home.nix;
-          }
-        ];
-      };
+    nixosConfigurations = import ./hosts {
+      lib = nixpkgs.lib;
+      inherit inputs;
     };
 
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;

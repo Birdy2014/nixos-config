@@ -4,16 +4,14 @@
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./soundblaster.nix
-    ../../nixos-modules/boot.nix
-    ../../nixos-modules/nix.nix
-    ../../nixos-modules/console.nix
-    ../../nixos-modules/user.nix
-    ../../nixos-modules/desktop.nix
-    ../../nixos-modules/cli-apps.nix
-    ../../nixos-modules/gaming.nix
-    ../../nixos-modules/virtualisation.nix
-    ../../nixos-modules/scan.nix
+    ../../nixos-modules
   ];
+
+  my = {
+    gaming.enable = true;
+    virtualisation.enable = true;
+    home.stateVersion = "23.05";
+  };
 
   boot.loader = {
     efi.canTouchEfiVariables = true;
