@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -29,6 +29,8 @@
 
     cifs-utils
     keyutils
+
+    inputs.self.packages.x86_64-linux.xdg-open
   ];
 
   documentation.man = {

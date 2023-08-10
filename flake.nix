@@ -28,6 +28,7 @@
         gruvbox-material-gtk =
           callPackage ./packages/gruvbox-material-gtk.nix { };
         lyrax-cursors = callPackage ./packages/lyrax-cursors.nix { };
+        xdg-open = callPackage ./packages/xdg-open { };
       };
 
     overlays.sway = import ./overlays/sway;
