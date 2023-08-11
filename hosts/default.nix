@@ -7,4 +7,7 @@ let
       specialArgs = { inherit inputs; };
       modules = [ ./${hostname}/configuration.nix ];
     };
-in { rotkehlchen = nixosSystem "rotkehlchen"; }
+in {
+  rotkehlchen = nixosSystem "rotkehlchen";
+  zilpzalp = nixosSystem "zilpzalp";
+}
