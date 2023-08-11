@@ -83,6 +83,7 @@
         backlight = {
           format = "{percent:>3}% {icon}";
           format-icons = [ "" "" ];
+          rotate = 90;
         };
         battery = {
           states = {
@@ -96,6 +97,7 @@
           format-plugged = "{capacity:>3}% ";
           format-alt = "{time} {icon}";
           format-icons = [ " " " " " " " " " " ];
+          rotate = 90;
         };
         network = {
           interval = 10;
