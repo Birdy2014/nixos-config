@@ -7,7 +7,6 @@
     ripgrep
     lf
     git
-    python3
     file
     btop
     nvtop-amd
@@ -18,7 +17,6 @@
     unzip
     p7zip
     zip
-    atool
     yt-dlp
     socat
     nil # nix language server
@@ -26,6 +24,10 @@
     pciutils
     usbutils
     alsaUtils
+
+    # lf dependencies
+    w3m
+    trash-cli
 
     cifs-utils
     keyutils

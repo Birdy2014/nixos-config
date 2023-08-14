@@ -80,12 +80,9 @@
     (mpv.override { scripts = [ mpvScripts.mpris ]; })
     imv
     zathura
-    flameshot
     dolphin
-    kio-admin
     kio-fuse
     libsForQt5.kio
-    libsForQt5.kio-admin
     libsForQt5.kio-extras
     libreoffice
 
@@ -93,14 +90,17 @@
     thunderbird
     mumble
 
-    # dependencies of dotfiles
+    # dependencies of lf previewer. TODO: Call directly
     highlight
     poppler_utils
     ffmpeg
     ffmpegthumbnailer
     f3d
-    jq
-    playerctl
     gnome-epub-thumbnailer
+
+    # dependencies of other dotfiles. TODO: Call directly
+    playerctl
+
+    syncplay
   ];
 }
