@@ -73,7 +73,6 @@
     polkit_gnome
 
     pavucontrol
-    easyeffects
     pw-viz
     obsidian
     keepassxc
