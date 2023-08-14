@@ -79,6 +79,7 @@
     (mpv.override { scripts = [ mpvScripts.mpris ]; })
     imv
     zathura
+    mcomix
     dolphin
     kio-fuse
     libsForQt5.kio
