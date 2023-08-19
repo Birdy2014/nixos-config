@@ -18,6 +18,9 @@
 
     # Enable SysRq
     "kernel.sysrq" = 1;
+
+    # Needed for some games
+    "vm.max_map_count" = 2147483642;
   };
 
   boot.kernelParams = [ "nowatchdog" ];
