@@ -21,6 +21,6 @@
     system.flake = inputs.self;
   };
 
-  # disable channels
-  nix.nixPath = [ ];
+  # legacy nix channels
+  nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
 }
