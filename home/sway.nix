@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, osConfig, ... }:
 
 {
   imports = [ ./kitty.nix ./rofi ./waybar ./themes.nix ];
@@ -97,8 +97,10 @@
         "${modifier}+d" = "exec ${launcher}";
         "${modifier}+q" = "kill";
 
-        "${modifier}+Control+w" = "exec ${pkgs.firefox}/bin/firefox";
-        "${modifier}+Control+y" = "exec ${pkgs.firefox}/bin/firefox -p Youtube";
+        "${modifier}+Control+w" =
+          "exec ${osConfig.programs.firefox.package}/bin/firefox";
+        "${modifier}+Control+y" =
+          "exec ${osConfig.programs.firefox.package}/bin/firefox -p Youtube";
         "${modifier}+Control+n" = "exec ${terminal} ${pkgs.lf}/bin/lf";
         "Print" = "exec ${pkgs.flameshot}/bin/flameshot gui";
 

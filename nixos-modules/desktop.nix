@@ -56,7 +56,7 @@
 
   programs.firefox = {
     enable = true;
-    nativeMessagingHosts.tridactyl = true;
+    package = pkgs.firefox-bin;
     languagePacks = [ "en-US" "de" ];
   };
 
@@ -87,7 +87,7 @@
     libreoffice
 
     discord
-    thunderbird
+    thunderbird-bin
     mumble
 
     # dependencies of lf previewer. TODO: Call directly
