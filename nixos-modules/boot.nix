@@ -23,7 +23,12 @@
     "vm.max_map_count" = 2147483642;
   };
 
-  boot.kernelParams = [ "nowatchdog" ];
+  boot.kernelParams = [
+    "nowatchdog"
+
+    # The mitigations have a significant performance impact e.g. in cpu-bound games. (At least on my zen2 cpu)
+    "mitigations=off"
+  ];
 
   boot.tmp.useTmpfs = true;
 }
