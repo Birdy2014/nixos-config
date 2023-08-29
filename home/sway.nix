@@ -26,11 +26,6 @@
       export _JAVA_AWT_WM_NONREPARENTING=1
 
       export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-
-      if lsmod | grep '^amdgpu' > /dev/null; then
-        # Workaround for dark cursor: https://gitlab.freedesktop.org/drm/amd/-/issues/1513
-        export WLR_NO_HARDWARE_CURSORS=1
-      fi
     '';
 
     config = {
