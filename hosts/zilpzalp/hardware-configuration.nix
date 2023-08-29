@@ -12,14 +12,17 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  boot.initrd.luks.devices."nixos-root" = {
+    device = "/dev/disk/by-uuid/ab5e48e8-5eec-4e0e-a25c-ce869c544bf1";
+    bypassWorkqueues = true;
+    allowDiscards = true;
+  };
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/a5b1135a-1c79-4bca-b56e-fd8d2dda921c";
     fsType = "btrfs";
     options = [ "subvol=root" ];
   };
-
-  boot.initrd.luks.devices."nixos-root".device =
-    "/dev/disk/by-uuid/ab5e48e8-5eec-4e0e-a25c-ce869c544bf1";
 
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/a5b1135a-1c79-4bca-b56e-fd8d2dda921c";
