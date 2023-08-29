@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 
 {
   console = {
@@ -11,4 +11,6 @@
     xkbVariant = "nodeadkeys";
     xkbOptions = "caps:escape";
   };
+
+  services.getty.helpLine = lib.mkForce "";
 }
