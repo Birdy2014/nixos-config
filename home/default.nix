@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./btop.nix
     ./dunst.nix
     ./git.nix
     ./gpg.nix

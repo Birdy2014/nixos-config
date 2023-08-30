@@ -8,7 +8,6 @@
     lf
     git
     file
-    btop
     nvtop-amd
     tmux
     psmisc
