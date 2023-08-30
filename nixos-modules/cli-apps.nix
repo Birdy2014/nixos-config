@@ -2,8 +2,13 @@
 
 {
   environment.systemPackages = with pkgs; [
-    neovim
-    gcc13 # Needed for neovim treesitter
+    (wrapNeovim neovim-unwrapped {
+      # gcc is required for nvim-treesitter and nodejs is required for markdown-preview.nvim
+      extraMakeWrapperArgs =
+        "--prefix PATH : ${lib.makeBinPath [ gcc13 nodejs_18 ]}";
+      vimAlias = true;
+      viAlias = true;
+    })
     ripgrep
     lf
     git
