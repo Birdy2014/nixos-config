@@ -28,6 +28,7 @@
     pciutils
     usbutils
     alsaUtils
+    compsize
 
     # lf dependencies
     w3m
