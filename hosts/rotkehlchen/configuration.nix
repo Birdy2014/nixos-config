@@ -1,11 +1,8 @@
 { pkgs, ... }:
 
 {
-  imports = [ # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-    ./soundblaster.nix
-    ../../nixos-modules
-  ];
+  imports =
+    [ ./hardware-configuration.nix ./soundblaster.nix ../../nixos-modules ];
 
   my = {
     gaming.enable = true;
