@@ -58,6 +58,9 @@
     enable = true;
     package = pkgs.firefox-bin;
     languagePacks = [ "en-US" "de" ];
+
+    # policies in /etc/firefox/policies/policies.json override the policies defined by the firefox-bin derivation
+    policies = { DisableAppUpdate = true; };
   };
 
   services.syncthing = {
