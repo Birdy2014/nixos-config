@@ -60,6 +60,12 @@
   # Needed for ddcutil
   hardware.i2c.enable = true;
 
+  boot.kernelParams = [
+    # Workaround for tty rendering lag.
+    # See https://gitlab.freedesktop.org/drm/amd/-/issues/2519
+    "drm.vblankoffdelay=0"
+  ];
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It's perfectly fine and recommended to leave
