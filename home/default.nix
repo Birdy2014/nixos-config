@@ -7,6 +7,7 @@
     ./git.nix
     ./gpg.nix
     ./kitty.nix
+    ./lf
     ./rofi
     ./spotify.nix
     ./sway.nix

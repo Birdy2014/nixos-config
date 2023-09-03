@@ -10,7 +10,6 @@
       viAlias = true;
     })
     ripgrep
-    lf
     git
     file
     nvtop-amd
@@ -29,11 +28,8 @@
     usbutils
     alsaUtils
     compsize
-
-    # lf dependencies
-    w3m
     trash-cli
-
+    ffmpeg
     cifs-utils
     keyutils
 

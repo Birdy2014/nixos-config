@@ -93,14 +93,6 @@
     thunderbird-bin
     mumble
 
-    # dependencies of lf previewer. TODO: Call directly
-    highlight
-    poppler_utils
-    ffmpeg
-    ffmpegthumbnailer
-    f3d
-    gnome-epub-thumbnailer
-
     # dependencies of other dotfiles. TODO: Call directly
     playerctl
 
