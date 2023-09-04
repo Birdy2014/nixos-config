@@ -73,8 +73,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    polkit_gnome
-
     pavucontrol
     pw-viz
     obsidian
