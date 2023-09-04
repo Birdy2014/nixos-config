@@ -1,26 +1,37 @@
-{ ... }:
+{ config, ... }:
 
 {
   home.homeDirectory = "/home/moritz";
 
-  xdg = { enable = true; };
+  xdg = {
+    enable = true;
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+    };
+  };
 
-  home.sessionVariables = {
+  home.sessionVariables = let
+    home = config.home.homeDirectory;
+    cacheHome = config.xdg.cacheHome;
+    configHome = config.xdg.configHome;
+    dataHome = config.xdg.dataHome;
+  in {
     EDITOR = "nvim";
     VISUAL = "nvim";
 
-    ANDROID_HOME = "$HOME/Android/Sdk";
-    CARGO_HOME = "$XDG_DATA_HOME/cargo";
-    CUDA_CACHE_PATH = "$XDG_CACHE_HOME/nv";
-    GOPATH = "$XDG_DATA_HOME/go";
-    GRADLE_USER_HOME = "$XDG_DATA_HOME/gradle";
-    JUPYTER_CONFIG_DIR = "$XDG_CONFIG_HOME/jupyter";
-    KDEHOME = "$XDG_CONFIG_HOME/kde";
-    MPLAYER_HOME = "$XDG_CONFIG_HOME/mplayer";
-    MYSQL_HISTFILE = "$XDG_DATA_HOME/mysql_history";
-    NODE_REPL_HISTORY = "$XDG_DATA_HOME/node_repl_history";
-    _JAVA_OPTIONS = "-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java";
-    RUSTUP_HOME = "$XDG_DATA_HOME/rustup";
-    SQLITE_HISTORY = "$XDG_DATA_HOME/sqlite_history";
+    ANDROID_HOME = "${home}/Android/Sdk";
+    CARGO_HOME = "${dataHome}/cargo";
+    CUDA_CACHE_PATH = "${cacheHome}/nv";
+    GOPATH = "${dataHome}/go";
+    GRADLE_USER_HOME = "${dataHome}/gradle";
+    JUPYTER_CONFIG_DIR = "${configHome}/jupyter";
+    KDEHOME = "${configHome}/kde";
+    MPLAYER_HOME = "${configHome}/mplayer";
+    MYSQL_HISTFILE = "${dataHome}/mysql_history";
+    NODE_REPL_HISTORY = "${dataHome}/node_repl_history";
+    _JAVA_OPTIONS = "-Djava.util.prefs.userRoot=${configHome}/java";
+    RUSTUP_HOME = "${dataHome}/rustup";
+    SQLITE_HISTORY = "${dataHome}/sqlite_history";
   };
 }
