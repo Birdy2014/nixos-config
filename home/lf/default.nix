@@ -128,9 +128,9 @@
             *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) ${pkgs.gnutar}/bin/tar --one-top-level xjvf $f;;
             *.tar.gz|*.tgz) ${pkgs.gnutar}/bin/tar --one-top-level xzvf $f;;
             *.tar.xz|*.txz) ${pkgs.gnutar}/bin/tar --one-top-level xJvf $f;;
-            *.zip) ${pkgs.unzip}/bin/unzip -d $''${f%.*} $f;;
-            *.rar) ${pkgs.unrar}/bin/unrar x -y -op$''${f%.*} -- $f;;
-            *.7z) ${pkgs.p7zip}/bin/7z -o$''${f%.*} x $f;;
+            *.zip) ${pkgs.unzip}/bin/unzip -d ''${f%.*} $f;;
+            *.rar) ${pkgs.unrar}/bin/unrar x -y -op''${f%.*} -- $f;;
+            *.7z) ${pkgs.p7zip}/bin/7z -o''${f%.*} x $f;;
             *.xz) ${pkgs.xz}/bin/unxz $f;;
           esac
         }}'';
