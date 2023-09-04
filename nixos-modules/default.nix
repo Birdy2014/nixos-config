@@ -6,6 +6,7 @@
     ./cli-apps.nix
     ./console.nix
     ./desktop.nix
+    ./firejail
     ./gaming.nix
     ./nix.nix
     ./scan.nix
