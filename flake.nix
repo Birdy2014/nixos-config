@@ -20,19 +20,8 @@
 
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
 
-    packages.x86_64-linux =
-      let callPackage = nixpkgs.legacyPackages.x86_64-linux.callPackage;
-      in {
-        gruvbox-kvantum-themes =
-          callPackage ./packages/gruvbox-kvantum-themes.nix { };
-        gruvbox-material-gtk =
-          callPackage ./packages/gruvbox-material-gtk.nix { };
-        lyrax-cursors = callPackage ./packages/lyrax-cursors.nix { };
-        xdg-open = callPackage ./packages/xdg-open { };
-      };
-
-    overlays.sway = import ./overlays/sway;
-
-    devShells.x86_64-linux = import ./devshells { inherit nixpkgs; };
+    packages = import ./packages { inherit nixpkgs; };
+    overlays = import ./overlays;
+    devShells = import ./devshells { inherit nixpkgs; };
   };
 }
