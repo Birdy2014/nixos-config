@@ -34,6 +34,7 @@
     keyutils
 
     inputs.self.packages.x86_64-linux.xdg-open
+    inputs.self.packages.x86_64-linux.playerctl-current
   ];
 
   documentation.man = {
