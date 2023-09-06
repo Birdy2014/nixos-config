@@ -1,4 +1,4 @@
-{ pkgs, osConfig, ... }:
+{ pkgs, ... }:
 
 {
   imports = [ ./kitty.nix ./rofi ./waybar ./themes.nix ];
@@ -7,7 +7,7 @@
     modifier = "Mod4";
     terminal = "kitty";
     launcher = ''
-      rofi -show combi -terminal ${terminal} -run-command "${pkgs.sway}/bin/swaymsg exec '{cmd}'" -run-shell-command "swaymsg exec {terminal} '{cmd}'"'';
+      rofi -show combi -terminal ${terminal} -run-command "swaymsg exec '{cmd}'" -run-shell-command "swaymsg exec {terminal} '{cmd}'"'';
     color-accent = "#a96b2c";
     color-bg = "#45403d";
     color-bg-dark = "#282828";
@@ -92,11 +92,9 @@
         "${modifier}+d" = "exec ${launcher}";
         "${modifier}+q" = "kill";
 
-        "${modifier}+Control+w" =
-          "exec ${osConfig.programs.firefox.package}/bin/firefox";
-        "${modifier}+Control+y" =
-          "exec ${osConfig.programs.firefox.package}/bin/firefox -p Youtube";
-        "${modifier}+Control+n" = "exec ${terminal} ${pkgs.lf}/bin/lf";
+        "${modifier}+Control+w" = "exec firefox";
+        "${modifier}+Control+y" = "exec firefox -p Youtube";
+        "${modifier}+Control+n" = "exec ${terminal} lf";
         "Print" = "exec ${pkgs.flameshot}/bin/flameshot gui";
 
         # Layout
@@ -133,7 +131,7 @@
         "7" = [{ app_id = "^discord$"; }];
       };
 
-      bars = [{ command = "${pkgs.waybar}/bin/waybar"; }];
+      bars = [{ command = "waybar"; }];
 
       seat = { "*" = { hide_cursor = "5000"; }; };
 
@@ -263,28 +261,28 @@
       {
         timeout = 10;
         command =
-          "${pkgs.procps}/bin/pidof swaylock && ${pkgs.sway}/bin/swaymsg 'output * power off'";
+          "${pkgs.procps}/bin/pidof swaylock && swaymsg 'output * power off'";
         resumeCommand =
-          "${pkgs.procps}/bin/pidof swaylock && ${pkgs.sway}/bin/swaymsg 'output * power on'";
+          "${pkgs.procps}/bin/pidof swaylock && swaymsg 'output * power on'";
       }
       {
         timeout = 600;
-        command = "${pkgs.sway}/bin/swaymsg 'output * power off'";
-        resumeCommand = "${pkgs.sway}/bin/swaymsg 'output * power on'";
+        command = "swaymsg 'output * power off'";
+        resumeCommand = "swaymsg 'output * power on'";
       }
       {
         timeout = 605;
-        command = "${pkgs.swaylock}/bin/swaylock -f";
+        command = "swaylock -f";
       }
     ];
     events = [
       {
         event = "before-sleep";
-        command = "${pkgs.swaylock}/bin/swaylock -f";
+        command = "swaylock -f";
       }
       {
         event = "lock";
-        command = "${pkgs.swaylock}/bin/swaylock -f";
+        command = "swaylock -f";
       }
     ];
   };
