@@ -16,6 +16,4 @@
     ./xdg.nix
     ./zsh.nix
   ];
-
-  targets.genericLinux.enable = true;
 }
