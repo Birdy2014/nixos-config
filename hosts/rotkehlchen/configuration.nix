@@ -45,7 +45,7 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [ vim ddcutil corectrl sidequest ];
+  environment.systemPackages = with pkgs; [ ddcutil corectrl sidequest gimp ];
 
   services.udisks2.enable = true;
 
