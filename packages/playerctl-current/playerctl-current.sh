@@ -11,7 +11,7 @@ main() {
     PLAYER_FILE="$TMP_DIR/last_player"
     [[ -e "$PLAYER_FILE" ]] || touch "$PLAYER_FILE"
 
-    players=("$(playerctl --list-all)")
+    mapfile -t players < <(playerctl --list-all)
 
     selected_player=""
 
