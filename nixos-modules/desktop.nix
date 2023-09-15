@@ -91,9 +91,6 @@
     thunderbird-bin
     mumble
 
-    # dependencies of other dotfiles. TODO: Call directly
-    playerctl
-
     syncplay
   ];
 }
