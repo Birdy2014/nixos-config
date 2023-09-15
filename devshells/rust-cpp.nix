@@ -41,5 +41,4 @@ pkgs.mkShell.override { stdenv = pkgs.clang16Stdenv; } rec {
   RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
   RUST_BACKTRACE = 1;
   LD_LIBRARY_PATH = with pkgs; lib.makeLibraryPath buildInputs;
-  shellHook = "exec zsh";
 }

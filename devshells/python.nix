@@ -7,5 +7,4 @@ pkgs.mkShell {
     python310Packages.pip
     nodePackages.pyright
   ];
-  shellHook = "exec zsh";
 }
