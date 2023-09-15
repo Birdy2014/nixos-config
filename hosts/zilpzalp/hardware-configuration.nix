@@ -8,6 +8,7 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+  boot.swraid.enable = false;
 
   boot.initrd.luks.devices."nixos-root" = {
     device = "/dev/disk/by-uuid/ab5e48e8-5eec-4e0e-a25c-ce869c544bf1";

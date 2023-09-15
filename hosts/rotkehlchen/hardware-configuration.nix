@@ -8,6 +8,7 @@
   boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+  boot.swraid.enable = false;
 
   # Samsung SSD 870 EVO 4TB
 
