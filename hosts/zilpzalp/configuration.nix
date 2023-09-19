@@ -12,6 +12,7 @@
 
   my = {
     gaming.enable = false;
+    scan.enable = false;
     virtualisation.enable = false;
     home.stateVersion = "23.05";
   };
