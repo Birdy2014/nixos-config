@@ -241,6 +241,7 @@
       for_window [app_id="^firefox$" title="^(Picture-in-Picture|Bild-im-Bild)$"] floating enable; sticky enable
       for_window [app_id="^rpcs3$"] inhibit_idle visible
       for_window [class="^dolphin-emu$"] inhibit_idle visible
+      for_window [app_id="^org.kde.kdeconnect.handler$"] floating enable
 
       # Scratchpad
       for_window [app_id="org.keepassxc.KeePassXC"] move scratchpad
