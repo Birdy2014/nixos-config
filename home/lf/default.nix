@@ -22,6 +22,7 @@
       "<enter>" = "shell";
 
       P = "paste-overwrite";
+      "<c-c>" = "cancel-paste";
 
       a = "push %mkdir<space>";
 
@@ -68,30 +69,62 @@
       }/bin/lf-preview";
 
     commands = let
-      # FIXME: Improve copy progress and show move progress
-      pasteFunction = overwrite:
-        let ifNot = str: if !overwrite then str else "";
-        in ''
-          &{{
-            set -- $(cat ~/.local/share/lf/files)
-            mode="$1"
-            shift
-            case "$mode" in
-              copy)
-                ${pkgs.rsync}/bin/rsync -r ${
-                  ifNot "--ignore-existing"
-                } --info=progress2 -h -- "$@" . |
-                stdbuf -i0 -o0 -e0 tr '\r' '\n' |
-                while IFS= read -r line; do
-                  lf -remote "send $id echo $line"
-                done
-                ;;
-              move) mv ${ifNot "-n"} -- "$@" .;;
-            esac
-            rm ~/.local/share/lf/files
-            lf -remote "send clear"
-            lf -remote "send reload"
-          }}'';
+      pasteFunction = overwrite: ''
+        &{{
+          set -- $(cat ~/.local/share/lf/files)
+          mode="$1"
+          shift
+          sources=("''$@")
+
+          destination_directory="$(pwd)"
+
+          declare -a destination_files
+
+          for source_element in ''${sources[@]}; do
+            destination_files+=("$destination_directory/$(basename "$source_element")")
+          done
+
+          sources_size_bytes="$(du -cs -- "''${sources[@]}" | tail -n1 | cut -f1)"
+          sources_size_human="$(du -csh -- "''${sources[@]}" | tail -n1 | cut -f1)"
+
+          case "$mode" in
+            copy)
+              cp -ar ''${sources[@]} $destination_directory &
+              ;;
+            move)
+              mv ''${sources[@]} $destination_directory &
+              ;;
+          esac
+          echo $! >~/.local/share/lf/paste_pid
+
+          while jobs %% 2>&1 >/dev/null; do
+            destination_size_bytes="$(du -cs -- "''${destination_files[@]}" 2>/dev/null | tail -n1 | cut -f1)"
+            destination_size_human="$(du -csh -- "''${destination_files[@]}" 2>/dev/null | tail -n1 | cut -f1)"
+
+            progress_percent="$(( ($destination_size_bytes * 100) / $sources_size_bytes ))%"
+            progress_human="''${destination_size_human}/''${sources_size_human}"
+
+            # printf '\r%s - %s' "$progress_percent" "$progress_human"
+            line="$progress_percent - $progress_human"
+            lf -remote "send $id echo $line"
+
+            sleep 0.5
+          done
+
+          rm ~/.local/share/lf/paste_pid
+          rm ~/.local/share/lf/files
+          lf -remote "send clear"
+          lf -remote "send reload"
+        }}
+      '';
+
+      cancelPasteFunction = ''
+        ''${{
+          [[ -f ~/.local/share/lf/paste_pid ]] || exit
+          pid="$(< ~/.local/share/lf/paste_pid)"
+          kill "$pid"
+        }}
+      '';
     in {
       on-cd = ''
         &{{
@@ -147,6 +180,7 @@
 
       paste = pasteFunction false;
       paste-overwrite = pasteFunction true;
+      cancel-paste = cancelPasteFunction;
 
       # Necessary / Better alternative?
       duplicate = ''
