@@ -1,8 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
-  programs.firejail = rec {
-    enable = wrappedBinaries != { };
+  programs.firejail = {
+    enable = config.programs.firejail.wrappedBinaries != { };
 
     wrappedBinaries = lib.mkIf config.my.gaming.enable {
       prismlauncher = {
