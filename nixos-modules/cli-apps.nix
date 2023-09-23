@@ -39,7 +39,6 @@
 
   documentation.man = {
     enable = true;
-    generateCaches = true;
   };
 
   # Needed for zsh completions
