@@ -37,9 +37,7 @@
     inputs.self.packages.x86_64-linux.playerctl-current
   ];
 
-  documentation.man = {
-    enable = true;
-  };
+  documentation.man.enable = true;
 
   # Needed for zsh completions
   environment.pathsToLink = [ "/share/zsh" ];
