@@ -18,13 +18,8 @@ display_image() {
     local image="$1"
     if [[ "$TERM" =~ .*kitty.* ]]; then
         kitten icat --silent --stdin no --transfer-mode memory --place "${W}x${H}@${X}x${Y}" "$image" < /dev/null > /dev/tty
-    elif command -v chafa &>/dev/null && [[ "$TERM" = 'foot' ]]; then
-        # Next lf version? See https://github.com/gokcehan/lf/pull/1211
-        chafa "$image" -f sixel -s "${W}x${H}" --animate false
-    elif command -v chafa &>/dev/null; then
-        chafa --fill=block --symbols=block -c 256 --size "${W}x${H}" "$image" 2>/dev/null
     else
-        echo 'supported image preview methods: kitty, chafa'
+        chafa --fill=block --symbols=block -c 256 --size "${W}x${H}" "$image" 2>/dev/null
     fi
 }
 
