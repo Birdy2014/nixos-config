@@ -69,54 +69,60 @@
       }/bin/lf-preview";
 
     commands = let
-      pasteFunction = overwrite: ''
-        &{{
-          set -- $(cat ~/.local/share/lf/files)
-          mode="$1"
-          shift
-          sources=("''$@")
+      pasteFunction = overwrite:
+        let ifNotOverwrite = str: if !overwrite then str else "";
+        in ''
+          &{{
+            set -- $(cat ~/.local/share/lf/files)
+            mode="$1"
+            shift
+            sources=("$@")
 
-          destination_directory="$(pwd)"
+            destination_directory="$(pwd)"
 
-          declare -a destination_files
+            declare -a destination_files
 
-          for source_element in ''${sources[@]}; do
-            destination_files+=("$destination_directory/$(basename "$source_element")")
-          done
+            for source_element in ''${sources[@]}; do
+              destination_files+=("$destination_directory/$(basename "$source_element")")
+            done
 
-          sources_size_bytes="$(du -cs -- "''${sources[@]}" | tail -n1 | cut -f1)"
-          sources_size_human="$(du -csh -- "''${sources[@]}" | tail -n1 | cut -f1)"
+            sources_size_bytes="$(du -cs -- "''${sources[@]}" | tail -n1 | cut -f1)"
+            sources_size_human="$(du -csh -- "''${sources[@]}" | tail -n1 | cut -f1)"
 
-          case "$mode" in
-            copy)
-              cp -ar ''${sources[@]} $destination_directory &
-              ;;
-            move)
-              mv ''${sources[@]} $destination_directory &
-              ;;
-          esac
-          echo $! >~/.local/share/lf/paste_pid
+            case "$mode" in
+              copy)
+                cp -ar ${
+                  ifNotOverwrite "-n"
+                } ''${sources[@]} $destination_directory &
+                ;;
+              move)
+                mv ${
+                  ifNotOverwrite "-n"
+                } ''${sources[@]} $destination_directory &
+                ;;
+            esac
+            echo $! >~/.local/share/lf/paste_pid
 
-          while jobs %% 2>&1 >/dev/null; do
-            destination_size_bytes="$(du -cs -- "''${destination_files[@]}" 2>/dev/null | tail -n1 | cut -f1)"
-            destination_size_human="$(du -csh -- "''${destination_files[@]}" 2>/dev/null | tail -n1 | cut -f1)"
+            while jobs %% 2>&1 >/dev/null; do
+              destination_size_bytes="$(du -cs -- "''${destination_files[@]}" 2>/dev/null | tail -n1 | cut -f1)"
+              destination_size_human="$(du -csh -- "''${destination_files[@]}" 2>/dev/null | tail -n1 | cut -f1)"
 
-            progress_percent="$(( ($destination_size_bytes * 100) / $sources_size_bytes ))%"
-            progress_human="''${destination_size_human}/''${sources_size_human}"
+              progress_percent="$(( ($destination_size_bytes * 100) / $sources_size_bytes ))%"
+              progress_human="''${destination_size_human}/''${sources_size_human}"
 
-            # printf '\r%s - %s' "$progress_percent" "$progress_human"
-            line="$progress_percent - $progress_human"
-            lf -remote "send $id echo $line"
+              # printf '\r%s - %s' "$progress_percent" "$progress_human"
+              line="$progress_percent - $progress_human"
+              lf -remote "send $id echo $line"
 
-            sleep 0.5
-          done
+              sleep 0.5
+            done
 
-          rm ~/.local/share/lf/paste_pid
-          rm ~/.local/share/lf/files
-          lf -remote "send clear"
-          lf -remote "send reload"
-        }}
-      '';
+            rm ~/.local/share/lf/paste_pid
+            rm ~/.local/share/lf/files
+            lf -remote "send clear"
+            lf -remote "send reload"
+          }}
+        '';
 
       cancelPasteFunction = ''
         ''${{
