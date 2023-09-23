@@ -33,4 +33,6 @@
   boot.tmp.useTmpfs = true;
 
   zramSwap.enable = true;
+
+  services.logind.powerKey = "ignore";
 }
