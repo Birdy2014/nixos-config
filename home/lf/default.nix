@@ -10,7 +10,8 @@
       incsearch = true;
       icons = true;
       cursorpreviewfmt = "\\033[7m";
-      rulerfmt = "%a  |%p  |\\033[7;31m %m \\033[0m  |\\033[7;33m %c \\033[0m  |\\033[7;35m %s \\033[0m  |\\033[7;34m %f \\033[0m  | %d | %i/%t";
+      rulerfmt =
+        "%a  |%{lf_user_filestatus}  |\\033[7;31m %m \\033[0m  |\\033[7;33m %c \\033[0m  |\\033[7;35m %s \\033[0m  |\\033[7;34m %f \\033[0m  | %d | %i/%t";
       shell = "sh";
       shellopts = "-eu";
       ifs = "\n";
@@ -112,13 +113,14 @@
 
               # printf '\r%s - %s' "$progress_percent" "$progress_human"
               line="$progress_percent - $progress_human"
-              lf -remote "send $id echo $line"
+              lf -remote "send $id set user_filestatus \"$line\""
 
               sleep 0.5
             done
 
             rm ~/.local/share/lf/paste_pid
             rm ~/.local/share/lf/files
+            lf -remote "send $id set user_filestatus"
             lf -remote "send clear"
             lf -remote "send reload"
           }}
