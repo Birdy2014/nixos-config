@@ -10,7 +10,7 @@
       incsearch = true;
       icons = true;
       cursorpreviewfmt = "\\033[7m";
-      ruler = "acc:progress:selection:df:ind";
+      rulerfmt = "acc:progress:selection:df:ind";
       shell = "sh";
       shellopts = "-eu";
       ifs = "\n";
