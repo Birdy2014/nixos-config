@@ -63,13 +63,7 @@
     motherboard = "amd";
   };
 
-  boot.kernelParams = [
-    "amd_pstate=active"
-
-    # Workaround for tty rendering lag.
-    # See https://gitlab.freedesktop.org/drm/amd/-/issues/2519
-    "drm.vblankoffdelay=0"
-  ];
+  boot.kernelParams = [ "amd_pstate=active" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
