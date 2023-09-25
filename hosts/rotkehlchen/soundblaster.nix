@@ -57,4 +57,7 @@
     options snd_usb_audio id=G6 index=0
     options snd_hda_intel id=HDMI,Generic index=1,2 enable=0,0
   '';
+
+  # Fix crackling
+  boot.kernelParams = [ "usbcore.autosuspend=-1" ];
 }
