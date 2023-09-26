@@ -13,7 +13,7 @@
         margin = "5";
         modules-left = [ "sway/workspaces" "sway/mode" ];
         modules-right = [
-          "idle_inhibitor"
+          "custom/idle-inhibit"
           "custom/powerdraw"
           "pulseaudio"
           "network"
@@ -65,12 +65,26 @@
           escape = true;
           rotate = 90;
         };
-        idle_inhibitor = {
-          format = "{icon}";
-          format-icons = {
-            activated = "󰈈";
-            deactivated = "󰈉";
-          };
+        "custom/idle-inhibit" = {
+          exec = pkgs.writeShellScript "waybar-idle-inhibit.sh" ''
+            if systemctl --user --quiet is-active swayidle.service; then
+              echo '{"text": "󰈉", "class": "inactive"}'
+            else
+              echo '{"text": "󰈈", "class": "active"}'
+            fi
+          '';
+          return-type = "json";
+          interval = "once";
+          exec-on-event = false;
+          on-click = pkgs.writeShellScript "waybar-idle-inhibit-click.sh" ''
+            if systemctl --user --quiet is-active swayidle.service; then
+              systemctl --user --quiet stop swayidle.service
+            else
+              systemctl --user --quiet start swayidle.service
+            fi
+            pkill -SIGRTMIN+10 waybar
+          '';
+          signal = 10;
         };
         tray = { spacing = 10; };
         clock = {
