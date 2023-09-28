@@ -30,6 +30,10 @@ in {
     programs.dconf.enable = true;
     users.users.moritz.extraGroups = [ "libvirtd" ];
 
-    environment.systemPackages = with pkgs; [ distrobox virt-manager ];
+    environment.systemPackages = with pkgs; [
+      distrobox
+      virt-manager
+      virtiofsd
+    ];
   };
 }
