@@ -118,8 +118,11 @@
 
         # System (Exit, Shutdown, ...)
         "Control+Mod4+Mod1+q" = "exit";
-        "Control+Mod4+Mod1+l" = "exec systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && loginctl lock-session";
-        "Control+Mod4+Mod1+s" = "exec systemctl poweroff";
+        "Control+Mod4+Mod1+l" =
+          "exec systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && loginctl lock-session";
+        "Control+Mod4+Mod1+s" =
+          "exec systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && systemctl suspend";
+        "Control+Mod4+Mod1+p" = "exec systemctl poweroff";
         "Control+Mod4+Mod1+r" = "exec systemctl reboot";
         "Control+Mod4+Mod1+h" = "exec systemctl hibernate";
 
