@@ -15,18 +15,7 @@ in {
     };
   };
 
-  imports = [
-    inputs.home-manager.nixosModules.home-manager
-    {
-      home-manager.useUserPackages = true;
-      home-manager.useGlobalPkgs = true;
-      home-manager.extraSpecialArgs = { inherit inputs; };
-      home-manager.users.moritz = {
-        imports = [ ../home { home.stateVersion = cfg.stateVersion; } ]
-          ++ cfg.extraModules;
-      };
-    }
-  ];
+  imports = [ inputs.home-manager.nixosModules.home-manager ];
 
   config = {
     users.users.moritz = {
@@ -38,6 +27,16 @@ in {
     };
 
     programs.zsh.enable = true;
+
+    home-manager = {
+      useUserPackages = true;
+      useGlobalPkgs = true;
+      extraSpecialArgs = { inherit inputs; };
+      users.moritz = {
+        imports = [ ../home { home.stateVersion = cfg.stateVersion; } ]
+          ++ cfg.extraModules;
+      };
+    };
 
     # Useful for audio stuff, podman and RPCS3
     # https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/Performance-tuning
