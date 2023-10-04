@@ -32,6 +32,7 @@
     ffmpeg
     cifs-utils
     keyutils
+    sshfs
 
     inputs.self.packages.x86_64-linux.xdg-open
     inputs.self.packages.x86_64-linux.playerctl-current
