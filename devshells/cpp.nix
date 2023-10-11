@@ -1,21 +1,17 @@
-{ pkgs, ... }:
+{ pkgs }:
 
 pkgs.mkShell.override { stdenv = pkgs.clang16Stdenv; } rec {
-  name = "rust-cpp";
+  name = "cpp";
   packages = with pkgs; [ perf-tools hotspot ];
-  buildInputs = with pkgs; [
-    cargo
-    rustc
-    rustfmt
-    clippy
-    rust-analyzer
-
+  nativeBuildInputs = with pkgs; [
     cmake
     gnumake
     ninja
     ccache
 
     pkg-config
+  ];
+  buildInputs = with pkgs; [
     fontconfig
     wayland
     wayland-protocols
@@ -38,7 +34,5 @@ pkgs.mkShell.override { stdenv = pkgs.clang16Stdenv; } rec {
   ];
   NIX_HARDENING_ENABLE = "";
   NIX_ENFORCE_PURITY = 0;
-  RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
-  RUST_BACKTRACE = 1;
-  LD_LIBRARY_PATH = with pkgs; lib.makeLibraryPath buildInputs;
+  LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath buildInputs;
 }
