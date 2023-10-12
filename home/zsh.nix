@@ -35,7 +35,24 @@
     completionInit = ''
       autoload -Uz compinit
       compinit
-      zstyle ':completion:*' menu select
+      zstyle ':completion:*' menu yes select
+      zstyle ':completion:*' use-cache on
+      zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
+
+      zstyle ':completion:*' list-colors '''
+
+      zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
+      zstyle ':completion:*' group-name '''
+
+      # vi navigation in completion menu
+      zmodload zsh/complist
+      bindkey -M menuselect 'h' vi-backward-char
+      bindkey -M menuselect 'k' vi-up-line-or-history
+      bindkey -M menuselect 'j' vi-down-line-or-history
+      bindkey -M menuselect 'l' vi-forward-char
+
+      # Cancel completion with escape
+      bindkey -M menuselect '^[' undo
     '';
 
     initExtra = ''
