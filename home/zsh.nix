@@ -12,7 +12,6 @@
       ls = "ls --color=auto";
       l = "ls -lAh";
       tm = "tmux new-session -A -s main";
-      gap = "git add -p";
       rm = "rm -I";
       cp = "cp -i";
     };
