@@ -72,41 +72,41 @@
 
       # Change cursor shape for different vi modes.
       _set-cursor-shape-for-keymap() {
-          local shape=0
-          case "$1" in
-              main)       shape=5;;
-              viins)      shape=5;; # vi insert: beam
-              isearch)    shape=5;; # inc search: beam
-              command)    shape=5;; # read a command name: beam
-              vicmd)      shape=2;; # vi cmd: block
-              visual)     shape=2;; # vi visual mode: block
-              viopp)      shape=0;; # vi operator pending mode: block
-          esac
-          printf $'\e[%d q' "$shape"
+        local shape=0
+        case "$1" in
+          main)       shape=5;;
+          viins)      shape=5;; # vi insert: beam
+          isearch)    shape=5;; # inc search: beam
+          command)    shape=5;; # read a command name: beam
+          vicmd)      shape=2;; # vi cmd: block
+          visual)     shape=2;; # vi visual mode: block
+          viopp)      shape=0;; # vi operator pending mode: block
+        esac
+        printf $'\e[%d q' "$shape"
       }
 
       zle-keymap-select() {
-          _set-cursor-shape-for-keymap "$KEYMAP"
+        _set-cursor-shape-for-keymap "$KEYMAP"
       }
       zle -N zle-keymap-select
 
       _set-cursor-shape-for-keymap main
       precmd() {
-          _set-cursor-shape-for-keymap main
-          set_terminal_title zsh - $(pwd)
+        _set-cursor-shape-for-keymap main
+        set_terminal_title zsh - $(pwd)
 
-          if [[ -z "$new_line_before_prompt" ]]; then
-              new_line_before_prompt=1
-          else
-              echo
-          fi
+        if [[ -z "$new_line_before_prompt" ]]; then
+          new_line_before_prompt=1
+        else
+          echo
+        fi
       }
 
       alias clear='unset new_line_before_prompt; clear'
 
       preexec() {
-          _set-cursor-shape-for-keymap main
-          set_terminal_title "$2"
+        _set-cursor-shape-for-keymap main
+        set_terminal_title "$2"
       }
     '';
 
