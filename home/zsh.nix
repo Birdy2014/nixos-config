@@ -128,30 +128,6 @@
       # Local History
       HISTORY_BASE = "${config.xdg.dataHome}/zsh/history";
 
-      # Theme
-      SPACESHIP_USER_SHOW = "always";
-      SPACESHIP_EXIT_CODE_SHOW = true;
-      SPACESHIP_SUDO_SHOW = true;
-      SPACESHIP_PROMPT_ADD_NEWLINE = false;
-      SPACESHIP_EXIT_CODE_SYMBOL = "";
-
-      SPACESHIP_PROMPT_ORDER = [
-        "user" # Username section
-        "dir" # Current directory section
-        "host" # Hostname section
-        "nix_shell"
-        "git" # Git section (git_branch + git_status)
-        "venv" # virtualenv section
-        "conda" # conda virtualenv section
-        "gnu_screen" # GNU Screen section
-        "exec_time" # Execution time
-        "line_sep" # Line break
-        "jobs" # Background jobs indicator
-        "exit_code" # Exit code section
-        #"sudo"           # Sudo indicator
-        "char" # Prompt character
-      ];
-
       # Autosuggestion
       ZSH_AUTOSUGGEST_STRATEGY = [ "history" "completion" ];
     };
@@ -170,16 +146,32 @@
           sha256 = "sha256-7Z0qaDhgopKt9BDKSqdziw9jsVgiLLafs30wPPbz+oo=";
         };
       }
-      {
-        name = "spaceship-prompt";
-        file = "spaceship.zsh";
-        src = pkgs.fetchFromGitHub {
-          owner = "spaceship-prompt";
-          repo = "spaceship-prompt";
-          rev = "8461d88f59536087bbccd383d1c5da82e9fb90b3";
-          sha256 = "sha256-gt9CuEHkjlsrc3svLh44L1SZA4OtIhcrFET9d2gJiLM=";
-        };
-      }
     ];
+  };
+
+  programs.starship = {
+    enable = true;
+    settings = {
+      add_newline = false;
+      format = pkgs.lib.concatStrings [
+        "$username"
+        "$directory"
+        "$hostname"
+        "$nix_shell"
+        "$git_branch"
+        "$git_state"
+        "$git_metrics"
+        "$git_status"
+        "$python"
+        "$conda"
+        "$cmd_duration"
+        "$line_break"
+        "$status"
+        "$character"
+      ];
+      username = {
+        show_always = true;
+      };
+    };
   };
 }
