@@ -37,7 +37,7 @@
   fileSystems."/swap" = {
     device = "/dev/disk/by-uuid/a5b1135a-1c79-4bca-b56e-fd8d2dda921c";
     fsType = "btrfs";
-    options = [ "noatime" ];
+    options = [ "subvol=swap" "noatime" ];
   };
 
   fileSystems."/boot" = {
