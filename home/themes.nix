@@ -6,7 +6,7 @@
   home.pointerCursor = {
     name = "LyraX-cursors";
     size = 24;
-    package = inputs.self.packages.x86_64-linux.lyrax-cursors;
+    package = inputs.self.packages.${pkgs.system}.lyrax-cursors;
     gtk.enable = true;
   };
 
@@ -15,12 +15,12 @@
 
     theme = {
       name = "Gruvbox-Material-Dark";
-      package = inputs.self.packages.x86_64-linux.gruvbox-material-gtk;
+      package = inputs.self.packages.${pkgs.system}.gruvbox-material-gtk;
     };
 
     iconTheme = {
       name = "Gruvbox-Material-Dark";
-      package = inputs.self.packages.x86_64-linux.gruvbox-material-gtk;
+      package = inputs.self.packages.${pkgs.system}.gruvbox-material-gtk;
     };
 
     font = {
@@ -110,7 +110,8 @@
       theme=Gruvbox-Dark-Green
     '';
 
-    "Kvantum/Gruvbox-Dark-Green".source =
-      "${inputs.self.packages.x86_64-linux.gruvbox-kvantum-themes}/share/Kvantum/Gruvbox-Dark-Green";
+    "Kvantum/Gruvbox-Dark-Green".source = "${
+        inputs.self.packages.${pkgs.system}.gruvbox-kvantum-themes
+      }/share/Kvantum/Gruvbox-Dark-Green";
   };
 }
