@@ -10,4 +10,5 @@ let
 in {
   rotkehlchen = nixosSystem "rotkehlchen";
   zilpzalp = nixosSystem "zilpzalp";
+  live-iso = nixosSystem "live-iso";
 }
