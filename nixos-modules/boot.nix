@@ -35,4 +35,13 @@
   zramSwap.enable = true;
 
   services.logind.powerKey = "ignore";
+
+  # Use the kyber IO Scheduler for SSDs to improve responsiveness
+  services.udev.extraRules = ''
+    # SATA SSDs
+    ACTION=="add|change", KERNEL=="sd[a-z]*|mmcblk[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="kyber"
+
+    # NVMe SSDs
+    ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="kyber"
+  '';
 }
