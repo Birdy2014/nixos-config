@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ writeShellApplication, playerctl, ... }:
 
-pkgs.writeShellApplication {
+writeShellApplication {
   name = "playerctl-current";
-  runtimeInputs = [ pkgs.playerctl ];
+  runtimeInputs = [ playerctl ];
   text = builtins.readFile ./playerctl-current.sh;
 }

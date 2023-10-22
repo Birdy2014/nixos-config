@@ -9,7 +9,7 @@
     gruvbox-material-gtk = callPackage ./gruvbox-material-gtk.nix { };
     lepton-firefox-theme = callPackage ./lepton-firefox-theme.nix { };
     lyrax-cursors = callPackage ./lyrax-cursors.nix { };
-    playerctl-current = import ./playerctl-current { inherit pkgs; };
+    playerctl-current = callPackage ./playerctl-current { };
     xdg-open = callPackage ./xdg-open { };
   };
 }

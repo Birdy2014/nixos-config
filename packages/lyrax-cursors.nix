@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, pkgs, ... }:
+{ stdenv, fetchFromGitHub, inkscape, xcursorgen, ... }:
 
 stdenv.mkDerivation {
   pname = "LyraX Cursors";
@@ -11,7 +11,7 @@ stdenv.mkDerivation {
     hash = "sha256-lfaX8ouE0JaQwVBpAGsrLIExQZ2rCSFKPs3cch17eYg=";
   };
 
-  buildInputs = with pkgs; [ inkscape xorg.xcursorgen ];
+  buildInputs = [ inkscape xcursorgen ];
 
   buildPhase = ''
     rm -rf ./dist/*

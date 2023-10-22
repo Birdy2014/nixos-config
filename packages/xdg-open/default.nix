@@ -1,10 +1,10 @@
-{ stdenv, pkgs, ... }:
+{ stdenv, python3, ... }:
 
 stdenv.mkDerivation {
   pname = "xdg-open";
   version = "0.0.1";
 
-  propagatedBuildInputs = [ pkgs.python3 ];
+  propagatedBuildInputs = [ python3 ];
   dontUnpack = true;
   installPhase = "install -Dm755 ${./xdg-open.py} $out/bin/xdg-open";
 
