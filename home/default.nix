@@ -5,6 +5,7 @@
     ./btop.nix
     ./direnv.nix
     ./dunst.nix
+    ./firefox.nix
     ./git.nix
     ./gpg.nix
     ./kitty.nix

@@ -10,6 +10,8 @@
     };
 
     spicetify-nix.url = "github:the-argus/spicetify-nix";
+
+    nur.url = "github:nix-community/NUR";
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {

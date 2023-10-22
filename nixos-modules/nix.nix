@@ -14,7 +14,7 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  nixpkgs.overlays = [ (inputs.self.overlays.sway) ];
+  nixpkgs.overlays = [ inputs.nur.overlay (inputs.self.overlays.sway) ];
 
   nix.registry = {
     nixpkgs.flake = inputs.nixpkgs;
