@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ osConfig, pkgs, ... }:
 
 {
   programs.waybar = {
@@ -139,6 +139,7 @@
             portable = "󰏲";
             default = [ "" "" "" ];
           };
+          max-volume = osConfig.my.home.max-volume;
           on-click = "swaymsg exec pavucontrol";
           rotate = 90;
         };

@@ -9,6 +9,7 @@
     scan.enable = true;
     virtualisation.enable = true;
     home.stateVersion = "23.05";
+    home.max-volume = 40;
   };
 
   boot.loader = {

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ osConfig, pkgs, ... }:
 
 {
   imports = [ ./kitty.nix ./rofi ./waybar ./themes.nix ];
@@ -212,8 +212,12 @@
       bindsym --locked ${modifier}+m exec ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_SOURCE@ toggle
       bindsym --locked XF86AudioMicMute exec ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_SOURCE@ toggle
       bindsym --locked XF86AudioMute exec ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_SINK@ toggle
-      bindsym --locked XF86AudioLowerVolume exec ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_SINK@ 1%- --limit 1
-      bindsym --locked XF86AudioRaiseVolume exec ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_SINK@ 1%+ --limit 1
+      bindsym --locked XF86AudioLowerVolume exec ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_SINK@ 1%- --limit ${
+        toString (osConfig.my.home.max-volume / 100.0)
+      }
+      bindsym --locked XF86AudioRaiseVolume exec ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_SINK@ 1%+ --limit ${
+        toString (osConfig.my.home.max-volume / 100.0)
+      }
       bindsym --locked XF86AudioPlay exec playerctl-current play-pause
       bindsym --locked XF86AudioPrev exec playerctl-current previous
       bindsym --locked XF86AudioNext exec playerctl-current next

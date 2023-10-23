@@ -13,6 +13,12 @@ in {
       default = [ ];
       description = lib.mkDoc "Extra home-manager modules.";
     };
+
+    max-volume = lib.mkOption {
+      type = lib.types.int;
+      default = 100;
+      description = lib.mkDoc "The maximum audio playback volume.";
+    };
   };
 
   imports = [ inputs.home-manager.nixosModules.home-manager ];
