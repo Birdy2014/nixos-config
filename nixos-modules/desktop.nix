@@ -75,6 +75,7 @@
   environment.systemPackages = with pkgs; [
     pavucontrol
     pw-viz
+    easyeffects
     obsidian
     keepassxc
     (mpv.override { scripts = [ mpvScripts.mpris ]; })
@@ -90,7 +91,6 @@
     discord
     thunderbird-bin
     mumble
-
-    syncplay
+    signal-desktop
   ];
 }
