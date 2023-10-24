@@ -38,6 +38,8 @@
     inputs.self.packages.${pkgs.system}.playerctl-current
   ];
 
+  services.udisks2.enable = true;
+
   documentation.man.enable = true;
 
   # Needed for zsh completions

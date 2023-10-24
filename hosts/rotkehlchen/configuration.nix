@@ -49,8 +49,6 @@
 
   environment.systemPackages = with pkgs; [ ddcutil corectrl sidequest gimp ];
 
-  services.udisks2.enable = true;
-
   programs.kdeconnect.enable = true;
 
   programs.adb.enable = true;
