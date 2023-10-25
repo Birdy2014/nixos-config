@@ -43,9 +43,6 @@
 
   services.tlp.enable = true;
 
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;

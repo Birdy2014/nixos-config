@@ -8,6 +8,7 @@
     ./desktop.nix
     ./firejail
     ./gaming.nix
+    ./locale.nix
     ./nix.nix
     ./scan.nix
     ./user.nix
