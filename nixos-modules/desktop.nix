@@ -83,9 +83,7 @@
     zathura
     mcomix
     dolphin
-    kio-fuse
-    libsForQt5.kio
-    libsForQt5.kio-extras
+    libsForQt5.kio-extras # for accessing SMB shares
     libreoffice
 
     thunderbird-bin
