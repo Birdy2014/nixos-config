@@ -8,8 +8,11 @@
     gaming.enable = true;
     scan.enable = true;
     virtualisation.enable = true;
-    home.stateVersion = "23.05";
-    home.max-volume = 40;
+    home = {
+      stateVersion = "23.05";
+      max-volume = 40;
+      extraModules = [ ./home/spotify.nix ];
+    };
   };
 
   boot.loader = {

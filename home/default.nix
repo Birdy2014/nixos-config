@@ -11,7 +11,6 @@
     ./kitty.nix
     ./lf
     ./rofi
-    ./spotify.nix
     ./sway.nix
     ./themes.nix
     ./waybar
