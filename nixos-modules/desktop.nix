@@ -84,6 +84,7 @@
     mcomix
     dolphin
     libsForQt5.kio-extras # for accessing SMB shares
+    bashmount
     libreoffice
 
     thunderbird-bin
