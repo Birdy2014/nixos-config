@@ -88,9 +88,7 @@
     libsForQt5.kio-extras
     libreoffice
 
-    discord
     thunderbird-bin
     mumble
-    signal-desktop
   ];
 }

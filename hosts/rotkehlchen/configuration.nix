@@ -35,7 +35,14 @@
     hostName = "rotkehlchen";
   };
 
-  environment.systemPackages = with pkgs; [ ddcutil corectrl sidequest gimp ];
+  environment.systemPackages = with pkgs; [
+    ddcutil
+    corectrl
+    sidequest
+    gimp
+    discord
+    signal-desktop
+  ];
 
   programs.kdeconnect.enable = true;
 
