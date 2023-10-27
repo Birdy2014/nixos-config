@@ -1,14 +1,11 @@
 { lib, inputs }:
 
-let
-  nixosSystem = hostname:
-    lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
-      modules = [ ./${hostname}/configuration.nix ];
-    };
-in {
-  rotkehlchen = nixosSystem "rotkehlchen";
-  zilpzalp = nixosSystem "zilpzalp";
-  live-iso = nixosSystem "live-iso";
-}
+let hosts = [ "rotkehlchen" "zilpzalp" "live-iso" ];
+in (builtins.listToAttrs (map (host: {
+  name = host;
+  value = lib.nixosSystem {
+    system = "x86_64-linux";
+    specialArgs = { inherit inputs; };
+    modules = [ ./${host}/configuration.nix ];
+  };
+}) hosts))
