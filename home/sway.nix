@@ -240,9 +240,11 @@
       for_window [app_id=".*"] border normal
       for_window [class=".*"] border normal
 
+      # floating and inhibit_idle for all windows on workspace 5 except steam, because not all steam games match [class="^steam_app.*$"], e.g. cs2
+      for_window [workspace="^5$"] inhibit_idle open; floating enable
+      for_window [class="^[Ss]team$"] inhibit_idle none; floating disable
+
       for_window [class="^zoom$"] floating enable; inhibit_idle open
-      for_window [class="^[Ss]team$"] inhibit_idle none
-      for_window [class="^steam_app.*$"] floating enable; inhibit_idle open
       for_window [class="^Birdy3d$"] floating enable
       for_window [app_id="^thunderbird$" title="^[1-9]* Erinnerung(en)?$"] floating enable
       for_window [app_id="^firefox$" title="^(Picture-in-Picture|Bild-im-Bild)$"] floating enable; sticky enable
