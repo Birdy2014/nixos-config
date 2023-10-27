@@ -147,6 +147,8 @@
 
       gaps.inner = 5;
 
+      focus.newWindow = "urgent";
+
       modes = {
         resize = {
           h = "resize shrink width 10px";
