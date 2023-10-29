@@ -81,15 +81,6 @@
 
             destination_directory="$(pwd)"
 
-            declare -a destination_files
-
-            for source_element in ''${sources[@]}; do
-              destination_files+=("$destination_directory/$(basename "$source_element")")
-            done
-
-            sources_size_bytes="$(du -cs -- "''${sources[@]}" | tail -n1 | cut -f1)"
-            sources_size_human="$(du -csh -- "''${sources[@]}" | tail -n1 | cut -f1)"
-
             case "$mode" in
               copy)
                 cp -ar ${
@@ -103,6 +94,15 @@
                 ;;
             esac
             echo $! >~/.local/share/lf/paste_pid
+
+            declare -a destination_files
+
+            for source_element in ''${sources[@]}; do
+              destination_files+=("$destination_directory/$(basename "$source_element")")
+            done
+
+            sources_size_bytes="$(du -cs -- "''${sources[@]}" | tail -n1 | cut -f1)"
+            sources_size_human="$(du -csh -- "''${sources[@]}" | tail -n1 | cut -f1)"
 
             while jobs %% 2>&1 >/dev/null; do
               destination_size_bytes="$(du -cs -- "''${destination_files[@]}" 2>/dev/null | tail -n1 | cut -f1)"
