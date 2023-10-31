@@ -35,9 +35,14 @@
       "browser.discovery.enabled" = false;
       "datareporting.healthreport.uploadEnabled" = false;
     };
+
+    commonExtensions = with pkgs.nur.repos.rycee.firefox-addons;
+      [ ublock-origin ];
   in {
     enable = true;
-    package = pkgs.firefox-bin;
+    package = (pkgs.firefox.override {
+      extraNativeMessagingHosts = [ pkgs.tridactyl-native ];
+    });
     profiles = {
       default = {
         id = 0;
@@ -51,15 +56,15 @@
           "privacy.clearOnShutdown.cache" = true;
           "privacy.clearOnShutdown.cookies" = true;
         };
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-          ublock-origin
-          keepassxc-browser
-          i-dont-care-about-cookies
-          vimium
-          bypass-paywalls-clean
-          darkreader
-          return-youtube-dislikes
-        ];
+        extensions = commonExtensions
+          ++ (with pkgs.nur.repos.rycee.firefox-addons; [
+            keepassxc-browser
+            i-dont-care-about-cookies
+            tridactyl
+            bypass-paywalls-clean
+            darkreader
+            return-youtube-dislikes
+          ]);
         search.default = "DuckDuckGo";
         search.force = true;
         userChrome = ''
@@ -81,15 +86,33 @@
         name = "persistent";
         isDefault = false;
         settings = commonSettings;
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-          ublock-origin
-          return-youtube-dislikes
-          youtube-shorts-block
-          sponsorblock
-        ];
+        extensions = commonExtensions
+          ++ (with pkgs.nur.repos.rycee.firefox-addons; [
+            return-youtube-dislikes
+            youtube-shorts-block
+            sponsorblock
+          ]);
         search.default = "DuckDuckGo";
         search.force = true;
       };
     };
   };
+
+  xdg.configFile."tridactyl/tridactylrc".text = ''
+    bind / fillcmdline find
+    bind ? fillcmdline find --reverse
+    bind n findnext --search-from-view
+    bind N findnext --search-from-view --reverse
+    bind gn findselect
+    bind gN composite findnext --search-from-view --reverse; findselect
+    bind <esc> nohlsearch
+
+    unbind <C-f>
+
+    bind <A-q> tabclose
+    bind <A-k> tabprev
+    bind <A-j> tabnext
+    bind <A-K> tabmove -1
+    bind <A-J> tabmove +1
+  '';
 }

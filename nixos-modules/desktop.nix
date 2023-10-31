@@ -54,15 +54,6 @@
     fcitx5.addons = with pkgs; [ fcitx5-mozc fcitx5-gtk ];
   };
 
-  programs.firefox = {
-    enable = true;
-    package = pkgs.firefox-bin;
-    languagePacks = [ "en-US" "de" ];
-
-    # policies in /etc/firefox/policies/policies.json override the policies defined by the firefox-bin derivation
-    policies = { DisableAppUpdate = true; };
-  };
-
   services.syncthing = {
     enable = true;
     user = "moritz";
