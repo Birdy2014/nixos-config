@@ -129,7 +129,7 @@ handle_mime() {
 
         application/x-7z-compressed)
             # Avoid password prompt by providing empty password
-            tout 7z l -ba -p -- "${FILE_PATH}" | awk '{$1=$2=$3=$4=$5=""; print $0}' | grep -o '\S.*'
+            tout 7zz l -ba -p -- "${FILE_PATH}" | awk '{$1=$2=$3=$4=$5=""; print $0}' | grep -o '\S.*'
             exit 1;;
 
         application/vnd.rar|application/x-rar)

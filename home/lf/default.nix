@@ -60,7 +60,7 @@
             odt2txt
             unzip
             gnutar
-            p7zip
+            _7zz
             unrar
             gnome-epub-thumbnailer
             f3d
@@ -171,7 +171,7 @@
             *.tar.xz|*.txz) ${pkgs.gnutar}/bin/tar --one-top-level -xJvf $f;;
             *.zip) ${pkgs.unzip}/bin/unzip -d ''${f%.*} $f;;
             *.rar) ${pkgs.unrar}/bin/unrar x -y -op''${f%.*} -- $f;;
-            *.7z) ${pkgs.p7zip}/bin/7z -o''${f%.*} x $f;;
+            *.7z) ${pkgs._7zz}/bin/7zz -o''${f%.*} x $f;;
             *.xz) ${pkgs.xz}/bin/unxz $f;;
           esac
         }}'';
@@ -182,7 +182,7 @@
           set -f
           mkdir $1
           cp -r $fx $1
-          7z a $1.7z $1
+          ${pkgs._7zz}/bin/7zz a $1.7z $1
           rm -rf $1
         }}'';
 

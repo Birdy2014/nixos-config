@@ -18,7 +18,7 @@
     libqalculate
     unrar
     unzip
-    p7zip
+    _7zz
     zip
     yt-dlp
     socat
