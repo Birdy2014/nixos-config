@@ -99,6 +99,8 @@
   };
 
   xdg.configFile."tridactyl/tridactylrc".text = ''
+    set smoothscroll true
+
     bind / fillcmdline find
     bind ? fillcmdline find --reverse
     bind n findnext --search-from-view
