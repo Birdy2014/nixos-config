@@ -2,13 +2,13 @@
 
 stdenv.mkDerivation {
   pname = "gruvbox-material-gtk";
-  version = "20230425";
+  version = "20230828";
 
   src = fetchFromGitHub {
     owner = "TheGreatMcPain";
     repo = "gruvbox-material-gtk";
-    rev = "558c2e174c00974685e4fc74c0fbc801018a2bbf";
-    hash = "sha256-hqQGl1Yv/xqGnhsVlpHun3phhNRRG1sC4LzDTFNQ7CY=";
+    rev = "a1295d8bcd4dfbd0cd6793d7b1583b442438ed89";
+    hash = "sha256-VumO8F4ZrFI6GZU1XXaw4MCnP+Nla1rVS3uuSUzpl9E=";
   };
 
   installPhase = ''
