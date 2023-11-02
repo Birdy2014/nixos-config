@@ -16,8 +16,6 @@ mime_associations: dict[str, str | list[str]] = {
     "application/postscript": "org.pwmt.zathura-ps.desktop",
     "application/python": "nvim.desktop",
     "application/rss\+xml": "nvim.desktop",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [ "libreoffice-calc.desktop", "calc.desktop" ],
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [ "libreoffice-writer.desktop", "writer.desktop" ],
     "application/x-bittorrent": "transmission-gtk.desktop",
     "application/x-javascript": "nvim.desktop",
     "application/x-sh": "nvim.desktop",
@@ -25,6 +23,14 @@ mime_associations: dict[str, str | list[str]] = {
     "application/x-wine-extension-ini": "nvim.desktop",
     "application/zip": "org.gnome.FileRoller.desktop",
     "inode/directory": "lf.desktop",
+
+    # Office formats
+    "application/vnd\.oasis\.opendocument\.spreadsheet": [ "libreoffice-calc.desktop", "calc.desktop" ], # ods
+    "application/vnd\.openxmlformats-officedocument\.spreadsheetml\.sheet": [ "libreoffice-calc.desktop", "calc.desktop" ], # xlsx
+    "application/(vnd\.)?ms-?excel": [ "libreoffice-calc.desktop", "calc.desktop" ], # xls
+    "application/vnd\.oasis\.opendocument\.text": [ "libreoffice-writer.desktop", "writer.desktop" ], # odt
+    "application/vnd\.openxmlformats-officedocument\.wordprocessingml\.document": [ "libreoffice-writer.desktop", "writer.desktop" ], # docx
+    "application/(vnd\.)?ms-?word": [ "libreoffice-writer.desktop", "writer.desktop" ], # doc
 }
 
 extension_associations: dict[str, str | list[str]] = {
