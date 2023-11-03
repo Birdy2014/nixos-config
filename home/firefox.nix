@@ -29,6 +29,7 @@
       "browser.aboutwelcome.enabled" = false;
       "browser.newtabpage.activity-stream.feeds.topsites" = false;
       "extensions.pocket.enabled" = false;
+      "browser.translations.automaticallyPopup" = false;
 
       # Disable telemetry
       "app.shield.optoutstudies.enabled" = false;
