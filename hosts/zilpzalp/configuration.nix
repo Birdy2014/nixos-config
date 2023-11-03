@@ -43,6 +43,8 @@
 
   services.tlp.enable = true;
 
+  nix.settings.trusted-users = [ "moritz" ];
+
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
