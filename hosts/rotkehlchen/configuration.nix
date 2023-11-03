@@ -57,6 +57,14 @@
     motherboard = "amd";
   };
 
+  services.printing.enable = true;
+
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+    openFirewall = true;
+  };
+
   boot.kernelParams = [ "amd_pstate=active" ];
 
   # This value determines the NixOS release from which the default
