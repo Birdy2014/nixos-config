@@ -42,7 +42,7 @@
   in {
     enable = true;
     package = (pkgs.firefox.override {
-      extraNativeMessagingHosts = [ pkgs.tridactyl-native ];
+      nativeMessagingHosts = [ pkgs.tridactyl-native ];
     });
     profiles = {
       default = {
