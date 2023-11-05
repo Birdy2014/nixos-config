@@ -1,11 +1,9 @@
 { pkgs, ... }:
 
 {
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_5;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_6;
 
   powerManagement.cpuFreqGovernor = "schedutil";
-
-  programs.cfs-zen-tweaks.enable = true;
 
   boot.kernel.sysctl = {
     # Make system more responsive in case of OOM
