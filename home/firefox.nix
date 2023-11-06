@@ -13,7 +13,7 @@
 
       # Autoplay
       "media.autoplay.block-event.enabled" = true;
-      "media.autoplay.default" = 1;
+      "media.autoplay.default" = 5;
 
       # UI
       "browser.uidensity" = 1;
@@ -22,19 +22,32 @@
       # Enable DRM :(
       "media.eme.enabled" = true;
 
+      # Ask where to save files
+      "browser.download.useDownloadDir" = false;
+
+      # Extensions
+      "extensions.enabledScopes" = 5;
+      "extensions.webextensions.restrictedDomains" = "";
+
       # Disable annoying firefox functionality
-      "signon.rememberSignons" = false;
-      "browser.formfill.enable" = false;
-      "extensions.formautofill.creditCards.enabled" = false;
+      "browser.aboutConfig.showWarning" = false; # about:config warning
       "browser.aboutwelcome.enabled" = false;
+      "browser.formfill.enable" = false;
       "browser.newtabpage.activity-stream.feeds.topsites" = false;
-      "extensions.pocket.enabled" = false;
       "browser.translations.automaticallyPopup" = false;
+      "extensions.formautofill.creditCards.enabled" = false;
+      "extensions.pocket.enabled" = false;
+      "identity.fxaccounts.enabled" = false; # Firefox sync
+      "privacy.webrtc.legacyGlobalIndicator" = false; # Sharing indicator
+      "signon.autofillForms" = false;
+      "signon.rememberSignons" = false;
 
       # Disable telemetry
       "app.shield.optoutstudies.enabled" = false;
       "browser.discovery.enabled" = false;
       "datareporting.healthreport.uploadEnabled" = false;
+      "extensions.getAddons.showPane" = false;
+      "extensions.htmlaboutaddons.recommendations.enabled" = false;
     };
 
     commonExtensions = with pkgs.nur.repos.rycee.firefox-addons;
@@ -53,9 +66,14 @@
           # History customisation
           "privacy.history.custom" = true;
           "privacy.sanitize.sanitizeOnShutdown" = true;
-          "privacy.clearOnShutdown.offlineApps" = true;
           "privacy.clearOnShutdown.cache" = true;
           "privacy.clearOnShutdown.cookies" = true;
+          "privacy.clearOnShutdown.downloads" = true;
+          "privacy.clearOnShutdown.formdata" = true;
+          "privacy.clearOnShutdown.history" = true;
+          "privacy.clearOnShutdown.offlineApps" = true;
+          "privacy.clearOnShutdown.sessions" = true;
+          "privacy.clearOnShutdown.sitesettings" = false;
         };
         extensions = commonExtensions
           ++ (with pkgs.nur.repos.rycee.firefox-addons; [
