@@ -62,7 +62,6 @@
             keepassxc-browser
             i-dont-care-about-cookies
             tridactyl
-            bypass-paywalls-clean
             darkreader
             return-youtube-dislikes
           ]);
