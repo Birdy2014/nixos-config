@@ -78,6 +78,8 @@
             mode="$1"
             shift
             sources=("$@")
+            lf -remote "send clear"
+            rm ~/.local/share/lf/files
 
             destination_directory="$(pwd)"
 
@@ -119,9 +121,7 @@
             done
 
             rm ~/.local/share/lf/paste_pid
-            rm ~/.local/share/lf/files
             lf -remote "send $id set user_filestatus"
-            lf -remote "send clear"
             lf -remote "send reload"
           }}
         '';
