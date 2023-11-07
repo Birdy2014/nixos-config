@@ -1,4 +1,4 @@
-{ osConfig, pkgs, ... }:
+{ osConfig, lib, pkgs, ... }:
 
 {
   imports = [ ./kitty.nix ./rofi ./waybar ./themes.nix ];
@@ -129,12 +129,24 @@
       };
 
       assigns = {
-        "5" = [{ class = "^[Ss]team$"; }];
-        "6" = [{ app_id = "^thunderbird$"; }];
-        "7" = [{ app_id = "^discord$"; }];
+        "5" = [{ app_id = "^thunderbird$"; }];
+        "6" = [{ app_id = "^discord$"; }];
+        "7" = lib.mkIf osConfig.my.gaming.enable [{ class = "^[Ss]team$"; }];
       };
 
       bars = [ ]; # Waybar is started by systemd
+
+      window.commands = lib.mkIf osConfig.my.gaming.enable [
+        # floating and inhibit_idle for all windows on workspace 7 except steam, because not all steam games match [class="^steam_app.*$"], e.g. cs2
+        {
+          command = "inhibit_idle open; floating enable";
+          criteria = { workspace = "^7$"; };
+        }
+        {
+          command = "inhibit_idle none; floating disable";
+          criteria = { class = "^[Ss]team$"; };
+        }
+      ];
 
       seat = { "*" = { hide_cursor = "5000"; }; };
 
@@ -239,10 +251,6 @@
       # Force borders for all windows
       for_window [app_id=".*"] border normal
       for_window [class=".*"] border normal
-
-      # floating and inhibit_idle for all windows on workspace 5 except steam, because not all steam games match [class="^steam_app.*$"], e.g. cs2
-      for_window [workspace="^5$"] inhibit_idle open; floating enable
-      for_window [class="^[Ss]team$"] inhibit_idle none; floating disable
 
       for_window [class="^zoom$"] floating enable; inhibit_idle open
       for_window [class="^Birdy3d$"] floating enable

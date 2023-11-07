@@ -1,4 +1,4 @@
-{ osConfig, pkgs, ... }:
+{ osConfig, lib, pkgs, ... }:
 
 {
   programs.waybar = {
@@ -37,16 +37,16 @@
             "4" = [ ];
             "5" = [ ];
             "6" = [ ];
-            "7" = [ ];
+            "7" = lib.mkIf osConfig.my.gaming.enable [ ];
           };
           format-icons = {
             "1" = "󰋜";
             "2" = "󰈹";
             "3" = "󰗃";
             "4" = "";
-            "5" = "󰓓";
-            "6" = "󰇮";
-            "7" = "󰙯";
+            "5" = "󰇮";
+            "6" = "󰙯";
+            "7" = lib.mkIf osConfig.my.gaming.enable "󰓓";
             default = "";
           };
         };
