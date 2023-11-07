@@ -23,7 +23,7 @@
 
     history = {
       extended = true;
-      ignoreDups = true;
+      ignoreAllDups = true;
       ignorePatterns = [ "rm *" ];
       ignoreSpace = true;
       save = 100000;
