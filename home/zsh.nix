@@ -108,6 +108,8 @@
         _set-cursor-shape-for-keymap main
         set_terminal_title "$2"
       }
+
+      bindkey '^R' history-incremental-pattern-search-backward
     '';
 
     envExtra = ''
