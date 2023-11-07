@@ -4,6 +4,10 @@
   programs.waybar = {
     enable = true;
     style = ./style.css;
+    systemd.enable = true;
+
+    # Waybar doesn't properly reload when the settings are changed and has to be restarted.
+    # https://github.com/Alexays/Waybar/issues/1881
 
     settings = {
       mainBar = {

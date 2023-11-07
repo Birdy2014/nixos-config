@@ -134,7 +134,7 @@
         "7" = [{ app_id = "^discord$"; }];
       };
 
-      bars = [{ command = "${pkgs.waybar}/bin/waybar"; }];
+      bars = [ ]; # Waybar is started by systemd
 
       seat = { "*" = { hide_cursor = "5000"; }; };
 
