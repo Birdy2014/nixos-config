@@ -132,6 +132,9 @@
 
       # Autosuggestion
       ZSH_AUTOSUGGEST_STRATEGY = [ "history" "completion" ];
+
+      # Silence direnv
+      DIRENV_LOG_FORMAT = "";
     };
 
     enableAutosuggestions = true;
