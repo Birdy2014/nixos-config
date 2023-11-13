@@ -4,6 +4,8 @@
   nix.settings = {
     auto-optimise-store = true;
     experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+    keep-derivations = true;
+    keep-outputs = true;
   };
 
   nix.gc = {
