@@ -30,7 +30,7 @@
           disable-scroll = true;
           all-outputs = true;
           format = "{icon}";
-          persistent_workspaces = {
+          persistent-workspaces = {
             "1" = [ ];
             "2" = [ ];
             "3" = [ ];
