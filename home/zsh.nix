@@ -19,6 +19,9 @@
     sessionVariables = {
       MANPAGER = "nvim +Man!";
       LESS = "--mouse -r";
+
+      # Silence direnv
+      DIRENV_LOG_FORMAT = "";
     };
 
     history = {
@@ -132,9 +135,6 @@
 
       # Autosuggestion
       ZSH_AUTOSUGGEST_STRATEGY = [ "history" "completion" ];
-
-      # Silence direnv
-      DIRENV_LOG_FORMAT = "";
     };
 
     enableAutosuggestions = true;
