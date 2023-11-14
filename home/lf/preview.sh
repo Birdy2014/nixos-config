@@ -19,7 +19,7 @@ display_image() {
     if [[ "$TERM" =~ .*kitty.* ]]; then
         kitten icat --silent --stdin no --transfer-mode memory --place "${W}x${H}@${X}x${Y}" "$image" < /dev/null > /dev/tty
     else
-        chafa --fill=block --symbols=block -c 256 --size "${W}x${H}" "$image" 2>/dev/null
+        chafa -c full --size "${W}x${H}" "$image" 2>/dev/null
     fi
 }
 

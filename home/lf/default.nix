@@ -16,6 +16,7 @@
       shellopts = "-eu";
       ifs = "\n";
       scrolloff = 10;
+      sixel = true;
       mouse = true;
     };
 
