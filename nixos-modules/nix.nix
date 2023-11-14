@@ -18,9 +18,6 @@
 
   nixpkgs.overlays = [ inputs.nur.overlay (inputs.self.overlays.sway) ];
 
-  # FIXME: Remove this once it is no longer necessary
-  nixpkgs.config.permittedInsecurePackages = [ "electron-24.8.6" ];
-
   nix.registry = {
     nixpkgs.flake = inputs.nixpkgs;
     system.flake = inputs.self;
