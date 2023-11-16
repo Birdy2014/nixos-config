@@ -62,23 +62,4 @@
     overrideDevices = false;
     dataDir = "/home/moritz";
   };
-
-  environment.systemPackages = with pkgs; [
-    pavucontrol
-    pw-viz
-    easyeffects
-    obsidian
-    keepassxc
-    (mpv.override { scripts = [ mpvScripts.mpris ]; })
-    imv
-    zathura
-    mcomix
-    dolphin
-    libsForQt5.kio-extras # for accessing SMB shares
-    bashmount
-    libreoffice
-
-    thunderbird-bin
-    mumble
-  ];
 }

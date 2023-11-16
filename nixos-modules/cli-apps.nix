@@ -33,6 +33,7 @@
     cifs-utils
     keyutils
     sshfs
+    bashmount
 
     inputs.self.packages.${pkgs.system}.xdg-open
     inputs.self.packages.${pkgs.system}.playerctl-current
