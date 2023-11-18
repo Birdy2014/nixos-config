@@ -10,7 +10,7 @@
 
   home.packages = with pkgs; [
     pavucontrol
-    pw-viz
+    helvum
     obsidian
     keepassxc
     zathura
