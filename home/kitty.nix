@@ -6,7 +6,7 @@
 
     font = {
       name = "monospace";
-      size = 11;
+      size = 10;
     };
 
     shellIntegration.mode = "disabled";
