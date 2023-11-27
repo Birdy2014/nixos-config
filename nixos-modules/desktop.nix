@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   hardware.opengl.enable = true;
@@ -64,6 +64,7 @@
     group = "users";
     overrideFolders = false;
     overrideDevices = false;
-    dataDir = "/home/moritz";
+    configDir = "${config.users.users.moritz.home}/.config/syncthing";
+    dataDir = "${config.users.users.moritz.home}/.local/state/syncthing";
   };
 }
