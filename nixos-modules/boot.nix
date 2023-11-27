@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_6;
@@ -28,20 +28,7 @@
     "mitigations=off"
   ];
 
-  # Make /tmp noexec
-  fileSystems."/tmp" = {
-    device = "tmpfs";
-    fsType = "tmpfs";
-    options = [
-      "mode=1777"
-      "strictatime"
-      "rw"
-      "nosuid"
-      "nodev"
-      "noexec"
-      "size=${toString config.boot.tmp.tmpfsSize}"
-    ];
-  };
+  boot.tmp.useTmpfs = true;
 
   zramSwap.enable = true;
 
