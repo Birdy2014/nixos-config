@@ -2,13 +2,13 @@
 
 stdenv.mkDerivation rec {
   pname = "lepton-firefox-theme";
-  version = "8.1.0";
+  version = "8.5.0";
 
   src = fetchFromGitHub {
     owner = "black7375";
     repo = "Firefox-UI-Fix";
     rev = "v${version}";
-    hash = "sha256-KpSR1z1BzTgeqnGEGwdcyOQAEt7V1kEloEtadxyiyfg=";
+    hash = "sha256-wv5EH3osPZNGe66hIJEjIy8rZAiFxpAzGatm/YgcF3o=";
   };
 
   installPhase = ''
