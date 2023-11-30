@@ -10,40 +10,46 @@
   boot.extraModulePackages = [ ];
   boot.swraid.enable = false;
 
-  # Samsung SSD 870 EVO 4TB
+  # Samsung SSD 980 PRO with Heatsink 2TB
 
   boot.initrd.luks.devices."nixos-root" = {
-    device = "/dev/disk/by-uuid/ec1f1df4-349f-43ca-aa22-8c60a5845a5a";
+    device = "/dev/disk/by-uuid/2710437f-5af4-46b1-a837-0c046c3e3209";
     bypassWorkqueues = true;
     allowDiscards = true;
   };
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/f313ecbb-7133-4a4e-bf77-272570e8a286";
+    device = "/dev/disk/by-uuid/b6d597be-f401-45a6-a7aa-e9c5498745f0";
     fsType = "btrfs";
-    options = [ "subvol=root" "compress=zstd:1" ];
+    options = [ "subvol=rootfs" "compress=zstd:1" ];
   };
 
   fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/f313ecbb-7133-4a4e-bf77-272570e8a286";
+    device = "/dev/disk/by-uuid/b6d597be-f401-45a6-a7aa-e9c5498745f0";
     fsType = "btrfs";
     options = [ "subvol=home" "compress=zstd:1" ];
   };
 
   fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/f313ecbb-7133-4a4e-bf77-272570e8a286";
+    device = "/dev/disk/by-uuid/b6d597be-f401-45a6-a7aa-e9c5498745f0";
     fsType = "btrfs";
     options = [ "subvol=nix" "compress=zstd:1" "noatime" ];
   };
 
   fileSystems."/swap" = {
-    device = "/dev/disk/by-uuid/f313ecbb-7133-4a4e-bf77-272570e8a286";
+    device = "/dev/disk/by-uuid/b6d597be-f401-45a6-a7aa-e9c5498745f0";
     fsType = "btrfs";
     options = [ "subvol=swap" "noatime" ];
   };
 
+  fileSystems."/snapshots" = {
+    device = "/dev/disk/by-uuid/b6d597be-f401-45a6-a7aa-e9c5498745f0";
+    fsType = "btrfs";
+    options = [ "subvol=snapshots" "noatime" ];
+  };
+
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/1820-B211";
+    device = "/dev/disk/by-uuid/C01C-AFCC";
     fsType = "vfat";
   };
 
@@ -61,29 +67,29 @@
     options = [ "compress=zstd:1" "noatime" ];
   };
 
-  # KINGSTON SA2000M8500G
-
-  boot.initrd.luks.devices."500GBSSD" = {
-    device = "/dev/disk/by-uuid/a3fbfddd-fbe9-4b6f-bc08-579810b18bae";
-    bypassWorkqueues = true;
-    allowDiscards = true;
-  };
-
-  fileSystems."/run/media/moritz/500GBSSD" = {
-    device = "/dev/disk/by-uuid/2c8e25fe-d15d-44d5-bd9e-024f1e9a8fe0";
-    fsType = "ext4";
-    options = [ "noatime" ];
-  };
-
-  # Samsung SSD 870 QVO 2TB
+  # Samsung SSD 870 EVO 4TB
 
   boot.initrd.luks.devices."archive" = {
-    device = "/dev/disk/by-uuid/ff1db63b-e1b0-494e-8425-f20d23e9ffc1";
+    device = "/dev/disk/by-uuid/6198ff28-d300-4217-a480-a855ef0a8867";
     bypassWorkqueues = true;
     allowDiscards = true;
   };
 
   fileSystems."/run/media/moritz/archive" = {
+    device = "/dev/disk/by-uuid/985dc3e3-86dc-48e2-9bd5-ee7b3ab798af";
+    fsType = "btrfs";
+    options = [ "noatime" ];
+  };
+
+  # Samsung SSD 870 QVO 2TB
+
+  boot.initrd.luks.devices."archive2" = {
+    device = "/dev/disk/by-uuid/ff1db63b-e1b0-494e-8425-f20d23e9ffc1";
+    bypassWorkqueues = true;
+    allowDiscards = true;
+  };
+
+  fileSystems."/run/media/moritz/archive2" = {
     device = "/dev/disk/by-uuid/e86999be-1893-440c-80e9-9cee8af2fada";
     fsType = "ext4";
     options = [ "noatime" ];
@@ -92,7 +98,7 @@
   swapDevices = [{ device = "/swap/swapfile"; }];
 
   boot.resumeDevice = "/dev/mapper/nixos-root";
-  boot.kernelParams = [ "resume_offset=533760" ];
+  boot.kernelParams = [ "resume_offset=136908230" ];
 
   services.fstrim.enable = true;
 
