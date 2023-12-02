@@ -36,6 +36,7 @@
     bashmount
     ldns # for drill
     binutils # for strings
+    progress
 
     inputs.self.packages.${pkgs.system}.xdg-open
     inputs.self.packages.${pkgs.system}.playerctl-current
