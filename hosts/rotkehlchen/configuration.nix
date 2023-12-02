@@ -65,6 +65,8 @@
     openFirewall = true;
   };
 
+  services.fwupd.enable = true;
+
   boot.kernelParams = [ "amd_pstate=active" ];
 
   # This value determines the NixOS release from which the default
