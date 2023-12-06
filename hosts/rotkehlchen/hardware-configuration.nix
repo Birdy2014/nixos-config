@@ -90,8 +90,8 @@
   };
 
   fileSystems."/run/media/moritz/archive2" = {
-    device = "/dev/disk/by-uuid/e86999be-1893-440c-80e9-9cee8af2fada";
-    fsType = "ext4";
+    device = "/dev/disk/by-uuid/1fde2cac-e61e-4f61-bf10-e797b6c84cfb";
+    fsType = "btrfs";
     options = [ "noatime" ];
   };
 
