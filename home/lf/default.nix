@@ -82,21 +82,26 @@
             lf -remote "send clear"
             rm ~/.local/share/lf/files
 
+            lf -remote "send $id set user_filestatus \"starting copy\""
+
             destination_directory="$(pwd)"
 
-            case "$mode" in
+            ( case "$mode" in
               copy)
                 cp -ar ${
                   ifNotOverwrite "-n"
-                } ''${sources[@]} $destination_directory &
+                } ''${sources[@]} $destination_directory
                 ;;
               move)
                 mv ${
                   ifNotOverwrite "-n"
-                } ''${sources[@]} $destination_directory &
+                } ''${sources[@]} $destination_directory
                 ;;
-            esac
-            echo $! >~/.local/share/lf/paste_pid
+            esac 2>~/.local/share/lf/paste_error ) &
+
+            set +u
+            echo "$!">~/.local/share/lf/paste_pid
+            set -u
 
             declare -a destination_files
 
@@ -121,17 +126,23 @@
               sleep 0.5
             done
 
-            rm ~/.local/share/lf/paste_pid
-            lf -remote "send $id set user_filestatus"
+            lf -remote "send $id set user_filestatus \"$(cat ~/.local/share/lf/paste_error)\""
             lf -remote "send reload"
+            rm -f ~/.local/share/lf/paste_pid
+            rm -f ~/.local/share/lf/paste_error
           }}
         '';
 
       cancelPasteFunction = ''
         ''${{
-          [[ -f ~/.local/share/lf/paste_pid ]] || exit
-          pid="$(< ~/.local/share/lf/paste_pid)"
-          kill "$pid"
+          pid_file=~/.local/share/lf/paste_pid
+          if [[ -f "$pid_file" ]]; then
+            # The pid is not the pid of cp or mv, but of a subshell.
+            # pkill also kills the subprocesses of the pid; kill does not.
+            ${pkgs.procps}/bin/pkill -P "$(< "$pid_file")"
+          fi
+          rm -f "$pid_file"
+          lf -remote "send $id set user_filestatus"
         }}
       '';
     in {
