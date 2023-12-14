@@ -11,9 +11,12 @@
       pull = { ff = "only"; };
     };
 
-    difftastic = {
+    delta = {
       enable = true;
-      display = "inline";
+      options = {
+        line-numbers = true;
+        hunk-header-style = "";
+      };
     };
   };
 }
