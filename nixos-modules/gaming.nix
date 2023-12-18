@@ -23,12 +23,18 @@ in {
     };
 
     environment.systemPackages = with pkgs; [
+      # Launchers
       heroic
       prismlauncher
+      (lutris.override { extraPkgs = pkgs: [ wineWowPackages.stable ]; })
+
+      # Emulators
       yuzu-mainline
       dolphin-emu
       pcsx2
       rpcs3
+
+      # Tools
       mangohud
     ];
 
