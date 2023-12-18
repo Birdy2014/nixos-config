@@ -1,14 +1,14 @@
 { stdenv, fetchFromGitHub }:
 
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   pname = "gruvbox-kvantum-themes";
-  version = "1.0";
+  version = "1.1";
 
   src = fetchFromGitHub {
     owner = "sachnr";
     repo = "gruvbox-kvantum-themes";
-    rev = "439fe6df66644579abcd11169200c8a20a134d5f";
-    hash = "sha256-orAPLYxl9/KMzGlX7YCpq5FTKa/4FG8/qEv2xdC9QOM=";
+    rev = "refs/tags/${version}";
+    hash = "sha256-u2J4Zf9HuMjNCt3qVpgEffkytl/t277FzOvWL8Nm8os=";
   };
 
   installPhase = ''
