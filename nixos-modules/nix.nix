@@ -6,6 +6,7 @@
     experimental-features = [ "nix-command" "flakes" "repl-flake" ];
     keep-derivations = true;
     keep-outputs = true;
+    flake-registry = "";
   };
 
   nix.gc = {
