@@ -19,6 +19,12 @@ in {
       default = 100;
       description = lib.mkDoc "The maximum audio playback volume.";
     };
+
+    mpdListenExternal = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = lib.mkDoc "Open firewall port 6600 for mpd.";
+    };
   };
 
   imports = [ inputs.home-manager.nixosModules.home-manager ];
@@ -72,5 +78,8 @@ in {
         value = "unlimited";
       }
     ];
+
+    networking.firewall.allowedTCPPorts =
+      lib.mkIf config.my.home.mpdListenExternal [ 6600 ];
   };
 }

@@ -15,6 +15,7 @@
     home = {
       stateVersion = "23.05";
       max-volume = 40;
+      mpdListenExternal = true;
       extraModules = [ ./home/spotify.nix ];
     };
   };
