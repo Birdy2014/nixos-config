@@ -93,9 +93,7 @@
                 } ''${sources[@]} $destination_directory
                 ;;
               move)
-                mv ${
-                  ifNotOverwrite "-n"
-                } ''${sources[@]} $destination_directory
+                mv ${ifNotOverwrite "-n"} ''${sources[@]} $destination_directory
                 ;;
             esac 2>~/.local/share/lf/paste_error ) &
 
@@ -112,14 +110,15 @@
             sources_size_bytes="$(du -cs -- "''${sources[@]}" | tail -n1 | cut -f1)"
             sources_size_human="$(du -csh -- "''${sources[@]}" | tail -n1 | cut -f1)"
 
-            while jobs %% 2>&1 >/dev/null; do
+            while jobs %% &>/dev/null; do
+              [[ "$sources_size_bytes" -le 0 ]] && break
+
               destination_size_bytes="$(du -cs -- "''${destination_files[@]}" 2>/dev/null | tail -n1 | cut -f1)"
               destination_size_human="$(du -csh -- "''${destination_files[@]}" 2>/dev/null | tail -n1 | cut -f1)"
 
               progress_percent="$(( ($destination_size_bytes * 100) / $sources_size_bytes ))%"
               progress_human="''${destination_size_human}/''${sources_size_human}"
 
-              # printf '\r%s - %s' "$progress_percent" "$progress_human"
               line="$progress_percent - $progress_human"
               lf -remote "send $id set user_filestatus \"$line\""
 
