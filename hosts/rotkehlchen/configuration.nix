@@ -72,7 +72,12 @@
 
   services.fwupd.enable = true;
 
-  boot.kernelParams = [ "amd_pstate=active" ];
+  boot.kernelParams = [
+    "amd_pstate=active"
+    "amd_prefcore=enable"
+
+    "gpu_sched.sched_policy=0" # https://gitlab.freedesktop.org/drm/amd/-/issues/2516#note_2119750
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
