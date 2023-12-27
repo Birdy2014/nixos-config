@@ -1,11 +1,10 @@
-{ config, lib, osConfig, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   services.mpd = {
     enable = true;
     musicDirectory = "${config.home.homeDirectory}/Music";
-    network.listenAddress =
-      lib.mkIf osConfig.my.home.mpdListenExternal "0.0.0.0";
+    network.listenAddress = "any";
     extraConfig = ''
       audio_output {
         type   "pipewire"

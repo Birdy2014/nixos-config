@@ -15,8 +15,7 @@
     home = {
       stateVersion = "23.05";
       max-volume = 40;
-      mpdListenExternal = true;
-      extraModules = [ ./home/spotify.nix ];
+      extraModules = [ ./home/spotify.nix ./home/mpd.nix ];
     };
   };
 
@@ -71,6 +70,9 @@
   };
 
   services.fwupd.enable = true;
+
+  # mpd
+  networking.firewall.allowedTCPPorts = [ 6600 ];
 
   boot.kernelParams = [
     "amd_pstate=active"
