@@ -1,4 +1,4 @@
-{ config, lib, modulesPath, ... }:
+{ config, lib, pkgs, modulesPath, ... }:
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
@@ -9,6 +9,8 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
   boot.swraid.enable = false;
+
+  hardware.opengl.extraPackages = with pkgs; [ vaapiIntel ];
 
   boot.initrd.luks.devices."nixos-root" = {
     device = "/dev/disk/by-uuid/ab5e48e8-5eec-4e0e-a25c-ce869c544bf1";
