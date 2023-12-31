@@ -25,6 +25,9 @@
       # Ask where to save files
       "browser.download.useDownloadDir" = false;
 
+      # Enable HTTPS only mode
+      "dom.security.https_only_mode" = true;
+
       # Extensions
       "extensions.enabledScopes" = 5;
       "extensions.webextensions.restrictedDomains" = "";
