@@ -28,6 +28,9 @@
       # Enable HTTPS only mode
       "dom.security.https_only_mode" = true;
 
+      # Show punycode in URLs to prevent homograph attacks
+      "network.IDN_show_punycode" = true;
+
       # Extensions
       "extensions.enabledScopes" = 5;
       "extensions.webextensions.restrictedDomains" = "";
