@@ -38,6 +38,7 @@
     binutils # for strings
     progress
     waypipe
+    nix-tree
 
     inputs.self.packages.${pkgs.system}.xdg-open
     inputs.self.packages.${pkgs.system}.playerctl-current
