@@ -102,7 +102,7 @@ handle_mime() {
             # Get frame 10% into video
             local video_width
             local target_width
-            video_width=$(ffprobe -v error -show_entries stream=width -of default=nw=1:nk=1 "${FILE_PATH}" | head -n1)
+            video_width=$(ffprobe -v error -show_entries stream=width -of default=nw=1:nk=1 -select_streams v "${FILE_PATH}" | head -n1)
             target_width=$((video_width>MAX_IMAGE_WIDTH ? MAX_IMAGE_WIDTH : video_width))
             ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s ${target_width} && display_image_cache && exit 1
             exit 1;;
