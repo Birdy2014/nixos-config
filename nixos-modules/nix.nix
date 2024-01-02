@@ -21,7 +21,8 @@
   # Remove once https://github.com/NixOS/nixpkgs/issues/273611 has been resolved.
   nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
 
-  nixpkgs.overlays = [ inputs.nur.overlay inputs.self.overlays.sway ];
+  nixpkgs.overlays =
+    [ inputs.nur.overlay inputs.self.overlays.sway inputs.self.overlays.f3d ];
 
   nix.registry = {
     nixpkgs.flake = inputs.nixpkgs;
