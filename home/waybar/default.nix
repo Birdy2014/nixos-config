@@ -28,16 +28,21 @@
         ];
         "sway/workspaces" = {
           disable-scroll = true;
-          all-outputs = true;
           format = "{icon}";
-          persistent-workspaces = {
-            "1" = [ ];
-            "2" = [ ];
-            "3" = [ ];
-            "4" = [ ];
-            "5" = [ ];
-            "6" = [ ];
-            "7" = lib.mkIf osConfig.my.gaming.enable [ ];
+          persistent-workspaces = let
+            primaryOutputList =
+              if (isNull osConfig.my.desktop.screens.primary) then
+                [ ]
+              else
+                [ osConfig.my.desktop.screens.primary ];
+          in {
+            "1" = primaryOutputList;
+            "2" = primaryOutputList;
+            "3" = primaryOutputList;
+            "4" = primaryOutputList;
+            "5" = primaryOutputList;
+            "6" = primaryOutputList;
+            "7" = lib.mkIf osConfig.my.gaming.enable primaryOutputList;
           };
           format-icons = {
             "1" = "󰋜";

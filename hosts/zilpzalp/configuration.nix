@@ -15,6 +15,10 @@
     scan.enable = false;
     virtualisation.enable = false;
     home.stateVersion = "23.05";
+    desktop.screens = {
+      primary = "eDP-1";
+      secondary = "HDMI-A-1";
+    };
   };
 
   boot.loader = {

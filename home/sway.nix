@@ -66,25 +66,6 @@
         "${modifier}+Ctrl+Shift+l" = "move right 40px";
 
         # Workspaces
-        "${modifier}+1" = "workspace 1";
-        "${modifier}+2" = "workspace 2";
-        "${modifier}+3" = "workspace 3";
-        "${modifier}+4" = "workspace 4";
-        "${modifier}+5" = "workspace 5";
-        "${modifier}+6" = "workspace 6";
-        "${modifier}+7" = "workspace 7";
-        "${modifier}+8" = "workspace 8";
-        "${modifier}+9" = "workspace 9";
-        "${modifier}+Shift+1" = "move container to workspace 1";
-        "${modifier}+Shift+2" = "move container to workspace 2";
-        "${modifier}+Shift+3" = "move container to workspace 3";
-        "${modifier}+Shift+4" = "move container to workspace 4";
-        "${modifier}+Shift+5" = "move container to workspace 5";
-        "${modifier}+Shift+6" = "move container to workspace 6";
-        "${modifier}+Shift+7" = "move container to workspace 7";
-        "${modifier}+Shift+8" = "move container to workspace 8";
-        "${modifier}+Shift+9" = "move container to workspace 9";
-
         "${modifier}+tab" = "workspace back_and_forth";
 
         # Start Applications
@@ -217,7 +198,36 @@
       ];
     };
 
-    extraConfig = ''
+    extraConfig = let
+      outputForWorkspaceNumber = n:
+        if n <= 10 then
+          osConfig.my.desktop.screens.primary
+        else
+          osConfig.my.desktop.screens.secondary;
+
+      keyForWorkspaceNumber = n:
+        if n <= 9 then
+          "${toString n}"
+        else if n == 10 then
+          "0"
+        else
+          "F${toString (n - 10)}";
+
+      workspaceKeybinding = numbers:
+        (lib.strings.concatLines (lib.flatten (map (n:
+          let output = outputForWorkspaceNumber n;
+          in (if (isNull output) then
+            [ ]
+          else
+            [ "workspace ${toString n} output ${output}" ]) ++ [
+              "bindsym ${modifier}+${keyForWorkspaceNumber n} workspace ${
+                toString n
+              }"
+              "bindsym ${modifier}+Shift+${
+                keyForWorkspaceNumber n
+              } move container to workspace ${toString n}"
+            ]) numbers)));
+    in workspaceKeybinding [ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 ] + ''
       title_align center
       titlebar_border_thickness 0
       titlebar_padding 2 2
@@ -237,10 +247,6 @@
       bindsym --locked XF86AudioNext exec playerctl-current next
       bindsym --locked XF86MonBrightnessDown exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%-
       bindsym --locked XF86MonBrightnessUp exec ${pkgs.brightnessctl}/bin/brightnessctl set +5%
-
-      # Ugly workaround for sway starting on workspace 10 because it would be defined first in the "keybindings" attribute set.
-      bindsym ${modifier}+0 workspace 10
-      bindsym ${modifier}+Shift+0 move container to workspace 10
 
       # XWayland title indicator
       for_window [shell="xwayland"] title_format "%title [XWayland]"
