@@ -1,6 +1,6 @@
 { pkgs }:
 
-pkgs.mkShell.override { stdenv = pkgs.clang16Stdenv; } rec {
+pkgs.mkShell.override { stdenv = pkgs.clang17Stdenv; } rec {
   name = "cpp";
   packages = with pkgs; [ gdb perf-tools hotspot ];
   nativeBuildInputs = with pkgs; [
