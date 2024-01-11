@@ -189,7 +189,10 @@
       };
 
       startup = [
-        { command = "dbus-update-activation-environment --systemd --all"; }
+        {
+          command =
+            "${pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all";
+        }
         {
           command =
             "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";

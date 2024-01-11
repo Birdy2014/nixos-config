@@ -28,6 +28,8 @@
       jack.enable = true;
     };
 
+    services.dbus.implementation = "broker";
+
     programs.dconf.enable = true;
 
     security.polkit.enable = true;
