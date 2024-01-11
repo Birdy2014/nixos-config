@@ -23,6 +23,7 @@
   services.mpdris2 = {
     enable = true;
     notifications = true;
+    mpd.host = "127.0.0.1";
   };
 
   programs.ncmpcpp = {
