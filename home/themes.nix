@@ -148,4 +148,6 @@
         inputs.self.packages.${pkgs.system}.gruvbox-kvantum-themes
       }/share/Kvantum/Gruvbox-Dark-Green";
   };
+
+  dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
 }
