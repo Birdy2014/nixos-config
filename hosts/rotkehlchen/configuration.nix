@@ -1,12 +1,7 @@
 { pkgs, ... }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-    ./soundblaster.nix
-    ../../nixos-modules
-    ./btrbk.nix
-  ];
+  imports = [ ./hardware-configuration.nix ./soundblaster.nix ./btrbk.nix ];
 
   my = {
     gaming.enable = true;

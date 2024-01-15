@@ -3,10 +3,7 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [
-    (modulesPath + "/installer/cd-dvd/installation-cd-base.nix")
-    ../../nixos-modules
-  ];
+  imports = [ (modulesPath + "/installer/cd-dvd/installation-cd-base.nix") ];
 
   my = {
     gaming.enable = false;
