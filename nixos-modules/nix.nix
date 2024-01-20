@@ -26,6 +26,7 @@
     inputs.self.overlays.sway
     inputs.self.overlays.f3d
     inputs.self.overlays.imv
+    inputs.self.overlays.lf
   ];
 
   nix.registry = {
