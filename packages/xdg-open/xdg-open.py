@@ -31,6 +31,7 @@ mime_associations: dict[str, str | list[str]] = {
     "application/vnd\.oasis\.opendocument\.text": [ "libreoffice-writer.desktop", "writer.desktop" ], # odt
     "application/vnd\.openxmlformats-officedocument\.wordprocessingml\.document": [ "libreoffice-writer.desktop", "writer.desktop" ], # docx
     "application/(vnd\.)?ms-?word": [ "libreoffice-writer.desktop", "writer.desktop" ], # doc
+    "application/vnd\.openxmlformats-officedocument\.presentationml\.presentation": [ "libreoffice-impress.desktop", "impress.desktop" ], # pptx
 }
 
 extension_associations: dict[str, str | list[str]] = {
