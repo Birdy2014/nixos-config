@@ -3,7 +3,7 @@
 let cfg = config.my.scan;
 in {
   options.my.scan.enable =
-    lib.mkEnableOption (lib.mkDoc "Whether to enable SANE and simple-scan.");
+    lib.mkEnableOption (lib.mdDoc "SANE and simple-scan");
 
   config = lib.mkIf cfg.enable {
     # Epson scanner

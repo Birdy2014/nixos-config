@@ -6,11 +6,15 @@
       primary = lib.mkOption {
         type = with lib.types; nullOr str;
         default = null;
+        description = lib.mdDoc
+          "Name of primary screen as shown by `swaymsg -t get_outputs`";
       };
 
       secondary = lib.mkOption {
         type = with lib.types; nullOr str;
         default = null;
+        description = lib.mdDoc
+          "Name of secondary screen as shown by `swaymsg -t get_outputs`";
       };
     };
   };

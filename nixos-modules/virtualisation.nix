@@ -3,7 +3,7 @@
 let cfg = config.my.virtualisation;
 in {
   options.my.virtualisation.enable =
-    lib.mkEnableOption (lib.mdDoc "Whether to enable podman, qemu, etc.");
+    lib.mkEnableOption (lib.mdDoc "podman, qemu, etc.");
 
   config = lib.mkIf cfg.enable {
     virtualisation = {

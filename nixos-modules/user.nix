@@ -5,19 +5,19 @@ in {
   options.my.home = {
     stateVersion = lib.mkOption {
       type = lib.types.str;
-      description = lib.mkDoc "Home Manager stateVersion.";
+      description = lib.mdDoc "Home Manager stateVersion.";
     };
 
     extraModules = lib.mkOption {
       type = lib.types.listOf lib.types.path;
       default = [ ];
-      description = lib.mkDoc "Extra home-manager modules.";
+      description = lib.mdDoc "Extra home-manager modules.";
     };
 
     max-volume = lib.mkOption {
       type = lib.types.int;
       default = 100;
-      description = lib.mkDoc "The maximum audio playback volume.";
+      description = lib.mdDoc "The maximum audio playback volume.";
     };
   };
 

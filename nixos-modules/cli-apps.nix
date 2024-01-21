@@ -47,6 +47,7 @@
   services.udisks2.enable = true;
 
   documentation.man.enable = true;
+  documentation.nixos.includeAllModules = true;
 
   # Needed for zsh completions
   environment.pathsToLink = [ "/share/zsh" ];
