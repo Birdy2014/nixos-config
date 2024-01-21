@@ -191,10 +191,14 @@
       compress-7z = ''
         ''${{
           set -f
-          mkdir $1
-          cp -r $fx $1
-          ${pkgs._7zz}/bin/7zz a $1.7z $1
-          rm -rf $1
+          if [[ -n "$fs" ]]; then
+            mkdir $1
+            cp -r $fx $1
+            ${pkgs._7zz}/bin/7zz a $1.7z $1
+            rm -rf $1
+          else
+            ${pkgs._7zz}/bin/7zz a $f.7z $f
+          fi
         }}'';
 
       paste = pasteFunction false;
