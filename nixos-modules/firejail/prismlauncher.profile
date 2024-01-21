@@ -7,6 +7,9 @@ include globals.local
 
 noblacklist ${HOME}/.local/share/PrismLauncher
 
+whitelist ${HOME}/Downloads
+read-only ${HOME}/Downloads
+
 # Ignore noexec on ${HOME} as MultiMC installs LWJGL native
 # libraries in ${HOME}/.local/share/multimc
 ignore noexec ${HOME}
