@@ -9,6 +9,7 @@
     gruvbox-material-gtk = callPackage ./gruvbox-material-gtk.nix { };
     lepton-firefox-theme = callPackage ./lepton-firefox-theme.nix { };
     lyrax-cursors = callPackage ./lyrax-cursors.nix { };
+    neovim = callPackage ./neovim { };
     playerctl-current = callPackage ./playerctl-current { };
     xdg-open = callPackage ./xdg-open { };
   };
