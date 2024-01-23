@@ -72,6 +72,7 @@
     # Treesitter
     {
       plugin = nvim-treesitter.withAllGrammars;
+      config = ./config/plugins/treesitter.lua;
     }
 
     # Misc
