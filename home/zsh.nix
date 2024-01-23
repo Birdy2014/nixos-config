@@ -14,6 +14,7 @@
       tm = "tmux new-session -A -s main";
       rm = "rm -I";
       cp = "cp -i";
+      ip = "ip --color";
     };
 
     sessionVariables = {
