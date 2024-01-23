@@ -65,8 +65,10 @@
       plugin = hop-nvim;
       config = ./config/plugins/hop.lua;
     }
+    { plugin = vim-tmux-navigator; }
     {
-      plugin = vim-tmux-navigator;
+      plugin = [ telescope-nvim plenary-nvim ];
+      config = ./config/plugins/telescope.lua;
     }
 
     # Treesitter

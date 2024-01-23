@@ -1,3 +1,5 @@
+vim.g.mapleader = " "
+
 -- basics
 vim.opt.compatible = false
 vim.opt.hidden = true
