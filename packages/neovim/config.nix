@@ -70,6 +70,10 @@
       plugin = [ telescope-nvim plenary-nvim ];
       config = ./config/plugins/telescope.lua;
     }
+    {
+      plugin = [ nvim-tree-lua nvim-web-devicons ];
+      config = ./config/plugins/nvim-tree.lua;
+    }
 
     # Treesitter
     {
