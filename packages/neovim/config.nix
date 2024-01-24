@@ -84,5 +84,9 @@
       plugin = indent-o-matic;
       config = ./config/plugins/indent-o-matic.lua;
     }
+    {
+      plugin = nvim-osc52;
+      config = ./config/plugins/osc52.lua;
+    }
   ];
 }
