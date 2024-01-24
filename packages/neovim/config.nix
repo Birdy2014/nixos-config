@@ -63,6 +63,10 @@
       plugin = [ gitsigns-nvim plenary-nvim ];
       config = ./config/plugins/gitsigns.lua;
     }
+    {
+      plugin = [ neogit plenary-nvim ];
+      config = ./config/plugins/neogit.lua;
+    }
 
     # Treesitter
     {
