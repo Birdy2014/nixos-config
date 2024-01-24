@@ -33,6 +33,10 @@
       plugin = indent-blankline-nvim;
       config = ./config/plugins/indent-blankline.lua;
     }
+    {
+      plugin = nvim-colorizer-lua;
+      config = ./config/plugins/colorizer.lua;
+    }
 
     # Bars
     {
