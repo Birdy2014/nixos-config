@@ -58,6 +58,12 @@
       config = ./config/plugins/nvim-tree.lua;
     }
 
+    # Git
+    {
+      plugin = [ gitsigns-nvim plenary-nvim ];
+      config = ./config/plugins/gitsigns.lua;
+    }
+
     # Treesitter
     {
       plugin = nvim-treesitter.withAllGrammars;
