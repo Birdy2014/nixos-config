@@ -6,6 +6,7 @@
     ./config/autocmds.lua
     ./config/diagnostic-sort.lua
     ./config/related-information-workaround.lua
+    ./config/keymap.lua
   ];
 
   plugins = with vimPlugins; [
