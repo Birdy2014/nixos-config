@@ -79,6 +79,17 @@
       config = ./config/plugins/treesitter.lua;
     }
 
+    # Coding
+    {
+      plugin =
+        [ nvim-cmp cmp-calc cmp-nvim-lsp cmp-buffer cmp-path cmp-cmdline ];
+      config = ./config/plugins/cmp.lua;
+    }
+    {
+      plugin = [ nvim-lspconfig cmp-nvim-lsp ];
+      config = ./config/plugins/lsp.lua;
+    }
+
     # Misc
     {
       plugin = indent-o-matic;
