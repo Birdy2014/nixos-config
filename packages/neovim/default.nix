@@ -5,9 +5,6 @@ let
   configBefore = config.configBefore;
   plugins = config.plugins;
 in wrapNeovimUnstable neovim-unwrapped {
-  # nodejs is required for markdown-preview.nvim
-  withNodeJs = true;
-
   vimAlias = true;
   viAlias = true;
 
