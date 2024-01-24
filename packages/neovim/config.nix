@@ -17,10 +17,6 @@
 
     # UI
     {
-      plugin = nvim-notify;
-      config = ''require("notify").setup{ stages = "fade"; }'';
-    }
-    {
       plugin = [ noice-nvim nui-nvim ];
       config = ./config/plugins/noice.lua;
     }
