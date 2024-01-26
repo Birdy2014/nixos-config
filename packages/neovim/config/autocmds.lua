@@ -1,9 +1,6 @@
 --- Remove trailing spaces
 vim.cmd [[autocmd BufWritePre * %s/\s\+$//e]]
 
---- Enter insert mode when navigating to a terminal
-vim.cmd [[autocmd BufWinEnter,WinEnter term://* startinsert]]
-
 --- Format code on save
 vim.api.nvim_create_augroup("fmt", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePre", {
