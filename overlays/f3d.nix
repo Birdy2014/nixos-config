@@ -10,5 +10,7 @@ final: prev: {
       rev = "refs/tags/v${version}";
       hash = "sha256-2LDHIeKgLUS2ujJUx2ZerXmZYB9rrT3PYvrtzV4vcHM=";
     };
+
+    meta.broken = false;
   });
 }
