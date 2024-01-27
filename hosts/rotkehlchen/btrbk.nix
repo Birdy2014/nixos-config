@@ -4,7 +4,7 @@
   services.btrbk.instances = {
     root = {
       settings = {
-        snapshot_preserve = "14d 4h";
+        snapshot_preserve = "7d 8h";
         snapshot_preserve_min = "2h";
         snapshot_dir = "/snapshots";
         subvolume."/" = { };
@@ -16,7 +16,7 @@
     name = baseNameOf mountpoint;
     value = {
       settings = {
-        snapshot_preserve = "14d 4h";
+        snapshot_preserve = "7d 8h";
         snapshot_preserve_min = "2h";
         snapshot_dir = "${mountpoint}/snapshots";
         subvolume."${mountpoint}" = { };
