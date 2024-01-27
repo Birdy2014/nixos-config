@@ -60,9 +60,29 @@
       [ ublock-origin ];
   in {
     enable = true;
-    package = (pkgs.firefox.override {
-      nativeMessagingHosts = [ pkgs.tridactyl-native ];
-    });
+    nativeMessagingHosts = [
+      pkgs.tridactyl-native
+      (let
+        file = pkgs.writeText "org.keepassxc.keepassxc_browser.json" ''
+          {
+            "allowed_extensions": [
+                "keepassxc-browser@keepassxc.org"
+            ],
+            "description": "KeePassXC integration with native messaging support",
+            "name": "org.keepassxc.keepassxc_browser",
+            "path": "${pkgs.keepassxc}/bin/keepassxc-proxy",
+            "type": "stdio"
+          }
+        '';
+      in pkgs.stdenv.mkDerivation {
+        pname = "keepassxc-native";
+        version = "1.0.0";
+
+        dontUnpack = true;
+        installPhase =
+          "install -Dm755 ${file} $out/lib/mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json";
+      })
+    ];
     profiles = {
       default = {
         id = 0;
