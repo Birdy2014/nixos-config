@@ -19,7 +19,10 @@
 
   boot.swraid.enable = lib.mkForce false;
 
-  isoImage.squashfsCompression = "zstd -Xcompression-level 15";
+  isoImage = {
+    squashfsCompression = "zstd -Xcompression-level 15";
+    isoBaseName = "nixos-custom";
+  };
 
   users.mutableUsers = lib.mkForce false;
   users.users.moritz.password = "";
