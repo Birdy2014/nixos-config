@@ -269,7 +269,7 @@
       for_window [class="^dolphin-emu$"] inhibit_idle visible
       for_window [app_id="^org.kde.kdeconnect.handler$"] floating enable
 
-      for_window [app_id="^$" title="^yuzu |.*$"] inhibit_idle visible
+      for_window [app_id="^org.yuzu_emu.yuzu$"] inhibit_idle visible
 
       # Scratchpad
       for_window [app_id="org.keepassxc.KeePassXC"] move scratchpad
