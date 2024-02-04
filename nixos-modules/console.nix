@@ -6,10 +6,10 @@
     useXkbConfig = true;
   };
 
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "de";
-    xkbVariant = "nodeadkeys";
-    xkbOptions = "caps:escape";
+    variant = "nodeadkeys";
+    options = "caps:escape";
   };
 
   services.getty.helpLine = lib.mkForce "";
