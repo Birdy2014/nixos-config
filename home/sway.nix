@@ -111,7 +111,7 @@
 
       assigns = {
         "5" = [{ app_id = "^thunderbird$"; }];
-        "6" = [{ app_id = "^discord$"; }];
+        "6" = [{ app_id = "^vesktop$"; }];
         "7" = lib.mkIf osConfig.my.gaming.enable [{ class = "^[Ss]team$"; }];
       };
 

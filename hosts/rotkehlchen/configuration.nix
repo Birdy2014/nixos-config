@@ -39,7 +39,7 @@
     corectrl
     sidequest
     gimp
-    discord
+    vesktop
     signal-desktop
   ];
 
