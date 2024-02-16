@@ -29,6 +29,7 @@
       a = "push %mkdir<space>";
 
       gi = ''$lf -remote "send $id cd /run/media/$USER"'';
+      gs = ''$lf -remote "send $id cd /run/user/$UID/gvfs"'';
       gc = ''$lf -remote "send $id cd $XDG_CONFIG_HOME"'';
 
       D = "trash";
