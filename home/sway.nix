@@ -125,7 +125,10 @@
         }
         {
           command = "inhibit_idle none; floating disable";
-          criteria = { class = "^[Ss]team$"; };
+          criteria = {
+            class = "^[Ss]team$";
+            title = "^[Ss]team$";
+          };
         }
       ];
 
