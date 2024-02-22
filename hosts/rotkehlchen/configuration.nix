@@ -7,6 +7,7 @@
     gaming.enable = true;
     scan.enable = true;
     virtualisation.enable = true;
+    sshd.enable = false;
     home = {
       stateVersion = "23.05";
       max-volume = 40;
