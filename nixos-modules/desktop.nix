@@ -92,5 +92,9 @@
     # For accessing SMB shares with `gio mount`
     services.gvfs.enable = true;
     environment.systemPackages = [ pkgs.glib ];
+
+    programs.thunar.enable = true;
+    services.tumbler.enable = true;
+    programs.xfconf.enable = true;
   };
 }
