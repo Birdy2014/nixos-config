@@ -149,5 +149,6 @@
       }/share/Kvantum/Gruvbox-Dark-Green";
   };
 
-  dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+  # This breaks the gtk3 theme
+  # dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
 }
