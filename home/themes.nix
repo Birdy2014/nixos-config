@@ -116,7 +116,7 @@
       }
 
       /* Remove rounded borders */
-      .solid-csd, .csd {
+      window.solid-csd, window.csd {
         border-radius: 0;
         border-style: none;
         box-shadow: none;
