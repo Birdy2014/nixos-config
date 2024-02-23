@@ -3,11 +3,6 @@
 {
   services.easyeffects.enable = true;
 
-  programs.mpv = {
-    enable = true;
-    scripts = [ pkgs.mpvScripts.mpris ];
-  };
-
   home.packages = with pkgs; [
     pavucontrol
     helvum

@@ -12,6 +12,7 @@
     ./kitty.nix
     ./lf
     ./misc.nix
+    ./mpv.nix
     ./rofi
     ./sway.nix
     ./themes.nix
