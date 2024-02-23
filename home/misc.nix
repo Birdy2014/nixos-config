@@ -24,7 +24,4 @@
     thunderbird
     mumble
   ];
-
-  gtk.gtk3.bookmarks =
-    [ "smb://seidenschwanz.mvogel.dev/ seidenschwanz.mvogel.dev" ];
 }

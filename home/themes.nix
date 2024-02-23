@@ -34,6 +34,7 @@
       "file://${config.home.homeDirectory}/Music"
       "file://${config.home.homeDirectory}/Pictures"
       "file://${config.home.homeDirectory}/Videos"
+      "smb://seidenschwanz.mvogel.dev/ seidenschwanz.mvogel.dev"
     ];
 
     # Reference: https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/named-colors.html
