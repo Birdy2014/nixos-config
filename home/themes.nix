@@ -14,8 +14,8 @@
     enable = true;
 
     theme = {
-      name = "Gruvbox-Material-Dark";
-      package = inputs.self.packages.${pkgs.system}.gruvbox-material-gtk;
+      name = "adw-gtk3-dark";
+      package = pkgs.adw-gtk3;
     };
 
     iconTheme = {
@@ -36,6 +36,8 @@
       "file://${config.home.homeDirectory}/Videos"
       "smb://seidenschwanz.mvogel.dev/ seidenschwanz.mvogel.dev"
     ];
+
+    gtk3.extraCss = config.gtk.gtk4.extraCss;
 
     # Reference: https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/named-colors.html
     gtk4.extraCss = ''
@@ -69,7 +71,7 @@
       @define-color window_fg_color #dbc8a9;
 
       /* View */
-      @define-color view_bg_color #1e1e1e;
+      @define-color view_bg_color #323232;
       @define-color view_fg_color @window_fg_color;
 
       /* Headerbar */
@@ -127,6 +129,18 @@
       headerbar .title {
         opacity: 0;
       }
+
+      /* Tooltip */
+      tooltip.background {
+        background-color: rgba(50, 48, 47, 0.9);
+        color: #ddc7a1;
+      }
+
+      tooltip > box {
+        margin: -6px;
+        min-height: 24px;
+        padding: 4px 8px;
+      }
     '';
   };
 
@@ -150,6 +164,5 @@
       }/share/Kvantum/Gruvbox-Dark-Green";
   };
 
-  # This breaks the gtk3 theme
-  # dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+  dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
 }
