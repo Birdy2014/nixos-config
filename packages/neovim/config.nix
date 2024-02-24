@@ -37,6 +37,10 @@
       plugin = nvim-colorizer-lua;
       config = ./config/plugins/colorizer.lua;
     }
+    {
+      plugin = which-key-nvim;
+      config = ./config/plugins/which-key.lua;
+    }
 
     # Bars
     {
