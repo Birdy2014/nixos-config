@@ -17,10 +17,6 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  # This is obsidian's fault again.
-  # Remove once https://github.com/NixOS/nixpkgs/issues/273611 has been resolved.
-  nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
-
   nixpkgs.overlays = [
     inputs.nur.overlay
     inputs.self.overlays.sway
