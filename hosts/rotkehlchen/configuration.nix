@@ -75,6 +75,7 @@
     "amd_prefcore=enable"
 
     "gpu_sched.sched_policy=0" # https://gitlab.freedesktop.org/drm/amd/-/issues/2516#note_2119750
+    "amdgpu.mcbp=0" # This may fix amdgpu crashes?
   ];
 
   # This value determines the NixOS release from which the default
