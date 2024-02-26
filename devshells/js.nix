@@ -2,5 +2,5 @@
 
 pkgs.mkShell {
   name = "js";
-  packages = with pkgs; [ nodejs_18 nodePackages.typescript-language-server ];
+  packages = with pkgs; [ nodejs_20 nodePackages.typescript-language-server ];
 }
