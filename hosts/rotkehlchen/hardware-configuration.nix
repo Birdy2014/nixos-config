@@ -78,7 +78,7 @@
   fileSystems."/run/media/moritz/archive" = {
     device = "/dev/disk/by-uuid/985dc3e3-86dc-48e2-9bd5-ee7b3ab798af";
     fsType = "btrfs";
-    options = [ "noatime" ];
+    options = [ "compress=zstd:3" "noatime" ];
   };
 
   # Samsung SSD 870 QVO 2TB
@@ -92,7 +92,7 @@
   fileSystems."/run/media/moritz/archive2" = {
     device = "/dev/disk/by-uuid/1fde2cac-e61e-4f61-bf10-e797b6c84cfb";
     fsType = "btrfs";
-    options = [ "noatime" ];
+    options = [ "compress=zstd:3" "noatime" ];
   };
 
   swapDevices = [{ device = "/swap/swapfile"; }];
