@@ -3,8 +3,8 @@
 pkgs.mkShell {
   name = "python";
   packages = with pkgs; [
-    python310
-    python310Packages.pip
+    python312
+    python312Packages.pip
     nodePackages.pyright
   ];
 }
