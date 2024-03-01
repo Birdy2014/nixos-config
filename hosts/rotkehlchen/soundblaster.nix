@@ -42,21 +42,24 @@
   boot.kernelParams = [ "usbcore.autosuspend=-1" ];
 
   # From ArchWiki: https://wiki.archlinux.org/title/PipeWire#Noticeable_audio_delay_or_audible_pop/crack_when_starting_playback
-  environment.etc."wireplumber/main.lua.d/51-disable-suspension.lua".text = ''
-    table.insert (alsa_monitor.rules, {
-      matches = {
-        {
-          -- Matches all sources.
-          { "node.name", "matches", "alsa_input.*" },
-        },
-        {
-          -- Matches all sinks.
-          { "node.name", "matches", "alsa_output.*" },
-        },
-      },
-      apply_properties = {
-        ["session.suspend-timeout-seconds"] = 0,  -- 0 disables suspend
-      },
-    })
-  '';
+  services.pipewire.wireplumber.configPackages = [
+    (pkgs.writeTextDir
+      "share/wireplumber/main.lua.d/51-disable-suspension.lua" ''
+        table.insert (alsa_monitor.rules, {
+          matches = {
+            {
+              -- Matches all sources.
+              { "node.name", "matches", "alsa_input.*" },
+            },
+            {
+              -- Matches all sinks.
+              { "node.name", "matches", "alsa_output.*" },
+            },
+          },
+          apply_properties = {
+            ["session.suspend-timeout-seconds"] = 0,  -- 0 disables suspend
+          },
+        })
+      '')
+  ];
 }
