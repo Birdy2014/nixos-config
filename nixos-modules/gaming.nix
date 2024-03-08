@@ -28,7 +28,6 @@ in {
       (lutris.override { extraPkgs = pkgs: [ wineWowPackages.stable ]; })
 
       # Emulators
-      yuzu-mainline
       dolphin-emu
       rpcs3
 
