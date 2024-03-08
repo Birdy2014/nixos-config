@@ -161,6 +161,7 @@
         "$username"
         "$directory"
         "$hostname"
+        "$custom"
         "$nix_shell"
         "$git_branch"
         "$git_state"
@@ -174,6 +175,10 @@
         "$character"
       ];
       username = { show_always = true; };
+      custom.lf = {
+        when = ''test -n "$lf"'';
+        format = "via [lf](bold green) ";
+      };
     };
   };
 }
