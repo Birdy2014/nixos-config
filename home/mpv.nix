@@ -1,15 +1,20 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 {
   programs.mpv = {
     enable = true;
-    scripts = [ pkgs.mpvScripts.mpris ];
+    scripts = [
+      pkgs.mpvScripts.mpris
+      pkgs.mpvScripts.thumbfast
+      inputs.self.packages.${pkgs.system}.mpv-thumbfast-vanilla-osc
+    ];
     config = {
       keep-open = true;
       script-opts-append = "ytdl_hook-ytdl_path=${pkgs.yt-dlp}/bin/yt-dlp";
       autofit-larger = "100%x100%";
       hwdec = "auto-safe";
       vo = "gpu-next";
+      osc = "no"; # Use thumbfast osc
 
       # Languages
       alang = "jpn,eng,en,deu,de";
