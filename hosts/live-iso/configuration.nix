@@ -6,11 +6,8 @@
   imports = [ (modulesPath + "/installer/cd-dvd/installation-cd-base.nix") ];
 
   my = {
-    gaming.enable = false;
-    scan.enable = false;
-    sshd.enable = true;
-    virtualisation.enable = false;
     home.stateVersion = config.system.stateVersion;
+    sshd.enable = true;
   };
 
   time.timeZone = "Europe/Amsterdam";

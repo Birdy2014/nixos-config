@@ -4,15 +4,12 @@
   imports = [ ./hardware-configuration.nix ];
 
   my = {
-    gaming.enable = false;
-    scan.enable = false;
-    sshd.enable = true;
-    virtualisation.enable = false;
-    home.stateVersion = "23.05";
     desktop.screens = {
       primary = "eDP-1";
       secondary = "HDMI-A-1";
     };
+    home.stateVersion = "23.05";
+    sshd.enable = true;
   };
 
   boot.loader = {

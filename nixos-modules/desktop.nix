@@ -2,6 +2,12 @@
 
 {
   options.my.desktop = {
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = lib.mdDoc "Whether to enable the desktop";
+    };
+
     screens = {
       primary = lib.mkOption {
         type = with lib.types; nullOr str;
@@ -19,7 +25,7 @@
     };
   };
 
-  config = {
+  config = lib.mkIf config.my.desktop.enable {
     hardware.opengl.enable = true;
 
     security.rtkit.enable = true;
@@ -31,8 +37,6 @@
       pulse.enable = true;
       jack.enable = true;
     };
-
-    services.dbus.implementation = "broker";
 
     programs.dconf.enable = true;
 

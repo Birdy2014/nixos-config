@@ -5,14 +5,14 @@
 
   my = {
     gaming.enable = true;
-    scan.enable = true;
-    virtualisation.enable = true;
-    sshd.enable = false;
     home = {
       stateVersion = "23.05";
       max-volume = 40;
       extraModules = [ ./home/spotify.nix ./home/mpd.nix ];
     };
+    scan.enable = true;
+    sshd.enable = false;
+    virtualisation.enable = true;
   };
 
   boot.loader = {

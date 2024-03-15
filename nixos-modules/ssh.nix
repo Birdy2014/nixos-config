@@ -22,8 +22,9 @@ in {
       ];
     in {
       root.openssh.authorizedKeys.keys = keys;
-      moritz.openssh.authorizedKeys.keys =
-        lib.mkIf (lib.hasAttr "moritz" config.users.users) keys;
+      moritz = lib.mkIf (config.my.home.enable) {
+        openssh.authorizedKeys.keys = keys;
+      };
     };
   };
 }
