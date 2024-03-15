@@ -63,7 +63,7 @@
       "CTRL+0" =
         "no-osd change-list glsl-shaders clr ''; show-text 'GLSL shaders cleared'";
 
-      a = "cycle-values sub-ass-override strip no";
+      u = "cycle-values sub-ass-override force strip no";
       D = "cycle deband";
     };
   };
