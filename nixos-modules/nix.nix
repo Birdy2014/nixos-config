@@ -12,7 +12,7 @@
 
   nix.gc = {
     automatic = true;
-    dates = "weekly";
+    dates = "monthly";
     options = "--delete-older-than 30d";
   };
 
