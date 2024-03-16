@@ -138,7 +138,7 @@
       ZSH_AUTOSUGGEST_STRATEGY = [ "history" "completion" ];
     };
 
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
     plugins = [{
