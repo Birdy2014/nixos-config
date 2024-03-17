@@ -78,6 +78,14 @@
     "amdgpu.mcbp=0" # This may fix amdgpu crashes?
   ];
 
+  systemd.services.gpu-power-limit = {
+    script = ''
+      echo 200000000 > /sys/class/drm/card0/device/hwmon/hwmon0/power1_cap
+    '';
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = { Type = "oneshot"; };
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It's perfectly fine and recommended to leave
