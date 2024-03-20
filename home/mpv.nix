@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ inputs, lib, osConfig, pkgs, ... }:
 
 {
   programs.mpv = {
@@ -31,7 +31,7 @@
       scale = "ewa_lanczos4sharpest";
       dscale = "hermite";
       cscale = "ewa_lanczos4sharpest";
-
+    } // lib.optionalAttrs (osConfig.my.home.mpv.enableInterpolation) {
       # Interpolation
       video-sync = "display-resample";
       interpolation = "yes";
