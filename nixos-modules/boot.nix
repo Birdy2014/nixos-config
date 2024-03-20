@@ -44,4 +44,6 @@
     # NVMe SSDs
     ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="kyber"
   '';
+
+  systemd.oomd.enableUserSlices = true;
 }
