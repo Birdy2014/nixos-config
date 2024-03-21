@@ -11,11 +11,8 @@ in {
       package = pkgs.steam.override {
         extraPkgs = pkgs:
           [
-            # Some (Unity) games require the corefonts to be in /usr/share/fonts
-            (pkgs.runCommand "share-fonts" { preferLocalBuild = true; } ''
-              mkdir -p "$out/share/fonts"
-              ln -s ${pkgs.corefonts}/share/fonts/* $out/share/fonts
-            '')
+            # Some (Unity) games require the corefonts
+            pkgs.corefonts
           ];
       };
       remotePlay.openFirewall = true;
