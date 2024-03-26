@@ -297,12 +297,13 @@
         command =
           "${pkgs.procps}/bin/pidof swaylock && ${pkgs.sway}/bin/swaymsg 'output * power off'";
         resumeCommand =
-          "${pkgs.procps}/bin/pidof swaylock && ${pkgs.sway}/bin/swaymsg 'output * power on'";
+          "${pkgs.procps}/bin/pidof swaylock && ${pkgs.sway}/bin/swaymsg 'output * power on' && ${pkgs.systemd}/bin/systemctl --user restart wlsunset.service";
       }
       {
         timeout = 600;
         command = "${pkgs.sway}/bin/swaymsg 'output * power off'";
-        resumeCommand = "${pkgs.sway}/bin/swaymsg 'output * power on'";
+        resumeCommand =
+          "${pkgs.sway}/bin/swaymsg 'output * power on' && ${pkgs.systemd}/bin/systemctl --user restart wlsunset.service";
       }
       {
         timeout = 605;
