@@ -9,7 +9,7 @@
       stateVersion = "23.05";
       max-volume = 40;
       extraModules = [ ./home/spotify.nix ./home/mpd.nix ];
-      mpv.enableInterpolation = true;
+      mpv.enableExpensiveEffects = true;
     };
     scan.enable = true;
     sshd.enable = false;

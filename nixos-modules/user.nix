@@ -27,8 +27,8 @@ in {
       description = lib.mdDoc "The maximum audio playback volume.";
     };
 
-    mpv.enableInterpolation =
-      lib.mkEnableOption (lib.mdDoc "interpolation in mpv");
+    mpv.enableExpensiveEffects = lib.mkEnableOption
+      (lib.mdDoc "expensive effects in mpv for high video quality.");
   };
 
   imports = [ inputs.home-manager.nixosModules.home-manager ];
