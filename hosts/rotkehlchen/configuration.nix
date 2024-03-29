@@ -38,8 +38,6 @@
 
   environment.systemPackages = with pkgs; [
     ddcutil
-    corectrl
-    sidequest
     gimp
     vesktop
     signal-desktop
