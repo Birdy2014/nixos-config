@@ -43,6 +43,7 @@
     gimp
     vesktop
     signal-desktop
+    nvtop-amd
   ];
 
   programs.kdeconnect.enable = true;

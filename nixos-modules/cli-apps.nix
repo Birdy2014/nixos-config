@@ -6,7 +6,6 @@
     ripgrep
     git
     file
-    nvtop-amd
     tmux
     psmisc
     libqalculate

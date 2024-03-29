@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [ ./hardware-configuration.nix ];
@@ -37,6 +37,8 @@
   services.thermald.enable = true;
 
   services.tlp.enable = true;
+
+  environment.systemPackages = with pkgs; [ nvtop-intel ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
