@@ -76,6 +76,9 @@
 
     "gpu_sched.sched_policy=0" # https://gitlab.freedesktop.org/drm/amd/-/issues/2516#note_2119750
     "amdgpu.mcbp=0" # This may fix amdgpu crashes?
+
+    # The mitigations have a significant performance impact e.g. in cpu-bound games. (At least on my zen2 cpu)
+    "mitigations=off"
   ];
 
   systemd.services.gpu-power-limit = {
