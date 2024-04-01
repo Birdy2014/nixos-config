@@ -63,7 +63,6 @@ window#waybar.hidden {
 #backlight,
 #network,
 #pulseaudio,
-#custom-powerdraw,
 #tray,
 #mode,
 #custom-idle-inhibit {
@@ -135,10 +134,6 @@ label:focus {
 
 #pulseaudio.muted {
     color: @color-yellow-dark;
-}
-
-#custom-powerdraw {
-    color: @color-purple;
 }
 
 #tray > .passive {

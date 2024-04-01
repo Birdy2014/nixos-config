@@ -18,7 +18,6 @@
         modules-left = [ "sway/workspaces" "sway/mode" ];
         modules-right = [
           "custom/idle-inhibit"
-          "custom/powerdraw"
           "pulseaudio"
           "network"
           "backlight"
@@ -57,21 +56,6 @@
         };
         "sway/mode" = {
           format = ''<span style="italic">{}</span>'';
-          rotate = 90;
-        };
-        "custom/powerdraw" = {
-          exec = pkgs.writeShellScript "waybar-powerdraw.sh" ''
-            password=$(${pkgs.libsecret}/bin/secret-tool lookup hostname shelly-plug-rotkehlchen user admin)
-            [[ "$?" != 0 ]] && exit 1
-
-            power=$(${pkgs.curl}/bin/curl --user "admin:$password" http://shelly-plug-rotkehlchen/meter/0 2>/dev/null | ${pkgs.jq}/bin/jq '.power')
-            [[ "$?" != 0 ]] && exit 1
-
-            printf '%.0f' "$power"
-          '';
-          format = "{:>3}W";
-          interval = 2;
-          escape = true;
           rotate = 90;
         };
         "custom/idle-inhibit" = {
