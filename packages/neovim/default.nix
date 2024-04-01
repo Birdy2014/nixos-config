@@ -1,7 +1,11 @@
-{ lib, wrapNeovimUnstable, neovim-unwrapped, vimPlugins, fetchFromGitHub, ... }:
+{ lib, wrapNeovimUnstable, neovim-unwrapped, vimPlugins, fetchFromGitHub
+, vimUtils, ... }:
 
 let
-  config = import ./config.nix { inherit vimPlugins fetchFromGitHub; };
+  config = import ./config.nix {
+    inherit vimPlugins fetchFromGitHub;
+    buildVimPlugin = vimUtils.buildVimPlugin;
+  };
   configBefore = config.configBefore;
   plugins = config.plugins;
 in wrapNeovimUnstable neovim-unwrapped {

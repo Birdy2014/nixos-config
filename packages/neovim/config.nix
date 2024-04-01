@@ -1,4 +1,4 @@
-{ vimPlugins, fetchFromGitHub }:
+{ buildVimPlugin, vimPlugins, fetchFromGitHub }:
 
 {
   configBefore = [
@@ -85,8 +85,7 @@
 
     # Coding
     {
-      plugin =
-        [ nvim-cmp cmp-calc cmp-nvim-lsp cmp-buffer cmp-path cmp-cmdline ];
+      plugin = [ nvim-cmp cmp-nvim-lsp cmp-buffer cmp-path cmp-cmdline ];
       config = ./config/plugins/cmp.lua;
     }
     {
@@ -102,6 +101,20 @@
     {
       plugin = nvim-osc52;
       config = ./config/plugins/osc52.lua;
+    }
+    {
+      plugin = buildVimPlugin {
+        pname = "qalc.nvim";
+        version = "2023-12-15";
+        src = fetchFromGitHub {
+          owner = "Apeiros-46B";
+          repo = "qalc.nvim";
+          rev = "d3072e5ac8dc1caa4b60f673c53f70c7e06f1367";
+          sha256 = "sha256-2ZBAa2J4thkEJqzs0bYZngtkuwslHVNqJjmZKSSzoO4=";
+        };
+        meta.homepage = "https://github.com/Apeiros-46B/qalc.nvim";
+      };
+      config = "require('qalc').setup{}";
     }
   ];
 }

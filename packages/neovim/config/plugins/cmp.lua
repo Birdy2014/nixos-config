@@ -76,7 +76,6 @@ cmp.setup({
         ["<S-Tab>"] = cmp.mapping(mapping_shift_tab, { "i", "s" }),
     },
     sources = {
-        { name = "calc" },
         { name = "nvim_lsp" },
         { name = "path" },
         {
@@ -106,7 +105,6 @@ cmp.setup({
 
             vim_item.kind = lspkind[vim_item.kind]
             vim_item.menu = ({
-                calc = "[Calc]",
                 nvim_lsp = "[LSP]",
                 path = "[Path]",
                 buffer = "[Buffer]",
