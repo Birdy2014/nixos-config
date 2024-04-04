@@ -20,7 +20,7 @@
       inherit inputs;
     };
 
-    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
+    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-classic;
 
     packages = import ./packages { inherit nixpkgs; };
     overlays = import ./overlays;
