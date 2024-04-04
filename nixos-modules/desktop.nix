@@ -5,7 +5,7 @@
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = lib.mdDoc "Whether to enable the desktop";
+      description = lib.mdDoc "Whether to enable the desktop and user 'moritz'";
     };
 
     screens = {

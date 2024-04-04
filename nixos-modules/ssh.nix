@@ -22,7 +22,7 @@ in {
       ];
     in {
       root.openssh.authorizedKeys.keys = keys;
-      moritz = lib.mkIf (config.my.home.enable) {
+      moritz = lib.mkIf (config.my.desktop.enable) {
         openssh.authorizedKeys.keys = keys;
       };
     };

@@ -3,13 +3,6 @@
 let cfg = config.my.home;
 in {
   options.my.home = {
-    enable = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description =
-        lib.mdDoc "Whether to enable the user 'moritz' and home-manager";
-    };
-
     stateVersion = lib.mkOption {
       type = lib.types.str;
       description = lib.mdDoc "Home Manager stateVersion.";
@@ -33,7 +26,7 @@ in {
 
   imports = [ inputs.home-manager.nixosModules.home-manager ];
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.my.desktop.enable {
     users.users.moritz = {
       isNormalUser = true;
       extraGroups = [ "wheel" "networkmanager" "i2c" ];
