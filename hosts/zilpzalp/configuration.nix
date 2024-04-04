@@ -38,7 +38,7 @@
 
   services.tlp.enable = true;
 
-  environment.systemPackages = with pkgs; [ nvtop-intel ];
+  environment.systemPackages = with pkgs; [ nvtopPackages.intel ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
