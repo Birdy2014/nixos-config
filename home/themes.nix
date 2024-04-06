@@ -42,9 +42,9 @@
     # Reference: https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/named-colors.html
     gtk4.extraCss = ''
       /* Accent */
-      @define-color accent_color #d4be98;
-      @define-color accent_bg_color #282828;
-      @define-color accent_fg_color #d4be98;
+      @define-color accent_color #e78a4e;
+      @define-color accent_bg_color #a96b2c;
+      @define-color accent_fg_color #000000;
 
       /* Destructive */
       @define-color destructive_color #ff7b63;
