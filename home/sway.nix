@@ -17,8 +17,6 @@
     enable = true;
     wrapperFeatures.gtk = true;
     extraSessionCommands = ''
-      # enable wayland in firefox and thunderbird
-      export MOZ_ENABLE_WAYLAND=1
       # enable wayland in electron applications under NixOS
       export NIXOS_OZONE_WL=1
 
