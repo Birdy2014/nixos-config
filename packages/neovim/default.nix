@@ -1,5 +1,5 @@
 { lib, wrapNeovimUnstable, neovim-unwrapped, vimPlugins, fetchFromGitHub
-, vimUtils, ... }:
+, vimUtils, libqalculate, nil, nodePackages }:
 
 let
   config = import ./config.nix {
@@ -11,6 +11,10 @@ let
 in wrapNeovimUnstable neovim-unwrapped {
   vimAlias = true;
   viAlias = true;
+
+  wrapperArgs = "--prefix PATH : ${
+      lib.makeBinPath [ libqalculate nil nodePackages.bash-language-server ]
+    }";
 
   packpathDirs.myNeovimPackages = {
     start = lib.flatten (map ({ plugin, ... }: plugin)

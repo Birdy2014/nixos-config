@@ -15,7 +15,6 @@
     zip
     yt-dlp
     socat
-    nil # nix language server
     neofetch
     pciutils
     usbutils
