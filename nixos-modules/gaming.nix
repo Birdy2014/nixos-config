@@ -26,8 +26,7 @@ in {
 
       # Emulators
       dolphin-emu
-      # Enable after https://github.com/NixOS/nixpkgs/pull/299971 is merged
-      #rpcs3
+      rpcs3
 
       # Tools
       mangohud
