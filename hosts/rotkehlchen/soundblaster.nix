@@ -7,7 +7,10 @@
       script =
         "${pkgs.usb-modeswitch}/bin/usb_modeswitch -v 0x041e -p 0x3256 --reset-usb";
       wantedBy = [ "multi-user.target" ];
-      serviceConfig = { Type = "oneshot"; };
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
     };
 
     user.services.soundblaster-set-alsa-options = {
