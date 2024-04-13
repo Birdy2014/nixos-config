@@ -19,6 +19,7 @@
     ./tmux
     ./waybar
     ./xdg.nix
+    ./yazi.nix
     ./zsh.nix
   ];
 }
