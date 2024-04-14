@@ -15,7 +15,13 @@
       preview = {
         max_width = 1280;
         max_height = 720;
+        image_filter = "lanczos3";
       };
+      opener.play = [{
+        run = ''xdg-open "$@"'';
+        desc = "Open";
+        for = "linux";
+      }];
     };
 
     keymap = {
