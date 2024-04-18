@@ -10,7 +10,6 @@ caps.drop all
 nogroups
 nonewprivs
 noroot
-private-dev
 private-tmp
 
 whitelist /run/current-system
