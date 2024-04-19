@@ -4,7 +4,7 @@ let cfg = config.my.sshd;
 in {
   options.my.sshd.enable = lib.mkOption {
     type = lib.types.bool;
-    description = lib.mdDoc "Whether to enable sshd";
+    description = "Whether to enable sshd";
   };
 
   config = lib.mkIf cfg.enable {

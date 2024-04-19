@@ -2,8 +2,7 @@
 
 let cfg = config.my.gaming;
 in {
-  options.my.gaming.enable =
-    lib.mkEnableOption (lib.mdDoc "gaming related programs");
+  options.my.gaming.enable = lib.mkEnableOption "gaming related programs";
 
   config = lib.mkIf cfg.enable {
     programs.steam = {

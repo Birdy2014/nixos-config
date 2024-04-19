@@ -5,23 +5,23 @@ in {
   options.my.home = {
     stateVersion = lib.mkOption {
       type = lib.types.str;
-      description = lib.mdDoc "Home Manager stateVersion.";
+      description = "Home Manager stateVersion.";
     };
 
     extraModules = lib.mkOption {
       type = lib.types.listOf lib.types.path;
       default = [ ];
-      description = lib.mdDoc "Extra home-manager modules.";
+      description = "Extra home-manager modules.";
     };
 
     max-volume = lib.mkOption {
       type = lib.types.int;
       default = 100;
-      description = lib.mdDoc "The maximum audio playback volume.";
+      description = "The maximum audio playback volume.";
     };
 
-    mpv.enableExpensiveEffects = lib.mkEnableOption
-      (lib.mdDoc "expensive effects in mpv for high video quality.");
+    mpv.enableExpensiveEffects =
+      lib.mkEnableOption "expensive effects in mpv for high video quality.";
   };
 
   imports = [ inputs.home-manager.nixosModules.home-manager ];

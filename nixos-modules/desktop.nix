@@ -5,21 +5,21 @@
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = lib.mdDoc "Whether to enable the desktop and user 'moritz'";
+      description = "Whether to enable the desktop and user 'moritz'";
     };
 
     screens = {
       primary = lib.mkOption {
         type = with lib.types; nullOr str;
         default = null;
-        description = lib.mdDoc
+        description =
           "Name of primary screen as shown by `swaymsg -t get_outputs`";
       };
 
       secondary = lib.mkOption {
         type = with lib.types; nullOr str;
         default = null;
-        description = lib.mdDoc
+        description =
           "Name of secondary screen as shown by `swaymsg -t get_outputs`";
       };
     };
