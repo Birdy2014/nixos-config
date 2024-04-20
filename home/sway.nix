@@ -93,6 +93,10 @@
         "${modifier}+space" = "focus mode_toggle";
         "${modifier}+Shift+space" = "floating toggle";
 
+        "${modifier}+p" = "mark --toggle replace";
+        "${modifier}+Shift+p" = ''
+          swap container with mark replace; [con_mark="replace"] focus; unmark replace'';
+
         # System (Exit, Shutdown, ...)
         "Control+Mod4+Mod1+q" = "exit";
         "Control+Mod4+Mod1+l" =
