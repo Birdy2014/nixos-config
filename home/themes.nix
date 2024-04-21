@@ -146,11 +146,8 @@
 
   qt = {
     enable = true;
-    platformTheme.name = "adwaita";
-    style = {
-      name = "kvantum-dark";
-      package = pkgs.libsForQt5.qtstyleplugin-kvantum;
-    };
+    platformTheme.name = "gtk3";
+    style.name = "kvantum";
   };
 
   xdg.configFile = {
