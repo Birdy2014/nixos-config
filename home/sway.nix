@@ -326,7 +326,7 @@
 
   programs.swaylock = {
     enable = true;
-    settings = { color = "282828"; };
+    settings = { color = "1b1b1b"; };
   };
 
   services.wlsunset = {
