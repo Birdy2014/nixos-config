@@ -20,7 +20,6 @@
 
   nixpkgs.overlays = [
     inputs.nur.overlay
-    inputs.self.overlays.sway
     inputs.self.overlays.imv
     inputs.self.overlays.lf
     inputs.self.overlays.waybar
