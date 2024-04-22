@@ -14,4 +14,9 @@
     playerctl-current = callPackage ./playerctl-current { };
     xdg-open = callPackage ./xdg-open { };
   };
+
+  aarch64-linux = let
+    pkgs = nixpkgs.legacyPackages.aarch64-linux;
+    callPackage = pkgs.callPackage;
+  in { neovim = callPackage ./neovim { }; };
 }
