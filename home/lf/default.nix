@@ -53,7 +53,6 @@
           runtimeInputs = with pkgs; [
             kitty
             chafa
-            w3m
             highlight
             poppler_utils
             imagemagick

@@ -56,12 +56,6 @@ handle_mime() {
     local mimetype
     mimetype="$(file --dereference --brief --mime-type -- "${FILE_PATH}")"
     case "${mimetype}" in
-        ## HTML
-        text/html)
-            # Preview as text conversion
-            tout w3m -dump "${FILE_PATH}" && exit 1
-            exit 1;;
-
         ## Text
         text/* | */xml | application/json | application/javascript)
             # Syntax highlight
