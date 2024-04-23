@@ -38,7 +38,7 @@
 
   services.udisks2.enable = true;
 
-  documentation.man.enable = true;
+  documentation.info.enable = false;
   documentation.nixos.includeAllModules = true;
 
   # Needed for zsh completions
