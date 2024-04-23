@@ -293,6 +293,7 @@
 
   services.swayidle = {
     enable = true;
+    extraArgs = [ "-s" ];
     timeouts = [
       {
         timeout = 10;

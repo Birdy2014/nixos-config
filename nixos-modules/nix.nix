@@ -23,6 +23,7 @@
     inputs.self.overlays.imv
     inputs.self.overlays.lf
     inputs.self.overlays.waybar
+    inputs.self.overlays.swayidle
   ];
 
   nix.registry = {
