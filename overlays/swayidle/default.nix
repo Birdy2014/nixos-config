@@ -14,6 +14,8 @@ final: prev: {
           "https://github.com/swaywm/swayidle/commit/d12f7e622c5aff6e7093e9ce6f2fcb7e7d56ee3c.diff";
         hash = "sha256-aQLw6FBWd7ccoybtIl2obh0jNYK/9LMUVLRmgZ66RAo=";
       })
+
+      ./0001-Prevent-Steam-from-inhibiting-the-screensaver.patch
     ];
   });
 }
