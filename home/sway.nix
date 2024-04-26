@@ -203,6 +203,10 @@
             "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
         }
         { command = "${pkgs.keepassxc}/bin/keepassxc"; }
+        {
+          command =
+            "${osConfig.security.pam.services.login.kwallet.package}/libexec/pam_kwallet_init";
+        }
       ];
     };
 
