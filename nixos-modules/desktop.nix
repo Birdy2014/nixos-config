@@ -44,10 +44,6 @@
 
     services.gnome.gnome-keyring.enable = true;
     security.pam.services.login.enableGnomeKeyring = true;
-    security.pam.services.login.kwallet.enable = true;
-    # This option (security.pam.services.<name>.rules) is experimental (and hidden in the options search!),
-    # but it is needed to unlock kwallet when not using a DM. Why is this not set by default?
-    security.pam.services.login.rules.session.kwallet.settings.force_run = true;
     security.pam.services.swaylock = { };
 
     xdg.portal = {
