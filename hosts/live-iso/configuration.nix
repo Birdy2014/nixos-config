@@ -10,8 +10,6 @@
     sshd.enable = true;
   };
 
-  time.timeZone = "Europe/Amsterdam";
-
   networking.networkmanager.enable = true;
   networking.wireless.enable = false;
 

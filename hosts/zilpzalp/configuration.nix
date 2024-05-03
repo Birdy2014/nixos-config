@@ -31,9 +31,6 @@
     hostName = "zilpzalp";
   };
 
-  # Set your time zone.
-  time.timeZone = "Europe/Amsterdam";
-
   services.thermald.enable = true;
 
   services.tlp.enable = true;
