@@ -1,7 +1,12 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ./soundblaster.nix ./btrbk.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ./soundblaster.nix
+    ./btrbk.nix
+    ./kdeconnect.nix
+  ];
 
   my = {
     gaming.enable = true;
@@ -45,8 +50,6 @@
     signal-desktop
     nvtopPackages.amd
   ];
-
-  programs.kdeconnect.enable = true;
 
   programs.adb.enable = true;
   users.users.moritz.extraGroups = [ "adbusers" ];
