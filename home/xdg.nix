@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   home.homeDirectory = "/home/moritz";
@@ -34,4 +34,11 @@
     RUSTUP_HOME = "${dataHome}/rustup";
     SQLITE_HISTORY = "${dataHome}/sqlite_history";
   };
+
+  # Make some applications find kitty when opening desktop files
+  home.packages = [
+    (pkgs.writeShellScriptBin "xdg-terminal-exec" ''
+      kitty "$@"
+    '')
+  ];
 }
