@@ -29,7 +29,4 @@
     nixpkgs.flake = inputs.nixpkgs;
     system.flake = inputs.self;
   };
-
-  # legacy nix channels
-  nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
 }
