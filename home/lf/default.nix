@@ -18,6 +18,7 @@
       scrolloff = 10;
       sixel = true;
       mouse = true;
+      period = 1;
     };
 
     keybindings = {
