@@ -108,16 +108,6 @@
       @define-color secondary_sidebar_backdrop_color #272727;
       @define-color secondary_sidebar_shade_color @sidebar_shade_color;
 
-      /* Remove close button */
-      windowcontrols * {
-        -gtk-icon-size: 0;
-        opacity: 0;
-        min-width: 0;
-        min-height: 0;
-        padding: 0;
-        margin: 0;
-      }
-
       /* Remove rounded borders */
       window.solid-csd, window.csd {
         border-radius: 0;
@@ -162,4 +152,7 @@
   };
 
   dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+
+  # Remove close button in GTK CSD titlebar
+  dconf.settings."org/gnome/desktop/wm/preferences".button-layout = "appmenu";
 }
