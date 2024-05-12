@@ -8,14 +8,11 @@
     file
     tmux
     psmisc
-    libqalculate
     unrar
     unzip
     _7zz
     zip
-    yt-dlp
     socat
-    neofetch
     pciutils
     usbutils
     alsaUtils
@@ -25,15 +22,11 @@
     cifs-utils
     keyutils
     sshfs
-    bashmount
     ldns # for drill
     binutils # for strings
     progress
     waypipe
     nix-tree
-
-    inputs.self.packages.${pkgs.system}.xdg-open
-    inputs.self.packages.${pkgs.system}.playerctl-current
   ];
 
   services.udisks2.enable = true;
