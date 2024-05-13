@@ -85,6 +85,16 @@
     "mitigations=off"
   ];
 
+  fileSystems."/run/media/moritz/family" = {
+    device = "//seidenschwanz.mvogel.dev/family";
+    fsType = "cifs";
+    options = let
+      # this line prevents hanging on network split
+      automount_opts =
+        "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+    in [ "${automount_opts},credentials=/smb-secrets,uid=1000,gid=100" ];
+  };
+
   systemd.services.gpu-power-limit = {
     script = ''
       echo 200000000 > /sys/class/drm/card1/device/hwmon/hwmon0/power1_cap
