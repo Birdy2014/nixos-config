@@ -1,4 +1,4 @@
-# Build using `nix build .#nixosConfigurations.live-iso.config.system.build.isoImage`
+# Build using `nix build .#nixosConfigurations.singdrossel.config.system.build.isoImage`
 
 { config, lib, pkgs, modulesPath, ... }:
 
@@ -17,7 +17,7 @@
 
   isoImage = {
     squashfsCompression = "zstd -Xcompression-level 15";
-    isoBaseName = "nixos-custom";
+    isoBaseName = "singdrossel-nixos-custom";
   };
 
   users.mutableUsers = lib.mkForce false;

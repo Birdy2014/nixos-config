@@ -1,6 +1,6 @@
 { lib, inputs }:
 
-let hosts = [ "rotkehlchen" "zilpzalp" "live-iso" ];
+let hosts = [ "rotkehlchen" "zilpzalp" "singdrossel" ];
 in (builtins.listToAttrs (map (host: {
   name = host;
   value = lib.nixosSystem {
