@@ -26,10 +26,7 @@
   boot.blacklistedKernelModules = [ "nouveau" ];
   boot.kernelParams = [ "intel_pstate=passive" ];
 
-  networking = {
-    networkmanager.enable = true;
-    hostName = "zilpzalp";
-  };
+  networking.networkmanager.enable = true;
 
   services.thermald.enable = true;
 

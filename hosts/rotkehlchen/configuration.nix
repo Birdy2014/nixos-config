@@ -38,10 +38,7 @@
 
   services.btrfs.autoScrub.enable = true;
 
-  networking = {
-    networkmanager.enable = true;
-    hostName = "rotkehlchen";
-  };
+  networking.networkmanager.enable = true;
 
   environment.systemPackages = with pkgs; [
     ddcutil
