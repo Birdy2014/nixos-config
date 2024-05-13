@@ -27,8 +27,6 @@
 
   zramSwap.enable = true;
 
-  services.logind.powerKey = "ignore";
-
   services.dbus.implementation = "broker";
 
   # Use the kyber IO Scheduler for SSDs to improve responsiveness

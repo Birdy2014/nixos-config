@@ -72,6 +72,8 @@
 
   services.fwupd.enable = true;
 
+  services.logind.powerKey = "ignore";
+
   # mpd
   networking.firewall.allowedTCPPorts = [ 6600 ];
 
