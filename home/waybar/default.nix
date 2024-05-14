@@ -75,7 +75,7 @@
             else
               systemctl --user --quiet start swayidle.service
             fi
-            pkill -SIGRTMIN+10 waybar
+            ${pkgs.procps}/bin/pkill -SIGRTMIN+10 waybar
           '';
           signal = 10;
         };
