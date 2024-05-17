@@ -13,6 +13,7 @@
     ./nix.nix
     ./scan.nix
     ./ssh.nix
+    ./tmux
     ./user.nix
     ./virtualisation.nix
   ];

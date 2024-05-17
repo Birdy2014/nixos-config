@@ -16,7 +16,6 @@
     ./rofi
     ./sway.nix
     ./themes.nix
-    ./tmux
     ./waybar
     ./xdg.nix
     ./yazi.nix

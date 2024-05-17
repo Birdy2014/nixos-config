@@ -6,7 +6,6 @@
     ripgrep
     git
     file
-    tmux
     psmisc
     unrar
     unzip
