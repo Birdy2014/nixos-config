@@ -5,12 +5,17 @@ function on_lsp_attach()
     local bufnr = vim.api.nvim_get_current_buf()
 
     for _, client in ipairs(clients) do
-        if client.server_capabilities.goto_definition then
+        if client.server_capabilities.definitionProvider then
             vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
         end
 
-        if client.server_capabilities.document_formatting then
+        if client.server_capabilities.documentFormattingProvider then
             vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
+        end
+
+        -- clangd sets client.server_capabilities.inlayHintProvider to true, rust_analyzer sets client.server_capabilities.inlayHintProvider.resolveProvider to true
+        if client.server_capabilities.inlayHintProvider or (type(client.server_capabilities.inlayHintProvider) == "table" and client.server_capabilities.inlayHintProvider.resolveProvider) then
+            vim.lsp.inlay_hint.enable(true, { bufnr })
         end
     end
 end
