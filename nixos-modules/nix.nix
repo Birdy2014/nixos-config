@@ -27,6 +27,7 @@
 
   nix.registry = {
     nixpkgs.flake = inputs.nixpkgs;
+    unstable.flake = inputs.nixpkgs-unstable;
     system.flake = inputs.self;
   };
 }
