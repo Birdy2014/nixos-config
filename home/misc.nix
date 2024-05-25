@@ -1,9 +1,15 @@
-{ inputs, pkgs, ... }:
+{ inputs, osConfig, pkgs, ... }:
 
 {
   services.easyeffects.enable = true;
 
   services.gnome-keyring.enable = true;
+
+  nix.gc = {
+    automatic = osConfig.nix.gc.automatic;
+    frequency = osConfig.nix.gc.dates;
+    options = osConfig.nix.gc.options;
+  };
 
   home.packages = with pkgs; [
     # CLI
