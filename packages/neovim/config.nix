@@ -92,6 +92,10 @@
       plugin = [ nvim-lspconfig cmp-nvim-lsp ];
       config = ./config/plugins/lsp.lua;
     }
+    {
+      plugin = [ package-info-nvim nui-nvim ];
+      config = "require('package-info').setup {}";
+    }
 
     # Misc
     {
