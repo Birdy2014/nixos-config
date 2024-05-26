@@ -59,8 +59,9 @@
       sub-visibility = false;
       slang = "deu,de,eng,en";
 
-      # Prevent framedrops on HDR Videos
+      # HDR
       hdr-compute-peak = "no";
+      tone-mapping = "mobius";
 
       # Scaling
       scale = if enableExpensive then "ewa_lanczos4sharpest" else "lanczos";
@@ -70,6 +71,9 @@
       video-sync = "display-resample";
       interpolation = "yes";
       tscale = "mitchell";
+
+      # HDR
+      hdr-compute-peak = "auto";
     };
 
     bindings = {
