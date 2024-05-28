@@ -89,11 +89,7 @@
     allowDiscards = true;
   };
 
-  fileSystems."/run/media/moritz/archive2" = {
-    device = "/dev/disk/by-uuid/1fde2cac-e61e-4f61-bf10-e797b6c84cfb";
-    fsType = "btrfs";
-    options = [ "compress=zstd:3" "noatime" ];
-  };
+  # "archive2" is a part of the "archive" btrfs volume
 
   swapDevices = [{ device = "/swap/swapfile"; }];
 
