@@ -7,8 +7,8 @@
     userEmail = "moritzv7@gmail.com";
 
     extraConfig = {
-      core = { autocrlf = "input"; };
-      pull = { ff = "only"; };
+      core.autocrlf = "input";
+      pull.ff = "only";
     };
 
     delta = {
