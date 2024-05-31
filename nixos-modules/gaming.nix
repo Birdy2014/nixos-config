@@ -7,13 +7,7 @@ in {
   config = lib.mkIf cfg.enable {
     programs.steam = {
       enable = true;
-      package = pkgs.steam.override {
-        extraPkgs = pkgs:
-          [
-            # Some (Unity) games require the corefonts
-            pkgs.corefonts
-          ];
-      };
+      extraPackages = with pkgs; [ corefonts ];
       remotePlay.openFirewall = true;
     };
 
