@@ -23,9 +23,5 @@
       };
       onCalendar = "hourly";
     };
-  }) [
-    "/run/media/moritz/archive"
-    "/run/media/moritz/archive2"
-    "/run/media/moritz/games"
-  ]));
+  }) [ "/run/media/moritz/archive" "/run/media/moritz/games" ]));
 }
