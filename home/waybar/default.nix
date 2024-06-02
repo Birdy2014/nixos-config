@@ -133,7 +133,8 @@
             default = [ "" "" "" ];
           };
           max-volume = osConfig.my.home.max-volume;
-          on-click = "swaymsg exec pavucontrol";
+          on-click =
+            "${pkgs.sway}/bin/swaymsg exec ${pkgs.pavucontrol}/bin/pavucontrol";
           rotate = 90;
           ignored-sinks = [ "Easy Effects Sink" ];
         };
