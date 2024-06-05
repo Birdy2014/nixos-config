@@ -27,6 +27,7 @@
   boot.kernelParams = [ "intel_pstate=passive" ];
 
   networking.networkmanager.enable = true;
+  services.resolved.enable = true;
 
   services.thermald.enable = true;
 

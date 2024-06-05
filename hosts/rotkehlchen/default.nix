@@ -39,6 +39,7 @@
   services.btrfs.autoScrub.enable = true;
 
   networking.networkmanager.enable = true;
+  services.resolved.enable = true;
 
   environment.systemPackages = with pkgs; [
     ddcutil

@@ -12,6 +12,7 @@
 
   networking.networkmanager.enable = true;
   networking.wireless.enable = false;
+  services.resolved.enable = true;
 
   boot.swraid.enable = lib.mkForce false;
 

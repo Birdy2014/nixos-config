@@ -13,9 +13,9 @@ noroot
 private-tmp
 
 whitelist /run/current-system
-whitelist /run/booted-system
 whitelist /run/opengl-driver
 whitelist /run/opengl-driver-32
+whitelist /run/systemd/resolve
 
 whitelist /run/media/moritz/games/Steam-Linux
 whitelist /run/media/moritz/games/Steam-Images
