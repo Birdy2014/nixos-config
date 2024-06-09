@@ -11,6 +11,7 @@
 
   my.proxy.domains.syncthing.proxyPass = "http://127.0.0.1:8384";
 
+  # "recommendedProxySettings" is unset on purpose because syncthing will complain about the host header
   services.nginx.virtualHosts.syncthing.extraConfig = ''
     # Syncthing uses long polling and shorter timeouts cause error messages in the web Interface.
     # I'm not sure which timeouts have to be adjusted.

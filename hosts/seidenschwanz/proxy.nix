@@ -49,7 +49,6 @@ in {
               listenAddresses = [ "[fd00:90::10]" "192.168.90.10" ];
               locations."/" = {
                 proxyPass = "${domainConfig.proxyPass}";
-                recommendedProxySettings = true;
                 extraConfig = lib.mkIf domainConfig.enableAuthelia ''
                   ## Send a subrequest to Authelia to verify if the user is authenticated and has permission to access the resource.
                   auth_request /authelia;
