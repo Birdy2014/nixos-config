@@ -8,6 +8,7 @@
   in {
     gruvbox-kvantum-themes = callPackage ./gruvbox-kvantum-themes.nix { };
     gruvbox-material-gtk = callPackage ./gruvbox-material-gtk.nix { };
+    improtheater-frankfurt = callPackage ./improtheater-frankfurt.nix { };
     lepton-firefox-theme = callPackage ./lepton-firefox-theme.nix { };
     lyrax-cursors = callPackage ./lyrax-cursors.nix { };
     mpv-thumbfast-vanilla-osc = callPackage ./mpv-thumbfast-vanilla-osc.nix { };
@@ -17,7 +18,11 @@
   };
 
   aarch64-linux = let
+    callPackage = nixpkgs.legacyPackages.aarch64-linux.callPackage;
     callPackageUnstable =
       nixpkgs-unstable.legacyPackages.aarch64-linux.callPackage;
-  in { neovim = callPackageUnstable ./neovim { }; };
+  in {
+    improtheater-frankfurt = callPackage ./improtheater-frankfurt.nix { };
+    neovim = callPackageUnstable ./neovim { };
+  };
 }

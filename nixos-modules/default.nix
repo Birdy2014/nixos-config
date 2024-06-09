@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./acme.nix
     ./bash.nix
     ./boot.nix
     ./cli-apps.nix
