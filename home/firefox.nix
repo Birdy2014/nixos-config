@@ -54,6 +54,12 @@
       "datareporting.healthreport.uploadEnabled" = false;
       "extensions.getAddons.showPane" = false;
       "extensions.htmlaboutaddons.recommendations.enabled" = false;
+
+      # Tracking and fingerprinting protection
+      "privacy.fingerprintingProtection" = true;
+      "privacy.trackingprotection.enabled" = true;
+      "privacy.trackingprotection.emailtracking.enabled" = true;
+      "privacy.trackingprotection.socialtracking.enabled" = true;
     };
 
     commonExtensions = with pkgs.nur.repos.rycee.firefox-addons;
