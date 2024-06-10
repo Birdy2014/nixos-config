@@ -7,7 +7,6 @@
     keep-derivations = true;
     keep-outputs = true;
     flake-registry = "";
-    trusted-users = [ "moritz" ];
     fallback = true;
   };
 
