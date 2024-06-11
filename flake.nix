@@ -24,7 +24,7 @@
     nur.url = "github:nix-community/NUR";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, ... }@inputs: {
     nixosConfigurations = import ./hosts {
       lib = nixpkgs.lib;
       inherit inputs;
@@ -34,7 +34,7 @@
 
     packages = import ./packages {
       inherit nixpkgs;
-      inherit (inputs) nixpkgs-unstable;
+      inherit nixpkgs-unstable;
     };
     overlays = import ./overlays;
     devShells = import ./devshells { inherit nixpkgs; };
