@@ -1,0 +1,24 @@
+From e5467744362c038d8d97ae47f4368c19c24acbfb Mon Sep 17 00:00:00 2001
+From: Moritz Vogel <moritzv7@gmail.com>
+Date: Thu, 13 Jun 2024 01:22:31 +0200
+Subject: [PATCH] Add file path to exec in desktop file
+
+---
+ lf.desktop | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lf.desktop b/lf.desktop
+index e41e56a..f94d884 100644
+--- a/lf.desktop
++++ b/lf.desktop
+@@ -4,6 +4,6 @@ Name=lf
+ Comment=Launches the lf file manager
+ Icon=utilities-terminal
+ Terminal=true
+-Exec=lf
++Exec=lf %f
+ Categories=ConsoleOnly;System;FileTools;FileManager
+ MimeType=inode/directory;
+-- 
+2.44.1
+
