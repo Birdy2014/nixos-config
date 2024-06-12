@@ -322,7 +322,7 @@ def get_file_associations(arg: str) -> list[DesktopEntry]:
 
     # Match MIME Type
     completed = subprocess.run(
-        ["file", "--mime-type", "--brief", "-E", arg], capture_output=True
+        ["file", "--mime-type", "--brief", "-E", os.path.realpath(arg)], capture_output=True
     )
     if completed.returncode != 0:
         return []
