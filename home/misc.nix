@@ -15,7 +15,6 @@
     # CLI
     libqalculate
     yt-dlp
-    neofetch
     bashmount
     inputs.self.packages.${pkgs.system}.xdg-open
     inputs.self.packages.${pkgs.system}.playerctl-current
