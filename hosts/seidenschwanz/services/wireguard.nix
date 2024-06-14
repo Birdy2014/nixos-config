@@ -20,13 +20,15 @@
           {
             wireguardPeerConfig = {
               PublicKey = "P0Xs1Jfqgy+anFVHTMQfRyPiWjY0oTXEfHqp/RbnMz8=";
+              PresharedKeyFile = config.sops.secrets."wireguard/psk2".path;
               AllowedIPs = [ "10.100.0.2" "fd00:100::2" ];
             };
           }
           {
             wireguardPeerConfig = {
               PublicKey = "/dPnjIFXx5+dVWIloVCdrVrNnrQg7nsVoQeedFM982U=";
-              AllowedIPs = [ "10.100.0.3" ];
+              PresharedKeyFile = config.sops.secrets."wireguard/psk3".path;
+              AllowedIPs = [ "10.100.0.3" "fd00:100::3" ];
             };
           }
           {

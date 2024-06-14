@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 {
   sops.secrets = let file = "/etc/nixos-secrets/seidenschwanz.yaml";
@@ -30,5 +30,9 @@
     };
 
     ddclient.sopsFile = file;
-  };
+  } // lib.genAttrs (map (n: "wireguard/psk${toString n}") [ 2 3 ]) (_: {
+    sopsFile = file;
+    owner = "systemd-network";
+    group = "systemd-network";
+  });
 }
