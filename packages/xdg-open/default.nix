@@ -1,6 +1,6 @@
-{ lib, stdenv, makeWrapper, coreutils, python3, ... }:
+{ lib, stdenvNoCC, makeWrapper, coreutils, python3 }:
 
-stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   pname = "xdg-open";
   version = "0.0.1";
 

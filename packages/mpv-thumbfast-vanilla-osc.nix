@@ -1,6 +1,6 @@
-{ fetchFromGitHub, stdenv }:
+{ fetchFromGitHub, stdenvNoCC }:
 
-stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   pname = "mpv-thumbfast-vanilla-osc";
   version = "2023-12-21";
 

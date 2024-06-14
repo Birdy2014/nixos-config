@@ -1,6 +1,6 @@
-{ stdenv, fetchFromGitHub, inkscape, xcursorgen, ... }:
+{ stdenvNoCC, fetchFromGitHub, inkscape, xcursorgen }:
 
-stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   pname = "LyraX Cursors";
   version = "20211204";
 

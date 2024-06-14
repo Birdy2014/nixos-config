@@ -1,4 +1,4 @@
-{ writeShellApplication, playerctl, ... }:
+{ writeShellApplication, playerctl }:
 
 writeShellApplication {
   name = "playerctl-current";
