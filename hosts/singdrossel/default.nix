@@ -25,6 +25,9 @@
   users.users.moritz.password = "";
   services.getty.autologinUser = lib.mkForce "moritz";
 
+  security.pam.services.login.allowNullPassword = true;
+  security.pam.services.swaylock.allowNullPassword = true;
+
   environment.systemPackages = [ pkgs.gparted pkgs.glxinfo ];
 
   home-manager.users.moritz.wayland.windowManager.sway.extraConfig =
