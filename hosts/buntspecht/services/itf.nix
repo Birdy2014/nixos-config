@@ -1,10 +1,11 @@
 { config, inputs, pkgs, ... }:
 
 let
+  hostname = "improtheater-frankfurt.de";
+
   itf-config = {
-    hostname = "improtheater-frankfurt.de";
+    base_url = "https://${hostname}";
     port = 6314;
-    tls = true;
     dbpath = "/var/lib/improtheater-frankfurt/improtheater-frankfurt.db";
 
     email = {
@@ -27,7 +28,7 @@ let
           "Improtheater Frankfurt Newsletter <newsletter@improtheater-frankfurt.de>";
       };
       improglycerin = {
-        "host" = "smtp.strato.de";
+        host = "smtp.strato.de";
         port = 465;
         secure = true;
         user = "newsletter@improglycerin.de";
@@ -84,18 +85,18 @@ in {
   services.nginx = {
     enable = true;
     virtualHosts = {
-      "${itf-config.hostname}" = {
+      "${hostname}" = {
         enableACME = true;
         forceSSL = true;
         locations."/".proxyPass =
-          "http://${itf-config.hostname}:${builtins.toString itf-config.port}/";
+          "http://127.0.0.1:${builtins.toString itf-config.port}/";
       };
 
-      "www.${itf-config.hostname}" = {
+      "www.${hostname}" = {
         enableACME = true;
         forceSSL = true;
         locations."/".extraConfig = ''
-          return 301 https://${itf-config.hostname}$request_uri;
+          return 301 https://${hostname}$request_uri;
         '';
       };
     };
