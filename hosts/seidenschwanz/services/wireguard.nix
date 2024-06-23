@@ -49,6 +49,13 @@
               AllowedIPs = [ "10.100.0.6" ];
             };
           }
+          {
+            wireguardPeerConfig = {
+              PublicKey = "F68/nZVgzZeNMYUONM54EIn8HVwnNpuWuDR9is10nzQ=";
+              PresharedKeyFile = config.sops.secrets."wireguard/psk7".path;
+              AllowedIPs = [ "10.100.0.7" "fd00:100::7" ];
+            };
+          }
         ];
       };
     };

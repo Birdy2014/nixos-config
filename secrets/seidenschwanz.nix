@@ -30,7 +30,7 @@
     };
 
     ddclient.sopsFile = file;
-  } // lib.genAttrs (map (n: "wireguard/psk${toString n}") [ 2 3 ]) (_: {
+  } // lib.genAttrs (map (n: "wireguard/psk${toString n}") [ 2 3 7 ]) (_: {
     sopsFile = file;
     owner = "systemd-network";
     group = "systemd-network";
