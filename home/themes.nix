@@ -151,8 +151,12 @@
       }/share/Kvantum/Gruvbox-Dark-Green";
   };
 
-  dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+  dconf.settings = {
+    "org/gnome/desktop/interface".color-scheme = "prefer-dark";
 
-  # Remove close button in GTK CSD titlebar
-  dconf.settings."org/gnome/desktop/wm/preferences".button-layout = "appmenu";
+    # Remove close button in GTK CSD titlebar
+    "org/gnome/desktop/wm/preferences".button-layout = "appmenu";
+
+    "org/gtk/settings/file-chooser".sort-directories-first = true;
+  };
 }
