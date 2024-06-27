@@ -7,7 +7,7 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 
 require("nvim-tree").setup {
     hijack_cursor = true,
-    update_cwd = true,
+    sync_root_with_cwd = true,
     diagnostics = {
         enable = true,
         icons = {
@@ -84,55 +84,64 @@ require("nvim-tree").setup {
         vim.keymap.set("n", "q", api.tree.close, opts("Close"))
         vim.keymap.set("n", "g?", api.tree.toggle_help, opts("Help"))
     end,
-    -- sort files with numbers correctly
-    sort_by = function(nodes)
-        table.sort(nodes, function(a, b)
-            local chars_a = {string.byte(a.name, 1, #a.name)}
-            local chars_b = {string.byte(b.name, 1, #b.name)}
-            local i_a = 1
-            local i_b = 1
-            for i = 1, math.max(#chars_a, #chars_b) do
-                c_a = chars_a[i_a]
-                c_b = chars_b[i_b]
-
-                if not c_a then
+    sort = {
+        sorter = function(nodes)
+            table.sort(nodes, function(a, b)
+                -- directories first
+                if a.type == "directory" and b.type ~= "directory" then
                     return true
-                elseif not c_b then
+                elseif a.type ~= "directory" and b.type == "directory" then
                     return false
                 end
 
-                -- compare numbers
-                local number_string_a = ""
-                while c_a and c_a >= 48 and c_a <= 57 do
-                    number_string_a = number_string_a .. string.char(c_a)
-                    i_a = i_a + 1
+                -- sort files with numbers correctly
+                local chars_a = {string.byte(a.name, 1, #a.name)}
+                local chars_b = {string.byte(b.name, 1, #b.name)}
+                local i_a = 1
+                local i_b = 1
+                for i = 1, math.max(#chars_a, #chars_b) do
                     c_a = chars_a[i_a]
-                end
-
-                local number_string_b = ""
-                while c_b and c_b >= 48 and c_b <= 57 do
-                    number_string_b = number_string_b .. string.char(c_b)
-                    i_b = i_b + 1
                     c_b = chars_b[i_b]
-                end
 
-                if #number_string_a == 0 and #number_string_b > 0 then
-                    return true
-                elseif #number_string_a > 0 and #number_string_b == 0 then
-                    return false
-                elseif #number_string_a > 0 and #number_string_b > 0 then
-                    return tonumber(number_string_a) < tonumber(number_string_b)
-                end
+                    if not c_a then
+                        return true
+                    elseif not c_b then
+                        return false
+                    end
 
-                -- compare chars
-                if c_a ~= c_b then
-                    return c_a < c_b
+                    -- compare numbers
+                    local number_string_a = ""
+                    while c_a and c_a >= 48 and c_a <= 57 do
+                        number_string_a = number_string_a .. string.char(c_a)
+                        i_a = i_a + 1
+                        c_a = chars_a[i_a]
+                    end
+
+                    local number_string_b = ""
+                    while c_b and c_b >= 48 and c_b <= 57 do
+                        number_string_b = number_string_b .. string.char(c_b)
+                        i_b = i_b + 1
+                        c_b = chars_b[i_b]
+                    end
+
+                    if #number_string_a == 0 and #number_string_b > 0 then
+                        return true
+                    elseif #number_string_a > 0 and #number_string_b == 0 then
+                        return false
+                    elseif #number_string_a > 0 and #number_string_b > 0 then
+                        return tonumber(number_string_a) < tonumber(number_string_b)
+                    end
+
+                    -- compare chars
+                    if c_a ~= c_b then
+                        return c_a < c_b
+                    end
+                    i_a = i_a + 1
+                    i_b = i_b + 1
                 end
-                i_a = i_a + 1
-                i_b = i_b + 1
-            end
-        end)
-    end
+            end)
+        end
+    }
 }
 
 vim.keymap.set("n", "<leader>tt", "<cmd>NvimTreeToggle<cr>", { desc = "Toggle NvimTree" })
