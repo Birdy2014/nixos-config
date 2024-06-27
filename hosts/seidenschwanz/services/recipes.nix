@@ -5,7 +5,7 @@
     enable = true;
     port = 8134;
 
-    package = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux.mealie;
+    package = inputs.nixpkgs-mealie.legacyPackages.x86_64-linux.mealie;
 
     settings = {
       ALLOW_SIGNUP = "false";
