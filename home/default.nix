@@ -8,6 +8,7 @@
     ./firefox.nix
     ./git.nix
     ./gpg.nix
+    ./gruvbox.nix
     ./imv.nix
     ./kitty.nix
     ./lf

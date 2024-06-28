@@ -1,4 +1,4 @@
-{ osConfig, lib, pkgs, ... }:
+{ config, osConfig, lib, pkgs, ... }:
 
 {
   imports = [ ./kitty.nix ./rofi ./waybar ./themes.nix ];
@@ -8,11 +8,12 @@
     terminal = "kitty";
     launcher = ''
       rofi -show combi -terminal ${terminal} -run-command "${pkgs.sway}/bin/swaymsg exec '{cmd}'" -run-shell-command "swaymsg exec {terminal} '{cmd}'"'';
-    color-accent = "#a96b2c";
-    color-bg = "#45403d";
-    color-bg-dark = "#282828";
-    color-fg = "#d4be98";
-    color-urgent = "#ea6962";
+    color-accent = config.my.theme.accent;
+    color-accent-text = config.my.theme.accent-text;
+    color-bg = config.my.theme.background-window;
+    color-bg-dark = config.my.theme.background-view;
+    color-fg = config.my.theme.text;
+    color-urgent = config.my.theme.error;
   in {
     enable = true;
     wrapperFeatures.gtk = true;
@@ -163,7 +164,7 @@
         focused = {
           border = color-accent;
           background = color-accent;
-          text = "#1d2021";
+          text = color-accent-text;
           indicator = "#ffffff";
           childBorder = color-accent;
         };
