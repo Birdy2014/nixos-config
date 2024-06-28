@@ -1,4 +1,4 @@
-{ inputs, pkgs, config, ... }:
+{ lib, inputs, pkgs, config, ... }:
 
 {
   imports = [ ./xdg.nix ];
@@ -134,23 +134,6 @@
     '';
   };
 
-  qt = {
-    enable = true;
-    platformTheme.name = "gtk3";
-    style.name = "kvantum";
-  };
-
-  xdg.configFile = {
-    "Kvantum/kvantum.kvconfig".text = ''
-      [General]
-      theme=Gruvbox-Dark-Green
-    '';
-
-    "Kvantum/Gruvbox-Dark-Green".source = "${
-        inputs.self.packages.${pkgs.system}.gruvbox-kvantum-themes
-      }/share/Kvantum/Gruvbox-Dark-Green";
-  };
-
   dconf.settings = {
     "org/gnome/desktop/interface".color-scheme = "prefer-dark";
 
@@ -158,5 +141,209 @@
     "org/gnome/desktop/wm/preferences".button-layout = "appmenu";
 
     "org/gtk/settings/file-chooser".sort-directories-first = true;
+  };
+
+  qt = {
+    enable = true;
+    platformTheme.name = "kde";
+    platformTheme.package = with pkgs.kdePackages; [
+      plasma-integration
+      plasma-integration.qt5
+      qtwayland # Needed for qt6 under wayland
+      qtsvg # Needed for qt6 to render icons
+
+      # QTQuick and Kirigami stuff
+      qqc2-breeze-style
+      qqc2-desktop-style
+      libplasma
+    ];
+    style.package = [ pkgs.kdePackages.breeze pkgs.kdePackages.breeze.qt5 ];
+  };
+
+  xdg.configFile = {
+    "kdeglobals".text = let
+      hexNumbers =
+        lib.genAttrs (lib.genList (x: toString x) 10) (x: lib.toInt x) // {
+          "a" = 10;
+          "b" = 11;
+          "c" = 12;
+          "d" = 13;
+          "e" = 14;
+          "f" = 15;
+        };
+      hexToDec = hex:
+        let len = lib.stringLength hex;
+        in if len == 0 then
+          0
+        else
+          (hexNumbers.${lib.toLower (lib.substring (len - 1) 1 hex)} + 16
+            * hexToDec (lib.substring 0 (len - 1) hex));
+      qtColor = hex:
+        lib.concatStringsSep ","
+        (map (x: toString (hexToDec (lib.substring x 2 hex))) [ 1 3 5 ]);
+
+      # TODO: Color naming; generalize colors together with gtk colors
+      color1 = "#3C3836";
+      color2 = "#282828";
+      color3 = "#689D6A";
+      color4 = "#83A598";
+      color5 = "#8EC07C";
+      color6 = "#377375";
+      color7 = "#B8BB26";
+      color8 = "#DA4453";
+      color9 = "#F67400";
+      color10 = "#EBDBB2";
+      color11 = "#27AE60";
+      color12 = "#7F8C8D";
+      color13 = "#FCFCFC";
+      color14 = "#FDBC4B";
+      color15 = "#BDC3C7";
+      # Based on https://store.kde.org/p/1327717/
+    in ''
+      [ColorEffects:Disabled]
+      ChangeSelectionColor=
+      Color=56,56,56
+      ColorAmount=0
+      ColorEffect=0
+      ContrastAmount=0.65000000000000002
+      ContrastEffect=1
+      Enable=
+      IntensityAmount=0.10000000000000001
+      IntensityEffect=2
+
+      [ColorEffects:Inactive]
+      ChangeSelectionColor=true
+      Color=112,111,110
+      ColorAmount=0.025000000000000001
+      ColorEffect=2
+      ContrastAmount=0.10000000000000001
+      ContrastEffect=2
+      Enable=true
+      IntensityAmount=0
+      IntensityEffect=0
+
+      [Colors:Button]
+      BackgroundAlternate=${qtColor color1}
+      BackgroundNormal=${qtColor color2}
+      DecorationFocus=${qtColor color3}
+      DecorationHover=${qtColor color4}
+      ForegroundActive=${qtColor color5}
+      ForegroundInactive=${qtColor color6}
+      ForegroundLink=${qtColor color7}
+      ForegroundNegative=${qtColor color8}
+      ForegroundNeutral=${qtColor color9}
+      ForegroundNormal=${qtColor color10}
+      ForegroundPositive=${qtColor color11}
+      ForegroundVisited=${qtColor color12}
+
+      [Colors:Selection]
+      BackgroundAlternate=${qtColor color5}
+      BackgroundNormal=${qtColor color3}
+      DecorationFocus=${qtColor color3}
+      DecorationHover=${qtColor color4}
+      ForegroundActive=${qtColor color13}
+      ForegroundInactive=${qtColor color10}
+      ForegroundLink=${qtColor color14}
+      ForegroundNegative=${qtColor color8}
+      ForegroundNeutral=${qtColor color9}
+      ForegroundNormal=${qtColor color10}
+      ForegroundPositive=${qtColor color11}
+      ForegroundVisited=${qtColor color15}
+
+      [Colors:Tooltip]
+      BackgroundAlternate=${qtColor color1}
+      BackgroundNormal=${qtColor color2}
+      DecorationFocus=${qtColor color3}
+      DecorationHover=${qtColor color4}
+      ForegroundActive=${qtColor color7}
+      ForegroundInactive=${qtColor color6}
+      ForegroundLink=${qtColor color5}
+      ForegroundNegative=${qtColor color8}
+      ForegroundNeutral=${qtColor color9}
+      ForegroundNormal=${qtColor color10}
+      ForegroundPositive=${qtColor color11}
+      ForegroundVisited=${qtColor color12}
+
+      [Colors:View]
+      BackgroundAlternate=${qtColor color1}
+      BackgroundNormal=${qtColor color2}
+      DecorationFocus=${qtColor color3}
+      DecorationHover=${qtColor color4}
+      ForegroundActive=${qtColor color7}
+      ForegroundInactive=${qtColor color6}
+      ForegroundLink=${qtColor color5}
+      ForegroundNegative=${qtColor color8}
+      ForegroundNeutral=${qtColor color9}
+      ForegroundNormal=${qtColor color10}
+      ForegroundPositive=${qtColor color11}
+      ForegroundVisited=${qtColor color12}
+
+      [Colors:Window]
+      BackgroundAlternate=${qtColor color1}
+      BackgroundNormal=${qtColor color2}
+      DecorationFocus=${qtColor color3}
+      DecorationHover=${qtColor color4}
+      ForegroundActive=${qtColor color7}
+      ForegroundInactive=${qtColor color6}
+      ForegroundLink=${qtColor color5}
+      ForegroundNegative=${qtColor color8}
+      ForegroundNeutral=${qtColor color9}
+      ForegroundNormal=${qtColor color10}
+      ForegroundPositive=${qtColor color11}
+      ForegroundVisited=${qtColor color12}
+
+      [General]
+      ColorScheme=GruvboxColors
+      TerminalApplication=kitty
+      XftHintStyle=hintslight
+      XftSubPixel=none
+      fixed=Monospace,10,-1,5,50,0,0,0,0,0
+      font=Sans Serif,10,-1,5,50,0,0,0,0,0
+      menuFont=Sans Serif,10,-1,5,50,0,0,0,0,0
+      smallestReadableFont=Sans Serif,8,-1,5,50,0,0,0,0,0
+      toolBarFont=Sans Serif,10,-1,5,50,0,0,0,0,0
+
+      [Icons]
+      Theme=${config.gtk.iconTheme.name}
+
+      [KDE]
+      LookAndFeelPackage=org.kde.breezedark.desktop
+      ShowDeleteCommand=false
+
+      [KFileDialog Settings]
+      Allow Expansion=false
+      Automatically select filename extension=true
+      Breadcrumb Navigation=true
+      Decoration position=2
+      LocationCombo Completionmode=5
+      PathCombo Completionmode=5
+      Show Bookmarks=false
+      Show Full Path=false
+      Show Inline Previews=true
+      Show Preview=false
+      Show Speedbar=true
+      Show hidden files=false
+      Sort by=Name
+      Sort directories first=true
+      Sort hidden files last=false
+      Sort reversed=false
+      Speedbar Width=144
+      View Style=DetailTree
+
+      [KShortcutsDialog Settings]
+      Dialog Size=600,480
+
+      [PreviewSettings]
+      MaximumRemoteSize=0
+
+      [WM]
+      activeBackground=39,39,39
+      activeBlend=${qtColor color10}
+      activeFont=Sans Serif,10,-1,5,50,0,0,0,0,0
+      activeForeground=${qtColor color10}
+      inactiveBackground=${qtColor color2}
+      inactiveBlend=${qtColor color1}
+      inactiveForeground=204,190,155
+    '';
   };
 }
