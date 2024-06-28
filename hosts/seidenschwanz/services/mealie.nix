@@ -1,11 +1,22 @@
-{ config, inputs, ... }:
+{ config, inputs, pkgs, ... }:
 
 {
   services.mealie = {
     enable = true;
     port = 8134;
 
-    package = inputs.nixpkgs-mealie.legacyPackages.x86_64-linux.mealie;
+    package =
+      inputs.nixpkgs-unstable.legacyPackages.x86_64-linux.mealie.overrideAttrs
+      (old: {
+        patches = (old.patches or [ ]) ++ [
+          (pkgs.fetchpatch {
+            url =
+              "https://github.com/mealie-recipes/mealie/commit/445754c5d844ccf098f3678bc4f3cc9642bdaad6.patch";
+            hash = "sha256-ZdATmSYxhGSjoyrni+b5b8a30xQPlUeyp3VAc8OBmDY=";
+            revert = true;
+          })
+        ];
+      });
 
     settings = {
       ALLOW_SIGNUP = "false";
