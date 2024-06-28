@@ -7,8 +7,8 @@
     ./jellyfin.nix
     ./kodi.nix
     ./lldap.nix
+    ./mealie.nix
     ./paperless.nix
-    ./recipes.nix
     ./smb.nix
     ./syncthing.nix
     ./wireguard.nix
