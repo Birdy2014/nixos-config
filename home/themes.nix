@@ -8,7 +8,6 @@
     "accent-text"
     "background-window"
     "background-view"
-    "background-alternate"
     "text"
     "text-inactive"
     "error"
@@ -74,6 +73,8 @@
         ]));
 
     accent-standalone = shade cfg.accent 1.5;
+
+    background-alternate = shade cfg.background-view 1.2;
   in {
     home.pointerCursor = {
       name = "LyraX-cursors";
@@ -115,7 +116,7 @@
       gtk4.extraCss = ''
         /* Accent */
         @define-color accent_bg_color ${cfg.accent};
-        @define-color accent_fg_color ${cfg.accent-text};
+        @define-color accent_fg_color ${cfg.accent-text}; /* accent_fg_color apparently must be either black or white */
         @define-color accent_color ${accent-standalone};
 
         /* Destructive */
@@ -159,7 +160,7 @@
         @define-color card_shade_color rgba(0, 0, 0, 0.36);
 
         /* Dialog */
-        @define-color dialog_bg_color ${cfg.background-alternate};
+        @define-color dialog_bg_color ${background-alternate};
         @define-color dialog_fg_color ${cfg.text};
 
         /* Popover */
@@ -295,7 +296,7 @@
         IntensityEffect=0
 
         [Colors:Button]
-        BackgroundAlternate=${qtColor cfg.background-alternate}
+        BackgroundAlternate=${qtColor background-alternate}
         BackgroundNormal=${qtColor cfg.background-window}
         DecorationFocus=${qtColor cfg.accent}
         DecorationHover=${qtColor accent-hover}
@@ -309,7 +310,7 @@
         ForegroundVisited=${qtColor link-visited}
 
         [Colors:Complementary]
-        BackgroundAlternate=${qtColor cfg.background-alternate}
+        BackgroundAlternate=${qtColor background-alternate}
         BackgroundNormal=${qtColor cfg.background-window}
         DecorationFocus=${qtColor cfg.accent}
         DecorationHover=${qtColor accent-hover}
@@ -349,7 +350,7 @@
         ForegroundVisited=${qtColor color15}
 
         [Colors:Tooltip]
-        BackgroundAlternate=${qtColor cfg.background-alternate}
+        BackgroundAlternate=${qtColor background-alternate}
         BackgroundNormal=${qtColor cfg.background-window}
         DecorationFocus=${qtColor cfg.accent}
         DecorationHover=${qtColor accent-hover}
@@ -363,7 +364,7 @@
         ForegroundVisited=${qtColor link-visited}
 
         [Colors:View]
-        BackgroundAlternate=${qtColor cfg.background-alternate}
+        BackgroundAlternate=${qtColor background-alternate}
         BackgroundNormal=${qtColor cfg.background-view}
         DecorationFocus=${qtColor cfg.accent}
         DecorationHover=${qtColor accent-hover}
@@ -377,7 +378,7 @@
         ForegroundVisited=${qtColor link-visited}
 
         [Colors:Window]
-        BackgroundAlternate=${qtColor cfg.background-alternate}
+        BackgroundAlternate=${qtColor background-alternate}
         BackgroundNormal=${qtColor cfg.background-window}
         DecorationFocus=${qtColor cfg.accent}
         DecorationHover=${qtColor accent-hover}
@@ -439,7 +440,7 @@
         activeFont=Sans Serif,10,-1,5,50,0,0,0,0,0
         activeForeground=${qtColor cfg.text}
         inactiveBackground=${qtColor cfg.background-window}
-        inactiveBlend=${qtColor cfg.background-alternate}
+        inactiveBlend=${qtColor background-alternate}
         inactiveForeground=204,190,155
       '';
     };
