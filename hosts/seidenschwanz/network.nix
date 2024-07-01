@@ -18,6 +18,8 @@
     };
   };
 
+  networking.nftables.enable = true;
+
   services.resolved.enable = false;
   networking.resolvconf.useLocalResolver = true;
 }
