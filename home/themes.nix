@@ -443,6 +443,11 @@
         inactiveBlend=${qtColor background-alternate}
         inactiveForeground=204,190,155
       '';
+
+      "kcminputrc".text = ''
+        [Mouse]
+        cursorTheme=${config.home.pointerCursor.name}
+      '';
     };
   };
 }
