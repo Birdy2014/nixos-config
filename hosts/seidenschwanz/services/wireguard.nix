@@ -74,7 +74,7 @@ in {
     networks."50-wg0" = {
       matchConfig.Name = "wg0";
       address = [ "10.100.0.1/24" "fd00:100::1/64" ];
-      networkConfig.IPForward = "yes";
+      networkConfig.IPMasquerade = "both";
     };
   };
 
@@ -122,11 +122,16 @@ in {
           }
         }
 
-        chain postrouting {
-          type nat hook postrouting priority 100; policy accept;
+        define WG_NET_IP4 = 10.100.0.0/24
+        define WG_NET_IP6 = fd00:100::/64
 
-          iifname wg0 oifname lan ip saddr $ALLOWED_IPSV4 masquerade
-          iifname wg0 oifname lan ip6 saddr $ALLOWED_IPSV6 masquerade
+        chain output {
+          type filter hook postrouting priority 0; policy accept;
+
+          iifname wg0 oifname lan ip saddr $ALLOWED_IPSV4 accept
+          iifname wg0 oifname lan ip6 saddr $ALLOWED_IPSV6 accept
+          iifname wg0 oifname lan ip saddr $WG_NET_IP4 log prefix "forbidden IPv4 wireguard peer tries to nat: " drop
+          iifname wg0 oifname lan ip6 saddr $WG_NET_IP6 log prefix "forbidden IPv6 wireguard peer tries to nat: " drop
         }
       '';
     };
