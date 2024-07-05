@@ -47,6 +47,7 @@
     vesktop
     signal-desktop
     nvtopPackages.amd
+    sops
   ];
 
   programs.adb.enable = true;
