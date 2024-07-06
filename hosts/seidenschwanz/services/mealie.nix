@@ -28,6 +28,7 @@
       LDAP_SERVER_URL = "ldap://[::1]:3890";
       LDAP_BASE_DN = "ou=people,dc=mvogel,dc=dev";
       LDAP_QUERY_BIND = "cn=admin,ou=people,dc=mvogel,dc=dev";
+      LDAP_USER_FILTER = "(memberOf=cn=mealie,ou=groups,dc=mvogel,dc=dev)";
       LDAP_ADMIN_FILTER =
         "(memberOf=cn=lldap_admin,ou=groups,dc=mvogel,dc=dev)";
       LDAP_NAME_ATTRIBUTE = "displayName";
