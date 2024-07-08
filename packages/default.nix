@@ -6,7 +6,6 @@
     callPackageUnstable =
       nixpkgs-unstable.legacyPackages.x86_64-linux.callPackage;
   in {
-    gruvbox-kvantum-themes = callPackage ./gruvbox-kvantum-themes.nix { };
     gruvbox-material-gtk = callPackage ./gruvbox-material-gtk.nix { };
     improtheater-frankfurt = callPackage ./improtheater-frankfurt.nix { };
     lepton-firefox-theme = callPackage ./lepton-firefox-theme.nix { };
