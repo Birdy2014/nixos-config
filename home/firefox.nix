@@ -33,6 +33,8 @@
 
       # Extensions
       "extensions.enabledScopes" = 5;
+      "extensions.autoDisableScopes" =
+        0; # Auto-enable extensions that are installed via home-manager
       "extensions.webextensions.restrictedDomains" = "";
 
       # Disable annoying firefox functionality
