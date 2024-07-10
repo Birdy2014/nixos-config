@@ -161,7 +161,7 @@
         "$username"
         "$directory"
         "$hostname"
-        "$custom"
+        "\${custom.lf}"
         "$nix_shell"
         "$git_branch"
         "$git_state"
