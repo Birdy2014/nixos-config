@@ -48,20 +48,8 @@
       else
         (decToHex (dec / 16) + decDigitToHex (lib.mod dec 16));
 
-    # There must be a better way to do this.
     clampByte = x:
-      if x < 0 then
-        0
-      else
-        (if x > 255 then
-          255
-        else
-          (if lib.elem "." (lib.strings.stringToCharacters (toString x)) then
-            (lib.toIntBase10 (lib.substring 0
-              (lib.lists.findFirstIndex (a: a == ".") null
-                (lib.strings.stringToCharacters (toString x))) (toString x)))
-          else
-            x));
+      if x < 0 then 0 else (if x > 255 then 255 else builtins.floor x);
 
     shade = color: factor:
       "#" + (lib.concatStrings (map (x:
