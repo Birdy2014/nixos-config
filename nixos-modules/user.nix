@@ -31,11 +31,12 @@ in {
       isNormalUser = true;
       extraGroups = [ "wheel" "networkmanager" "i2c" ];
       shell = pkgs.zsh;
+      # Needed because zsh is not enabled globally to prevent issues with
+      # duplicate completion settings in system and home-manager configuration
+      ignoreShellProgramCheck = true;
       home = "/home/moritz";
       createHome = true;
     };
-
-    programs.zsh.enable = true;
 
     home-manager = {
       useUserPackages = true;
