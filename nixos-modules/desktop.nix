@@ -115,6 +115,7 @@
       group = "users";
       overrideFolders = false;
       overrideDevices = false;
+      openDefaultPorts = true;
       configDir = "${config.users.users.moritz.home}/.config/syncthing";
       dataDir = "${config.users.users.moritz.home}/.local/state/syncthing";
     };
