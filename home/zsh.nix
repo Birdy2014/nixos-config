@@ -181,4 +181,6 @@
       };
     };
   };
+
+  programs.dircolors.enable = true;
 }
