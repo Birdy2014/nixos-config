@@ -136,6 +136,7 @@
 
       # Autosuggestion
       ZSH_AUTOSUGGEST_STRATEGY = [ "history" "completion" ];
+      ZSH_AUTOSUGGEST_COMPLETION_IGNORE = " #nix [a-z]# *";
     };
 
     autosuggestion.enable = true;
