@@ -1,8 +1,8 @@
-{ inputs, pkgs, ... }:
+{ pkgs, pkgsSelf, ... }:
 
 {
   environment.systemPackages = with pkgs; [
-    inputs.self.packages.${pkgs.system}.neovim
+    pkgsSelf.neovim
     ripgrep
     git
     file

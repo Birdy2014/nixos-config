@@ -1,4 +1,4 @@
-{ inputs, osConfig, pkgs, ... }:
+{ osConfig, pkgs, pkgsSelf, ... }:
 
 {
   services.easyeffects.enable = true;
@@ -16,8 +16,8 @@
     libqalculate
     yt-dlp
     bashmount
-    inputs.self.packages.${pkgs.system}.xdg-open
-    inputs.self.packages.${pkgs.system}.playerctl-current
+    pkgsSelf.xdg-open
+    pkgsSelf.playerctl-current
 
     # GUI
     pavucontrol

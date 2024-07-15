@@ -1,4 +1,4 @@
-{ lib, inputs, pkgs, config, ... }:
+{ lib, pkgs, pkgsSelf, config, ... }:
 
 {
   imports = [ ./xdg.nix ];
@@ -67,7 +67,7 @@
     home.pointerCursor = {
       name = "LyraX-cursors";
       size = 24;
-      package = inputs.self.packages.${pkgs.system}.lyrax-cursors;
+      package = pkgsSelf.lyrax-cursors;
       gtk.enable = true;
     };
 
@@ -81,7 +81,7 @@
 
       iconTheme = {
         name = "Gruvbox-Material-Dark";
-        package = inputs.self.packages.${pkgs.system}.gruvbox-material-gtk;
+        package = pkgsSelf.gruvbox-material-gtk;
       };
 
       font = {

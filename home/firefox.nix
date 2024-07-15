@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ pkgs, pkgsSelf, ... }:
 
 {
   programs.firefox = let
@@ -120,17 +120,13 @@
         search.default = "DuckDuckGo";
         search.force = true;
         userChrome = ''
-          @import "${
-            inputs.self.packages.${pkgs.system}.lepton-firefox-theme
-          }/userChrome.css";
+          @import "${pkgsSelf.lepton-firefox-theme}/userChrome.css";
         '';
         userContent = ''
-          @import "${
-            inputs.self.packages.${pkgs.system}.lepton-firefox-theme
-          }/userContent.css";
+          @import "${pkgsSelf.lepton-firefox-theme}/userContent.css";
         '';
-        extraConfig = builtins.readFile
-          "${inputs.self.packages.${pkgs.system}.lepton-firefox-theme}/user.js";
+        extraConfig =
+          builtins.readFile "${pkgsSelf.lepton-firefox-theme}/user.js";
       };
 
       persistent = {

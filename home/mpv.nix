@@ -1,4 +1,4 @@
-{ inputs, lib, osConfig, pkgs, ... }:
+{ lib, osConfig, pkgs, pkgsSelf, ... }:
 
 {
   programs.mpv = let
@@ -40,7 +40,7 @@
         scripts = [
           pkgs.mpvScripts.mpris
           pkgs.mpvScripts.thumbfast
-          inputs.self.packages.${pkgs.system}.mpv-thumbfast-vanilla-osc
+          pkgsSelf.mpv-thumbfast-vanilla-osc
         ];
       };
     config = {

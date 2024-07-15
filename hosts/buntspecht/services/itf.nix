@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, ... }:
+{ config, pkgs, pkgsSelf, ... }:
 
 let
   hostname = "improtheater-frankfurt.de";
@@ -57,9 +57,7 @@ in {
       NODE_ENV = "production";
       ITF_CONFIG_FILE = config-file;
     };
-    script = "${
-        inputs.self.packages.${pkgs.system}.improtheater-frankfurt
-      }/bin/improtheater-frankfurt";
+    script = "${pkgsSelf.improtheater-frankfurt}/bin/improtheater-frankfurt";
     serviceConfig = {
       DynamicUser = true;
       Group = "itf";

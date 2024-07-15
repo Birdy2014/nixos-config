@@ -27,7 +27,11 @@ in (builtins.listToAttrs (map ({ name, system }: {
   name = name;
   value = lib.nixosSystem {
     system = system;
-    specialArgs = { inherit inputs; };
+    specialArgs = {
+      inherit inputs;
+      pkgsSelf = inputs.self.packages.${system};
+      pkgsUnstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+    };
     modules =
       [ ./${name} ../nixos-modules ../secrets { networking.hostName = name; } ];
   };
