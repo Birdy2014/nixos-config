@@ -23,7 +23,7 @@
     };
   };
 
-  boot.blacklistedKernelModules = [ "nouveau" ];
+  boot.blacklistedKernelModules = [ "nouveau" "acer_wmi" ];
   boot.kernelParams = [ "intel_pstate=passive" ];
 
   networking.networkmanager.enable = true;
