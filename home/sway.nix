@@ -260,8 +260,7 @@
       for_window [workspace="^1$"] floating enable
 
       # Force borders for all windows
-      for_window [app_id=".*"] border normal
-      for_window [class=".*"] border normal
+      for_window [all] border normal
 
       for_window [class="^zoom$"] floating enable; inhibit_idle open
       for_window [class="^Birdy3d$"] floating enable
