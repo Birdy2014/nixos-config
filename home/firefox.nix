@@ -56,6 +56,7 @@
       "datareporting.healthreport.uploadEnabled" = false;
       "extensions.getAddons.showPane" = false;
       "extensions.htmlaboutaddons.recommendations.enabled" = false;
+      "dom.private-attribution.submission.enabled" = false;
 
       # Tracking and fingerprinting protection
       "privacy.fingerprintingProtection" = true;
