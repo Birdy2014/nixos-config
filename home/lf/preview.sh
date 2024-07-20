@@ -34,7 +34,7 @@ cache_if_needed_and_display_image() {
     if (( "$image_width" < "$MAX_IMAGE_WIDTH" )); then
         display_image "$image"
     else
-        convert -geometry "$MAX_IMAGE_WIDTH"x -- "${image}" "${IMAGE_CACHE_PATH}" && display_image_cache
+        magick "${image}" -geometry "$MAX_IMAGE_WIDTH"x "${IMAGE_CACHE_PATH}" && display_image_cache
     fi
 }
 
@@ -75,7 +75,7 @@ handle_mime() {
 
         ## SVG
         image/svg+xml|image/svg)
-            convert -- "${FILE_PATH}" "${IMAGE_CACHE_PATH}" && display_image_cache
+            magick "${FILE_PATH}" -geometry "$MAX_IMAGE_WIDTH"x "${IMAGE_CACHE_PATH}" && display_image_cache
             exit 1;;
 
         ## Image
