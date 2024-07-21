@@ -13,6 +13,22 @@
     "error"
     "headerbar-background"
     "headerbar-background-inactive"
+    "black"
+    "light-black"
+    "red"
+    "light-red"
+    "green"
+    "light-green"
+    "yellow"
+    "light-yellow"
+    "blue"
+    "light-blue"
+    "magenta"
+    "light-magenta"
+    "cyan"
+    "light-cyan"
+    "white"
+    "light-white"
   ] (name:
     lib.mkOption {
       type = lib.types.str;

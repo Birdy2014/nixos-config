@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 {
   programs.kitty = {
@@ -11,7 +11,7 @@
 
     shellIntegration.mode = "disabled";
 
-    settings = {
+    settings = with config.my.theme; {
       disable_ligatures = "cursor";
       remember_window_size = false;
       initial_window_width = 720;
@@ -23,52 +23,30 @@
       clear_all_shortcuts = true;
 
       # Theme
-      background = "#282828";
-      foreground = "#ebdbb2";
+      background = background-view;
+      foreground = text;
 
-      cursor = "#928374";
+      cursor = light-black;
 
-      selection_foreground = "#928374";
-      selection_background = "#3c3836";
+      selection_foreground = text-inactive;
+      selection_background = background-window;
 
-      color0 = "#282828";
-      color8 = "#928374";
-
-      # red
-      color1 = "#cc241d";
-      # light red
-      color9 = "#fb4934";
-
-      # green
-      color2 = "#98971a";
-      # light green
-      color10 = "#b8bb26";
-
-      # yellow
-      color3 = "#d79921";
-      # light yellow
-      color11 = "#fabd2f";
-
-      # blue
-      color4 = "#458588";
-      # light blue
-      color12 = "#83a598";
-
-      # magenta
-      color5 = "#b16286";
-      # light magenta
-      color13 = "#d3869b";
-
-      # cyan
-      color6 = "#689d6a";
-      # lighy cyan
-      color14 = "#8ec07c";
-
-      # light gray
-      color7 = "#a89984";
-      # dark gray
-      color15 = "#928374";
-
+      color0 = black;
+      color1 = red;
+      color2 = green;
+      color3 = yellow;
+      color4 = blue;
+      color5 = magenta;
+      color6 = cyan;
+      color7 = white;
+      color8 = light-black;
+      color9 = light-red;
+      color10 = light-green;
+      color11 = light-yellow;
+      color12 = light-blue;
+      color13 = light-magenta;
+      color14 = light-cyan;
+      color15 = light-white;
     };
 
     keybindings = {

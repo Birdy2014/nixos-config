@@ -13,5 +13,29 @@
     error = "#ea6962";
     headerbar-background = "#32302f";
     headerbar-background-inactive = "#282625";
+
+    black = "#282828";
+    light-black = "#928374";
+
+    red = "#cc241d";
+    light-red = "#fb4934";
+
+    green = "#98971a";
+    light-green = "#b8bb26";
+
+    yellow = "#d79921";
+    light-yellow = "#fabd2f";
+
+    blue = "#458588";
+    light-blue = "#83a598";
+
+    magenta = "#b16286";
+    light-magenta = "#d3869b";
+
+    cyan = "#689d6a";
+    light-cyan = "#8ec07c";
+
+    white = "#a89984";
+    light-white = "#928374";
   };
 }
