@@ -113,7 +113,6 @@
         extensions = commonExtensions
           ++ (with pkgs.nur.repos.rycee.firefox-addons; [
             keepassxc-browser
-            i-dont-care-about-cookies
             tridactyl
             darkreader
             return-youtube-dislikes
