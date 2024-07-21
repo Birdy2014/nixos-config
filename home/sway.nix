@@ -237,6 +237,8 @@
       titlebar_border_thickness 0
       titlebar_padding 2 2
 
+      floating_maximum_size -1 x -1
+
       # Multimedia Keys
       bindsym --locked ${modifier}+m exec ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_SOURCE@ toggle
       bindsym --locked XF86AudioMicMute exec ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_SOURCE@ toggle
