@@ -7,42 +7,42 @@ let
       pskFile = config.sops.secrets."wireguard/psk2".path;
       ipv4 = "10.100.0.2";
       ipv6 = "fd00:100::2";
-      allowNat = true;
+      allowOutgoing = true;
     }
     {
       publicKey = "/dPnjIFXx5+dVWIloVCdrVrNnrQg7nsVoQeedFM982U=";
       pskFile = config.sops.secrets."wireguard/psk3".path;
       ipv4 = "10.100.0.3";
       ipv6 = "fd00:100::3";
-      allowNat = true;
+      allowOutgoing = true;
     }
     {
       publicKey = "/a07tuiXkhvz2dny3u6y9GdfN/aL3jONxh6/MeWWlXI=";
       pskFile = null;
       ipv4 = "10.100.0.4";
       ipv6 = "fd00:100::4";
-      allowNat = true;
+      allowOutgoing = true;
     }
     {
       publicKey = "GRqdpb8pU/q1xABuSm1EIxEXAaDavWRKosoRf4yMXk8=";
       pskFile = null;
       ipv4 = "10.100.0.5";
       ipv6 = "fd00:100::5";
-      allowNat = true;
+      allowOutgoing = true;
     }
     {
       publicKey = "AJ5znHncvK516Msh7F7aultWZt01rhIE6PCdD2CW33Q=";
       pskFile = null;
       ipv4 = "10.100.0.6";
       ipv6 = "fd00:100::6";
-      allowNat = true;
+      allowOutgoing = true;
     }
     {
       publicKey = "F68/nZVgzZeNMYUONM54EIn8HVwnNpuWuDR9is10nzQ=";
       pskFile = config.sops.secrets."wireguard/psk7".path;
       ipv4 = "10.100.0.7";
       ipv6 = "fd00:100::7";
-      allowNat = false;
+      allowOutgoing = false;
     }
   ];
 in {
@@ -105,20 +105,20 @@ in {
 
   networking.nftables = {
     enable = true;
-    tables.wireguard-nat = {
+    tables.wireguard = {
       family = "inet";
       content = ''
         define ALLOWED_IPSV4 = {
           ${
             lib.concatStringsSep "," (map ({ ipv4, ... }: ipv4)
-              (lib.filter ({ allowNat, ... }: allowNat) peers))
+              (lib.filter ({ allowOutgoing, ... }: allowOutgoing) peers))
           }
         }
 
         define ALLOWED_IPSV6 = {
           ${
             lib.concatStringsSep "," (map ({ ipv6, ... }: ipv6)
-              (lib.filter ({ allowNat, ... }: allowNat) peers))
+              (lib.filter ({ allowOutgoing, ... }: allowOutgoing) peers))
           }
         }
 
@@ -130,8 +130,8 @@ in {
 
           iifname wg0 oifname lan ip saddr $ALLOWED_IPSV4 accept
           iifname wg0 oifname lan ip6 saddr $ALLOWED_IPSV6 accept
-          iifname wg0 oifname lan ip saddr $WG_NET_IP4 log prefix "forbidden IPv4 wireguard peer tries to nat: " drop
-          iifname wg0 oifname lan ip6 saddr $WG_NET_IP6 log prefix "forbidden IPv6 wireguard peer tries to nat: " drop
+          iifname wg0 oifname lan ip saddr $WG_NET_IP4 log prefix "forbidden IPv4 wireguard peer tries to connect to outside network: " drop
+          iifname wg0 oifname lan ip6 saddr $WG_NET_IP6 log prefix "forbidden IPv6 wireguard peer tries to connect to outside network: " drop
         }
       '';
     };
