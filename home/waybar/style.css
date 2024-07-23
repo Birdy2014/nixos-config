@@ -6,23 +6,9 @@
     min-width: 0;
 }
 
-@define-color color-bg #1d2021;
-@define-color color-fg #d4be98;
-@define-color color-blue #7daea3;
-@define-color color-aqua #89b482;
-@define-color color-purple #d3869b;
-@define-color color-orange #e78a4e;
-@define-color color-yellow #d8a657;
-@define-color color-yellow-dark #b47109;
-@define-color color-green #a9b665;
-@define-color color-red #ea6962;
-@define-color color-red-dark #c14a4a;
-
 window#waybar {
-    background-color: @color-bg;
+    background-color: @background-bar;
     color: #ffffff;
-    transition-property: background-color;
-    transition-duration: .5s;
 }
 
 window#waybar.hidden {
@@ -38,7 +24,7 @@ window#waybar.hidden {
 #workspaces button {
     padding: 4px 0;
     background-color: transparent;
-    color: @color-aqua;
+    color: @cyan;
 }
 
 #workspaces button:hover {
@@ -46,15 +32,15 @@ window#waybar.hidden {
 }
 
 #workspaces button.focused {
-    color: @color-yellow-dark;
+    color: @accent;
 }
 
 #workspaces button.urgent {
-    color: @color-red;
+    color: @red;
 }
 
 #workspaces button.persistent {
-    color: @color-fg;
+    color: @text;
 }
 
 #clock,
@@ -67,43 +53,43 @@ window#waybar.hidden {
 #mode,
 #custom-idle-inhibit {
     padding: 10px 0;
-    color: @color-fg;
+    color: @text;
 }
 
 #mode {
     font-weight: bold;
-    background-color: @color-red;
-    color: @color-bg;
+    background-color: @red;
+    color: @background-alternate;
 }
 
 #clock {
-    color: @color-blue;
+    color: @blue;
 }
 
 #battery {
-    color: @color-fg;
+    color: @text;
 }
 
 #battery.charging, #battery.plugged, #battery.good {
-    color: @color-green;
+    color: @green;
 }
 
 #battery.ok:not(.charging) {
-    color: @color-yellow-dark;
+    color: @yellow;
 }
 
 #battery.warning:not(.charging) {
-    color: @color-red;
+    color: @red;
 }
 
 @keyframes blink {
     to {
-        color: @color-fg;
+        color: @text;
     }
 }
 
 #battery.critical:not(.charging) {
-    color: @color-red;
+    color: @red;
 
     animation-name: blink;
     animation-duration: 0.5s;
@@ -117,23 +103,19 @@ label:focus {
 }
 
 #backlight {
-    color: @color-blue;
+    color: @blue;
 }
 
 #network {
-    color: @color-green;
+    color: @green;
 }
 
 #network.disconnected {
-    color: @color-red;
+    color: @red;
 }
 
 #pulseaudio {
-    color: @color-yellow;
-}
-
-#pulseaudio.muted {
-    color: @color-yellow-dark;
+    color: @yellow;
 }
 
 #tray > .passive {
@@ -142,9 +124,9 @@ label:focus {
 
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
-    color: @color-red;
+    color: @red;
 }
 
 #custom-idle-inhibit.active {
-    color: @color-red;
+    color: @red;
 }

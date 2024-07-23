@@ -1,9 +1,34 @@
-{ osConfig, lib, pkgs, ... }:
+{ config, osConfig, lib, pkgs, ... }:
 
 {
   programs.waybar = {
     enable = true;
-    style = ./style.css;
+    style = with config.my.theme;
+      ''
+        @define-color accent ${accent};
+        @define-color accent-text ${accent-text};
+        @define-color background-window ${background-window};
+        @define-color background-view ${background-view};
+        @define-color background-alternate ${background-alternate};
+        @define-color text ${text};
+        @define-color text-inactive ${text-inactive};
+        @define-color black ${black};
+        @define-color light-black ${light-black};
+        @define-color red ${red};
+        @define-color light-red ${light-red};
+        @define-color green ${green};
+        @define-color light-green ${light-green};
+        @define-color yellow ${yellow};
+        @define-color light-yellow ${light-yellow};
+        @define-color blue ${blue};
+        @define-color light-blue ${light-blue};
+        @define-color magenta ${magenta};
+        @define-color light-magenta ${light-magenta};
+        @define-color cyan ${cyan};
+        @define-color light-cyan ${light-cyan};
+        @define-color white ${white};
+        @define-color light-white ${light-white};
+      '' + builtins.readFile ./style.css;
     systemd.enable = true;
 
     # Waybar doesn't properly reload when the settings are changed and has to be restarted.
