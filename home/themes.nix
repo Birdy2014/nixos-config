@@ -349,7 +349,7 @@
         ForegroundLink=${qtColor link-selected}
         ForegroundNegative=${qtColor text-negative}
         ForegroundNeutral=${qtColor text-neutral}
-        ForegroundNormal=${qtColor cfg.text}
+        ForegroundNormal=${qtColor cfg.accent-text}
         ForegroundPositive=${qtColor text-positive}
         ForegroundVisited=${qtColor color15}
 
