@@ -121,7 +121,7 @@
           format = "{volume:>3}% {icon} {format_source}";
           format-bluetooth = "{volume:>3}% {icon}󰂯 {format_source}";
           format-bluetooth-muted = "{icon}󰂯 {format_source}";
-          format-muted = "{format_source}";
+          format-muted = "  {format_source}";
           format-source = "{volume:>3}% 󰍬";
           format-source-muted = "󰍭";
           format-icons = {
