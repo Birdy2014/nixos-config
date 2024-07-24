@@ -8,7 +8,7 @@
     ./firefox.nix
     ./git.nix
     ./gpg.nix
-    ./gruvbox.nix
+    ./colors
     ./imv.nix
     ./kitty.nix
     ./lf
@@ -16,7 +16,6 @@
     ./mpv.nix
     ./rofi
     ./sway.nix
-    ./themes.nix
     ./waybar
     ./xdg.nix
     ./yazi.nix

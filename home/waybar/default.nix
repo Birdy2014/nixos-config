@@ -7,9 +7,9 @@
       ''
         @define-color accent ${accent};
         @define-color accent-text ${accent-text};
-        @define-color background-window ${background-window};
-        @define-color background-view ${background-view};
-        @define-color background-alternate ${background-alternate};
+        @define-color background-primary ${background-primary};
+        @define-color background-secondary ${background-secondary};
+        @define-color background-tertiary ${background-tertiary};
         @define-color text ${text};
         @define-color text-inactive ${text-inactive};
         @define-color black ${black};
@@ -28,6 +28,8 @@
         @define-color light-cyan ${light-cyan};
         @define-color white ${white};
         @define-color light-white ${light-white};
+        @define-color accent ${accent};
+        @define-color accent-complementary ${accent-complementary};
       '' + builtins.readFile ./style.css;
     systemd.enable = true;
 

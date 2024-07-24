@@ -22,6 +22,8 @@
     };
 
     nur.url = "github:nix-community/NUR";
+
+    nix-colorizer.url = "github:nutsalhan87/nix-colorizer/v0.2";
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, ... }@inputs: {

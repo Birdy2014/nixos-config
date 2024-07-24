@@ -1,18 +1,18 @@
 { config, osConfig, lib, pkgs, ... }:
 
 {
-  imports = [ ./kitty.nix ./rofi ./waybar ./themes.nix ];
+  imports = [ ./kitty.nix ./rofi ./waybar ];
 
   wayland.windowManager.sway = let
     modifier = "Mod4";
     terminal = "kitty";
     launcher = ''
       rofi -show combi -terminal ${terminal} -run-command "${pkgs.sway}/bin/swaymsg exec '{cmd}'" -run-shell-command "swaymsg exec {terminal} '{cmd}'"'';
-    color-accent = config.my.theme.accent;
-    color-accent-text = config.my.theme.accent-text;
-    color-bg = config.my.theme.background-window;
-    color-bg-dark = config.my.theme.background-view;
-    color-fg = config.my.theme.text;
+    color-focused-background = config.my.theme.accent-background;
+    color-focused-text = config.my.theme.accent-text;
+    color-focused-inactive = config.my.theme.background-primary;
+    color-unfocused = config.my.theme.background-secondary;
+    color-text = config.my.theme.text;
     color-urgent = config.my.theme.error;
   in {
     enable = true;
@@ -178,33 +178,33 @@
 
       colors = {
         focused = {
-          border = color-accent;
-          background = color-accent;
-          text = color-accent-text;
+          border = color-focused-background;
+          background = color-focused-background;
+          text = color-focused-text;
           indicator = "#ffffff";
-          childBorder = color-accent;
+          childBorder = color-focused-background;
         };
 
         focusedInactive = {
-          border = color-bg;
-          background = color-bg;
-          text = color-fg;
+          border = color-focused-inactive;
+          background = color-focused-inactive;
+          text = color-text;
           indicator = "#ffffff";
-          childBorder = color-bg;
+          childBorder = color-focused-inactive;
         };
 
         unfocused = {
-          border = color-bg-dark;
-          background = color-bg-dark;
-          text = color-fg;
+          border = color-unfocused;
+          background = color-unfocused;
+          text = color-text;
           indicator = "#ffffff";
-          childBorder = color-bg-dark;
+          childBorder = color-unfocused;
         };
 
         urgent = {
           border = color-urgent;
           background = color-urgent;
-          text = color-fg;
+          text = color-text;
           indicator = "#ffffff";
           childBorder = color-urgent;
         };
@@ -341,7 +341,7 @@
 
   programs.swaylock = {
     enable = true;
-    settings = { color = "1b1b1b"; };
+    settings.color = lib.substring 1 6 config.my.theme.background-tertiary;
   };
 
   services.wlsunset = {

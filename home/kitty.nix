@@ -23,13 +23,13 @@
       clear_all_shortcuts = true;
 
       # Theme
-      background = background-view;
+      background = background-secondary;
       foreground = text;
 
-      cursor = light-black;
+      cursor = light-white;
 
       selection_foreground = text-inactive;
-      selection_background = background-window;
+      selection_background = background-primary;
 
       color0 = black;
       color1 = red;

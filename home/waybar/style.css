@@ -7,7 +7,7 @@
 }
 
 window#waybar {
-    background-color: @background-bar;
+    background-color: @background-tertiary;
     color: #ffffff;
 }
 
@@ -24,7 +24,7 @@ window#waybar.hidden {
 #workspaces button {
     padding: 4px 0;
     background-color: transparent;
-    color: @cyan;
+    color: @accent-complementary;
 }
 
 #workspaces button:hover {
@@ -40,7 +40,7 @@ window#waybar.hidden {
 }
 
 #workspaces button.persistent {
-    color: @text;
+    color: @text-inactive;
 }
 
 #clock,
@@ -59,7 +59,7 @@ window#waybar.hidden {
 #mode {
     font-weight: bold;
     background-color: @red;
-    color: @background-alternate;
+    color: @background-tertiary;
 }
 
 #clock {

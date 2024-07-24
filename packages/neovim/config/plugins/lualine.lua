@@ -9,7 +9,7 @@ end
 local lualine = require("lualine")
 lualine.setup {
     options = {
-        theme = "gruvbox-material",
+        theme = "catppuccin-frappe",
         section_separators = {},
         component_separators = "|",
         icons_enabled = true,

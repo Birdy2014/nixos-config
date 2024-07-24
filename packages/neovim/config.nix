@@ -11,9 +11,13 @@
 
   plugins = with vimPlugins; [
     # Colors
+    # {
+    #   plugin = gruvbox-material;
+    #   config = ./config/plugins/gruvbox.lua;
+    # }
     {
-      plugin = gruvbox-material;
-      config = ./config/plugins/gruvbox.lua;
+      plugin = catppuccin-nvim;
+      config = ''vim.cmd("colorscheme catppuccin-frappe")'';
     }
 
     # UI

@@ -1,14 +1,15 @@
-{ lib, myLib, pkgs, pkgsSelf, config, ... }:
+{ inputs, lib, myLib, pkgs, pkgsSelf, config, ... }:
 
 {
-  imports = [ ./xdg.nix ];
+  # TODO: Move options to system config, so that an override for neovim can be set?
 
   options.my.theme = lib.genAttrs [
     "accent"
-    "accent-text"
-    "background-window"
-    "background-view"
-    "background-alternate"
+    "accent-background"
+    "accent-complementary"
+    "background-primary"
+    "background-secondary"
+    "background-tertiary"
     "text"
     "text-inactive"
     "error"
@@ -34,25 +35,45 @@
     lib.mkOption {
       type = lib.types.str;
       description = "color";
-    });
+    }) // {
+      accent-text = lib.mkOption {
+        type = lib.types.enum [ "#000000" "#ffffff" ];
+        description = "color";
+      };
+    };
 
   config = let
     cfg = config.my.theme;
 
-    clampByte = x:
-      if x < 0 then 0 else (if x > 255 then 255 else builtins.floor x);
-
-    shade = color: factor:
-      "#" + (lib.concatStrings (map (x:
-        lib.fixedWidthString 2 "0" (myLib.decToHex
-          (clampByte (myLib.hexToDec (lib.substring x 2 color) * factor)))) [
-            1
-            3
-            5
-          ]));
-
-    accent-standalone = shade cfg.accent 1.5;
+    colorizer = inputs.nix-colorizer;
+    darken = hex: percent:
+      colorizer.oklchToHex
+      (colorizer.darken (colorizer.hexToOklch hex) percent);
+    lighten = hex: percent:
+      colorizer.oklchToHex
+      (colorizer.lighten (colorizer.hexToOklch hex) percent);
+    complementary = hex:
+      colorizer.oklchToHex (colorizer.complementary (colorizer.hexToOklch hex));
   in {
+    my.theme = {
+      accent-background = lib.mkDefault (darken cfg.accent 20);
+
+      accent-complementary =
+        lib.mkDefault (complementary cfg.accent-background);
+      headerbar-background = lib.mkDefault cfg.background-primary;
+      headerbar-background-inactive = lib.mkDefault cfg.background-tertiary;
+      error = lib.mkDefault (darken cfg.red 20);
+
+      light-black = lib.mkDefault (lighten cfg.black 10);
+      light-red = lib.mkDefault (lighten cfg.red 10);
+      light-green = lib.mkDefault (lighten cfg.green 10);
+      light-yellow = lib.mkDefault (lighten cfg.yellow 10);
+      light-blue = lib.mkDefault (lighten cfg.blue 10);
+      light-magenta = lib.mkDefault (lighten cfg.magenta 10);
+      light-cyan = lib.mkDefault (lighten cfg.cyan 10);
+      light-white = lib.mkDefault (lighten cfg.white 10);
+    };
+
     home.pointerCursor = {
       name = "LyraX-cursors";
       size = 24;
@@ -92,9 +113,9 @@
       # Reference: https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/css-variables.html
       gtk4.extraCss = ''
         /* Accent */
-        @define-color accent_bg_color ${cfg.accent};
+        @define-color accent_bg_color ${cfg.accent-background};
         @define-color accent_fg_color ${cfg.accent-text}; /* accent_fg_color apparently must be either black or white */
-        @define-color accent_color ${accent-standalone};
+        @define-color accent_color ${cfg.accent};
 
         /* Destructive */
         @define-color destructive_color #ff7b63;
@@ -117,11 +138,11 @@
         @define-color error_fg_color ${cfg.text};
 
         /* Window */
-        @define-color window_bg_color ${cfg.background-window};
+        @define-color window_bg_color ${cfg.background-primary};
         @define-color window_fg_color ${cfg.text};
 
         /* View */
-        @define-color view_bg_color ${cfg.background-view};
+        @define-color view_bg_color ${cfg.background-secondary};
         @define-color view_fg_color ${cfg.text};
 
         /* Headerbar */
@@ -137,7 +158,7 @@
         @define-color card_shade_color rgba(0, 0, 0, 0.36);
 
         /* Dialog */
-        @define-color dialog_bg_color ${cfg.background-alternate};
+        @define-color dialog_bg_color ${cfg.background-tertiary};
         @define-color dialog_fg_color ${cfg.text};
 
         /* Popover */
@@ -149,7 +170,7 @@
         @define-color scrollbar_outline_color rgba(0, 0, 0, 0.5);
 
         /* Sidebar */
-        @define-color sidebar_bg_color ${cfg.background-window};
+        @define-color sidebar_bg_color ${cfg.background-primary};
         @define-color sidebar_fg_color ${cfg.text};
         @define-color sidebar_backdrop_color #2a2a2a;
         @define-color sidebar_shade_color rgba(0, 0, 0, 0.36);
@@ -240,16 +261,15 @@
           ]);
 
         # TODO: Color naming; generalize colors together with gtk colors
-        accent-hover = "#83A598";
+        accent-hover = lighten cfg.accent 10;
         text-inactive = cfg.text-inactive;
         text-active = "#B8BB26";
         text-negative = cfg.error;
         text-neutral = "#F67400";
         text-positive = "#27AE60";
-        link = accent-standalone;
+        link = cfg.yellow;
         link-visited = "#7F8C8D";
         link-selected = "#FDBC4B";
-        color13 = "#FCFCFC";
         color15 = "#BDC3C7";
 
         # Based on https://store.kde.org/p/1327717/
@@ -277,8 +297,8 @@
         IntensityEffect=0
 
         [Colors:Button]
-        BackgroundAlternate=${qtColor cfg.background-alternate}
-        BackgroundNormal=${qtColor cfg.background-window}
+        BackgroundAlternate=${qtColor cfg.background-tertiary}
+        BackgroundNormal=${qtColor cfg.background-primary}
         DecorationFocus=${qtColor cfg.accent}
         DecorationHover=${qtColor accent-hover}
         ForegroundActive=${qtColor link}
@@ -291,8 +311,8 @@
         ForegroundVisited=${qtColor link-visited}
 
         [Colors:Complementary]
-        BackgroundAlternate=${qtColor cfg.background-alternate}
-        BackgroundNormal=${qtColor cfg.background-window}
+        BackgroundAlternate=${qtColor cfg.background-tertiary}
+        BackgroundNormal=${qtColor cfg.background-primary}
         DecorationFocus=${qtColor cfg.accent}
         DecorationHover=${qtColor accent-hover}
         ForegroundActive=${qtColor text-active}
@@ -318,10 +338,10 @@
 
         [Colors:Selection]
         BackgroundAlternate=${qtColor link}
-        BackgroundNormal=${qtColor cfg.accent}
-        DecorationFocus=${qtColor cfg.accent}
+        BackgroundNormal=${qtColor cfg.accent-background}
+        DecorationFocus=${qtColor cfg.accent-background}
         DecorationHover=${qtColor accent-hover}
-        ForegroundActive=${qtColor color13}
+        ForegroundActive=${qtColor cfg.accent-text}
         ForegroundInactive=${qtColor cfg.text}
         ForegroundLink=${qtColor link-selected}
         ForegroundNegative=${qtColor text-negative}
@@ -331,8 +351,8 @@
         ForegroundVisited=${qtColor color15}
 
         [Colors:Tooltip]
-        BackgroundAlternate=${qtColor cfg.background-alternate}
-        BackgroundNormal=${qtColor cfg.background-window}
+        BackgroundAlternate=${qtColor cfg.background-tertiary}
+        BackgroundNormal=${qtColor cfg.background-primary}
         DecorationFocus=${qtColor cfg.accent}
         DecorationHover=${qtColor accent-hover}
         ForegroundActive=${qtColor text-active}
@@ -345,8 +365,8 @@
         ForegroundVisited=${qtColor link-visited}
 
         [Colors:View]
-        BackgroundAlternate=${qtColor cfg.background-alternate}
-        BackgroundNormal=${qtColor cfg.background-view}
+        BackgroundAlternate=${qtColor cfg.background-tertiary}
+        BackgroundNormal=${qtColor cfg.background-secondary}
         DecorationFocus=${qtColor cfg.accent}
         DecorationHover=${qtColor accent-hover}
         ForegroundActive=${qtColor text-active}
@@ -359,8 +379,8 @@
         ForegroundVisited=${qtColor link-visited}
 
         [Colors:Window]
-        BackgroundAlternate=${qtColor cfg.background-alternate}
-        BackgroundNormal=${qtColor cfg.background-window}
+        BackgroundAlternate=${qtColor cfg.background-tertiary}
+        BackgroundNormal=${qtColor cfg.background-primary}
         DecorationFocus=${qtColor cfg.accent}
         DecorationHover=${qtColor accent-hover}
         ForegroundActive=${qtColor text-active}
@@ -420,8 +440,8 @@
         activeBlend=${qtColor cfg.text}
         activeFont=Sans Serif,10,-1,5,50,0,0,0,0,0
         activeForeground=${qtColor cfg.text}
-        inactiveBackground=${qtColor cfg.background-window}
-        inactiveBlend=${qtColor cfg.background-alternate}
+        inactiveBackground=${qtColor cfg.background-primary}
+        inactiveBlend=${qtColor cfg.background-tertiary}
         inactiveForeground=204,190,155
       '';
 
