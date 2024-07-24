@@ -12,12 +12,22 @@
         logRetentionDays = 7;
       };
 
-      upstreams.groups.default = [ "https://one.one.one.one/dns-query" ];
+      upstreams.groups.default = [
+        # Cloudflare DoH
+        "https://one.one.one.one/dns-query"
 
-      bootstrapDns = {
-        upstream = "https://one.one.one.one/dns-query";
-        ips = [ "1.1.1.1" "1.0.0.1" ];
-      };
+        # Cloudflare DoT
+        "tcp-tls:2606:4700:4700::1111"
+        "tcp-tls:1.1.1.1"
+
+        # Quad9 DoH
+        "https://dns.quad9.net/dns-query"
+
+        # Quad9 DoT
+        "tcp-tls:2620:fe::fe"
+      ];
+
+      bootstrapDns.upstream = "tcp-tls:1.1.1.1";
 
       caching = {
         minTime = "5m";
