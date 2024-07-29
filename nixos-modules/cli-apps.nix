@@ -26,6 +26,7 @@
     progress
     waypipe
     nix-tree
+    htop
   ];
 
   services.udisks2.enable = true;
