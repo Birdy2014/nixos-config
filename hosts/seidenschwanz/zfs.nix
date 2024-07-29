@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   boot.supportedFilesystems = [ "zfs" ];
@@ -8,7 +8,7 @@
   services.zfs = {
     autoScrub = {
       enable = true;
-      interval = "Sat *-*-1..7 20:00";
+      interval = "Sun *-*-1..7 02:00";
     };
 
     autoSnapshot = {
@@ -21,9 +21,12 @@
     };
   };
 
-  systemd.timers."zfs-snapshot-frequent".enable = false;
-  systemd.timers."zfs-snapshot-hourly".enable = false;
-  systemd.timers."zfs-snapshot-daily".enable = true;
-  systemd.timers."zfs-snapshot-weekly".enable = true;
-  systemd.timers."zfs-snapshot-monthly".enable = false;
+  systemd.timers = {
+    "zfs-snapshot-frequent".enable = false;
+    "zfs-snapshot-hourly".enable = false;
+    "zfs-snapshot-daily".timerConfig.OnCalendar = lib.mkForce "*-*-* 02:00:00";
+    "zfs-snapshot-weekly".timerConfig.OnCalendar =
+      lib.mkForce "Mon *-*-* 02:00:00";
+    "zfs-snapshot-monthly".enable = false;
+  };
 }
