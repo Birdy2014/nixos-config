@@ -17,6 +17,7 @@ in {
         desktop = "${pkgs.steam}/share/applications/steam.desktop";
         home = "$HOME/.local/share/steam";
         allowDesktop = true;
+        unshareIpc = false;
         extraBinds = [
           "/run/media/moritz/games/Steam-Linux"
           "/run/media/moritz/games/Steam-Images"

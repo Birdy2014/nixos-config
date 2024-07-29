@@ -1,12 +1,11 @@
 { config, lib, pkgs, ... }:
 
-# TODO: create namespaces. --unshare-pid breaks steam.
-
 let
   cfg = config.my.bubblewrap;
 
   mkBind = dir: [ "--bind" dir dir ];
   mkRoBind = dir: [ "--ro-bind" dir dir ];
+  mkRoBindTry = dir: [ "--ro-bind-try" dir dir ];
   mkDevBind = dir: [ "--dev-bind-try" dir dir ];
   mkEnvBind = env: [ "--setenv" env "\$${env}" ];
 
@@ -22,29 +21,54 @@ let
         "/etc"
         "/run/systemd/resolve"
       ];
-    in (lib.concatMap mkRoBind binds)
-    ++ [ "--proc" "/proc" "--dev" "/dev" "--tmpfs" "/tmp" "--clearenv" ];
+    in (lib.concatMap mkRoBind binds) ++ [
+      "--proc"
+      "/proc"
+      "--dev"
+      "/dev"
+      "--tmpfs"
+      "/tmp"
+      "--clearenv"
+      "--unshare-user"
+      "--unshare-uts"
+      "--unshare-cgroup"
+    ];
+
     desktopCommon = let
       envs =
         [ "HOME" "PATH" "LANG" "TERM" "XDG_RUNTIME_DIR" "XDG_SESSION_TYPE" ];
     in [ "--tmpfs" "$XDG_RUNTIME_DIR" ] ++ (lib.concatMap mkEnvBind envs);
+
     wayland = (mkEnvBind "WAYLAND_DISPLAY")
       ++ (mkRoBind "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY");
+
     xorg = (mkEnvBind "DISPLAY") ++ (mkRoBind "/tmp/.X11-unix");
-    sound = [
-      "--ro-bind"
-      "$XDG_RUNTIME_DIR/pulse/native"
-      "$XDG_RUNTIME_DIR/pulse/native"
-      "--ro-bind-try"
-      "$HOME/.config/pulse/cookie"
-      "$HOME/.config/pulse/cookie"
-      "--ro-bind-try"
-      "$XDG_RUNTIME_DIR/pipewire-0"
-      "$XDG_RUNTIME_DIR/pipewire-0"
-    ];
+
+    sound = (mkRoBind "$XDG_RUNTIME_DIR/pulse/native")
+      ++ (lib.concatMap mkRoBindTry [
+        "$HOME/.config/pulse/cookie"
+        "$XDG_RUNTIME_DIR/pipewire-0"
+      ]);
+
     gpu = (mkDevBind "/dev/dri") ++ (mkRoBind "/sys");
+
     dbus = (mkEnvBind "DBUS_SESSION_BUS_ADDRESS")
       ++ (mkRoBind "$XDG_RUNTIME_DIR/bus");
+
+    newSession = [ "--new-session" ];
+
+    unshareIpc = [ "--unshare-ipc" "--unshare-pid" ];
+
+    theming = (lib.concatMap mkEnvBind [ "QT_QPA_PLATFORMTHEME" ])
+      ++ (lib.concatMap mkRoBind [
+        "$XDG_CONFIG_HOME/kdeglobals"
+        "$XDG_CONFIG_HOME/kcminputrc"
+        "$XDG_CONFIG_HOME/gtk-3.0/settings.ini"
+        "$XDG_CONFIG_HOME/gtk-3.0/gtk.css"
+        "$XDG_CONFIG_HOME/gtk-4.0/settings.ini"
+        "$XDG_CONFIG_HOME/gtk-4.0/gtk.css"
+        "$XDG_DATA_HOME/icons"
+      ]);
   };
 
   wrappedBins = pkgs.runCommand "bubblewrap-wrapped-binaries" {
@@ -59,17 +83,24 @@ let
       let
         mkHomeBind = dir: [ "--bind" dir "$HOME" "--chdir" "$HOME" ];
 
-        args = defaultArgs.common ++ (if value.home == null then [
+        commonArgs = defaultArgs.common ++ (if value.home == null then [
           "--tmpfs"
           "$HOME"
           "--chdir"
           "$HOME"
         ] else
-          mkHomeBind value.home) ++ (lib.optionals value.allowDesktop
-            (defaultArgs.desktopCommon ++ defaultArgs.dbus
-              ++ defaultArgs.wayland ++ defaultArgs.xorg ++ defaultArgs.sound
-              ++ defaultArgs.gpu)) ++ (lib.optionals (value.extraBinds != null)
-                (lib.concatMap mkBind value.extraBinds))
+          mkHomeBind value.home);
+
+        desktopArgs = (lib.optionals value.allowDesktop
+          (defaultArgs.desktopCommon ++ defaultArgs.dbus ++ defaultArgs.wayland
+            ++ defaultArgs.xorg ++ defaultArgs.sound ++ defaultArgs.gpu
+            ++ defaultArgs.theming));
+
+        args = commonArgs ++ desktopArgs
+          ++ (lib.optionals value.newSession defaultArgs.newSession)
+          ++ (lib.optionals value.unshareIpc defaultArgs.unshareIpc)
+          ++ (lib.optionals (value.extraBinds != null)
+            (lib.concatMap mkBind value.extraBinds))
           ++ (lib.optionals (value.extraRoBinds != null)
             (lib.concatMap mkRoBind value.extraRoBinds))
           ++ (lib.optionals (value.extraDevBinds != null)
@@ -112,6 +143,18 @@ in {
           type = lib.types.nullOr lib.types.str;
           default = null;
           description = "home directory";
+        };
+
+        newSession = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = "add `--new-session` to workaround CVE-2017-5226";
+        };
+
+        unshareIpc = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = "create new ipc and pid namespaces";
         };
 
         allowDesktop = lib.mkOption {
