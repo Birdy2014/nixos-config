@@ -2,6 +2,7 @@
 
 {
   nix.settings = {
+    allowed-users = [ "root" "@wheel" ];
     auto-optimise-store = true;
     experimental-features = [ "nix-command" "flakes" "repl-flake" ];
     keep-derivations = true;
