@@ -2,10 +2,12 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
-    ./soundblaster.nix
+    ../../secrets/rotkehlchen.nix
+    ./borg.nix
     ./btrbk.nix
+    ./hardware-configuration.nix
     ./kdeconnect.nix
+    ./soundblaster.nix
   ];
 
   my = {
