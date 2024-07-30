@@ -59,16 +59,18 @@ let
 
     unshareIpc = [ "--unshare-ipc" "--unshare-pid" ];
 
-    theming = (lib.concatMap mkEnvBind [ "QT_QPA_PLATFORMTHEME" ])
-      ++ (lib.concatMap mkRoBind [
-        "$XDG_CONFIG_HOME/kdeglobals"
-        "$XDG_CONFIG_HOME/kcminputrc"
-        "$XDG_CONFIG_HOME/gtk-3.0/settings.ini"
-        "$XDG_CONFIG_HOME/gtk-3.0/gtk.css"
-        "$XDG_CONFIG_HOME/gtk-4.0/settings.ini"
-        "$XDG_CONFIG_HOME/gtk-4.0/gtk.css"
-        "$XDG_DATA_HOME/icons"
-      ]);
+    theming = (lib.concatMap mkEnvBind [
+      "QT_QPA_PLATFORMTHEME"
+      "PLASMA_INTEGRATION_USE_PORTAL"
+    ]) ++ (lib.concatMap mkRoBind [
+      "$XDG_CONFIG_HOME/kdeglobals"
+      "$XDG_CONFIG_HOME/kcminputrc"
+      "$XDG_CONFIG_HOME/gtk-3.0/settings.ini"
+      "$XDG_CONFIG_HOME/gtk-3.0/gtk.css"
+      "$XDG_CONFIG_HOME/gtk-4.0/settings.ini"
+      "$XDG_CONFIG_HOME/gtk-4.0/gtk.css"
+      "$XDG_DATA_HOME/icons"
+    ]);
   };
 
   wrappedBins = pkgs.runCommand "bubblewrap-wrapped-binaries" {
