@@ -89,6 +89,12 @@
     "mitigations=off"
   ];
 
+  services.static-web-server = {
+    enable = true;
+    listen = "[::]:8787";
+    root = "/home/moritz/misc/nighttab-images";
+  };
+
   fileSystems."/run/media/moritz/family" = {
     device = "//seidenschwanz.mvogel.dev/family";
     fsType = "cifs";
