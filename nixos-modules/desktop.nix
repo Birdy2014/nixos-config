@@ -100,11 +100,7 @@
             };
             "GroupOrder"."0" = "Default";
           };
-          globalOptions = {
-            "Hotkey/TriggerKeys" = { "0" = "Super_R"; };
-            # waylandim is currently broken with sway
-            "Behavior/DisabledAddons"."0" = "waylandim";
-          };
+          globalOptions."Hotkey/TriggerKeys"."0" = "Super_R";
         };
       };
     };
