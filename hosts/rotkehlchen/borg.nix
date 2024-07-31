@@ -11,6 +11,7 @@
       "${home}/.mozilla"
       "${home}/.ssh"
       "${home}/.thunderbird"
+      "${home}/Documents"
       "${home}/Downloads"
       "${home}/misc"
     ];
@@ -24,5 +25,12 @@
       passCommand = "cat ${config.sops.secrets.borgbackup-home-password.path}";
     };
     startAt = "*-*-* 00:00:00";
+    persistentTimer = true;
+    prune.keep = {
+      within = "1d"; # Keep all archives from the last day
+      daily = 7;
+      weekly = 4;
+      monthly = 6;
+    };
   };
 }
