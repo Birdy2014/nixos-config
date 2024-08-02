@@ -63,6 +63,8 @@ for _, lsp in ipairs(servers) do
         }
     elseif lsp == "bashls" then
         conf.filetypes = { "sh", "bash" }
+    elseif lsp == "denols" then
+        conf.root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc")
     end
     lspconfig[lsp].setup(conf)
 end
