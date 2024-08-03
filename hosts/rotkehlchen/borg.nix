@@ -9,6 +9,7 @@
       "${home}/.config"
       "${home}/.local"
       "${home}/.mozilla"
+      "${home}/.sandboxed"
       "${home}/.ssh"
       "${home}/.thunderbird"
       "${home}/Documents"

@@ -15,7 +15,7 @@ in {
       steam = {
         executable = "${pkgs.steam}/bin/steam";
         desktop = "${pkgs.steam}/share/applications/steam.desktop";
-        home = "$HOME/.local/share/steam";
+        persistentHome = true;
         allowDesktop = true;
         unshareIpc = false;
         extraBinds = [
@@ -41,7 +41,7 @@ in {
         desktop =
           "${pkgs.heroic}/share/applications/com.heroicgameslauncher.hgl.desktop";
         allowDesktop = true;
-        home = "$HOME/.local/share/heroic";
+        persistentHome = true;
         extraBinds = [ "/run/media/moritz/games/Heroic" "/sys/class/input" ];
         extraDevBinds = (lib.genList (x: "/dev/hidraw${toString x}") 13)
           ++ [ "/dev/input" "/dev/uinput" ];

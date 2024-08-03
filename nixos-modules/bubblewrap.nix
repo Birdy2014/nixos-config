@@ -81,17 +81,17 @@ let
     mkdir -p $out/bin
     mkdir -p $out/share/applications
 
-    ${lib.concatStringsSep "\n" (lib.mapAttrsToList (command: value:
+    ${lib.concatStringsSep "\n" (lib.mapAttrsToList (appName: value:
       let
         mkHomeBind = dir: [ "--bind" dir "$HOME" "--chdir" "$HOME" ];
 
-        commonArgs = defaultArgs.common ++ (if value.home == null then [
+        commonArgs = defaultArgs.common ++ (if !value.persistentHome then [
           "--tmpfs"
           "$HOME"
           "--chdir"
           "$HOME"
         ] else
-          mkHomeBind value.home);
+          mkHomeBind "$HOME/.sandboxed/${appName}");
 
         desktopArgs = (lib.optionals value.allowDesktop
           (defaultArgs.desktopCommon ++ defaultArgs.dbus ++ defaultArgs.wayland
@@ -108,18 +108,20 @@ let
           ++ (lib.optionals (value.extraDevBinds != null)
             (lib.concatMap mkDevBind value.extraDevBinds));
       in ''
-        cat <<'_EOF' >$out/bin/${command}
+        executable_out_path="$out/bin/$(basename ${value.executable})"
+
+        cat <<'_EOF' >"$executable_out_path"
           #! ${pkgs.runtimeShell} -e
           exec ${pkgs.bubblewrap}/bin/bwrap ${
             lib.concatStringsSep " " (map (arg: ''"${arg}"'') args)
           } ${builtins.toString value.executable} "$@"
         _EOF
 
-        chmod 0755 $out/bin/${command}
+        chmod 0755 "$executable_out_path"
 
         ${lib.optionalString (value.desktop != null) ''
           substitute ${value.desktop} $out/share/applications/$(basename ${value.desktop}) \
-            --replace ${value.executable} $out/bin/${command}
+            --replace ${value.executable} "$executable_out_path"
         ''}
       '') cfg)}
   '';
@@ -141,10 +143,10 @@ in {
             ".desktop file to modify. Only necessary if it uses the absolute path to the executable.";
         };
 
-        home = lib.mkOption {
-          type = lib.types.nullOr lib.types.str;
-          default = null;
-          description = "home directory";
+        persistentHome = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "use ~/.sandboxed/<name> as home directory";
         };
 
         newSession = lib.mkOption {
