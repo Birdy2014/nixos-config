@@ -35,6 +35,17 @@ in {
         extraBinds = [ "$HOME/.local/share/PrismLauncher" ];
         extraRoBinds = [ "$HOME/Downloads" ];
       };
+
+      heroic = {
+        executable = "${pkgs.heroic}/bin/heroic";
+        desktop =
+          "${pkgs.heroic}/share/applications/com.heroicgameslauncher.hgl.desktop";
+        allowDesktop = true;
+        home = "$HOME/.local/share/heroic";
+        extraBinds = [ "/run/media/moritz/games/Heroic" "/sys/class/input" ];
+        extraDevBinds = (lib.genList (x: "/dev/hidraw${toString x}") 13)
+          ++ [ "/dev/input" "/dev/uinput" ];
+      };
     };
 
     environment.systemPackages = with pkgs; [
