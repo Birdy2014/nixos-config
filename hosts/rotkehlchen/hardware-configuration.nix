@@ -28,6 +28,7 @@
     device = "/dev/disk/by-uuid/b6d597be-f401-45a6-a7aa-e9c5498745f0";
     fsType = "btrfs";
     options = [ "subvol=home" "compress=zstd:1" ];
+    neededForBoot = true; # Needed for sops to find the key
   };
 
   fileSystems."/nix" = {
