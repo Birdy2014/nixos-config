@@ -43,8 +43,7 @@ in {
         allowDesktop = true;
         persistentHome = true;
         extraBinds = [ "/run/media/moritz/games/Heroic" "/sys/class/input" ];
-        extraDevBinds = (lib.genList (x: "/dev/hidraw${toString x}") 13)
-          ++ [ "/dev/input" "/dev/uinput" ];
+        extraDevBinds = [ "/dev/input" "/dev/uinput" ];
       };
     };
 
