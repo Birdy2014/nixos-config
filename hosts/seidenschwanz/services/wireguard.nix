@@ -1,50 +1,47 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, myLib, pkgs, ... }:
 
 let
   peers = [
     {
       publicKey = "P0Xs1Jfqgy+anFVHTMQfRyPiWjY0oTXEfHqp/RbnMz8=";
       pskFile = config.sops.secrets."wireguard/psk2".path;
-      ipv4 = "10.100.0.2";
-      ipv6 = "fd00:100::2";
+      n = 2;
       allowOutgoing = true;
     }
     {
       publicKey = "/dPnjIFXx5+dVWIloVCdrVrNnrQg7nsVoQeedFM982U=";
       pskFile = config.sops.secrets."wireguard/psk3".path;
-      ipv4 = "10.100.0.3";
-      ipv6 = "fd00:100::3";
+      n = 3;
       allowOutgoing = true;
     }
     {
       publicKey = "/a07tuiXkhvz2dny3u6y9GdfN/aL3jONxh6/MeWWlXI=";
       pskFile = null;
-      ipv4 = "10.100.0.4";
-      ipv6 = "fd00:100::4";
+      n = 4;
       allowOutgoing = true;
     }
     {
       publicKey = "GRqdpb8pU/q1xABuSm1EIxEXAaDavWRKosoRf4yMXk8=";
       pskFile = null;
-      ipv4 = "10.100.0.5";
-      ipv6 = "fd00:100::5";
+      n = 5;
       allowOutgoing = true;
     }
     {
       publicKey = "AJ5znHncvK516Msh7F7aultWZt01rhIE6PCdD2CW33Q=";
       pskFile = null;
-      ipv4 = "10.100.0.6";
-      ipv6 = "fd00:100::6";
+      n = 6;
       allowOutgoing = true;
     }
     {
       publicKey = "F68/nZVgzZeNMYUONM54EIn8HVwnNpuWuDR9is10nzQ=";
       pskFile = config.sops.secrets."wireguard/psk7".path;
-      ipv4 = "10.100.0.7";
-      ipv6 = "fd00:100::7";
+      n = 7;
       allowOutgoing = false;
     }
   ];
+
+  vpnIp4Addr = n: "10.100.0.${toString n}";
+  vpnIp6Addr = n: "fd00:90::100:${myLib.decToHex n}";
 in {
   environment.systemPackages = [ pkgs.wireguard-tools ];
 
@@ -61,11 +58,11 @@ in {
           PrivateKeyFile = config.sops.secrets."wireguard/private-key".path;
           ListenPort = 49626;
         };
-        wireguardPeers = map ({ publicKey, pskFile, ipv4, ipv6, ... }: {
+        wireguardPeers = map ({ publicKey, pskFile, n, ... }: {
           wireguardPeerConfig = {
             PublicKey = publicKey;
             PresharedKeyFile = lib.mkIf (pskFile != null) pskFile;
-            AllowedIPs = [ ipv4 ipv6 ];
+            AllowedIPs = [ (vpnIp4Addr n) (vpnIp6Addr n) ];
           };
         }) peers;
       };
@@ -73,9 +70,18 @@ in {
 
     networks."50-wg0" = {
       matchConfig.Name = "wg0";
-      address = [ "10.100.0.1/24" "fd00:100::1/64" ];
-      networkConfig.IPMasquerade = "both";
+      address = [ "${vpnIp4Addr 1}/24" "${vpnIp6Addr 1}/120" ];
+      networkConfig = {
+        IPForward = "yes";
+        IPMasquerade = "ipv4";
+      };
     };
+  };
+
+  services.ndppd = {
+    enable = true;
+    # Use method "static" to reserve all adresses in this range
+    proxies.lan.rules."${vpnIp6Addr 0}/120".method = "static";
   };
 
   # NAT traversal
@@ -110,20 +116,20 @@ in {
       content = ''
         define ALLOWED_IPSV4 = {
           ${
-            lib.concatStringsSep "," (map ({ ipv4, ... }: ipv4)
+            lib.concatStringsSep "," (map ({ n, ... }: vpnIp4Addr n)
               (lib.filter ({ allowOutgoing, ... }: allowOutgoing) peers))
           }
         }
 
         define ALLOWED_IPSV6 = {
           ${
-            lib.concatStringsSep "," (map ({ ipv6, ... }: ipv6)
+            lib.concatStringsSep "," (map ({ n, ... }: vpnIp6Addr n)
               (lib.filter ({ allowOutgoing, ... }: allowOutgoing) peers))
           }
         }
 
-        define WG_NET_IP4 = 10.100.0.0/24
-        define WG_NET_IP6 = fd00:100::/64
+        define WG_NET_IP4 = ${vpnIp4Addr 0}/24
+        define WG_NET_IP6 = ${vpnIp6Addr 0}/120
 
         chain output {
           type filter hook postrouting priority 0; policy accept;
@@ -132,6 +138,13 @@ in {
           iifname wg0 oifname lan ip6 saddr $ALLOWED_IPSV6 accept
           iifname wg0 oifname lan ip saddr $WG_NET_IP4 log prefix "forbidden IPv4 wireguard peer tries to connect to outside network: " drop
           iifname wg0 oifname lan ip6 saddr $WG_NET_IP6 log prefix "forbidden IPv6 wireguard peer tries to connect to outside network: " drop
+        }
+
+        chain nat {
+          type nat hook postrouting priority 100; policy accept;
+
+          iifname wg0 oifname lan ip6 saddr $ALLOWED_IPSV6 ip6 daddr fc00::/7 accept
+          iifname wg0 oifname lan ip6 saddr $ALLOWED_IPSV6 masquerade
         }
       '';
     };
