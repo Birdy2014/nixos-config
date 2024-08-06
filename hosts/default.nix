@@ -29,6 +29,7 @@ in (builtins.listToAttrs (map ({ name, system }: {
     system = system;
     specialArgs = {
       inherit inputs;
+      myLib = import ../lib lib;
       pkgsSelf = inputs.self.packages.${system};
       pkgsUnstable = inputs.nixpkgs-unstable.legacyPackages.${system};
     };

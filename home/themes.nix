@@ -1,4 +1,4 @@
-{ lib, pkgs, pkgsSelf, config, ... }:
+{ lib, myLib, pkgs, pkgsSelf, config, ... }:
 
 {
   imports = [ ./xdg.nix ];
@@ -38,43 +38,17 @@
   config = let
     cfg = config.my.theme;
 
-    # Watch out - there is no error handling.
-
-    hexDigitToDec = digit:
-      let value = lib.strings.charToInt (lib.toLower digit);
-      in if value >= 48 && value <= 57 then value - 48 else value - 87;
-
-    hexToDec = hex:
-      let len = lib.stringLength hex;
-      in if len == 0 then
-        0
-      else
-        ((hexDigitToDec (lib.substring (len - 1) 1 hex)) + 16
-          * hexToDec (lib.substring 0 (len - 1) hex));
-
-    decDigitToHex = digit:
-      if digit < 10 then
-        toString digit
-      else
-        lib.elemAt [ "a" "b" "c" "d" "e" "f" ] (digit - 10);
-
-    decToHex = dec:
-      if dec == 0 then
-        ""
-      else
-        (decToHex (dec / 16) + decDigitToHex (lib.mod dec 16));
-
     clampByte = x:
       if x < 0 then 0 else (if x > 255 then 255 else builtins.floor x);
 
     shade = color: factor:
       "#" + (lib.concatStrings (map (x:
-        lib.fixedWidthString 2 "0"
-        (decToHex (clampByte (hexToDec (lib.substring x 2 color) * factor)))) [
-          1
-          3
-          5
-        ]));
+        lib.fixedWidthString 2 "0" (myLib.decToHex
+          (clampByte (myLib.hexToDec (lib.substring x 2 color) * factor)))) [
+            1
+            3
+            5
+          ]));
 
     accent-standalone = shade cfg.accent 1.5;
 
@@ -260,7 +234,11 @@
       "kdeglobals".text = let
         qtColor = hex:
           lib.concatStringsSep ","
-          (map (x: toString (hexToDec (lib.substring x 2 hex))) [ 1 3 5 ]);
+          (map (x: toString (myLib.hexToDec (lib.substring x 2 hex))) [
+            1
+            3
+            5
+          ]);
 
         # TODO: Color naming; generalize colors together with gtk colors
         accent-hover = "#83A598";

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, pkgsSelf, pkgsUnstable, inputs, ... }:
+{ config, lib, myLib, pkgs, pkgsSelf, pkgsUnstable, inputs, ... }:
 
 let cfg = config.my.home;
 in {
@@ -41,7 +41,7 @@ in {
     home-manager = {
       useUserPackages = true;
       useGlobalPkgs = true;
-      extraSpecialArgs = { inherit inputs pkgsSelf pkgsUnstable; };
+      extraSpecialArgs = { inherit inputs myLib pkgsSelf pkgsUnstable; };
       users.moritz = {
         imports = [ ../home { home.stateVersion = cfg.stateVersion; } ]
           ++ cfg.extraModules;
