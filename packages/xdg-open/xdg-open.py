@@ -18,6 +18,7 @@ from enum import Enum
 class OpenSuccess(Enum):
     SUCCESS = 0
     ERROR = 1
+    CANCELED = 2
 
 
 def parse_mime_associations() -> dict[str, list[str]]:
@@ -263,7 +264,7 @@ def main(args):
 
     for arg in args[1:]:
         if not should_only_use_portal:
-            if open_directly(arg) == OpenSuccess.SUCCESS:
+            if open_directly(arg) in [OpenSuccess.SUCCESS, OpenSuccess.CANCELED]:
                 continue
         open_xdg_portal(arg)
 
@@ -282,7 +283,7 @@ def open_directly(arg: str) -> OpenSuccess:
 
     if selected_entry is None:
         send_notification("Failed to open file", f"Nothing selected")
-        return OpenSuccess.ERROR
+        return OpenSuccess.CANCELED
 
     selected_entry.exec([arg])
     return OpenSuccess.SUCCESS
