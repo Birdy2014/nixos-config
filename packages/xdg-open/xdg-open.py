@@ -2,55 +2,42 @@
 
 default_terminal = "kitty"
 
-mime_associations: dict[str, str | list[str]] = {
-    "text/*": "nvim.desktop",
-    "text/html": "firefox.desktop",
-    "text/xml": "firefox.desktop",
-    "image/*": "imv-dir.desktop",
-    "video/*": "mpv.desktop",
-    "audio/*": "mpv.desktop",
-    "application/epub\+zip": "org.pwmt.zathura.desktop",
-    "application/javascript": "nvim.desktop",
-    "application/json": "nvim.desktop",
-    "application/pdf": "org.pwmt.zathura-pdf-mupdf.desktop",
-    "application/postscript": "org.pwmt.zathura-ps.desktop",
-    "application/python": "nvim.desktop",
-    "application/rss\+xml": "nvim.desktop",
-    "application/x-bittorrent": "transmission-gtk.desktop",
-    "application/x-javascript": "nvim.desktop",
-    "application/x-sh": "nvim.desktop",
-    "application/x-shellscript": "nvim.desktop",
-    "application/x-wine-extension-ini": "nvim.desktop",
-    "application/zip": "org.gnome.FileRoller.desktop",
-    "inode/directory": "lf.desktop",
-
-    # Office formats
-    "application/vnd\.oasis\.opendocument\.spreadsheet": [ "libreoffice-calc.desktop", "calc.desktop" ], # ods
-    "application/vnd\.openxmlformats-officedocument\.spreadsheetml\.sheet": [ "libreoffice-calc.desktop", "calc.desktop" ], # xlsx
-    "application/(vnd\.)?ms-?excel": [ "libreoffice-calc.desktop", "calc.desktop" ], # xls
-    "application/vnd\.oasis\.opendocument\.text": [ "libreoffice-writer.desktop", "writer.desktop" ], # odt
-    "application/vnd\.openxmlformats-officedocument\.wordprocessingml\.document": [ "libreoffice-writer.desktop", "writer.desktop" ], # docx
-    "application/(vnd\.)?ms-?word": [ "libreoffice-writer.desktop", "writer.desktop" ], # doc
-    "application/vnd\.openxmlformats-officedocument\.presentationml\.presentation": [ "libreoffice-impress.desktop", "impress.desktop" ], # pptx
-}
-
 extension_associations: dict[str, str | list[str]] = {
     "stl": "f3d.desktop",
     "obj": "f3d.desktop",
-}
-
-scheme_associations: dict[str, str | list[str]] = {
-    "http": "firefox.desktop",
-    "https": "firefox.desktop",
-    "mailto": "thunderbird.desktop",
-    "file": "lf.desktop",
-    "steam": "steam.desktop",
 }
 
 import os
 import re
 import sys
 import subprocess
+import dbus
+from enum import Enum
+
+
+class OpenSuccess(Enum):
+    SUCCESS = 0
+    ERROR = 1
+
+
+def parse_mime_associations() -> dict[str, list[str]]:
+    HOME = os.environ.get("HOME", "")
+    XDG_CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME", f"{HOME}/.config")
+
+    mime_associations: dict[str, list[str]] = {}
+
+    association_file = f"{XDG_CONFIG_HOME}/mimeapps_patterns.list"
+
+    if os.path.isfile(association_file):
+        with open(association_file, "r") as patterns_file:
+            for line in patterns_file:
+                pattern, associations = line.strip().split("=")
+                mime_associations[pattern] = associations.split(";")
+
+    return mime_associations
+
+
+mime_associations = parse_mime_associations()
 
 
 class DesktopEntry:
@@ -270,25 +257,77 @@ mimeapps_path = f"{config_home}/mimeapps.list"
 
 
 def main(args):
+    should_only_use_portal = os.environ.get(
+        "NIXOS_XDG_OPEN_USE_PORTAL", "0"
+    ) == "1" or os.path.isfile("/.flatpak-info")
+
     for arg in args[1:]:
-        desktop_entries = get_file_associations(arg)
-        if len(desktop_entries) == 0:
-            send_notification(
-                "Failed to open file", f"Could not find association for {arg}"
-            )
-            continue
+        if not should_only_use_portal:
+            if open_directly(arg) == OpenSuccess.SUCCESS:
+                continue
+        open_xdg_portal(arg)
 
-        selected_entry = (
-            show_menu(desktop_entries)
-            if len(desktop_entries) > 1
-            else desktop_entries[0]
+
+def open_directly(arg: str) -> OpenSuccess:
+    desktop_entries = get_file_associations(arg)
+    if len(desktop_entries) == 0:
+        send_notification(
+            "Failed to open file", f"Could not find association for {arg}"
         )
+        return OpenSuccess.ERROR
 
-        if selected_entry is None:
-            send_notification("Failed to open file", f"Nothing selected")
-            continue
+    selected_entry = (
+        show_menu(desktop_entries) if len(desktop_entries) > 1 else desktop_entries[0]
+    )
 
-        selected_entry.exec([arg])
+    if selected_entry is None:
+        send_notification("Failed to open file", f"Nothing selected")
+        return OpenSuccess.ERROR
+
+    selected_entry.exec([arg])
+    return OpenSuccess.SUCCESS
+
+
+# TODO: Check if open was successfull to only display an error if both methods were unsuccessfull
+def open_xdg_portal(arg: str) -> OpenSuccess:
+    session_bus = dbus.SessionBus()
+    proxy = session_bus.get_object(
+        "org.freedesktop.portal.Desktop", "/org/freedesktop/portal/desktop"
+    )
+
+    arg = strip_file_scheme(arg)
+
+    if re.match("(.+)://", arg) is not None:
+        proxy.OpenURI("", arg, {}, dbus_interface="org.freedesktop.portal.OpenURI")
+    elif os.path.isfile(arg):
+        with open(arg, "r") as f:
+            proxy.OpenFile(
+                "",
+                dbus.types.UnixFd(f),
+                {},
+                dbus_interface="org.freedesktop.portal.OpenURI",
+            )
+    elif os.path.isdir(arg):
+        fd = os.open(arg, os.O_RDONLY)
+        proxy.OpenDirectory(
+            "",
+            dbus.types.UnixFd(fd),
+            {},
+            dbus_interface="org.freedesktop.portal.OpenURI",
+        )
+        os.close(fd)
+    else:
+        send_notification("Failed to open file", f"File {arg} doesn't exist.")
+        return OpenSuccess.ERROR
+    return OpenSuccess.SUCCESS
+
+
+def strip_file_scheme(uri: str) -> str:
+    if (match := re.match("(.+)://(.+)", uri)) is not None:
+        scheme = match.group(1)
+        if scheme == "file":
+            return match.group(2)
+    return uri
 
 
 def get_file_associations(arg: str) -> list[DesktopEntry]:
@@ -299,18 +338,6 @@ def get_file_associations(arg: str) -> list[DesktopEntry]:
         if desktop_entry is not None and desktop_entry not in desktop_entries:
             desktop_entries.append(desktop_entry)
 
-    # Match Scheme
-    if (match := re.match("(.+)://", arg)) is not None:
-        arg_scheme = match.group(1)
-        for scheme, desktop_file in scheme_associations.items():
-            if re.match(scheme, arg_scheme) is not None:
-                if isinstance(desktop_file, str):
-                    add_desktop_entry(desktop_file)
-                elif isinstance(desktop_file, list):
-                    for file in desktop_file:
-                        add_desktop_entry(file)
-        return desktop_entries
-
     # Match File Extensions
     for file_extension, desktop_file in extension_associations.items():
         if arg.endswith(file_extension):
@@ -320,21 +347,26 @@ def get_file_associations(arg: str) -> list[DesktopEntry]:
                 for file in desktop_file:
                     add_desktop_entry(file)
 
-    # Match MIME Type
-    completed = subprocess.run(
-        ["file", "--mime-type", "--brief", "-E", os.path.realpath(arg)], capture_output=True
-    )
-    if completed.returncode != 0:
-        return []
-    arg_mime_type = completed.stdout.decode()
+    # Match Scheme
+    if (match := re.match("(.+)://", arg)) is not None:
+        arg_scheme = match.group(1)
+        arg_mime_type = f"x-scheme-handler/{arg_scheme}"
+    else:
+        # Match MIME Type
+        completed = subprocess.run(
+            ["xdg-mime", "query", "filetype", os.path.realpath(arg)],
+            capture_output=True,
+        )
+        if completed.returncode != 0:
+            return []
+        arg_mime_type = completed.stdout.decode().strip()
 
-    for mime_type, desktop_file in mime_associations.items():
-        if re.match(mime_type, arg_mime_type) is not None:
-            if isinstance(desktop_file, str):
-                add_desktop_entry(desktop_file)
-            elif isinstance(desktop_file, list):
-                for file in desktop_file:
-                    add_desktop_entry(file)
+    for mime_type_pattern, desktop_file in mime_associations.items():
+        if (mime_type_pattern == arg_mime_type) or (
+            mime_type_pattern[-1] == "/" and arg_mime_type.startswith(mime_type_pattern)
+        ):
+            for file in desktop_file:
+                add_desktop_entry(file)
     return desktop_entries
 
 

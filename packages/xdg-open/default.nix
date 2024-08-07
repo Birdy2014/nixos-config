@@ -5,7 +5,7 @@ stdenvNoCC.mkDerivation {
   version = "0.0.1";
 
   nativeBuildInputs = [ makeWrapper ];
-  buildInputs = [ python3 ];
+  buildInputs = [ (python3.withPackages (p: [ p.dbus-python ])) ];
   dontUnpack = true;
 
   installPhase = ''

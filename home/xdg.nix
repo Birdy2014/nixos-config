@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, pkgsSelf, ... }:
 
 {
   home.homeDirectory = "/home/moritz";
@@ -9,6 +9,72 @@
       enable = true;
       createDirectories = true;
     };
+  };
+
+  xdg.configFile = let
+    mimeapps = {
+      "text/" = "nvim.desktop";
+      "text/html" = "firefox.desktop";
+
+      "image/" = "imv-dir.desktop";
+
+      "video/" = "mpv.desktop";
+
+      "audio/" = "mpv.desktop";
+
+      "application/epub+zip" = "org.pwmt.zathura.desktop";
+      "application/javascript" = "nvim.desktop";
+      "application/json" = "nvim.desktop";
+      "application/pdf" = "org.pwmt.zathura-pdf-mupdf.desktop";
+      "application/postscript" = "org.pwmt.zathura-ps.desktop";
+      "application/python" = "nvim.desktop";
+      "application/rss+xml" = "nvim.desktop";
+      "application/x-javascript" = "nvim.desktop";
+      "application/x-sh" = "nvim.desktop";
+      "application/x-shellscript" = "nvim.desktop";
+      "application/x-wine-extension-ini" = "nvim.desktop";
+      "application/xml" = "firefox.desktop";
+
+      "inode/directory" = "lf.desktop";
+
+      "x-scheme-handler/http" = "firefox.desktop";
+      "x-scheme-handler/https" = "firefox.desktop";
+      "x-scheme-handler/mailto" = "thunderbird.desktop";
+    };
+  in {
+    "mimeapps_patterns.list".text = "${lib.concatLines
+      (map ({ name, value }: "${name}=${value}") (lib.attrsToList mimeapps))}";
+
+    "mimeapps.list".source = pkgs.runCommand "mimeapps.list" { } ''
+      declare -A mimeapps=(
+        ${
+          lib.concatLines (map ({ name, value }: ''["${name}"]="${value}"'')
+            (lib.attrsToList mimeapps))
+        }
+      )
+
+      cat <<_EOF >"$out"
+      [Added Associations]
+
+      [Removed Associations]
+
+      [Default Applications]
+      _EOF
+
+      while IFS="" read -r mimetype; do
+        for mimeapp_prefix in "''${!mimeapps[@]}"; do
+          if [[ "''${mimeapp_prefix: -1}" == '/' ]]; then
+            if [[ "$mimetype" == "$mimeapp_prefix"* ]]; then
+              echo "$mimetype=''${mimeapps[$mimeapp_prefix]}"
+            fi
+          else
+            if [[ "$mimetype" == "$mimeapp_prefix" ]]; then
+              echo "$mimetype=''${mimeapps[$mimeapp_prefix]}"
+            fi
+          fi
+        done
+      done < "${pkgs.shared-mime-info}/share/mime/types" >> "$out"
+    '';
   };
 
   home.sessionVariables = let
@@ -35,8 +101,10 @@
     SQLITE_HISTORY = "${dataHome}/sqlite_history";
   };
 
-  # Make some applications find kitty when opening desktop files
   home.packages = [
+    pkgsSelf.xdg-open
+
+    # Make some applications find kitty when opening desktop files
     (pkgs.writeShellScriptBin "xdg-terminal-exec" ''
       kitty "$@"
     '')

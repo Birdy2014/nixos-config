@@ -32,6 +32,9 @@ let
       "--unshare-user"
       "--unshare-uts"
       "--unshare-cgroup"
+      "--setenv"
+      "NIXOS_XDG_OPEN_USE_PORTAL"
+      "1"
     ];
 
     desktopCommon = let

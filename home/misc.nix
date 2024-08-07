@@ -16,7 +16,6 @@
     libqalculate
     yt-dlp
     bashmount
-    pkgsSelf.xdg-open
     pkgsSelf.playerctl-current
 
     # GUI
