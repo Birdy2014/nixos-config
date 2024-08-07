@@ -300,26 +300,17 @@ def open_xdg_portal(arg: str) -> OpenSuccess:
 
     if re.match("(.+)://", arg) is not None:
         proxy.OpenURI("", arg, {}, dbus_interface="org.freedesktop.portal.OpenURI")
-    elif os.path.isfile(arg):
-        with open(arg, "r") as f:
-            proxy.OpenFile(
-                "",
-                dbus.types.UnixFd(f),
-                {},
-                dbus_interface="org.freedesktop.portal.OpenURI",
-            )
-    elif os.path.isdir(arg):
+    else:
+        # Use OpenFile for files and directories, because OpenDirectory doesn't respect the
+        # inode/directory mime type for some reason.
         fd = os.open(arg, os.O_RDONLY)
-        proxy.OpenDirectory(
+        proxy.OpenFile(
             "",
             dbus.types.UnixFd(fd),
             {},
             dbus_interface="org.freedesktop.portal.OpenURI",
         )
         os.close(fd)
-    else:
-        send_notification("Failed to open file", f"File {arg} doesn't exist.")
-        return OpenSuccess.ERROR
     return OpenSuccess.SUCCESS
 
 
