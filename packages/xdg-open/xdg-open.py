@@ -2,11 +2,6 @@
 
 default_terminal = "kitty"
 
-extension_associations: dict[str, str | list[str]] = {
-    "stl": "f3d.desktop",
-    "obj": "f3d.desktop",
-}
-
 import os
 import re
 import sys
@@ -329,15 +324,6 @@ def get_file_associations(arg: str) -> list[DesktopEntry]:
         desktop_entry = resolve_desktop_entry(desktop_file)
         if desktop_entry is not None and desktop_entry not in desktop_entries:
             desktop_entries.append(desktop_entry)
-
-    # Match File Extensions
-    for file_extension, desktop_file in extension_associations.items():
-        if arg.endswith(file_extension):
-            if isinstance(desktop_file, str):
-                add_desktop_entry(desktop_file)
-            elif isinstance(desktop_file, list):
-                for file in desktop_file:
-                    add_desktop_entry(file)
 
     # Match Scheme
     if (match := re.match("(.+)://", arg)) is not None:
