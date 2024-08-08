@@ -1,4 +1,4 @@
-{ lib, stdenvNoCC, makeWrapper, coreutils, python3 }:
+{ lib, stdenvNoCC, makeWrapper, coreutils, python3, xdg-utils }:
 
 stdenvNoCC.mkDerivation {
   pname = "xdg-open";
@@ -12,7 +12,7 @@ stdenvNoCC.mkDerivation {
     install -Dm755 ${./xdg-open.py} $out/bin/xdg-open
 
     wrapProgram $out/bin/xdg-open \
-      --prefix PATH : ${lib.makeBinPath [ coreutils ]}
+      --prefix PATH : ${lib.makeBinPath [ coreutils xdg-utils ]}
   '';
 
   meta = {
