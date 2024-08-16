@@ -1,36 +1,44 @@
-{ config, osConfig, lib, pkgs, ... }:
+{ config, inputs, osConfig, lib, pkgs, ... }:
 
 {
   programs.waybar = {
     enable = true;
-    style = with config.my.theme;
-      ''
-        @define-color accent ${accent};
-        @define-color accent-text ${accent-text};
-        @define-color background-primary ${background-primary};
-        @define-color background-secondary ${background-secondary};
-        @define-color background-tertiary ${background-tertiary};
-        @define-color text ${text};
-        @define-color text-inactive ${text-inactive};
-        @define-color black ${black};
-        @define-color light-black ${light-black};
-        @define-color red ${red};
-        @define-color light-red ${light-red};
-        @define-color green ${green};
-        @define-color light-green ${light-green};
-        @define-color yellow ${yellow};
-        @define-color light-yellow ${light-yellow};
-        @define-color blue ${blue};
-        @define-color light-blue ${light-blue};
-        @define-color magenta ${magenta};
-        @define-color light-magenta ${light-magenta};
-        @define-color cyan ${cyan};
-        @define-color light-cyan ${light-cyan};
-        @define-color white ${white};
-        @define-color light-white ${light-white};
-        @define-color accent ${accent};
-        @define-color accent-complementary ${accent-complementary};
-      '' + builtins.readFile ./style.css;
+    style = let
+      colorizer = inputs.nix-colorizer;
+      increaseChroma = hex:
+        colorizer.oklchToHex (let okclh = colorizer.hexToOklch hex;
+        in {
+          inherit (okclh) L h;
+          C = okclh.C + 0.1;
+        });
+    in with config.my.theme;
+    ''
+      @define-color accent ${accent};
+      @define-color accent-text ${accent-text};
+      @define-color background-primary ${background-primary};
+      @define-color background-secondary ${background-secondary};
+      @define-color background-tertiary ${background-tertiary};
+      @define-color text ${text};
+      @define-color text-inactive ${text-inactive};
+      @define-color black ${black};
+      @define-color light-black ${light-black};
+      @define-color red ${red};
+      @define-color light-red ${light-red};
+      @define-color green ${green};
+      @define-color light-green ${light-green};
+      @define-color yellow ${yellow};
+      @define-color light-yellow ${light-yellow};
+      @define-color blue ${blue};
+      @define-color light-blue ${light-blue};
+      @define-color magenta ${magenta};
+      @define-color light-magenta ${light-magenta};
+      @define-color cyan ${cyan};
+      @define-color light-cyan ${light-cyan};
+      @define-color white ${white};
+      @define-color light-white ${light-white};
+      @define-color accent ${increaseChroma accent};
+      @define-color accent-complementary ${increaseChroma accent-complementary};
+    '' + builtins.readFile ./style.css;
     systemd.enable = true;
 
     # Waybar doesn't properly reload when the settings are changed and has to be restarted.
