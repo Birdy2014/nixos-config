@@ -7,7 +7,7 @@
     modifier = "Mod4";
     terminal = "kitty";
     launcher = ''
-      rofi -show combi -terminal ${terminal} -run-command "${pkgs.sway}/bin/swaymsg exec '{cmd}'" -run-shell-command "swaymsg exec {terminal} '{cmd}'"'';
+      rofi -show drun -terminal ${terminal} -run-command "${pkgs.sway}/bin/swaymsg exec '{cmd}'" -run-shell-command "swaymsg exec {terminal} '{cmd}'"'';
     color-focused-background = config.my.theme.accent-background;
     color-focused-text = config.my.theme.accent-text;
     color-focused-inactive = config.my.theme.background-primary;

@@ -1,5 +1,0 @@
-@theme "gruvbox-dark"
-
-window {
-    width: 900px;
-}
