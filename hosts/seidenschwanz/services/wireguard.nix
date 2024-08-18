@@ -16,13 +16,13 @@ let
     }
     {
       publicKey = "/a07tuiXkhvz2dny3u6y9GdfN/aL3jONxh6/MeWWlXI=";
-      pskFile = null;
+      pskFile = config.sops.secrets."wireguard/psk4".path;
       n = 4;
       allowOutgoing = true;
     }
     {
       publicKey = "GRqdpb8pU/q1xABuSm1EIxEXAaDavWRKosoRf4yMXk8=";
-      pskFile = null;
+      pskFile = config.sops.secrets."wireguard/psk5".path;
       n = 5;
       allowOutgoing = true;
     }
