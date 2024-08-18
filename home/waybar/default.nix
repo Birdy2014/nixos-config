@@ -9,7 +9,7 @@
         colorizer.oklchToHex (let okclh = colorizer.hexToOklch hex;
         in {
           inherit (okclh) L h;
-          C = okclh.C + 0.1;
+          C = okclh.C + 5.0e-2;
         });
     in with config.my.theme;
     ''
