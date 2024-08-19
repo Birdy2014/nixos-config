@@ -61,19 +61,17 @@
       [Default Applications]
       _EOF
 
-      while IFS="" read -r mimetype; do
-        for mimeapp_prefix in "''${!mimeapps[@]}"; do
-          if [[ "''${mimeapp_prefix: -1}" == '/' ]]; then
+      for mimeapp_prefix in "''${!mimeapps[@]}"; do
+        if [[ "''${mimeapp_prefix: -1}" == '/' ]]; then
+          while IFS="" read -r mimetype; do
             if [[ "$mimetype" == "$mimeapp_prefix"* ]]; then
               echo "$mimetype=''${mimeapps[$mimeapp_prefix]}"
             fi
-          else
-            if [[ "$mimetype" == "$mimeapp_prefix" ]]; then
-              echo "$mimetype=''${mimeapps[$mimeapp_prefix]}"
-            fi
-          fi
-        done
-      done < "${pkgs.shared-mime-info}/share/mime/types" >> "$out"
+          done < "${pkgs.shared-mime-info}/share/mime/types"
+        else
+          echo "$mimeapp_prefix=''${mimeapps[$mimeapp_prefix]}"
+        fi
+      done >> "$out"
     '';
   };
 
