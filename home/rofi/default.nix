@@ -11,7 +11,7 @@
       * {
         bg-col: ${background-primary};
         bg-col-light: ${background-primary};
-        border-col: ${background-primary};
+        border-col: ${accent-background};
         selected-col: ${background-primary};
         selected-mode: ${accent};
         text: ${text};
