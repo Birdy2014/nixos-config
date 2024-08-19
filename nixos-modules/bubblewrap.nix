@@ -104,12 +104,9 @@ let
         args = commonArgs ++ desktopArgs
           ++ (lib.optionals value.newSession defaultArgs.newSession)
           ++ (lib.optionals value.unshareIpc defaultArgs.unshareIpc)
-          ++ (lib.optionals (value.extraBinds != null)
-            (lib.concatMap mkBind value.extraBinds))
-          ++ (lib.optionals (value.extraRoBinds != null)
-            (lib.concatMap mkRoBind value.extraRoBinds))
-          ++ (lib.optionals (value.extraDevBinds != null)
-            (lib.concatMap mkDevBind value.extraDevBinds));
+          ++ (lib.concatMap mkBind value.extraBinds)
+          ++ (lib.concatMap mkRoBind value.extraRoBinds)
+          ++ (lib.concatMap mkDevBind value.extraDevBinds);
       in ''
         executable_out_path="$out/bin/$(basename ${value.executable})"
 
@@ -171,20 +168,20 @@ in {
         };
 
         extraBinds = lib.mkOption {
-          type = lib.types.nullOr (lib.types.listOf lib.types.str);
-          default = null;
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
           description = "Extra read-write binds";
         };
 
         extraRoBinds = lib.mkOption {
-          type = lib.types.nullOr (lib.types.listOf lib.types.str);
-          default = null;
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
           description = "Extra read-only binds";
         };
 
         extraDevBinds = lib.mkOption {
-          type = lib.types.nullOr (lib.types.listOf lib.types.str);
-          default = null;
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
           description = "Extra dev binds";
         };
       };
