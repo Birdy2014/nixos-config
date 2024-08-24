@@ -27,6 +27,8 @@
       yellow = "#d79921";
       light-yellow = "#fabd2f";
 
+      orange = "#fe8019";
+
       blue = "#458588";
       light-blue = "#83a598";
 
@@ -58,6 +60,7 @@
       red = "#ed8796";
       green = "#a6da95";
       yellow = "#eed49f";
+      orange = "#f5a97f";
       blue = "#8aadf4";
       magenta = "#f5bde6";
       cyan = "#8bd5ca";
@@ -82,6 +85,7 @@
       red = "#e78284";
       green = "#a6d189";
       yellow = "#e5c890";
+      orange = "#ef9f76";
       blue = "#8caaee";
       magenta = "#f4b8e4";
       cyan = "#81c8be";

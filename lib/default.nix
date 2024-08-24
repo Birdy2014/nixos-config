@@ -1,4 +1,4 @@
-lib:
+{ lib, nix-colorizer }:
 let
   hexDigitToDec = digit:
     let value = lib.strings.charToInt (lib.toLower digit);
@@ -25,4 +25,12 @@ let
       (decToHexHelper (dec / 16) + decDigitToHex (lib.mod dec 16));
 
   decToHex = dec: if dec == 0 then "0" else (decToHexHelper dec);
-in { inherit hexToDec decToHex; }
+
+  mix = oklch1: oklch2: ratio:
+    let interpolate = n: m: n * (1 - ratio) + m * ratio;
+    in {
+      L = interpolate oklch1.L oklch2.L;
+      C = interpolate oklch1.C oklch2.C;
+      h = interpolate oklch1.h oklch2.h;
+    };
+in { inherit hexToDec decToHex mix; }

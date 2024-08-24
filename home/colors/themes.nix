@@ -23,6 +23,7 @@
     "light-green"
     "yellow"
     "light-yellow"
+    "orange"
     "blue"
     "light-blue"
     "magenta"

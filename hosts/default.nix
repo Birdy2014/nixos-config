@@ -29,7 +29,10 @@ in (builtins.listToAttrs (map ({ name, system }: {
     system = system;
     specialArgs = {
       inherit inputs;
-      myLib = import ../lib lib;
+      myLib = import ../lib {
+        inherit lib;
+        inherit (inputs) nix-colorizer;
+      };
       pkgsSelf = inputs.self.packages.${system};
       pkgsUnstable = inputs.nixpkgs-unstable.legacyPackages.${system};
     };
