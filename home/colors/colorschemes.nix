@@ -6,7 +6,7 @@
       accent = yellow;
       accent-text = "#000000";
       accent-background = "#a96b2c";
-      accent-complementary = blue;
+      accent-complementary = cyan;
 
       background-primary = "#383838";
       background-secondary = "#282828";
