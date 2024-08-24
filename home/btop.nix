@@ -16,6 +16,11 @@
       # mem
       swap_disk = false;
 
+      # disks
+      use_fstab = false;
+      disks_filter =
+        "/ /boot /run/media/moritz/archive /run/media/moritz/games";
+
       # proc
       proc_per_core = true;
     };
