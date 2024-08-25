@@ -1,8 +1,8 @@
-{ pkgs, pkgsSelf, ... }:
+{ config, pkgs, pkgsSelf, ... }:
 
 {
   environment.systemPackages = with pkgs; [
-    pkgsSelf.neovim
+    (pkgsSelf.neovim.override { colorscheme = config.my.desktop.colorscheme; })
     ripgrep
     git
     file

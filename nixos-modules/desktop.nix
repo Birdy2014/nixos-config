@@ -8,6 +8,13 @@
       description = "Whether to enable the desktop and user 'moritz'";
     };
 
+    colorscheme = lib.mkOption {
+      type =
+        lib.types.enum [ "gruvbox" "catppuccin-frappe" "catppuccin-macchiato" ];
+      default = "gruvbox";
+      description = "Which colorscheme to use";
+    };
+
     screens = {
       primary = lib.mkOption {
         type = with lib.types; nullOr str;

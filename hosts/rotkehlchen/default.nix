@@ -11,6 +11,7 @@
   ];
 
   my = {
+    desktop.colorscheme = "catppuccin-frappe";
     gaming.enable = true;
     home = {
       stateVersion = "23.05";

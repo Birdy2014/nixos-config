@@ -1,8 +1,6 @@
 { inputs, lib, myLib, pkgs, pkgsSelf, config, ... }:
 
 {
-  # TODO: Move options to system config, so that an override for neovim can be set?
-
   options.my.theme = lib.genAttrs [
     "accent"
     "accent-background"
