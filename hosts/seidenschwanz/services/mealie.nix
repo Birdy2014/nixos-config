@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, pkgsUnstable, ... }:
+{ config, inputs, pkgsUnstable, ... }:
 
 {
   disabledModules = [ "services/web-apps/mealie.nix" ];
@@ -10,16 +10,7 @@
     enable = true;
     port = 8134;
 
-    # Remove override once https://github.com/NixOS/nixpkgs/pull/334231 is in unstable
-    package = pkgsUnstable.mealie.overrideAttrs (old: {
-      patches = (old.patches or [ ]) ++ [
-        (pkgs.fetchpatch {
-          url =
-            "https://github.com/mealie-recipes/mealie/commit/65ece35966120479db903785b22e9f2645f72aa4.patch";
-          hash = "sha256-4Nc0dFJrZ7ElN9rrq+CFpayKsrRjRd24fYraUFTzcH8=";
-        })
-      ];
-    });
+    package = pkgsUnstable.mealie;
 
     settings = {
       ALLOW_SIGNUP = "false";
