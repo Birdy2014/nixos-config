@@ -1,9 +1,10 @@
 { lib, wrapNeovimUnstable, neovim-unwrapped, vimPlugins, fetchFromGitHub
-, vimUtils, git, ripgrep, libqalculate, nil, nodePackages }:
+, vimUtils, git, ripgrep, libqalculate, nil, nodePackages
+, colorscheme ? "gruvbox" }:
 
 let
   config = import ./config.nix {
-    inherit vimPlugins fetchFromGitHub;
+    inherit vimPlugins fetchFromGitHub colorscheme;
     buildVimPlugin = vimUtils.buildVimPlugin;
   };
   configBefore = config.configBefore;

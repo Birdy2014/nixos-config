@@ -1,4 +1,4 @@
-{ buildVimPlugin, vimPlugins, fetchFromGitHub }:
+{ buildVimPlugin, vimPlugins, fetchFromGitHub, colorscheme }:
 
 {
   configBefore = [
@@ -9,17 +9,23 @@
     ./config/keymap.lua
   ];
 
-  plugins = with vimPlugins; [
-    # Colors
-    # {
-    #   plugin = gruvbox-material;
-    #   config = ./config/plugins/gruvbox.lua;
-    # }
-    {
-      plugin = catppuccin-nvim;
-      config = ''vim.cmd("colorscheme catppuccin-frappe")'';
-    }
-
+  plugins = let
+    colorschemes = {
+      gruvbox = [{
+        plugin = vimPlugins.gruvbox-material;
+        config = ./config/plugins/gruvbox.lua;
+      }];
+      catppuccin-macchiato = [{
+        plugin = vimPlugins.catppuccin-nvim;
+        config = ''vim.cmd("colorscheme catppuccin-macchiato")'';
+      }];
+      catppuccin-frappe = [{
+        plugin = vimPlugins.catppuccin-nvim;
+        config = ''vim.cmd("colorscheme catppuccin-frappe")'';
+      }];
+    };
+  in with vimPlugins;
+  [
     # UI
     {
       plugin = [ noice-nvim nui-nvim ];
@@ -124,5 +130,5 @@
       };
       config = "require('qalc').setup{}";
     }
-  ];
+  ] ++ colorschemes.${colorscheme};
 }
