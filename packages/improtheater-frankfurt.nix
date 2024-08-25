@@ -2,16 +2,16 @@
 
 buildNpmPackage {
   pname = "improtheater-frankfurt.de";
-  version = "2024-07-27";
+  version = "2024-08-25";
 
   src = fetchFromGitHub {
     owner = "Birdy2014";
     repo = "improtheater-frankfurt.de";
-    rev = "36b2ddcb2d8e2a44e2096f0ec269e60486cd49ea";
-    hash = "sha256-X1WlWkdUgYv7O3+btr/9skvuWDsJQnHu8E9+lSwO4K0=";
+    rev = "5acd83e2eba5334b95486ba3b924dcfda5d7a0ea";
+    hash = "sha256-I8Qe4I7lKoyGQIbEKOMhGGdZzz1dapAJwBr9Y9Smh8A=";
   };
 
-  npmDepsHash = "sha256-C08wQ7/rJnUE8ukJdIaD4zkPNIQMlPwfmMjexpo+R9M=";
+  npmDepsHash = "sha256-DyjnXK6kQk1g2kNNxREu/2XwKXLJHHZ0I0BpIUML1/w=";
 
   nativeBuildInputs = [
     # for bcrypt
