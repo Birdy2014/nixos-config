@@ -11,8 +11,6 @@
     "text"
     "text-inactive"
     "error"
-    "headerbar-background"
-    "headerbar-background-inactive"
     "black"
     "light-black"
     "red"
@@ -59,8 +57,6 @@
 
       accent-complementary =
         lib.mkDefault (complementary cfg.accent-background);
-      headerbar-background = lib.mkDefault cfg.background-primary;
-      headerbar-background-inactive = lib.mkDefault cfg.background-tertiary;
       error = lib.mkDefault (darken cfg.red 20);
 
       light-black = lib.mkDefault (lighten cfg.black 10);
@@ -145,10 +141,10 @@
         @define-color view_fg_color ${cfg.text};
 
         /* Headerbar */
-        @define-color headerbar_bg_color ${cfg.headerbar-background};
+        @define-color headerbar_bg_color ${cfg.background-primary};
         @define-color headerbar_fg_color ${cfg.text};
         @define-color headerbar_border_color #D4BE98;
-        @define-color headerbar_backdrop_color ${cfg.headerbar-background-inactive};
+        @define-color headerbar_backdrop_color ${cfg.background-tertiary};
         @define-color headerbar_shade_color rgba(0, 0, 0, 0.36);
 
         /* Card */
@@ -324,14 +320,14 @@
         ForegroundVisited=${qtColor link-visited}
 
         [Colors:Header]
-        BackgroundAlternate=${qtColor cfg.headerbar-background-inactive}
-        BackgroundNormal=${qtColor cfg.headerbar-background}
+        BackgroundAlternate=${qtColor cfg.background-tertiary}
+        BackgroundNormal=${qtColor cfg.background-primary}
         ForegroundActive=${qtColor text-active}
         ForegroundLink=${qtColor link-selected}
 
         [Colors:Header][Inactive]
-        BackgroundAlternate=${qtColor cfg.headerbar-background}
-        BackgroundNormal=${qtColor cfg.headerbar-background-inactive}
+        BackgroundAlternate=${qtColor cfg.background-primary}
+        BackgroundNormal=${qtColor cfg.background-tertiary}
         ForegroundActive=${qtColor text-active}
         ForegroundLink=${qtColor link-selected}
 
