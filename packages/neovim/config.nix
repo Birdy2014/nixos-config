@@ -13,7 +13,10 @@
     colorschemes = {
       gruvbox = [{
         plugin = vimPlugins.gruvbox-material;
-        config = ./config/plugins/gruvbox.lua;
+        config = ''
+          vim.g.gruvbox_material_disable_terminal_colors = 1
+          vim.cmd("colorscheme gruvbox-material")
+        '';
       }];
       catppuccin-macchiato = [{
         plugin = vimPlugins.catppuccin-nvim;
