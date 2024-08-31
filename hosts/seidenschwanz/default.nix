@@ -7,6 +7,7 @@
     ./btrbk.nix
     ./ddclient.nix
     ./hardware-configuration.nix
+    ./hdd.nix
     ./network.nix
     ./proxy.nix
     ./services
