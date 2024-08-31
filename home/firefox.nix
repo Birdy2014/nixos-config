@@ -158,6 +158,7 @@
     bind <esc> nohlsearch
 
     unbind <C-f>
+    unbind d
 
     bind <A-q> tabclose
     bind <A-k> tabprev
