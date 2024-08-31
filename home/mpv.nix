@@ -61,7 +61,7 @@
 
       # HDR
       hdr-compute-peak = "no";
-      tone-mapping = "mobius";
+      tone-mapping = "bt.2446a";
 
       # Scaling
       scale = if enableExpensive then "ewa_lanczos4sharpest" else "lanczos";
@@ -74,6 +74,7 @@
 
       # HDR
       hdr-compute-peak = "auto";
+      allow-delayed-peak-detect = true;
     };
 
     bindings = {
