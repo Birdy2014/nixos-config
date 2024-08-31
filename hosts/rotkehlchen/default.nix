@@ -7,6 +7,7 @@
     ./btrbk.nix
     ./hardware-configuration.nix
     ./kdeconnect.nix
+    ./network.nix
     ./soundblaster.nix
   ];
 
@@ -40,9 +41,6 @@
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   services.btrfs.autoScrub.enable = true;
-
-  networking.networkmanager.enable = true;
-  services.resolved.enable = true;
 
   hardware.bluetooth.enable = true;
 
