@@ -77,6 +77,11 @@
 
   services.logind.powerKey = "ignore";
 
+  programs.ausweisapp = {
+    enable = true;
+    openFirewall = true;
+  };
+
   # mpd
   networking.firewall.allowedTCPPorts = [ 6600 ];
 
