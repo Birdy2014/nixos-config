@@ -1,8 +1,6 @@
 # My NixOS Configuration
 
-![2023-09-02_nixos-screenshot](https://github.com/Birdy2014/nixos-config/assets/31102625/0e6ad71b-9d42-4710-9330-feadb3de6649)
-
-Wallpaper: https://www.artstation.com/artwork/JlNQgz, upscaled using [Upscayl](https://github.com/upscayl/upscayl)
+![2024-09-14 nixos screenshot](https://github.com/user-attachments/assets/7ae5f2a1-9182-483a-885d-d04b9e1ef6b2)
 
 ## Hosts
 
