@@ -139,7 +139,7 @@
       window.commands = lib.mkIf osConfig.my.gaming.enable [
         # floating and inhibit_idle for all windows on workspace 7 except steam, because not all steam games match [class="^steam_app.*$"], e.g. cs2
         {
-          command = "inhibit_idle open; floating enable";
+          command = "inhibit_idle visible; floating enable";
           criteria = { workspace = "^7$"; };
         }
         {
