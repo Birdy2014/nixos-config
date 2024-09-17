@@ -27,12 +27,17 @@
     waypipe
     nix-tree
     htop
+
+    man-pages
   ];
 
   services.udisks2.enable = true;
 
-  documentation.info.enable = false;
-  documentation.nixos.includeAllModules = true;
+  documentation = {
+    info.enable = false;
+    nixos.includeAllModules = true;
+    dev.enable = true;
+  };
 
   # Needed for zsh completions
   environment.pathsToLink = [ "/share/zsh" ];
