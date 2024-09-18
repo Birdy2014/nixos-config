@@ -123,6 +123,10 @@
       dataDir = "${config.users.users.moritz.home}/.local/state/syncthing";
     };
 
+    # Needed for mDNS
+    networking.firewall.allowedUDPPorts = [ 5353 ];
+    services.resolved.llmnr = "false";
+
     # For accessing SMB shares with `gio mount`
     services.gvfs.enable = true;
     environment.systemPackages = [ pkgs.glib ];

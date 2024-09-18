@@ -68,7 +68,6 @@
           "fritz.box" = "192.168.90.1,fd00:90::1eed:6fff:fe98:ee7e";
           "rotkehlchen.fritz.box" =
             "192.168.90.21,fd00:90::4247:4a9a:1e40:eeb6";
-          "zilpzalp.fritz.box" = "192.168.90.25";
           "shelly-plug-rotkehlchen.fritz.box" = "192.168.90.166";
         };
       };

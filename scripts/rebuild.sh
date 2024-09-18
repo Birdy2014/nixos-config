@@ -43,7 +43,7 @@ for host in "$@"; do
             commands+=("nixos-rebuild $mode --flake $flake_path#buntspecht --target-host buntspecht --build-host buntspecht --use-substitutes")
             ;;
         zilpzalp)
-            commands+=("nixos-rebuild $mode --flake $flake_path#zilpzalp --target-host root@zilpzalp")
+            commands+=("nixos-rebuild $mode --flake $flake_path#zilpzalp --target-host root@zilpzalp.local")
             ;;
         *)
             echo "Invalid hostname '$host'" >&2
