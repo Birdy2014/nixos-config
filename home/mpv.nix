@@ -50,6 +50,7 @@
       hwdec = "auto-safe";
       vo = "gpu-next";
       osc = "no"; # Use thumbfast osc
+      screenshot-format = "png";
 
       # Languages
       alang = "jpn,eng,en,deu,de";
