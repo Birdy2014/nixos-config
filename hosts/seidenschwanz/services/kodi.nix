@@ -35,13 +35,14 @@
   in {
     description = "Kodi media center";
 
-    wantedBy = [ "multi-user.target" ];
     after = [
       "network-online.target"
       "sound.target"
       "systemd-user-sessions.service"
     ];
     wants = [ "network-online.target" ];
+
+    conflicts = [ "kodi.socket" ];
 
     serviceConfig = {
       Type = "simple";
@@ -53,9 +54,9 @@
     };
   };
 
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
+  systemd.sockets.kodi = {
+    wantedBy = [ "sockets.target" ];
+    listenStreams = [ "8080" ];
+    conflicts = [ "kodi.service" ];
   };
 }
