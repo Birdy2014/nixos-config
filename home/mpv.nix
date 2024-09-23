@@ -59,6 +59,10 @@
       demuxer-mkv-subtitle-preroll = "yes";
       sub-visibility = false;
       slang = "deu,de,eng,en";
+      sub-font-size = 40;
+      sub-bold = true;
+      sub-scale-with-window =
+        false; # This is confusing, but seems to fix the wired behaviour when using panscan
 
       # HDR
       hdr-compute-peak = "no";
