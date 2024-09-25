@@ -16,5 +16,7 @@
       owner = "moritz";
       group = "users";
     };
+
+    seidenschwanz-smb-password.sopsFile = file;
   };
 }
