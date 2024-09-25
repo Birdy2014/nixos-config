@@ -10,17 +10,7 @@
     };
     home.stateVersion = "23.05";
     sshd.enable = true;
-  };
-
-  boot.loader = {
-    efi.canTouchEfiVariables = true;
-    timeout = 2;
-    grub = {
-      enable = true;
-      device = "nodev";
-      efiSupport = true;
-      splashMode = "normal";
-    };
+    systemd-boot.enable = true;
   };
 
   boot.blacklistedKernelModules = [ "nouveau" "acer_wmi" ];

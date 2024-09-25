@@ -12,12 +12,7 @@
   my = {
     desktop.enable = false;
     sshd.enable = true;
-  };
-
-  boot.loader.grub = {
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-    device = "nodev";
+    systemd-boot.enable = true;
   };
 
   services.openssh.ports = [ 46773 ];

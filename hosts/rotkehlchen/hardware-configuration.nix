@@ -52,6 +52,7 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/C01C-AFCC";
     fsType = "vfat";
+    options = [ "umask=0077" ];
   };
 
   # Crucial CT1000P1SSD8

@@ -18,15 +18,7 @@
   my = {
     desktop.enable = false;
     sshd.enable = true;
-  };
-
-  boot.loader = {
-    efi = {
-      canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot";
-    };
     systemd-boot.enable = true;
-    timeout = 0;
   };
 
   networking.hostId = "c1004e7c";

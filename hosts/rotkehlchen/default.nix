@@ -23,20 +23,8 @@
     };
     scan.enable = true;
     sshd.enable = false;
+    systemd-boot.enable = true;
     virtualisation.enable = true;
-  };
-
-  boot.loader = {
-    efi.canTouchEfiVariables = true;
-    timeout = 2;
-    grub = {
-      enable = true;
-      device = "nodev";
-      efiSupport = true;
-      splashMode = "normal";
-      gfxmodeEfi = "3440x1440,auto";
-      gfxpayloadEfi = "keep";
-    };
   };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
