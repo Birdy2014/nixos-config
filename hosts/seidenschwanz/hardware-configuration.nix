@@ -13,7 +13,7 @@
     options = [ "subvol=rootfs" "noatime" "compress=zstd:1" ];
   };
 
-  fileSystems."/boot/efi" = {
+  fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/A314-8A92";
     fsType = "vfat";
     options = [ "umask=0077" ];
