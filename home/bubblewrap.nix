@@ -88,13 +88,15 @@ let
       let
         mkHomeBind = dir: [ "--bind" dir "$HOME" "--chdir" "$HOME" ];
 
+        persistentHomeDir = "$HOME/.sandboxed/${appName}";
+
         commonArgs = defaultArgs.common ++ (if !value.persistentHome then [
           "--tmpfs"
           "$HOME"
           "--chdir"
           "$HOME"
         ] else
-          mkHomeBind "$HOME/.sandboxed/${appName}");
+          mkHomeBind persistentHomeDir);
 
         desktopArgs = (lib.optionals value.allowDesktop
           (defaultArgs.desktopCommon ++ defaultArgs.dbus ++ defaultArgs.wayland
@@ -108,10 +110,14 @@ let
           ++ (lib.concatMap mkRoBind value.extraRoBinds)
           ++ (lib.concatMap mkDevBind value.extraDevBinds);
       in ''
-        executable_out_path="$out/bin/$(basename ${value.executable})"
+        executable_out_path="$out/bin/$(basename ${appName})"
 
         cat <<'_EOF' >"$executable_out_path"
           #! ${pkgs.runtimeShell} -e
+          ${
+            lib.optionalString value.persistentHome
+            "mkdir -p ${persistentHomeDir}"
+          }
           exec ${pkgs.bubblewrap}/bin/bwrap ${
             lib.concatStringsSep " " (map (arg: ''"${arg}"'') args)
           } ${builtins.toString value.executable} "$@"
@@ -188,6 +194,5 @@ in {
     });
   };
 
-  config =
-    lib.mkIf (cfg != { }) { environment.systemPackages = [ wrappedBins ]; };
+  config = lib.mkIf (cfg != { }) { home.packages = [ wrappedBins ]; };
 }

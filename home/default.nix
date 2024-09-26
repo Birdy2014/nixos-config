@@ -3,12 +3,14 @@
 {
   imports = [
     ./btop.nix
+    ./bubblewrap.nix
+    ./colors
     ./direnv.nix
     ./dunst.nix
     ./firefox.nix
+    ./gaming.nix
     ./git.nix
     ./gpg.nix
-    ./colors
     ./imv.nix
     ./kitty.nix
     ./lf

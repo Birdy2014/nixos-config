@@ -5,7 +5,6 @@
     ./acme.nix
     ./bash.nix
     ./boot.nix
-    ./bubblewrap.nix
     ./cli-apps.nix
     ./console.nix
     ./desktop.nix
