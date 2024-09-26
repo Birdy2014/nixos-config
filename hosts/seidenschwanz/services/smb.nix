@@ -9,6 +9,10 @@
     extraConfig = ''
       workgroup = WORKGROUP
       server string = seidenschwanz
+
+      # Fix special characters under linux
+      vfs objects = catia fruit
+      fruit:encoding = native
     '';
     shares = let
       sharedOptions = {
