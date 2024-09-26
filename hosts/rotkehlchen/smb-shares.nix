@@ -13,7 +13,7 @@
       in [
         "${automount_opts},credentials=${
           config.sops.templates."seidenschwanz-smb-credentials".path
-        },uid=1000,gid=100"
+        },uid=1000,gid=100,file_mode=0644"
       ];
     };
   }) [ "family" "moritz" ]);
