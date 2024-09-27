@@ -54,6 +54,12 @@ local mapping_shift_tab = function(fallback)
 end
 
 cmp.setup({
+    -- TODO: Enable on neovim 0.10 - NixOS 24.11
+    -- snippet = {
+    --     expand = function(args)
+    --         vim.snippet.expand(args.body)
+    --     end
+    -- },
     window = {
         completion = {
             border = vim.g._border
