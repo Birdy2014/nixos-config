@@ -1,4 +1,4 @@
-{ config, osConfig, lib, pkgs, ... }:
+{ config, options, osConfig, lib, pkgs, ... }:
 
 {
   imports = [ ./kitty.nix ./rofi ./waybar ];
@@ -27,21 +27,12 @@
       export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
     '';
 
-    systemd.variables = [
-      # Default
-      "DISPLAY"
-      "WAYLAND_DISPLAY"
-      "SWAYSOCK"
-      "XDG_CURRENT_DESKTOP"
-      "XDG_SESSION_TYPE"
-      "NIXOS_OZONE_WL"
-      "XCURSOR_THEME"
-      "XCURSOR_SIZE"
-
-      # Added (this fixes xdg-open with xdg-desktop-portal)
-      "XDG_DATA_DIRS"
-      "PATH"
-    ];
+    systemd.variables =
+      options.wayland.windowManager.sway.systemd.variables.default ++ [
+        # fixes xdg-open with xdg-desktop-portal
+        "XDG_DATA_DIRS"
+        "PATH"
+      ];
 
     config = {
       output = { "AOC U34G2G4R3 0x00001553" = { mode = "3440x1440@120Hz"; }; };
