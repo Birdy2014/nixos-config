@@ -90,15 +90,11 @@ handle_mime() {
 
         ## Video
         video/*)
-            # Get embedded thumbnail
-            ffmpeg -i "${FILE_PATH}" -map 0:v -map -0:V -c copy "${IMAGE_CACHE_PATH}" && cache_if_needed_and_display_image "$IMAGE_CACHE_PATH" && exit 1
-
-            # Get frame 10% into video
             local video_width
             local target_width
             video_width=$(ffprobe -v error -show_entries stream=width -of default=nw=1:nk=1 -select_streams v "${FILE_PATH}" | head -n1)
             target_width=$((video_width>MAX_IMAGE_WIDTH ? MAX_IMAGE_WIDTH : video_width))
-            ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s ${target_width} && display_image_cache && exit 1
+            ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s "$target_width" -m && display_image_cache && exit 1
             exit 1;;
 
         ## Audio
