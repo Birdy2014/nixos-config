@@ -1,7 +1,7 @@
 { buildNpmPackage, fetchFromGitHub, nodePackages, pkg-config, vips, nodejs_20 }:
 
 buildNpmPackage {
-  pname = "improtheater-frankfurt.de";
+  pname = "improtheater-frankfurt";
   version = "2024-10-02";
 
   src = fetchFromGitHub {

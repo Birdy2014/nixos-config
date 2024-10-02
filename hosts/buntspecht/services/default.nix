@@ -1,6 +1,10 @@
 { ... }:
 
 {
-  imports =
-    [ ./home-redirect.nix ./itf.nix ./nextcloud.nix ./seidenschwanz-proxy.nix ];
+  imports = [
+    ./home-redirect.nix
+    ./improtheater-frankfurt.nix
+    ./nextcloud.nix
+    ./seidenschwanz-proxy.nix
+  ];
 }
