@@ -51,6 +51,9 @@
       vo = "gpu-next";
       osc = "no"; # Use thumbfast osc
       screenshot-format = "png";
+      # Fix slow screenshots
+      screenshot-high-bit-depth = "no";
+      screenshot-png-compression = 5;
 
       # Languages
       alang = "jpn,eng,en,deu,de";
