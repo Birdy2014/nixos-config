@@ -1,0 +1,30 @@
+From 056371bca620c787fa41122718b6ca1aa7852b96 Mon Sep 17 00:00:00 2001
+From: Moritz Vogel <moritzv7@gmail.com>
+Date: Thu, 3 Oct 2024 20:03:47 +0200
+Subject: [PATCH] Fix distortion in heif and avif
+
+---
+ src/backend_libheif.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/src/backend_libheif.c b/src/backend_libheif.c
+index 8264e87..7899d71 100644
+--- a/src/backend_libheif.c
++++ b/src/backend_libheif.c
+@@ -34,7 +34,12 @@ static void load_image(void *raw_private, struct imv_image **image, int *frameti
+   int width = heif_image_get_width(private->img, heif_channel_interleaved);
+   int height = heif_image_get_height(private->img, heif_channel_interleaved);
+   unsigned char *bitmap = malloc(width * height * 4);
+-  memcpy(bitmap, data, width * height * 4);
++
++  for (int y = 0; y < height; ++y) {
++    uint8_t *src = &data[y * stride];
++    unsigned char *dest = &bitmap[y * width * 4];
++    memcpy(dest, src, width * 4);
++  }
+ 
+   struct imv_bitmap *bmp = malloc(sizeof *bmp);
+   bmp->width = width,
+-- 
+2.44.1
+
