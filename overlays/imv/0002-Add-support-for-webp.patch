@@ -1,0 +1,185 @@
+From d69b1c2f088447f043405a5a8956c1f54764463b Mon Sep 17 00:00:00 2001
+From: Moritz Vogel <moritzv7@gmail.com>
+Date: Thu, 3 Oct 2024 16:57:07 +0200
+Subject: [PATCH] Add support for webp
+
+---
+ files/imv-dir.desktop |  2 +-
+ files/imv.desktop     |  2 +-
+ meson.build           |  1 +
+ meson_options.txt     |  5 +++
+ src/backend_libwebp.c | 88 +++++++++++++++++++++++++++++++++++++++++++
+ src/main.c            |  5 +++
+ 6 files changed, 101 insertions(+), 2 deletions(-)
+ create mode 100644 src/backend_libwebp.c
+
+diff --git a/files/imv-dir.desktop b/files/imv-dir.desktop
+index 640f159..7490a51 100644
+--- a/files/imv-dir.desktop
++++ b/files/imv-dir.desktop
+@@ -9,6 +9,6 @@ NoDisplay=true
+ Terminal=false
+ Type=Application
+ Categories=Graphics;2DGraphics;Viewer;
+-MimeType=image/bmp;image/gif;image/jpeg;image/jpg;image/pjpeg;image/png;image/tiff;image/x-bmp;image/x-pcx;image/x-png;image/x-portable-anymap;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-tga;image/x-xbitmap;image/heif;image/avif
++MimeType=image/bmp;image/gif;image/jpeg;image/jpg;image/pjpeg;image/png;image/tiff;image/x-bmp;image/x-pcx;image/x-png;image/x-portable-anymap;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-tga;image/x-xbitmap;image/heif;image/avif;image/webp
+ Icon=multimedia-photo-viewer
+ Keywords=photo;picture;
+diff --git a/files/imv.desktop b/files/imv.desktop
+index e122c33..f4ac7b9 100644
+--- a/files/imv.desktop
++++ b/files/imv.desktop
+@@ -8,7 +8,7 @@ NoDisplay=true
+ Terminal=false
+ Type=Application
+ Categories=Graphics;2DGraphics;Viewer;
+-MimeType=image/bmp;image/gif;image/jpeg;image/jpg;image/pjpeg;image/png;image/tiff;image/x-bmp;image/x-pcx;image/x-png;image/x-portable-anymap;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-tga;image/x-xbitmap;image/heif;image/avif
++MimeType=image/bmp;image/gif;image/jpeg;image/jpg;image/pjpeg;image/png;image/tiff;image/x-bmp;image/x-pcx;image/x-png;image/x-portable-anymap;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-tga;image/x-xbitmap;image/heif;image/avif;image/webp
+ Name[en_US]=imv
+ Icon=multimedia-photo-viewer
+ Keywords=photo;picture;
+diff --git a/meson.build b/meson.build
+index e072190..47e3255 100644
+--- a/meson.build
++++ b/meson.build
+@@ -129,6 +129,7 @@ foreach backend : [
+   ['libnsgif', 'dependency', 'libnsgif', '< 1.0.0'],
+   ['libheif', 'dependency', 'libheif', []],
+   ['libjxl', 'dependency', 'libjxl', []],
++  ['libwebp', 'dependency', 'libwebp', []],
+ ]
+   _backend_name = backend[0]
+   _dep_type = backend[1]
+diff --git a/meson_options.txt b/meson_options.txt
+index 686ad68..90cfec4 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -97,3 +97,8 @@ option('libjxl',
+   type : 'feature',
+   description : 'provides: jxl'
+ )
++
++option('libwebp',
++  type : 'feature',
++  description : 'provides: webp'
++)
+diff --git a/src/backend_libwebp.c b/src/backend_libwebp.c
+new file mode 100644
+index 0000000..06700b0
+--- /dev/null
++++ b/src/backend_libwebp.c
+@@ -0,0 +1,88 @@
++#include "backend.h"
++#include "bitmap.h"
++#include "image.h"
++#include "source.h"
++#include "source_private.h"
++
++#include <stdlib.h>
++
++#include <webp/decode.h>
++
++struct private {
++  FILE *file;
++};
++
++static void free_private(void *raw_private)
++{
++  if (!raw_private) {
++    return;
++  }
++
++  struct private *private = raw_private;
++  if (private->file) {
++    fclose(private->file);
++  }
++  free(private);
++}
++
++static void load_image(void *raw_private, struct imv_image **image, int *frametime)
++{
++  *image = NULL;
++  *frametime = 0;
++
++  struct private *private = raw_private;
++
++  fseek(private->file, 0L, SEEK_END);
++  int filesize = ftell(private->file);
++  rewind(private->file);
++
++  uint8_t *buffer = malloc(filesize);
++  fread(buffer, 1, filesize, private->file);
++
++  int width;
++  int height;
++  uint8_t *raw_bmp = WebPDecodeBGRA(buffer, filesize, &width, &height);
++
++  free(buffer);
++
++  struct imv_bitmap *bmp = malloc(sizeof *bmp);
++  bmp->width = width;
++  bmp->height = height;
++  // "IMV_ARGB" means BGRA for some reason.
++  bmp->format = IMV_ARGB;
++  bmp->data = raw_bmp;
++  *image = imv_image_create_from_bitmap(bmp);
++}
++
++static const struct imv_source_vtable vtable = {
++  .load_first_frame = load_image,
++  .free = free_private
++};
++
++static enum backend_result open_path(const char *path, struct imv_source **src)
++{
++  unsigned char header[15];
++  FILE *f = fopen(path, "rb");
++  if (!f) {
++    return BACKEND_BAD_PATH;
++  }
++  fread(header, 1, sizeof header, f);
++  if (memcmp(header, "RIFF", 4) != 0 || memcmp(header + 8, "WEBPVP8", 7) != 0) {
++    fclose(f);
++    return BACKEND_UNSUPPORTED;
++  }
++
++  struct private *private = calloc(1, sizeof *private);
++  private->file = f;
++
++  *src = imv_source_create(&vtable, private);
++  return BACKEND_SUCCESS;
++}
++
++const struct imv_backend imv_backend_libwebp = {
++  .name = "libwebp",
++  .description = "",
++  .website = "https://chromium.googlesource.com/webm/libwebp",
++  .license = "BSD-3-Clause license",
++  .open_path = &open_path,
++};
+diff --git a/src/main.c b/src/main.c
+index cf851d1..23a8379 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -10,6 +10,7 @@ extern const struct imv_backend imv_backend_libjpeg;
+ extern const struct imv_backend imv_backend_libnsgif;
+ extern const struct imv_backend imv_backend_libheif;
+ extern const struct imv_backend imv_backend_libjxl;
++extern const struct imv_backend imv_backend_libwebp;
+ 
+ int main(int argc, char **argv)
+ {
+@@ -51,6 +52,10 @@ int main(int argc, char **argv)
+   imv_install_backend(imv, &imv_backend_libjxl);
+ #endif
+ 
++#ifdef IMV_BACKEND_LIBWEBP
++  imv_install_backend(imv, &imv_backend_libwebp);
++#endif
++
+   if (!imv_load_config(imv)) {
+     imv_free(imv);
+     return 1;
+-- 
+2.44.1
+
