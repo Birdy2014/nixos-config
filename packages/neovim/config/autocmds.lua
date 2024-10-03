@@ -1,6 +1,9 @@
 --- Remove trailing spaces
 vim.cmd [[autocmd BufWritePre * %s/\s\+$//e]]
 
+--- Disable syntax highlighting for SSA subtitles due to extremely poor performance
+vim.cmd [[autocmd FileType ssa syntax off]]
+
 --- Format code on save
 vim.api.nvim_create_augroup("fmt", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePre", {
