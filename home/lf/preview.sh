@@ -27,15 +27,10 @@ display_image_cache() {
     display_image "$IMAGE_CACHE_PATH"
 }
 
-cache_if_needed_and_display_image() {
+cache_and_display_image() {
     local image="$1"
-    local image_width
-    image_width="$(identify -format '%w' "$image")"
-    if (( "$image_width" < "$MAX_IMAGE_WIDTH" )); then
-        display_image "$image"
-    else
-        magick "${image}" -geometry "$MAX_IMAGE_WIDTH"x "${IMAGE_CACHE_PATH}" && display_image_cache
-    fi
+
+    magick "${image}" -geometry "$MAX_IMAGE_WIDTH"x\> "${IMAGE_CACHE_PATH}" && display_image_cache
 }
 
 LF_CACHE="$HOME/.cache/lf_images"
@@ -70,7 +65,7 @@ handle_mime() {
                 -jpeg -tiffcompression jpeg \
                 -- "${FILE_PATH}" "${IMAGE_CACHE_PATH}" &&
             mv "${IMAGE_CACHE_PATH}.jpg" "${IMAGE_CACHE_PATH}" &&
-            cache_if_needed_and_display_image "$IMAGE_CACHE_PATH"
+            cache_and_display_image "$IMAGE_CACHE_PATH"
             exit 1;;
 
         ## SVG
@@ -85,7 +80,7 @@ handle_mime() {
             exit 1;;
 
         image/*)
-            cache_if_needed_and_display_image "$FILE_PATH"
+            cache_and_display_image "$FILE_PATH"
             exit 1;;
 
         ## Video
@@ -130,7 +125,7 @@ handle_mime() {
         ## Epub
         application/epub+zip)
             tout gnome-epub-thumbnailer --size '512' "$FILE_PATH" "$IMAGE_CACHE_PATH" \
-                && cache_if_needed_and_display_image "$IMAGE_CACHE_PATH" && exit 1
+                && cache_and_display_image "$IMAGE_CACHE_PATH" && exit 1
             exit 1;;
     esac
 }
@@ -156,14 +151,14 @@ handle_fallback() {
 preview_audio() {
     # Get embedded thumbnail
     ffmpeg -i "${FILE_PATH}" -map 0:v -map -0:V -c copy \
-      "${IMAGE_CACHE_PATH}" && cache_if_needed_and_display_image "$IMAGE_CACHE_PATH" && exit 1
+      "${IMAGE_CACHE_PATH}" && cache_and_display_image "$IMAGE_CACHE_PATH" && exit 1
 
     # Get conver.png (or other formats) image
     local directory
     directory="$(dirname "$FILE_PATH")"
     for file in "cover.png" "cover.jpg"; do
         local cover_image_path="${directory}/${file}"
-        [[ -f "$cover_image_path" ]] && cache_if_needed_and_display_image "$cover_image_path" && exit 1
+        [[ -f "$cover_image_path" ]] && cache_and_display_image "$cover_image_path" && exit 1
     done
 }
 
