@@ -87,16 +87,12 @@ let
     ${lib.concatStringsSep "\n" (lib.mapAttrsToList (appName: value:
       let
         mkHomeBind = dir: [ "--bind" dir "$HOME" "--chdir" "$HOME" ];
+        mkTmpHomeBind = [ "--tmpfs" "$HOME" "--chdir" "$HOME" ];
 
-        persistentHomeDir = "$HOME/.sandboxed/${appName}";
-
-        commonArgs = defaultArgs.common ++ (if !value.persistentHome then [
-          "--tmpfs"
-          "$HOME"
-          "--chdir"
-          "$HOME"
-        ] else
-          mkHomeBind persistentHomeDir);
+        commonArgs = defaultArgs.common ++ (if !value.persistentHome then
+          mkTmpHomeBind
+        else
+          mkHomeBind value.persistentHomeDir);
 
         desktopArgs = (lib.optionals value.allowDesktop
           (defaultArgs.desktopCommon ++ defaultArgs.dbus ++ defaultArgs.wayland
@@ -116,7 +112,7 @@ let
           #! ${pkgs.runtimeShell} -e
           ${
             lib.optionalString value.persistentHome
-            "mkdir -p ${persistentHomeDir}"
+            "mkdir -p ${value.persistentHomeDir}"
           }
           exec ${pkgs.bubblewrap}/bin/bwrap ${
             lib.concatStringsSep " " (map (arg: ''"${arg}"'') args)
@@ -135,7 +131,7 @@ in {
   options.my.bubblewrap = lib.mkOption {
     description = "sandboxed applications";
     default = { };
-    type = lib.types.attrsOf (lib.types.submodule {
+    type = lib.types.attrsOf (lib.types.submodule ({ name, ... }: {
       options = {
         executable = lib.mkOption {
           type = lib.types.path;
@@ -152,7 +148,13 @@ in {
         persistentHome = lib.mkOption {
           type = lib.types.bool;
           default = false;
-          description = "use ~/.sandboxed/<name> as home directory";
+          description = "use persistentHomeDir as home directory";
+        };
+
+        persistentHomeDir = lib.mkOption {
+          type = lib.types.str;
+          default = "$HOME/.sandboxed/${name}";
+          description = "default: `~/.sandboxed/<name>`";
         };
 
         newSession = lib.mkOption {
@@ -191,7 +193,7 @@ in {
           description = "Extra dev binds";
         };
       };
-    });
+    }));
   };
 
   config = lib.mkIf (cfg != { }) { home.packages = [ wrappedBins ]; };
