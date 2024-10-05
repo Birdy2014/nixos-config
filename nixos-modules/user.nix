@@ -67,13 +67,13 @@ in {
         domain = "moritz";
         item = "nice";
         type = "-";
-        value = "-19";
+        value = "-11";
       }
       {
         domain = "moritz";
         item = "nproc";
         type = "-";
-        value = "unlimited";
+        value = "10000";
       }
     ];
   };
