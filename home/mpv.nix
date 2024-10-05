@@ -78,7 +78,7 @@
       # Interpolation
       video-sync = "display-resample";
       interpolation = "yes";
-      tscale = "mitchell";
+      tscale = "triangle";
 
       # HDR
       hdr-compute-peak = "auto";
