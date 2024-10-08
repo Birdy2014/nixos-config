@@ -156,7 +156,7 @@ preview_audio() {
     # Get conver.png (or other formats) image
     local directory
     directory="$(dirname "$FILE_PATH")"
-    for file in "cover.png" "cover.jpg"; do
+    for file in "cover.png" "cover.jpg" "cover.avif" "cover.jxl" "cover.webp"; do
         local cover_image_path="${directory}/${file}"
         [[ -f "$cover_image_path" ]] && cache_and_display_image "$cover_image_path" && exit 1
     done
