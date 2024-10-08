@@ -31,4 +31,23 @@
     thunderbird
     mumble
   ];
+
+  my.bubblewrap.wine = {
+    applications = [
+      {
+        executable = "${pkgs.wineWowPackages.stable}/bin/wine";
+        name = "wine-bwrap";
+      }
+      {
+        executable = "${pkgs.winetricks}/bin/winetricks";
+        name = "winetricks-bwrap";
+      }
+    ];
+    allowDesktop = true;
+    persistentHome = true;
+    extraEnvBinds = [ "WINEPREFIX" ];
+    extraRoBinds = [ "$HOME/Downloads" ];
+    extraBinds = [ "/sys/class/input" ];
+    extraDevBinds = [ "/dev/input" "/dev/uinput" ];
+  };
 }
