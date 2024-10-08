@@ -84,48 +84,58 @@ let
     mkdir -p $out/bin
     mkdir -p $out/share/applications
 
-    ${lib.concatStringsSep "\n" (lib.mapAttrsToList (appName: value:
-      let
-        mkHomeBind = dir: [ "--bind" dir "$HOME" "--chdir" "$HOME" ];
-        mkTmpHomeBind = [ "--tmpfs" "$HOME" "--chdir" "$HOME" ];
+    ${lib.concatStringsSep "\n" (lib.flatten (lib.mapAttrsToList
+      (sandboxName: sandboxConfig:
+        let
+          mkHomeBind = dir: [ "--bind" dir "$HOME" "--chdir" "$HOME" ];
+          mkTmpHomeBind = [ "--tmpfs" "$HOME" "--chdir" "$HOME" ];
 
-        commonArgs = defaultArgs.common ++ (if !value.persistentHome then
-          mkTmpHomeBind
-        else
-          mkHomeBind value.persistentHomeDir);
+          commonArgs = defaultArgs.common
+            ++ (if !sandboxConfig.persistentHome then
+              mkTmpHomeBind
+            else
+              mkHomeBind sandboxConfig.persistentHomeDir);
 
-        desktopArgs = (lib.optionals value.allowDesktop
-          (defaultArgs.desktopCommon ++ defaultArgs.dbus ++ defaultArgs.wayland
-            ++ defaultArgs.xorg ++ defaultArgs.sound ++ defaultArgs.gpu
-            ++ defaultArgs.theming));
+          desktopArgs = (lib.optionals sandboxConfig.allowDesktop
+            (defaultArgs.desktopCommon ++ defaultArgs.dbus
+              ++ defaultArgs.wayland ++ defaultArgs.xorg ++ defaultArgs.sound
+              ++ defaultArgs.gpu ++ defaultArgs.theming));
 
-        args = commonArgs ++ desktopArgs
-          ++ (lib.optionals value.newSession defaultArgs.newSession)
-          ++ (lib.optionals value.unshareIpc defaultArgs.unshareIpc)
-          ++ (lib.concatMap mkBind value.extraBinds)
-          ++ (lib.concatMap mkRoBind value.extraRoBinds)
-          ++ (lib.concatMap mkDevBind value.extraDevBinds);
-      in ''
-        executable_out_path="$out/bin/$(basename ${appName})"
+          args = commonArgs ++ desktopArgs
+            ++ (lib.optionals sandboxConfig.newSession defaultArgs.newSession)
+            ++ (lib.optionals sandboxConfig.unshareIpc defaultArgs.unshareIpc)
+            ++ (lib.concatMap mkBind sandboxConfig.extraBinds)
+            ++ (lib.concatMap mkRoBind sandboxConfig.extraRoBinds)
+            ++ (lib.concatMap mkDevBind sandboxConfig.extraDevBinds)
+            ++ (lib.concatMap mkEnvBind sandboxConfig.extraEnvBinds);
+        in map ({ name, executable, desktop }: ''
+          executable_out_path="$out/bin/${
+            if isNull name then ''$(basename "${executable}")'' else name
+          }"
 
-        cat <<'_EOF' >"$executable_out_path"
-          #! ${pkgs.runtimeShell} -e
-          ${
-            lib.optionalString value.persistentHome
-            "mkdir -p ${value.persistentHomeDir}"
-          }
-          exec ${pkgs.bubblewrap}/bin/bwrap ${
-            lib.concatStringsSep " " (map (arg: ''"${arg}"'') args)
-          } ${builtins.toString value.executable} "$@"
-        _EOF
+          cat <<'_EOF' >"$executable_out_path"
+            #! ${pkgs.runtimeShell} -e
+            ${
+              lib.optionalString sandboxConfig.persistentHome
+              ''mkdir -p "${sandboxConfig.persistentHomeDir}"''
+            }
+            export PATH="${
+              lib.concatStringsSep ":"
+              (lib.map ({ executable, ... }: ''$(dirname "${executable}")'')
+                sandboxConfig.applications)
+            }:$PATH"
+            exec ${pkgs.bubblewrap}/bin/bwrap ${
+              lib.concatStringsSep " " (map (arg: ''"${arg}"'') args)
+            } ${builtins.toString executable} "$@"
+          _EOF
 
-        chmod 0755 "$executable_out_path"
+          chmod 0755 "$executable_out_path"
 
-        ${lib.optionalString (value.desktop != null) ''
-          substitute ${value.desktop} $out/share/applications/$(basename ${value.desktop}) \
-            --replace ${value.executable} "$executable_out_path"
-        ''}
-      '') cfg)}
+          ${lib.optionalString (desktop != null) ''
+            substitute ${desktop} $out/share/applications/$(basename ${desktop}) \
+              --replace ${executable} "$executable_out_path"
+          ''}
+        '') sandboxConfig.applications) cfg))}
   '';
 in {
   options.my.bubblewrap = lib.mkOption {
@@ -133,16 +143,29 @@ in {
     default = { };
     type = lib.types.attrsOf (lib.types.submodule ({ name, ... }: {
       options = {
-        executable = lib.mkOption {
-          type = lib.types.path;
-          description = "Executable to run sandboxed";
-        };
+        applications = lib.mkOption {
+          type = lib.types.listOf (lib.types.submodule {
+            options = {
+              name = lib.mkOption {
+                type = lib.types.nullOr lib.types.str;
+                default = null;
+                description = "Name of executable wrapper";
+              };
 
-        desktop = lib.mkOption {
-          type = lib.types.nullOr lib.types.path;
-          default = null;
-          description =
-            ".desktop file to modify. Only necessary if it uses the absolute path to the executable.";
+              executable = lib.mkOption {
+                type = lib.types.path;
+                description = "Executable to run sandboxed";
+              };
+
+              desktop = lib.mkOption {
+                type = lib.types.nullOr lib.types.path;
+                default = null;
+                description =
+                  ".desktop file to modify. Only necessary if it uses the absolute path to the executable.";
+              };
+            };
+          });
+          description = "Applications to run sandboxed";
         };
 
         persistentHome = lib.mkOption {
@@ -191,6 +214,12 @@ in {
           type = lib.types.listOf lib.types.str;
           default = [ ];
           description = "Extra dev binds";
+        };
+
+        extraEnvBinds = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+          description = "Extra environment variables to passthrough";
         };
       };
     }));
