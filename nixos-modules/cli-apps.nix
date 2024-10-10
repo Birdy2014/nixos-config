@@ -4,7 +4,7 @@
   environment.systemPackages = with pkgs; [
     (pkgsSelf.neovim.override {
       colorscheme = config.my.desktop.colorscheme;
-      withLanguageServers = true;
+      withLanguageServers = config.my.desktop.enable;
     })
     ripgrep
     git
