@@ -1,6 +1,7 @@
 { lib, wrapNeovimUnstable, neovim-unwrapped, vimPlugins, fetchFromGitHub
 , vimUtils, git, ripgrep, libqalculate, nil, nodePackages
-, colorscheme ? "gruvbox" }:
+, colorscheme ? "gruvbox", withLanguageServers ? false, clang-tools
+, rust-analyzer }:
 
 let
   config = import ./config.nix {
@@ -14,13 +15,14 @@ in wrapNeovimUnstable neovim-unwrapped {
   viAlias = true;
 
   wrapperArgs = "--prefix PATH : ${
-      lib.makeBinPath [
-        git
-        ripgrep
-        libqalculate
-        nil
-        nodePackages.bash-language-server
-      ]
+      lib.makeBinPath
+      ([ git ripgrep libqalculate nil nodePackages.bash-language-server ]
+        ++ lib.optionals withLanguageServers [
+          clang-tools
+          nodePackages.typescript-language-server
+          nodePackages.pyright
+          rust-analyzer
+        ])
     }";
 
   packpathDirs.myNeovimPackages = {
