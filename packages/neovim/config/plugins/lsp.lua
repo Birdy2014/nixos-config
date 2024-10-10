@@ -61,6 +61,9 @@ for _, lsp in ipairs(servers) do
             allow_incremental_sync = false,
             debounce_text_changes = 500
         }
+
+        -- start clangd using the autocmd below
+        conf.autostart = false;
     elseif lsp == "bashls" then
         conf.filetypes = { "sh", "bash" }
     elseif lsp == "denols" then
@@ -68,6 +71,24 @@ for _, lsp in ipairs(servers) do
     end
     lspconfig[lsp].setup(conf)
 end
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = require("lspconfig.configs")["clangd"].filetypes,
+    callback = function()
+        local cwd = vim.loop.cwd()
+        for _, value in pairs({
+            "compile_commands.json",
+            "compile_flags.txt",
+            ".clangd",
+            "build/compile_commands.json"
+        }) do
+            if vim.fn.filereadable(value) == 1 then
+                require("lspconfig.configs")["clangd"].launch()
+                return
+            end
+        end
+    end
+})
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 
