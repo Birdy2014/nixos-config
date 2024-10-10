@@ -1,8 +1,6 @@
 local hop = require("hop")
 
-hop.setup {
-    keys = "asdghklöqwertyuiopzxcvbnmfjä"
-}
+hop.setup()
 
 vim.keymap.set({"n", "v"}, "s", hop.hint_words, {
     desc = "Hop words";
