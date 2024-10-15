@@ -34,7 +34,10 @@ in (builtins.listToAttrs (map ({ name, system }: {
         inherit (inputs) nix-colorizer;
       };
       pkgsSelf = inputs.self.packages.${system};
-      pkgsUnstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+      pkgsUnstable = import inputs.nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
     };
     modules =
       [ ./${name} ../nixos-modules ../secrets { networking.hostName = name; } ];
