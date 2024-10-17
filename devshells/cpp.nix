@@ -5,6 +5,7 @@ pkgs.mkShell.override { stdenv = pkgs.clang17Stdenv; } rec {
   packages = with pkgs; [ gdb perf-tools hotspot ];
   nativeBuildInputs = with pkgs; [
     cmake
+    meson
     gnumake
     ninja
     ccache
@@ -28,9 +29,6 @@ pkgs.mkShell.override { stdenv = pkgs.clang17Stdenv; } rec {
     vulkan-headers
     vulkan-loader
     vulkan-tools
-
-    assimp
-    libffi
   ];
   NIX_HARDENING_ENABLE = "";
   NIX_ENFORCE_PURITY = 0;
