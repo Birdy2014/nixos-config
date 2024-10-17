@@ -21,31 +21,31 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/a5b1135a-1c79-4bca-b56e-fd8d2dda921c";
     fsType = "btrfs";
-    options = [ "subvol=root" ];
+    options = [ "subvol=root" "compress=zstd:1" "noatime" "nosuid" ];
   };
 
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/a5b1135a-1c79-4bca-b56e-fd8d2dda921c";
     fsType = "btrfs";
-    options = [ "subvol=home" "compress=zstd:1" ];
+    options = [ "subvol=home" "compress=zstd:1" "noatime" "nosuid" ];
   };
 
   fileSystems."/nix" = {
     device = "/dev/disk/by-uuid/a5b1135a-1c79-4bca-b56e-fd8d2dda921c";
     fsType = "btrfs";
-    options = [ "subvol=nix" "compress=zstd:1" "noatime" ];
+    options = [ "subvol=nix" "compress=zstd:1" "noatime" "nodev" "nosuid" ];
   };
 
   fileSystems."/swap" = {
     device = "/dev/disk/by-uuid/a5b1135a-1c79-4bca-b56e-fd8d2dda921c";
     fsType = "btrfs";
-    options = [ "subvol=swap" "noatime" ];
+    options = [ "subvol=swap" "noatime" "nodev" "nosuid" "noexec" ];
   };
 
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/3A68-8541";
     fsType = "vfat";
-    options = [ "umask=0077" ];
+    options = [ "umask=0077" "noatime" "nodev" "nosuid" "noexec" ];
   };
 
   swapDevices = [{ device = "/swap/swapfile"; }];
