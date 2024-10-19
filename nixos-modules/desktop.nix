@@ -9,9 +9,12 @@
     };
 
     colorscheme = lib.mkOption {
-      type =
-        lib.types.enum [ "gruvbox" "catppuccin-frappe" "catppuccin-macchiato" ];
-      default = "gruvbox";
+      type = lib.types.enum [
+        "gruvbox-material-dark"
+        "catppuccin-frappe"
+        "catppuccin-macchiato"
+      ];
+      default = "gruvbox-material-dark";
       description = "Which colorscheme to use";
     };
 

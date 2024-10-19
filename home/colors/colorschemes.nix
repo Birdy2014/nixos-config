@@ -7,7 +7,7 @@
 {
   my.theme = let
     colorschemes = {
-      gruvbox = rec {
+      gruvbox-material-dark = rec {
         accent = yellow;
         accent-text = "#000000";
         accent-background = "#a96b2c";

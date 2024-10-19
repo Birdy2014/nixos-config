@@ -1,7 +1,7 @@
 { lib, wrapNeovimUnstable, neovim-unwrapped, vimPlugins, fetchFromGitHub
 , vimUtils, git, ripgrep, libqalculate, nil, nodePackages
-, colorscheme ? "gruvbox", withLanguageServers ? false, clang-tools
-, rust-analyzer }:
+, colorscheme ? "gruvbox-material-dark", withLanguageServers ? false
+, clang-tools, rust-analyzer }:
 
 let
   config = import ./config.nix {

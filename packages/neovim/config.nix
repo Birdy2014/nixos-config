@@ -11,7 +11,7 @@
 
   plugins = let
     colorschemes = {
-      gruvbox = [{
+      gruvbox-material-dark = [{
         plugin = vimPlugins.gruvbox-material;
         config = ''
           vim.g.gruvbox_material_disable_terminal_colors = 1
