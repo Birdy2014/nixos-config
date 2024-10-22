@@ -37,7 +37,8 @@ LF_CACHE="$HOME/.cache/lf_images"
 [[ -d "$LF_CACHE" ]] || mkdir -p "$LF_CACHE"
 
 # Use hash of absolute path and compare change time
-IMAGE_CACHE_PATH="$LF_CACHE/$(echo "$FILE_PATH" | sha1sum | cut -f1 -d' ').jpg"
+IMAGE_PATH_HASH="$(echo "$FILE_PATH" | sha1sum | cut -f1 -d' ')"
+IMAGE_CACHE_PATH="$LF_CACHE/$IMAGE_PATH_HASH.jpg"
 
 if [[ -f "$IMAGE_CACHE_PATH" ]]; then
     if [[ $(stat -c '%Y' "$FILE_PATH") -lt $(stat -c '%Y' "$IMAGE_CACHE_PATH") ]]; then
@@ -46,6 +47,9 @@ if [[ -f "$IMAGE_CACHE_PATH" ]]; then
         rm "$IMAGE_CACHE_PATH"
     fi
 fi
+
+[[ -d "$LF_CACHE/tmp" ]] || mkdir "$LF_CACHE/tmp"
+IMAGE_TMP_PATH="$LF_CACHE/tmp/$IMAGE_PATH_HASH"
 
 handle_mime() {
     local mimetype
@@ -63,9 +67,9 @@ handle_mime() {
             pdftoppm -f 1 -l 1 \
                 -singlefile \
                 -jpeg -tiffcompression jpeg \
-                -- "${FILE_PATH}" "${IMAGE_CACHE_PATH}" &&
-            mv "${IMAGE_CACHE_PATH}.jpg" "${IMAGE_CACHE_PATH}" &&
-            cache_and_display_image "$IMAGE_CACHE_PATH"
+                -- "${FILE_PATH}" "${IMAGE_TMP_PATH}" &&
+            cache_and_display_image "${IMAGE_TMP_PATH}.jpg" &&
+            rm "${IMAGE_TMP_PATH}.jpg"
             exit 1;;
 
         ## SVG
@@ -125,7 +129,7 @@ handle_mime() {
         ## Epub
         application/epub+zip)
             tout gnome-epub-thumbnailer --size '512' "$FILE_PATH" "$IMAGE_CACHE_PATH" \
-                && cache_and_display_image "$IMAGE_CACHE_PATH" && exit 1
+                && display_image_cache && exit 1
             exit 1;;
     esac
 }
@@ -150,8 +154,11 @@ handle_fallback() {
 
 preview_audio() {
     # Get embedded thumbnail
-    ffmpeg -i "${FILE_PATH}" -map 0:v -map -0:V -c copy \
-      "${IMAGE_CACHE_PATH}" && cache_and_display_image "$IMAGE_CACHE_PATH" && exit 1
+    local video_width
+    local target_width
+    video_width=$(ffprobe -v error -show_entries stream=width -of default=nw=1:nk=1 -select_streams v "${FILE_PATH}" | head -n1)
+    target_width=$((video_width>MAX_IMAGE_WIDTH ? MAX_IMAGE_WIDTH : video_width))
+    ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s "$target_width" -m && display_image_cache && exit 1
 
     # Get conver.png (or other formats) image
     local directory
