@@ -6,7 +6,7 @@ vim.opt.hidden = true
 
 -- visual
 vim.opt.background = "dark"
-vim.opt.breakindent = false -- breakindent with indent-blankline seems broken? The cursor and the display doesn't line up.
+vim.opt.breakindent = false -- breakindent with indent-blankline seems broken? The cursor and the display doesn't line up. This might work in nvim 0.10 / NixOS 24.11
 vim.opt.breakindentopt = "sbr"
 vim.opt.cmdheight = 0
 vim.opt.conceallevel = 1
@@ -54,5 +54,7 @@ vim.opt.virtualedit = "block"
 vim.opt.shell = "/bin/sh" -- Fix performance issues with nvim-tree.lua and potentially some other bugs
 vim.opt.backupcopy = "yes" -- Fix reloading issues with parcel
 vim.opt.fsync = true -- Prevent potential data loss on system crash
+vim.opt.ignorecase = true -- Case insensitive search. Can be overridden using "\C".
+vim.opt.smartcase = true -- Case insensitive search only if the pattern is all lowercase. Overrides "ignorecase"
 
 vim.g._border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" }
