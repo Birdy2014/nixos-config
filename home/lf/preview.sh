@@ -9,6 +9,7 @@ X=$4
 Y=$5
 
 MAX_IMAGE_WIDTH=1280
+MAX_CHARS=10000
 
 tout() {
     timeout 2 "$@"
@@ -24,32 +25,48 @@ display_image() {
 }
 
 display_image_cache() {
-    display_image "$IMAGE_CACHE_PATH"
+    display_image "$FILE_CACHE_PATH"
 }
 
 cache_and_display_image() {
     local image="$1"
 
-    magick "${image}" -geometry "$MAX_IMAGE_WIDTH"x\> "${IMAGE_CACHE_PATH}" && display_image_cache
+    magick "${image}" -geometry "$MAX_IMAGE_WIDTH"x\> "jpg:${FILE_CACHE_PATH}" && display_image_cache
 }
 
-LF_CACHE="$HOME/.cache/lf_images"
+display_text_cache() {
+    cat "$FILE_CACHE_PATH"
+}
+
+cache_and_display_text() {
+    cut -c -${MAX_CHARS} | tee "$FILE_CACHE_PATH"
+}
+
+LF_CACHE="$HOME/.cache/lf_previews"
 [[ -d "$LF_CACHE" ]] || mkdir -p "$LF_CACHE"
 
 # Use hash of absolute path and compare change time
-IMAGE_PATH_HASH="$(echo "$FILE_PATH" | sha1sum | cut -f1 -d' ')"
-IMAGE_CACHE_PATH="$LF_CACHE/$IMAGE_PATH_HASH.jpg"
+FILE_PATH_HASH="$(echo "$FILE_PATH" | sha1sum | cut -f1 -d' ')"
+FILE_CACHE_PATH="$LF_CACHE/$FILE_PATH_HASH"
 
-if [[ -f "$IMAGE_CACHE_PATH" ]]; then
-    if [[ $(stat -c '%Y' "$FILE_PATH") -lt $(stat -c '%Y' "$IMAGE_CACHE_PATH") ]]; then
-        display_image_cache && exit 1
+if [[ -f "$FILE_CACHE_PATH" ]]; then
+    if [[ $(stat -c '%Y' "$FILE_PATH") -lt $(stat -c '%Y' "$FILE_CACHE_PATH") ]]; then
+        mimetype="$(file --dereference --brief --mime-type -- "${FILE_CACHE_PATH}")"
+        case "$mimetype" in
+            image/*)
+                display_image_cache && exit 1
+                ;;
+            *)
+                display_text_cache && exit 1
+                ;;
+        esac
     else
-        rm "$IMAGE_CACHE_PATH"
+        rm "$FILE_CACHE_PATH"
     fi
 fi
 
 [[ -d "$LF_CACHE/tmp" ]] || mkdir "$LF_CACHE/tmp"
-IMAGE_TMP_PATH="$LF_CACHE/tmp/$IMAGE_PATH_HASH"
+FILE_TMP_PATH="$LF_CACHE/tmp/$FILE_PATH_HASH"
 
 handle_mime() {
     local mimetype
@@ -58,7 +75,7 @@ handle_mime() {
         ## Text
         text/* | */xml | application/json | application/javascript)
             # Syntax highlight
-            highlight --out-format=ansi "${FILE_PATH}" && exit 1
+            highlight --out-format=ansi "${FILE_PATH}" | cache_and_display_text && exit 1
             cat "${FILE_PATH}" && exit 1
             exit 1;;
 
@@ -67,14 +84,14 @@ handle_mime() {
             pdftoppm -f 1 -l 1 \
                 -singlefile \
                 -jpeg -tiffcompression jpeg \
-                -- "${FILE_PATH}" "${IMAGE_TMP_PATH}" &&
-            cache_and_display_image "${IMAGE_TMP_PATH}.jpg" &&
-            rm "${IMAGE_TMP_PATH}.jpg"
+                -- "${FILE_PATH}" "${FILE_TMP_PATH}" &&
+            cache_and_display_image "${FILE_TMP_PATH}.jpg" &&
+            rm "${FILE_TMP_PATH}.jpg"
             exit 1;;
 
         ## SVG
         image/svg+xml|image/svg)
-            magick "${FILE_PATH}" -geometry "$MAX_IMAGE_WIDTH"x "${IMAGE_CACHE_PATH}" && display_image_cache
+            cache_and_display_image "${FILE_PATH}"
             exit 1;;
 
         ## Image
@@ -89,17 +106,13 @@ handle_mime() {
 
         ## Video
         video/*)
-            local video_width
-            local target_width
-            video_width=$(ffprobe -v error -show_entries stream=width -of default=nw=1:nk=1 -select_streams v "${FILE_PATH}" | head -n1)
-            target_width=$((video_width>MAX_IMAGE_WIDTH ? MAX_IMAGE_WIDTH : video_width))
-            ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s "$target_width" -m && display_image_cache && exit 1
+            preview_embedded_thumbnail_video_audio
             exit 1;;
 
         ## Audio
         audio/*)
             preview_audio
-            exit 1;;
+            ;;
 
         ## OpenDocument
         application/vnd.oasis.opendocument*)
@@ -109,26 +122,27 @@ handle_mime() {
 
         ## Archives
         application/zip)
-            tout zipinfo -1 -- "${FILE_PATH}" && exit 1
+            tout zipinfo -1 -- "${FILE_PATH}" | cache_and_display_text && exit 1
             exit 1;;
 
         application/x-tar|application/gzip|application/zstd)
-            tout tar -tf "${FILE_PATH}" && exit 1
+            tout tar -tf "${FILE_PATH}" | cache_and_display_text && exit 1
             exit 1;;
 
         application/x-7z-compressed)
             # Avoid password prompt by providing empty password
-            tout 7zz l -ba -p -- "${FILE_PATH}" | awk '{$1=$2=$3=$4=$5=""; print $0}' | grep -o '\S.*'
+            tout 7zz l -ba -p -- "${FILE_PATH}" | awk '{$1=$2=$3=$4=$5=""; print $0}' | grep -o '\S.*' | cache_and_display_text
             exit 1;;
 
         application/vnd.rar|application/x-rar)
             # Avoid password prompt by providing empty password
-            tout unrar lb -p- -- "${FILE_PATH}"
+            tout unrar lb -p- -- "${FILE_PATH}" | cache_and_display_text
             exit 1;;
 
         ## Epub
         application/epub+zip)
-            tout gnome-epub-thumbnailer --size '512' "$FILE_PATH" "$IMAGE_CACHE_PATH" \
+            tout gnome-epub-thumbnailer --size "$MAX_IMAGE_WIDTH" "$FILE_PATH" "$FILE_TMP_PATH.jpg" \
+                && mv "$FILE_TMP_PATH.jpg" "$FILE_CACHE_PATH" \
                 && display_image_cache && exit 1
             exit 1;;
     esac
@@ -139,10 +153,10 @@ handle_extension() {
         *.mp3)
             # Sometimes mp3 files are not recognized for some reason
             preview_audio
-            exit 1;;
+            ;;
 
         *.stl|*.obj)
-            f3d --quiet --ambient-occlusion --up +Z --output "$IMAGE_CACHE_PATH" "$FILE_PATH" && display_image_cache
+            f3d --quiet --ambient-occlusion --up +Z --output "$FILE_CACHE_PATH" "$FILE_PATH" && display_image_cache
             exit 1;;
     esac
 }
@@ -152,13 +166,16 @@ handle_fallback() {
     exit 1
 }
 
-preview_audio() {
-    # Get embedded thumbnail
+preview_embedded_thumbnail_video_audio() {
     local video_width
     local target_width
     video_width=$(ffprobe -v error -show_entries stream=width -of default=nw=1:nk=1 -select_streams v "${FILE_PATH}" | head -n1)
     target_width=$((video_width>MAX_IMAGE_WIDTH ? MAX_IMAGE_WIDTH : video_width))
-    ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s "$target_width" -m && display_image_cache && exit 1
+    ffmpegthumbnailer -i "${FILE_PATH}" -o "${FILE_CACHE_PATH}" -s "$target_width" -m -c jpeg && display_image_cache && exit 1
+}
+
+preview_audio() {
+    preview_embedded_thumbnail_video_audio
 
     # Get conver.png (or other formats) image
     local directory
