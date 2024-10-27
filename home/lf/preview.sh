@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -o noclobber -o noglob -o nounset -o pipefail
+set +e -u -o noclobber -o noglob -o nounset -o pipefail
 
 FILE_PATH="$(realpath "$1")"
 W=$2
