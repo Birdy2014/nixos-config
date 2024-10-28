@@ -177,7 +177,7 @@
       extract = ''
         ''${{
           set -f
-            case $f in
+          case $f in
             *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) ${pkgs.gnutar}/bin/tar --one-top-level -xjvf $f;;
             *.tar.gz|*.tgz) ${pkgs.gnutar}/bin/tar --one-top-level -xzvf $f;;
             *.tar.xz|*.txz) ${pkgs.gnutar}/bin/tar --one-top-level -xJvf $f;;
@@ -210,8 +210,8 @@
       duplicate = ''
         ''${{
           file="$f"
-          new_name="$1"
-          cp "$file" "$new_name"
+          IFS=' ' new_name="$*"
+          cp -r "$file" "$new_name"
         }}'';
 
       trash = ''
@@ -249,6 +249,20 @@
           done
           rm -- "$old" "$new"
           lf -remote "send $id unselect"
+        }}'';
+
+      mkdir = ''
+        ''${{
+          [[ "$#" -eq 0 ]] && echo 'Not enough arguments'>&2
+          IFS=' ' name="$*"
+          mkdir "$name"
+        }}'';
+
+      touch = ''
+        ''${{
+          [[ "$#" -eq 0 ]] && echo 'Not enough arguments'>&2
+          IFS=' ' name="$*"
+          touch "$name"
         }}'';
     };
 
