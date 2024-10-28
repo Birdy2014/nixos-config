@@ -109,6 +109,9 @@
       plugin = [ package-info-nvim nui-nvim ];
       config = "require('package-info').setup {}";
     }
+    {
+      plugin = [ vim-bsv ];
+    }
 
     # Misc
     {
