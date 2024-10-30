@@ -1,4 +1,4 @@
-{ osConfig, lib, pkgs, ... }:
+{ osConfig, lib, pkgs, pkgsUnstable, ... }:
 
 {
   config = lib.mkIf osConfig.my.gaming.enable {
@@ -33,20 +33,20 @@
 
       heroic = {
         applications = [{
-          executable = "${pkgs.heroic}/bin/heroic";
+          executable = "${pkgsUnstable.heroic}/bin/heroic";
           desktop =
-            "${pkgs.heroic}/share/applications/com.heroicgameslauncher.hgl.desktop";
+            "${pkgsUnstable.heroic}/share/applications/com.heroicgameslauncher.hgl.desktop";
         }];
         allowDesktop = true;
         persistentHome = true;
         extraBinds = [ "/run/media/moritz/games/Heroic" "/sys/class/input" ];
         extraDevBinds = [ "/dev/input" "/dev/uinput" ];
+        useUnstableMesa = true;
       };
     };
 
     home.packages = with pkgs; [
       # Launchers
-      heroic
       prismlauncher
       (lutris.override { extraPkgs = pkgs: [ wineWowPackages.stable ]; })
 
