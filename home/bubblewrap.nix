@@ -40,7 +40,8 @@ let
     desktopCommon = let
       envs =
         [ "HOME" "PATH" "LANG" "TERM" "XDG_RUNTIME_DIR" "XDG_SESSION_TYPE" ];
-    in [ "--tmpfs" "$XDG_RUNTIME_DIR" ] ++ (lib.concatMap mkEnvBind envs);
+    in [ "--perms" "0700" "--tmpfs" "$XDG_RUNTIME_DIR" ]
+    ++ (lib.concatMap mkEnvBind envs);
 
     wayland = (mkEnvBind "WAYLAND_DISPLAY")
       ++ (mkRoBind "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY");
