@@ -73,7 +73,7 @@ handle_mime() {
     mimetype="$(file --dereference --brief --mime-type -- "${FILE_PATH}")"
     case "${mimetype}" in
         ## Text
-        text/* | */xml | application/json | application/javascript)
+        text/* | */xml | application/json | application/x-ndjson | application/javascript)
             # Syntax highlight
             highlight --out-format=ansi "${FILE_PATH}" | cache_and_display_text && exit 1
             cat "${FILE_PATH}" && exit 1
