@@ -1,4 +1,4 @@
-{ config, lib, pkgs, pkgsUnstable, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.my.bubblewrap;
@@ -74,22 +74,6 @@ let
       "$XDG_CONFIG_HOME/gtk-4.0/gtk.css"
       "$XDG_DATA_HOME/icons"
     ]);
-
-    # Are there more variables necessary for vulkan?
-    unstableMesa = let
-      mesa-drivers =
-        [ pkgsUnstable.mesa.drivers pkgsUnstable.pkgsi686Linux.mesa.drivers ];
-    in [
-      "--setenv"
-      "LD_LIBRARY_PATH"
-      (lib.makeSearchPathOutput "drivers" "lib" mesa-drivers)
-      "--setenv"
-      "LIBGL_DRIVERS_PATH"
-      (lib.makeSearchPathOutput "lib" "lib/dri" mesa-drivers)
-      "--setenv"
-      "LIBVA_DRIVERS_PATH"
-      (lib.makeSearchPathOutput "out" "lib/dri" mesa-drivers)
-    ];
   };
 
   wrappedBins = pkgs.runCommand "bubblewrap-wrapped-binaries" {
@@ -126,9 +110,7 @@ let
             ++ (lib.concatMap mkEnvBind sandboxConfig.extraEnvBinds)
             ++ (lib.concatLists
               (lib.mapAttrsToList (name: value: [ "--setenv" name value ])
-                sandboxConfig.extraEnv))
-            ++ (lib.optionals sandboxConfig.useUnstableMesa
-              defaultArgs.unstableMesa);
+                sandboxConfig.extraEnv));
         in map (package: ''
           declare -a executables_substitute_args
 
@@ -241,13 +223,6 @@ in {
           type = lib.types.attrsOf lib.types.str;
           default = { };
           description = "Extra environment variables to set in the sandbox";
-        };
-
-        useUnstableMesa = lib.mkOption {
-          type = lib.types.bool;
-          default = false;
-          description =
-            "Use unstable mesa to work around issues when using graphical applications from nixos-unstable";
         };
       };
     }));

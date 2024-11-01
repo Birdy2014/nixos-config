@@ -1,4 +1,4 @@
-{ pkgs, pkgsUnstable, ... }:
+{ lib, pkgs, pkgsUnstable, ... }:
 
 {
   imports = [
@@ -68,7 +68,10 @@
     applications = [ pkgsUnstable.feishin ];
     allowDesktop = true;
     extraBinds = [ "$HOME/.config/feishin" ];
-    useUnstableMesa = true;
+    extraEnv.LD_LIBRARY_PATH = lib.makeLibraryPath [
+      pkgsUnstable.mesa.drivers
+      pkgsUnstable.pkgsi686Linux.mesa.drivers
+    ];
   };
 
   # mpd

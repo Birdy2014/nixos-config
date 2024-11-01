@@ -30,7 +30,16 @@
         persistentHome = true;
         extraBinds = [ "/run/media/moritz/games/Heroic" "/sys/class/input" ];
         extraDevBinds = [ "/dev/input" "/dev/uinput" ];
-        useUnstableMesa = true;
+        extraEnv = {
+          LIBVA_DRIVERS_PATH = lib.makeSearchPathOutput "drivers" "lib/dri" [
+            pkgsUnstable.mesa
+            pkgsUnstable.pkgsi686Linux.mesa
+          ];
+          LD_LIBRARY_PATH = lib.makeLibraryPath [
+            pkgsUnstable.mesa.drivers
+            pkgsUnstable.pkgsi686Linux.mesa.drivers
+          ];
+        };
       };
     };
 
