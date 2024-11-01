@@ -65,10 +65,7 @@
   };
 
   home-manager.users.moritz.my.bubblewrap.feishin = {
-    applications = [{
-      executable = "${pkgsUnstable.feishin}/bin/feishin";
-      desktop = "${pkgsUnstable.feishin}/share/applications/feishin.desktop";
-    }];
+    applications = [ pkgsUnstable.feishin ];
     allowDesktop = true;
     extraBinds = [ "$HOME/.config/feishin" ];
     useUnstableMesa = true;

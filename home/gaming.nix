@@ -4,10 +4,7 @@
   config = lib.mkIf osConfig.my.gaming.enable {
     my.bubblewrap = {
       steam = {
-        applications = [{
-          executable = "${pkgs.steam}/bin/steam";
-          desktop = "${pkgs.steam}/share/applications/steam.desktop";
-        }];
+        applications = [ pkgs.steam ];
         persistentHome = true;
         allowDesktop = true;
         unshareIpc = false;
@@ -21,22 +18,14 @@
       };
 
       prismlauncher = {
-        applications = [{
-          executable = "${pkgs.prismlauncher}/bin/prismlauncher";
-          desktop =
-            "${pkgs.prismlauncher}/share/applications/org.prismlauncher.PrismLauncher.desktop";
-        }];
+        applications = [ pkgs.prismlauncher ];
         allowDesktop = true;
         extraBinds = [ "$HOME/.local/share/PrismLauncher" ];
         extraRoBinds = [ "$HOME/Downloads" ];
       };
 
       heroic = {
-        applications = [{
-          executable = "${pkgsUnstable.heroic}/bin/heroic";
-          desktop =
-            "${pkgsUnstable.heroic}/share/applications/com.heroicgameslauncher.hgl.desktop";
-        }];
+        applications = [ pkgsUnstable.heroic ];
         allowDesktop = true;
         persistentHome = true;
         extraBinds = [ "/run/media/moritz/games/Heroic" "/sys/class/input" ];
@@ -47,7 +36,6 @@
 
     home.packages = with pkgs; [
       # Launchers
-      prismlauncher
       (lutris.override { extraPkgs = pkgs: [ wineWowPackages.stable ]; })
 
       # Emulators

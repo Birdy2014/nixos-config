@@ -129,32 +129,46 @@ let
                 sandboxConfig.extraEnv))
             ++ (lib.optionals sandboxConfig.useUnstableMesa
               defaultArgs.unstableMesa);
-        in map ({ name, executable, desktop }: ''
-          executable_out_path="$out/bin/${
-            if isNull name then ''$(basename "${executable}")'' else name
-          }"
+        in map (package: ''
+          declare -a executables_substitute_args
 
-          cat <<'_EOF' >"$executable_out_path"
-            #! ${pkgs.runtimeShell} -e
-            ${
-              lib.optionalString sandboxConfig.persistentHome
-              ''mkdir -p "${sandboxConfig.persistentHomeDir}"''
-            }
-            export PATH="${
-              lib.concatStringsSep ":"
-              (lib.map ({ executable, ... }: ''$(dirname "${executable}")'')
-                sandboxConfig.applications)
-            }:$PATH"
-            exec ${pkgs.bubblewrap}/bin/bwrap ${
-              lib.concatStringsSep " " (map (arg: ''"${arg}"'') args)
-            } ${builtins.toString executable} "$@"
-          _EOF
+          for executable in "${package}/bin/"*; do
+            executable_out_path="$out/bin/$(basename "$executable")"
+            executables_substitute_args+=("--replace-quiet" "$executable" "$executable_out_path")
 
-          chmod 0755 "$executable_out_path"
+            export executable
 
-          ${lib.optionalString (desktop != null) ''
-            substitute ${desktop} $out/share/applications/$(basename ${desktop}) \
-              --replace ${executable} "$executable_out_path"
+            ${pkgs.gettext}/bin/envsubst '$executable' <<'  _EOF' >"$executable_out_path"
+              #! ${pkgs.runtimeShell} -e
+              ${
+                lib.optionalString sandboxConfig.persistentHome
+                ''mkdir -p "${sandboxConfig.persistentHomeDir}"''
+              }
+              export PATH="${
+                lib.concatStringsSep ":"
+                (lib.map (package: "${package}/bin") sandboxConfig.applications)
+              }:$PATH"
+              exec ${pkgs.bubblewrap}/bin/bwrap ${
+                lib.concatStringsSep " " (map (arg: ''"${arg}"'') args)
+              } "$executable" "$@"
+            _EOF
+
+            chmod 0755 "$executable_out_path"
+          done
+
+          ${lib.optionalString (sandboxConfig.allowDesktop) ''
+            if [[ -d "${package}/share/applications" ]]; then
+              for desktop in "${package}/share/applications/"*; do
+                substitute "$desktop" $out/share/applications/$(basename "$desktop") \
+                  "''${executables_substitute_args[@]}"
+              done
+            fi
+
+            if [[ -d "${package}/share/icons" ]]; then
+              mkdir -p "$out/share/icons"
+              cp -rL "${package}/share/icons/"* "$out/share/icons"
+              ${pkgs.findutils}/bin/find "$out/share/icons" -type d -print0 | ${pkgs.findutils}/bin/xargs -0 chmod 755
+            fi
           ''}
         '') sandboxConfig.applications) cfg))}
   '';
@@ -165,27 +179,7 @@ in {
     type = lib.types.attrsOf (lib.types.submodule ({ name, ... }: {
       options = {
         applications = lib.mkOption {
-          type = lib.types.listOf (lib.types.submodule {
-            options = {
-              name = lib.mkOption {
-                type = lib.types.nullOr lib.types.str;
-                default = null;
-                description = "Name of executable wrapper";
-              };
-
-              executable = lib.mkOption {
-                type = lib.types.path;
-                description = "Executable to run sandboxed";
-              };
-
-              desktop = lib.mkOption {
-                type = lib.types.nullOr lib.types.path;
-                default = null;
-                description =
-                  ".desktop file to modify. Only necessary if it uses the absolute path to the executable.";
-              };
-            };
-          });
+          type = lib.types.listOf lib.types.package;
           description = "Applications to run sandboxed";
         };
 
