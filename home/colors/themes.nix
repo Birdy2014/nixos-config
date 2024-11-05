@@ -167,11 +167,13 @@
         /* Sidebar */
         @define-color sidebar_bg_color ${cfg.background-primary};
         @define-color sidebar_fg_color ${cfg.text};
-        @define-color sidebar_backdrop_color #2a2a2a;
+        @define-color sidebar_backdrop_color ${cfg.background-secondary};
         @define-color sidebar_shade_color rgba(0, 0, 0, 0.36);
-        @define-color secondary_sidebar_bg_color #2a2a2a;
+        @define-color secondary_sidebar_bg_color ${cfg.background-secondary};
         @define-color secondary_sidebar_fg_color ${cfg.text};
-        @define-color secondary_sidebar_backdrop_color #272727;
+        @define-color secondary_sidebar_backdrop_color ${
+          darken cfg.background-secondary 20
+        };
         @define-color secondary_sidebar_shade_color @sidebar_shade_color;
 
         /* Remove rounded borders */
