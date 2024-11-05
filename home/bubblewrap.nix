@@ -38,8 +38,15 @@ let
     ];
 
     desktopCommon = let
-      envs =
-        [ "HOME" "PATH" "LANG" "TERM" "XDG_RUNTIME_DIR" "XDG_SESSION_TYPE" ];
+      envs = [
+        "HOME"
+        "PATH"
+        "LANG"
+        "TERM"
+        "XDG_RUNTIME_DIR"
+        "XDG_SESSION_TYPE"
+        "XDG_DATA_DIRS"
+      ];
     in [ "--perms" "0700" "--tmpfs" "$XDG_RUNTIME_DIR" ]
     ++ (lib.concatMap mkEnvBind envs);
 
@@ -58,6 +65,8 @@ let
 
     dbus = (mkEnvBind "DBUS_SESSION_BUS_ADDRESS")
       ++ (mkRoBind "$XDG_RUNTIME_DIR/bus");
+
+    dconf = mkRoBind "$XDG_CONFIG_HOME/dconf";
 
     newSession = [ "--new-session" ];
 
@@ -98,7 +107,7 @@ let
               mkHomeBind sandboxConfig.persistentHomeDir);
 
           desktopArgs = (lib.optionals sandboxConfig.allowDesktop
-            (defaultArgs.desktopCommon ++ defaultArgs.dbus
+            (defaultArgs.desktopCommon ++ defaultArgs.dbus ++ defaultArgs.dconf
               ++ defaultArgs.wayland ++ defaultArgs.xorg ++ defaultArgs.sound
               ++ defaultArgs.gpu ++ defaultArgs.theming));
 

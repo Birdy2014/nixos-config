@@ -41,12 +41,24 @@
           ];
         };
       };
+
+      lutris = {
+        applications = [
+          (pkgs.lutris.override {
+            extraPkgs = pkgs: [ pkgs.wineWowPackages.stable ];
+          })
+        ];
+        allowDesktop = true;
+        extraBinds = [
+          "$HOME/.config/lutris"
+          "$HOME/.local/share/lutris"
+          "$HOME/.cache/lutris"
+          "/run/media/moritz/games/lutris"
+        ];
+      };
     };
 
     home.packages = with pkgs; [
-      # Launchers
-      (lutris.override { extraPkgs = pkgs: [ wineWowPackages.stable ]; })
-
       # Emulators
       dolphin-emu
       rpcs3
