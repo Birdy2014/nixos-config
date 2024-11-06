@@ -13,6 +13,8 @@
     systemd-boot.enable = true;
   };
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   boot.blacklistedKernelModules = [ "nouveau" "acer_wmi" ];
   boot.kernelParams = [ "intel_pstate=passive" ];
 
