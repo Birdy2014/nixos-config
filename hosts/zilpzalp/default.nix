@@ -26,6 +26,7 @@
   environment.systemPackages = with pkgs; [ nvtopPackages.intel ];
 
   # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/2669
+  # Remove with NixOS 24.11
   services.pipewire.wireplumber.configPackages = [
     (pkgs.writeTextDir
       "share/wireplumber/wireplumber.conf.d/10-disable-camera.conf" ''
