@@ -74,9 +74,6 @@
     ];
   };
 
-  # mpd
-  networking.firewall.allowedTCPPorts = [ 6600 ];
-
   boot.kernelParams = [
     "amd_pstate=active"
 
