@@ -16,8 +16,6 @@ let
         "/bin"
         "/nix"
         "/run/current-system"
-        "/run/opengl-driver"
-        "/run/opengl-driver-32"
         "/etc"
         "/run/systemd/resolve"
       ];
@@ -46,6 +44,7 @@ let
         "XDG_RUNTIME_DIR"
         "XDG_SESSION_TYPE"
         "XDG_DATA_DIRS"
+        "NIXOS_OZONE_WL"
       ];
     in [ "--perms" "0700" "--tmpfs" "$XDG_RUNTIME_DIR" ]
     ++ (lib.concatMap mkEnvBind envs);
@@ -111,7 +110,21 @@ let
               ++ defaultArgs.wayland ++ defaultArgs.xorg ++ defaultArgs.sound
               ++ defaultArgs.gpu ++ defaultArgs.theming));
 
-          args = commonArgs ++ desktopArgs
+          graphisArgs = if (isNull sandboxConfig.customMesaPkgsSet) then
+            (lib.concatMap mkRoBind [
+              "/run/opengl-driver"
+              "/run/opengl-driver-32"
+            ])
+          else [
+            "--ro-bind"
+            "${sandboxConfig.customMesaPkgsSet.mesa.drivers}"
+            "/run/opengl-driver"
+            "--ro-bind"
+            "${sandboxConfig.customMesaPkgsSet.pkgsi686Linux.mesa.drivers}"
+            "/run/opengl-driver-32"
+          ];
+
+          args = commonArgs ++ desktopArgs ++ graphisArgs
             ++ (lib.optionals sandboxConfig.newSession defaultArgs.newSession)
             ++ (lib.optionals sandboxConfig.unshareIpc defaultArgs.unshareIpc)
             ++ (lib.concatMap mkBind sandboxConfig.extraBinds)
@@ -203,6 +216,13 @@ in {
           type = lib.types.bool;
           default = false;
           description = "allow access to desktop resources";
+        };
+
+        customMesaPkgsSet = lib.mkOption {
+          type = lib.types.nullOr lib.types.pkgs;
+          default = null;
+          description =
+            "Bind `/run/opengl-driver` to mesa provided by package set";
         };
 
         extraBinds = lib.mkOption {

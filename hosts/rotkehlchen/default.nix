@@ -67,11 +67,8 @@
   home-manager.users.moritz.my.bubblewrap.feishin = {
     applications = [ pkgsUnstable.feishin ];
     allowDesktop = true;
+    customMesaPkgsSet = pkgsUnstable;
     extraBinds = [ "$HOME/.config/feishin" ];
-    extraEnv.LD_LIBRARY_PATH = lib.makeLibraryPath [
-      pkgsUnstable.mesa.drivers
-      pkgsUnstable.pkgsi686Linux.mesa.drivers
-    ];
   };
 
   boot.kernelParams = [
