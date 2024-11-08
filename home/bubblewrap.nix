@@ -107,8 +107,9 @@ let
 
           desktopArgs = (lib.optionals sandboxConfig.allowDesktop
             (defaultArgs.desktopCommon ++ defaultArgs.dbus ++ defaultArgs.dconf
-              ++ defaultArgs.wayland ++ defaultArgs.xorg ++ defaultArgs.sound
-              ++ defaultArgs.gpu ++ defaultArgs.theming));
+              ++ defaultArgs.wayland ++ defaultArgs.sound ++ defaultArgs.gpu
+              ++ defaultArgs.theming))
+            ++ (lib.optionals sandboxConfig.allowX11 defaultArgs.xorg);
 
           graphisArgs = if (isNull sandboxConfig.customMesaPkgsSet) then
             (lib.concatMap mkRoBind [
@@ -216,6 +217,12 @@ in {
           type = lib.types.bool;
           default = false;
           description = "allow access to desktop resources";
+        };
+
+        allowX11 = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "allow access to X11";
         };
 
         customMesaPkgsSet = lib.mkOption {
