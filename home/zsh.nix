@@ -183,5 +183,12 @@
     };
   };
 
-  programs.dircolors.enable = true;
+  programs.dircolors = {
+    enable = true;
+    settings = {
+      ".avif" = "01;35";
+      ".jxl" = "01;35";
+      ".qoi" = "01;35";
+    };
+  };
 }

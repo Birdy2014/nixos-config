@@ -257,6 +257,7 @@ Vagrantfile             
 *.esd   
 
 # image formats (extensions from dircolors defaults)
+*.avif   
 *.bmp   
 *.cgm   
 *.dl    
@@ -267,6 +268,7 @@ Vagrantfile             
 *.ico   
 *.jpeg  
 *.jpg   
+*.jxl   
 *.mng   
 *.ogx   
 *.pbm   
@@ -274,6 +276,7 @@ Vagrantfile             
 *.pgm   
 *.png   
 *.ppm   
+*.qoi   
 *.qt    
 *.svg   
 *.svgz  
