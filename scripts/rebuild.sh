@@ -32,7 +32,7 @@ declare -a commands
 for host in "$@"; do
     case "$host" in
         rotkehlchen)
-            commands+=("sudo nixos-rebuild $mode --flake $flake_path#rotkehlchen")
+            commands+=("nixos-rebuild $mode --flake $flake_path#rotkehlchen --use-remote-sudo")
             ;;
         seidenschwanz)
             commands+=("ssh seidenschwanz git -C /etc/nixos-secrets pull")
