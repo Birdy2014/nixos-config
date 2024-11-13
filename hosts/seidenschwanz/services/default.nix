@@ -4,7 +4,7 @@
   imports = [
     ./authelia.nix
     ./blocky.nix
-    ./borg.nix
+    ./borg-repos.nix
     ./jellyfin.nix
     ./kodi.nix
     ./lldap.nix

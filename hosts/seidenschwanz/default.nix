@@ -4,6 +4,7 @@
   imports = [
     ../../secrets/buntspecht-seidenschwanz.nix
     ../../secrets/seidenschwanz.nix
+    ./borg.nix
     ./btrbk.nix
     ./ddclient.nix
     ./hardware-configuration.nix
