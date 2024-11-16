@@ -128,7 +128,7 @@ require("nvim-tree").setup {
                         return true
                     elseif #number_string_a > 0 and #number_string_b == 0 then
                         return false
-                    elseif #number_string_a > 0 and #number_string_b > 0 then
+                    elseif #number_string_a > 0 and #number_string_b > 0 and number_string_a ~= number_string_b then
                         return tonumber(number_string_a) < tonumber(number_string_b)
                     end
 
