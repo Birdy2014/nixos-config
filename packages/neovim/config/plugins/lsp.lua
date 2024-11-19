@@ -38,9 +38,25 @@ local server_config = {
     texlab = {
         texlab = {
             build = {
-                executable = "pdflatex",
+                executable = "latexmk",
+                args = {
+                    "-pdflua",
+                    "-bibtex-cond", "-bibfudge",
+                    "-interaction=nonstopmode",
+                    "-auxdir=./build/", "-outdir=./build/",
+                    "-synctex=1", "%f"
+                },
+                auxDirectory = "./build/",
+                logDirectory = "./build/",
+                pdfDirectory = "./build/",
                 onSave = true
-            }
+            },
+            forwardSearch = {
+                executable = "zathura",
+                args = {
+                    "--synctex-forward", "%l:1:%f", "%p"
+                },
+            },
         }
     }
 }
