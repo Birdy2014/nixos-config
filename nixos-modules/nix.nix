@@ -24,6 +24,7 @@
     inputs.self.overlays.imv
     inputs.self.overlays.lf
     inputs.self.overlays.swayidle
+    inputs.self.overlays.spicetify-cli
   ];
 
   nix.registry = {
