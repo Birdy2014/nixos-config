@@ -56,6 +56,11 @@ window#waybar.hidden {
     color: @text;
 }
 
+.screenshare,
+.audio-in {
+    padding: 10px 10px;
+}
+
 #mode {
     font-weight: bold;
     background-color: @red;

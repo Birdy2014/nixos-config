@@ -54,6 +54,8 @@
         modules-right = [
           "custom/idle-inhibit"
           "pulseaudio"
+          "privacy#screenshare"
+          "privacy#audio-in"
           "network"
           "backlight"
           "battery"
@@ -172,6 +174,22 @@
             "${pkgs.sway}/bin/swaymsg exec ${pkgs.pavucontrol}/bin/pavucontrol";
           rotate = 90;
           ignored-sinks = [ "Easy Effects Sink" ];
+        };
+        "privacy#screenshare" = {
+          icon-size = 12;
+          modules = [{
+            type = "screenshare";
+            tooltip = true;
+            tooltip-icon-size = 24;
+          }];
+        };
+        "privacy#audio-in" = {
+          icon-size = 12;
+          modules = [{
+            type = "audio-in";
+            tooltip = true;
+            tooltip-icon-size = 24;
+          }];
         };
       };
     };
