@@ -21,11 +21,14 @@
       "vm.max_map_count" = 2147483642;
     };
 
-    boot.kernelParams = [ "nowatchdog" ];
+    boot.kernelParams = [
+      "nowatchdog"
+
+      # zswap
+      "zswap.enabled=1"
+    ];
 
     boot.tmp.useTmpfs = true;
-
-    zramSwap.enable = true;
 
     services.dbus.implementation = "broker";
 
