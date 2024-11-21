@@ -17,4 +17,6 @@
     fsType = "vfat";
     options = [ "umask=0077" "noatime" "nodev" "nosuid" "noexec" ];
   };
+
+  swapDevices = [{ device = "/swap/swapfile"; }];
 }
