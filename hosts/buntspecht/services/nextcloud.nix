@@ -13,6 +13,13 @@ in {
     extraAppsEnable = true;
     https = true;
     configureRedis = true;
+    phpOptions."opcache.interned_strings_buffer" = "16";
+
+    settings = {
+      default_language = "de";
+      default_locale = "de_DE";
+      maintenance_window_start = 3;
+    };
   };
 
   services.nginx.virtualHosts.${fqdn} = {
