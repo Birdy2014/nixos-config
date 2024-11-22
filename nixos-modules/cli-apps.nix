@@ -38,7 +38,6 @@
 
   documentation = {
     info.enable = false;
-    nixos.includeAllModules = true;
     dev.enable = true;
   };
 
