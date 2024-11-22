@@ -20,7 +20,6 @@
   nixpkgs.config.allowUnfree = true;
 
   nixpkgs.overlays = [
-    inputs.nur.overlay
     inputs.self.overlays.imv
     inputs.self.overlays.lf
     inputs.self.overlays.swayidle

@@ -20,9 +20,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nur.url = "github:nix-community/NUR";
-
     nix-colorizer.url = "github:nutsalhan87/nix-colorizer/v0.2";
+
+    rycee-nur-expressions = {
+      url = "gitlab:rycee/nur-expressions";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, ... }@inputs: {

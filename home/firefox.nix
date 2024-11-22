@@ -1,4 +1,4 @@
-{ pkgs, pkgsSelf, ... }:
+{ inputs, pkgs, pkgsSelf, ... }:
 
 {
   programs.firefox = let
@@ -69,8 +69,12 @@
       "privacy.trackingprotection.socialtracking.enabled" = true;
     };
 
-    commonExtensions = with pkgs.nur.repos.rycee.firefox-addons;
-      [ ublock-origin ];
+    inherit (import "${inputs.rycee-nur-expressions}/default.nix" {
+      inherit pkgs;
+    })
+      firefox-addons;
+
+    commonExtensions = with firefox-addons; [ ublock-origin ];
   in {
     enable = true;
     nativeMessagingHosts = with pkgs; [ tridactyl-native keepassxc ];
@@ -92,13 +96,12 @@
           "privacy.clearOnShutdown.sessions" = true;
           "privacy.clearOnShutdown.sitesettings" = false;
         };
-        extensions = commonExtensions
-          ++ (with pkgs.nur.repos.rycee.firefox-addons; [
-            keepassxc-browser
-            tridactyl
-            darkreader
-            return-youtube-dislikes
-          ]);
+        extensions = commonExtensions ++ (with firefox-addons; [
+          keepassxc-browser
+          tridactyl
+          darkreader
+          return-youtube-dislikes
+        ]);
         search.default = "DuckDuckGo";
         search.force = true;
         userChrome = ''
@@ -116,12 +119,11 @@
         name = "persistent";
         isDefault = false;
         settings = commonSettings;
-        extensions = commonExtensions
-          ++ (with pkgs.nur.repos.rycee.firefox-addons; [
-            return-youtube-dislikes
-            youtube-shorts-block
-            sponsorblock
-          ]);
+        extensions = commonExtensions ++ (with firefox-addons; [
+          return-youtube-dislikes
+          youtube-shorts-block
+          sponsorblock
+        ]);
         search.default = "DuckDuckGo";
         search.force = true;
       };
