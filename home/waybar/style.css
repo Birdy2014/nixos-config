@@ -50,8 +50,7 @@ window#waybar.hidden {
 #network,
 #pulseaudio,
 #tray,
-#mode,
-#custom-idle-inhibit {
+#mode {
     padding: 10px 0;
     color: @text;
 }
@@ -130,6 +129,11 @@ label:focus {
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
     color: @red;
+}
+
+#custom-idle-inhibit {
+    padding-right: 4px;
+    color: @text;
 }
 
 #custom-idle-inhibit.active {

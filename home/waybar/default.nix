@@ -52,10 +52,10 @@
         margin = "5";
         modules-left = [ "sway/workspaces" "sway/mode" ];
         modules-right = [
-          "custom/idle-inhibit"
-          "pulseaudio"
           "privacy#screenshare"
           "privacy#audio-in"
+          "custom/idle-inhibit"
+          "pulseaudio"
           "network"
           "backlight"
           "battery"
