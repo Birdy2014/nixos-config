@@ -4,7 +4,7 @@ let fqdn = "cloud.mvogel.dev";
 in {
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud29;
+    package = pkgs.nextcloud30;
     hostName = fqdn;
     config.adminpassFile = config.sops.secrets.nextcloud-admin-password.path;
     extraApps = with config.services.nextcloud.package.packages.apps; {
