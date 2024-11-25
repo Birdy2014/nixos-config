@@ -9,7 +9,6 @@ X=$4
 Y=$5
 
 MAX_IMAGE_WIDTH=1280
-MAX_CHARS=10000
 
 tout() {
     timeout 2 "$@"
@@ -39,7 +38,7 @@ display_text_cache() {
 }
 
 cache_and_display_text() {
-    cut -c -${MAX_CHARS} | tee "$FILE_CACHE_PATH"
+    head -n 80 | cut -c -1000 | iconv -c | tee "$FILE_CACHE_PATH"
 }
 
 LF_CACHE="$HOME/.cache/lf_previews"
@@ -50,7 +49,7 @@ FILE_PATH_HASH="$(echo "$FILE_PATH" | sha1sum | cut -f1 -d' ')"
 FILE_CACHE_PATH="$LF_CACHE/$FILE_PATH_HASH"
 
 if [[ -f "$FILE_CACHE_PATH" ]]; then
-    if [[ $(stat -c '%Y' "$FILE_PATH") -lt $(stat -c '%Y' "$FILE_CACHE_PATH") ]]; then
+    if [[ $(stat -c '%Y' "$FILE_PATH") -lt $(stat -c '%Y' "$FILE_CACHE_PATH") ]] && [[ -s "$FILE_CACHE_PATH" ]]; then
         mimetype="$(file --dereference --brief --mime-type -- "${FILE_CACHE_PATH}")"
         case "$mimetype" in
             image/*)
@@ -75,8 +74,8 @@ handle_mime() {
         ## Text
         text/* | */xml | application/json | application/x-ndjson | application/javascript)
             # Syntax highlight
-            highlight --out-format=ansi "${FILE_PATH}" | cache_and_display_text && exit 1
-            cat "${FILE_PATH}" && exit 1
+            highlight --out-format=ansi --line-length=400 "${FILE_PATH}" | cache_and_display_text && exit 1
+            cache_and_display_text < "$FILE_PATH" && exit 1
             exit 1;;
 
         ## PDF
