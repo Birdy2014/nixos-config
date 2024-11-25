@@ -14,7 +14,10 @@
       "${home}/.thunderbird"
       "${home}/Documents"
       "${home}/Downloads"
+      "${home}/Music"
+      "${home}/Pictures"
       "${home}/misc"
+      "${home}/src"
     ];
     exclude = [ "${home}/.local/share/containers" ];
     compression = "zstd,10";
