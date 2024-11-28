@@ -18,6 +18,7 @@
     spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-compat.follows = "";
     };
 
     nix-colorizer.url = "github:nutsalhan87/nix-colorizer/v0.2";
