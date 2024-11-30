@@ -10,8 +10,8 @@
     domains = [ "seidenschwanz.mvogel.dev" "ipv6.seidenschwanz.mvogel.dev" ]
       ++ (map (name: "${name}.seidenschwanz.mvogel.dev")
         (lib.attrNames config.my.proxy.domains));
-    use = "web, web=checkip.dyndns.org";
-    extraConfig = "usev6=ifv6, if=lan";
+    usev4 = "web, web=checkip.dyndns.org";
+    usev6 = "ifv6, if=lan";
   };
 
   systemd.services.ddclient.path = [ pkgs.iproute2 ];

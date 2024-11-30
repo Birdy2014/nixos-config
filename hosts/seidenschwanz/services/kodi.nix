@@ -13,7 +13,7 @@
   networking.firewall.allowedTCPPorts = [ 8080 9090 ];
   networking.firewall.allowedUDPPorts = [ 9777 ];
 
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   security.rtkit.enable = true;
 

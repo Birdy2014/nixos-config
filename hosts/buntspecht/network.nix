@@ -19,12 +19,10 @@
         "fe80::9400:2ff:fe50:b47b/64"
       ];
       routes = [
-        { routeConfig.Gateway = "fe80::1"; }
+        { Gateway = "fe80::1"; }
         {
-          routeConfig = {
-            Gateway = "172.31.1.1";
-            GatewayOnLink = true;
-          };
+          Gateway = "172.31.1.1";
+          GatewayOnLink = true;
         }
       ];
     };

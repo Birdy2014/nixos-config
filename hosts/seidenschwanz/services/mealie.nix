@@ -1,16 +1,9 @@
-{ config, inputs, pkgsUnstable, ... }:
+{ config, ... }:
 
 {
-  disabledModules = [ "services/web-apps/mealie.nix" ];
-
-  imports =
-    [ (inputs.nixpkgs-unstable + /nixos/modules/services/web-apps/mealie.nix) ];
-
   services.mealie = {
     enable = true;
     port = 8134;
-
-    package = pkgsUnstable.mealie;
 
     settings = {
       ALLOW_SIGNUP = "false";

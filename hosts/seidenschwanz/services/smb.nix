@@ -4,17 +4,8 @@
   services.samba = {
     enable = true;
     openFirewall = true;
-    securityType = "user";
 
-    extraConfig = ''
-      workgroup = WORKGROUP
-      server string = seidenschwanz
-
-      # Fix special characters under linux
-      vfs objects = catia fruit
-      fruit:encoding = native
-    '';
-    shares = let
+    settings = let
       sharedOptions = {
         "read only" = "no";
         "create mask" = "0644";
@@ -23,6 +14,15 @@
         "force group" = "data";
       };
     in {
+      global = {
+        workgroup = "WORKGROUP";
+        "server string" = "seidenschwanz";
+        security = "user";
+
+        # Fix special characters under linux
+        "vfs objects" = "catia fruit";
+        "fruit:encoding" = "native";
+      };
       family = sharedOptions // {
         path = "/zpool/shares/family";
         "valid users" = "@family";

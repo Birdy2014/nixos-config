@@ -1,4 +1,4 @@
-{ lib, pkgs, pkgsUnstable, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -65,9 +65,8 @@
   };
 
   home-manager.users.moritz.my.bubblewrap.feishin = {
-    applications = [ pkgsUnstable.feishin ];
+    applications = [ pkgs.feishin ];
     allowDesktop = true;
-    customMesaPkgsSet = pkgsUnstable;
     extraBinds = [ "$HOME/.config/feishin" ];
   };
 

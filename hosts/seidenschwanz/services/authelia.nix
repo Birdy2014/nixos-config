@@ -5,10 +5,7 @@
     enable = true;
 
     settings = {
-      server = {
-        host = "localhost";
-        port = 9091;
-      };
+      server.address = "tcp://:9091/";
 
       theme = "auto";
 
@@ -31,7 +28,10 @@
         ];
       };
 
-      session.domain = "seidenschwanz.mvogel.dev";
+      session.cookies = [{
+        domain = "seidenschwanz.mvogel.dev";
+        authelia_url = "https://auth.seidenschwanz.mvogel.dev";
+      }];
 
       storage.local.path = "/var/lib/authelia-main/authelia.db";
 
@@ -40,20 +40,22 @@
       authentication_backend = {
         password_reset.disable = true;
         ldap = {
+          attributes = {
+            username = "uid";
+            group_name = "cn";
+            mail = "mail";
+            display_name = "displayName";
+          };
           implementation = "custom";
-          url = "ldap://[::1]:3890";
+          address = "ldap://[::1]:3890";
           timeout = "5s";
           start_tls = false;
           base_dn = "dc=mvogel,dc=dev";
-          username_attribute = "uid";
           additional_users_dn = "ou=people";
           users_filter =
             "(&({username_attribute}={input})(objectClass=person))";
           additional_groups_dn = "ou=groups";
           groups_filter = "(member={dn})";
-          group_name_attribute = "cn";
-          mail_attribute = "mail";
-          display_name_attribute = "displayName";
           user = "uid=admin,ou=people,dc=mvogel,dc=dev";
         };
       };
@@ -70,4 +72,6 @@
     config.sops.secrets.ldap-admin-password.path;
 
   my.proxy.domains.auth.proxyPass = "http://localhost:9091";
+  services.nginx.virtualHosts.auth.locations."/".recommendedProxySettings =
+    true;
 }

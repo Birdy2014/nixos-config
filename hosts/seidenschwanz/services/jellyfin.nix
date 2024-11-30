@@ -3,24 +3,14 @@
 {
   boot.kernelParams = [ "i915.enable_guc=3" ];
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
       intel-media-driver
       intel-compute-runtime
-      onevpl-intel-gpu
+      vpl-gpu-rt
     ];
   };
-
-  # Might not be needed on NixOS 24.11: https://github.com/NixOS/nixpkgs/pull/315425
-  nixpkgs.overlays = [
-    (final: prev: {
-      ffmpeg_6-full = prev.ffmpeg_6-full.override {
-        withMfx = false;
-        withVpl = true;
-      };
-    })
-  ];
 
   services.jellyfin.enable = true;
 

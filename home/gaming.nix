@@ -1,4 +1,4 @@
-{ osConfig, lib, pkgs, pkgsUnstable, ... }:
+{ osConfig, lib, pkgs, ... }:
 
 {
   config = lib.mkIf osConfig.my.gaming.enable {
@@ -27,19 +27,18 @@
       };
 
       heroic = {
-        applications = [ pkgsUnstable.heroic ];
+        applications = [ pkgs.heroic ];
         allowDesktop = true;
         allowX11 = true;
         persistentHome = true;
         extraBinds = [ "/run/media/moritz/games/Heroic" "/sys/class/input" ];
         extraDevBinds = [ "/dev/input" "/dev/uinput" ];
-        customMesaPkgsSet = pkgsUnstable;
       };
 
       lutris = {
         applications = [
           (pkgs.lutris.override {
-            extraPkgs = pkgs: [ pkgs.wineWowPackages.stable ];
+            extraPkgs = p: [ p.wineWowPackages.stable ];
           })
         ];
         allowDesktop = true;

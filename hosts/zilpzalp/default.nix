@@ -27,19 +27,6 @@
 
   environment.systemPackages = with pkgs; [ nvtopPackages.intel ];
 
-  # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/2669
-  # Remove with NixOS 24.11
-  services.pipewire.wireplumber.configPackages = [
-    (pkgs.writeTextDir
-      "share/wireplumber/wireplumber.conf.d/10-disable-camera.conf" ''
-        wireplumber.profiles = {
-          main = {
-            monitor.libcamera = disabled
-          }
-        }
-      '')
-  ];
-
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It's perfectly fine and recommended to leave

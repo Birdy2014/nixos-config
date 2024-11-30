@@ -17,7 +17,7 @@
     socat
     pciutils
     usbutils
-    alsaUtils
+    alsa-utils
     compsize
     trash-cli
     ffmpeg

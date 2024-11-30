@@ -1,7 +1,7 @@
 { lib, wrapNeovimUnstable, neovim-unwrapped, vimPlugins, fetchFromGitHub
-, vimUtils, git, ripgrep, libqalculate, nil, nodePackages
-, colorscheme ? "gruvbox-material-dark", withLanguageServers ? false
-, clang-tools }:
+, vimUtils, git, ripgrep, libqalculate, colorscheme ? "gruvbox-material-dark"
+, withLanguageServers ? false, nil, bash-language-server, clang-tools
+, typescript-language-server, pyright }:
 
 let
   config = import ./config.nix {
@@ -9,26 +9,23 @@ let
     buildVimPlugin = vimUtils.buildVimPlugin;
   };
   configBefore = config.configBefore;
-  plugins = config.plugins;
 in wrapNeovimUnstable neovim-unwrapped {
   vimAlias = true;
   viAlias = true;
 
   wrapperArgs = "--prefix PATH : ${
-      lib.makeBinPath ([ git ripgrep libqalculate nil ]
+      lib.makeBinPath ([ git ripgrep libqalculate ]
         ++ lib.optionals withLanguageServers [
-          nodePackages.bash-language-server
+          nil
+          bash-language-server
           clang-tools
-          nodePackages.typescript-language-server
-          nodePackages.pyright
+          typescript-language-server
+          pyright
         ])
     }";
 
-  packpathDirs.myNeovimPackages = {
-    start = lib.flatten (map ({ plugin, ... }: plugin)
-      (lib.filter (x: lib.hasAttr "plugin" x) plugins));
-    opt = [ ];
-  };
+  plugins = map (plugin: { inherit plugin; })
+    (lib.flatten (map ({ plugin, ... }: plugin) config.plugins));
 
   luaRcContent = lib.concatStringsSep "\n" ((map builtins.readFile configBefore)
     ++ (map ({ config, ... }:
@@ -39,5 +36,5 @@ in wrapNeovimUnstable neovim-unwrapped {
       else
         config) + ''
 
-          end'') (lib.filter (x: lib.hasAttr "config" x) plugins)));
+          end'') (lib.filter (x: lib.hasAttr "config" x) config.plugins)));
 }

@@ -4,7 +4,7 @@
   nix.settings = {
     allowed-users = [ "root" "@wheel" ];
     auto-optimise-store = true;
-    experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+    experimental-features = [ "nix-command" "flakes" ];
     keep-derivations = true;
     keep-outputs = true;
     flake-registry = "";
@@ -40,4 +40,6 @@
     unstable.flake = inputs.nixpkgs-unstable;
     system.flake = inputs.self;
   };
+
+  system.tools.nixos-option.enable = false;
 }

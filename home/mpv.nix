@@ -29,20 +29,18 @@
     '';
   in {
     enable = true;
-    package = pkgs.wrapMpv (if enableExpensive then
-      pkgs.mpv-unwrapped.override {
-        vapoursynthSupport = true;
+    package = pkgs.mpv-unwrapped.wrapper {
+      mpv = pkgs.mpv-unwrapped.override {
+        vapoursynthSupport = enableExpensive;
         vapoursynth =
           (pkgs.vapoursynth.withPlugins [ pkgs.vapoursynth-mvtools ]);
-      }
-    else
-      pkgs.mpv-unwrapped) {
-        scripts = [
-          pkgs.mpvScripts.mpris
-          pkgs.mpvScripts.thumbfast
-          pkgsSelf.mpv-thumbfast-vanilla-osc
-        ];
       };
+      scripts = [
+        pkgs.mpvScripts.mpris
+        pkgs.mpvScripts.thumbfast
+        pkgsSelf.mpv-thumbfast-vanilla-osc
+      ];
+    };
     config = {
       keep-open = true;
       script-opts-append = "ytdl_hook-ytdl_path=${pkgs.yt-dlp}/bin/yt-dlp";

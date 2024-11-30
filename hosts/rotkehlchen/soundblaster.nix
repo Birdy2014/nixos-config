@@ -15,16 +15,16 @@
 
     user.services.soundblaster-set-alsa-options = {
       script = ''
-        ${pkgs.alsaUtils}/bin/amixer -D hw:G6 sset 'PCM Capture Source' 'External Mic'
-        ${pkgs.alsaUtils}/bin/amixer -D hw:G6 sset 'External Mic',0 Capture cap
-        ${pkgs.alsaUtils}/bin/amixer -D hw:G6 sset 'External Mic',0 Capture 9dB
-        ${pkgs.alsaUtils}/bin/amixer -D hw:G6 sset 'Line In',0 Capture nocap
-        ${pkgs.alsaUtils}/bin/amixer -D hw:G6 sset 'S/PDIF In',0 Capture nocap
-        ${pkgs.alsaUtils}/bin/amixer -D hw:G6 sset 'What U Hear',0 Capture nocap
+        ${pkgs.alsa-utils}/bin/amixer -D hw:G6 sset 'PCM Capture Source' 'External Mic'
+        ${pkgs.alsa-utils}/bin/amixer -D hw:G6 sset 'External Mic',0 Capture cap
+        ${pkgs.alsa-utils}/bin/amixer -D hw:G6 sset 'External Mic',0 Capture 9dB
+        ${pkgs.alsa-utils}/bin/amixer -D hw:G6 sset 'Line In',0 Capture nocap
+        ${pkgs.alsa-utils}/bin/amixer -D hw:G6 sset 'S/PDIF In',0 Capture nocap
+        ${pkgs.alsa-utils}/bin/amixer -D hw:G6 sset 'What U Hear',0 Capture nocap
 
-        ${pkgs.alsaUtils}/bin/amixer -D hw:G6 sset 'Line In',0 Playback mute
-        ${pkgs.alsaUtils}/bin/amixer -D hw:G6 sset 'External Mic',0 Playback mute
-        ${pkgs.alsaUtils}/bin/amixer -D hw:G6 sset 'S/PDIF In',0 Playback mute
+        ${pkgs.alsa-utils}/bin/amixer -D hw:G6 sset 'Line In',0 Playback mute
+        ${pkgs.alsa-utils}/bin/amixer -D hw:G6 sset 'External Mic',0 Playback mute
+        ${pkgs.alsa-utils}/bin/amixer -D hw:G6 sset 'S/PDIF In',0 Playback mute
       '';
       # Wait until wireplumber has set the alsa options.
       preStart = "${pkgs.coreutils-full}/bin/sleep 5";

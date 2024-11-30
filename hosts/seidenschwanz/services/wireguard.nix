@@ -48,31 +48,27 @@ in {
   networking.firewall.allowedUDPPorts = [ 49626 ];
 
   systemd.network = {
-    netdevs = {
-      "50-wg0" = {
-        netdevConfig = {
-          Kind = "wireguard";
-          Name = "wg0";
-        };
-        wireguardConfig = {
-          PrivateKeyFile = config.sops.secrets."wireguard/private-key".path;
-          ListenPort = 49626;
-        };
-        wireguardPeers = map ({ publicKey, pskFile, n, ... }: {
-          wireguardPeerConfig = {
-            PublicKey = publicKey;
-            PresharedKeyFile = lib.mkIf (pskFile != null) pskFile;
-            AllowedIPs = [ (vpnIp4Addr n) (vpnIp6Addr n) ];
-          };
-        }) peers;
+    netdevs."50-wg0" = {
+      netdevConfig = {
+        Kind = "wireguard";
+        Name = "wg0";
       };
+      wireguardConfig = {
+        PrivateKeyFile = config.sops.secrets."wireguard/private-key".path;
+        ListenPort = 49626;
+      };
+      wireguardPeers = map ({ publicKey, pskFile, n, ... }: {
+        PublicKey = publicKey;
+        PresharedKeyFile = lib.mkIf (pskFile != null) pskFile;
+        AllowedIPs = [ (vpnIp4Addr n) (vpnIp6Addr n) ];
+      }) peers;
     };
 
     networks."50-wg0" = {
       matchConfig.Name = "wg0";
       address = [ "${vpnIp4Addr 1}/24" "${vpnIp6Addr 1}/120" ];
       networkConfig = {
-        IPForward = "yes";
+        IPv6Forwarding = true;
         IPMasquerade = "ipv4";
       };
     };
