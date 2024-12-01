@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, lib, pkgs, ... }:
 
 {
   nix.settings = {
@@ -10,6 +10,15 @@
     flake-registry = "";
     fallback = true;
   };
+
+  # Makes system derivation depend on the flake input sources.
+  # This prevents them being deleted by gc, which is necessary
+  # to be able to rebuild the system while offline.
+  environment.etc.flake-inputs.source = pkgs.runCommand "flake-inputs" { } ''
+    mkdir $out
+    ${lib.concatLines
+    (lib.mapAttrsToList (name: input: "ln -s ${input} $out/${name}") inputs)}
+  '';
 
   nix.gc = {
     automatic = true;
