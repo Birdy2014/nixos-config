@@ -135,11 +135,13 @@
       HISTORY_BASE = "${config.xdg.dataHome}/zsh/history";
 
       # Autosuggestion
-      ZSH_AUTOSUGGEST_STRATEGY = [ "history" "completion" ];
       ZSH_AUTOSUGGEST_COMPLETION_IGNORE = " #nix [a-z]# *";
     };
 
-    autosuggestion.enable = true;
+    autosuggestion = {
+      enable = true;
+      strategy = [ "history" "completion" ];
+    };
     syntaxHighlighting.enable = true;
 
     plugins = [{
