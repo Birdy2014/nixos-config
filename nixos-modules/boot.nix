@@ -45,7 +45,6 @@
 
     systemd.oomd.enableUserSlices = true;
 
-    # TODO: Enable boot counting on NixOS 24.11
     boot.loader = lib.mkIf config.my.systemd-boot.enable {
       efi = {
         canTouchEfiVariables = true;

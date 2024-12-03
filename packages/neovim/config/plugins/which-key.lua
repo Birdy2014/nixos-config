@@ -1,5 +1,5 @@
-require("which-key").register {
-    ["<leader>f"] = { name = "Find" },
-    ["<leader>s"] = { name = "Splits" },
-    ["<leader>t"] = { name = "Toggle" },
+require("which-key").add {
+    { "<leader>f", group = "Find" },
+    { "<leader>s", group = "Splits" },
+    { "<leader>t", group = "Toggle" },
 }

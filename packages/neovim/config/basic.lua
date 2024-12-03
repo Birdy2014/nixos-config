@@ -6,7 +6,6 @@ vim.opt.hidden = true
 
 -- visual
 vim.opt.background = "dark"
-vim.opt.breakindent = false -- breakindent with indent-blankline seems broken? The cursor and the display doesn't line up. This might work in nvim 0.10 / NixOS 24.11
 vim.opt.breakindentopt = "sbr"
 vim.opt.cmdheight = 0
 vim.opt.conceallevel = 1
