@@ -144,8 +144,4 @@ vim.keymap.set("n", "]D", function()
     vim.diagnostic.goto_next({ float = false, severity = vim.diagnostic.severity.ERROR })
 end, { desc = "Next Error Diagnostic" })
 
-vim.keymap.set("n", "<leader>d", function()
-    vim.diagnostic.open_float({
-        border = vim.g._border,
-    });
-end, { desc = "Open Diagnostic float" })
+vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Open Diagnostic float" })

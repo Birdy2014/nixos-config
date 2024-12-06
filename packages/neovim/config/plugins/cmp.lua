@@ -59,14 +59,6 @@ cmp.setup({
             vim.snippet.expand(args.body)
         end
     },
-    window = {
-        completion = {
-            border = vim.g._border
-        },
-        documentation = {
-            border = vim.g._border
-        },
-    },
     completion = {
         completeopt = "menuone,noselect",
     },

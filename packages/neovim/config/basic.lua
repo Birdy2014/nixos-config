@@ -55,5 +55,3 @@ vim.opt.backupcopy = "yes" -- Fix reloading issues with parcel
 vim.opt.fsync = true -- Prevent potential data loss on system crash
 vim.opt.ignorecase = true -- Case insensitive search. Can be overridden using "\C".
 vim.opt.smartcase = true -- Case insensitive search only if the pattern is all lowercase. Overrides "ignorecase"
-
-vim.g._border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" }

@@ -38,13 +38,7 @@ require("noice").setup {
             silent = false, -- set to true to not show a message if hover is not available
             view = nil, -- when nil, use defaults from documentation
             ---@type NoiceViewOptions
-            opts = {
-                border = {
-                    style = vim.g._border,
-                    padding = { 0, 1 },
-                },
-                position = { row = 2, col = 0 },
-            }, -- merged with defaults from documentation
+            opts = { }, -- merged with defaults from documentation
         },
         signature = {
             enabled = true,
@@ -55,13 +49,7 @@ require("noice").setup {
             },
             view = nil, -- when nil, use defaults from documentation
             ---@type NoiceViewOptions
-            opts = {
-                border = {
-                    style = vim.g._border,
-                    padding = { 0, 1 },
-                },
-                position = { row = 2, col = 0 },
-            }, -- merged with defaults from documentation
+            opts = { }, -- merged with defaults from documentation
         }
     },
     -- you can enable a preset for easier configuration
