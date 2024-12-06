@@ -121,7 +121,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
     severity_sort = true
 })
 
-vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
 vim.keymap.set("n", "ga", vim.lsp.buf.code_action, { desc = "Code Action" })
 vim.keymap.set("n", "gr", vim.lsp.buf.rename, { desc = "Rename symbol" })
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Declaration" })
