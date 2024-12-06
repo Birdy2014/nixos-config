@@ -25,7 +25,7 @@ vim.g.markdown_fenced_languages = {
     "ts=typescript"
 }
 
-local servers = { "clangd", "pyright", "rust_analyzer", "ts_lsp", "bashls", "texlab", "nil_ls", "denols", "zls", "svelte" }
+local servers = { "clangd", "pyright", "rust_analyzer", "ts_ls", "bashls", "texlab", "nil_ls", "denols", "zls", "svelte" }
 
 local server_config = {
     rust_analyzer = {
