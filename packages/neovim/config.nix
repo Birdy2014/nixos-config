@@ -119,10 +119,6 @@
       config = ./config/plugins/indent-o-matic.lua;
     }
     {
-      plugin = nvim-osc52;
-      config = ./config/plugins/osc52.lua;
-    }
-    {
       plugin = buildVimPlugin {
         pname = "qalc.nvim";
         version = "2023-12-15";
