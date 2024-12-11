@@ -161,7 +161,7 @@ handle_extension() {
 }
 
 handle_fallback() {
-    echo '----- File Type Classification -----' && file --dereference --brief -- "${FILE_PATH}"
+    { echo '----- File Type Classification -----' && file --dereference --brief -- "${FILE_PATH}"; } | cache_and_display_text
     exit 1
 }
 
