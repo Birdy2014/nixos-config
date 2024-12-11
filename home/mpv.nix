@@ -49,6 +49,8 @@
       vo = "gpu-next";
       osc = "no"; # Use thumbfast osc
       screenshot-format = "png";
+      screenshot-template = "%F - [%P] (%#01n)";
+
       # Fix slow screenshots
       screenshot-high-bit-depth = "no";
       screenshot-png-compression = 5;
