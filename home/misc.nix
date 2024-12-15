@@ -17,6 +17,7 @@
     yt-dlp
     bashmount
     pkgsSelf.playerctl-current
+    syncplay-nogui
 
     # GUI
     pavucontrol
