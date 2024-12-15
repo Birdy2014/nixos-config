@@ -28,7 +28,6 @@
       '';
       # Wait until wireplumber has set the alsa options.
       preStart = "${pkgs.coreutils-full}/bin/sleep 5";
-      partOf = [ "sound.target" ];
       # pipewire.service reached on initial startup sound.target is reached on subsequent soundcard events
       wantedBy = [ "sound.target" "pipewire.service" ];
       after = [ "pipewire.service" "wireplumber.service" ];
