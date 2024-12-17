@@ -1,4 +1,4 @@
-{ inputs, lib, pkgs, ... }:
+{ config, inputs, lib, pkgs, ... }:
 
 {
   nix.settings = {
@@ -42,4 +42,13 @@
   };
 
   system.tools.nixos-option.enable = false;
+
+  _module.args = let inherit (config.nixpkgs.hostPlatform) system;
+  in {
+    pkgsSelf = inputs.self.packages.${system};
+    pkgsUnstable = import inputs.nixpkgs-unstable {
+      system = system;
+      config.allowUnfree = true;
+    };
+  };
 }
