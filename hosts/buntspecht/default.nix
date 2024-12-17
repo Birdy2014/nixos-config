@@ -1,10 +1,11 @@
-{ lib, ... }:
+{ lib, modulesPath, ... }:
 
 {
   imports = [
+    (modulesPath + "/profiles/qemu-guest.nix")
     ../../secrets/buntspecht-seidenschwanz.nix
     ../../secrets/buntspecht.nix
-    ./hardware-configuration.nix
+    ./filesystems.nix
     ./network.nix
     ./services
   ];
@@ -14,6 +15,10 @@
     sshd.enable = true;
     systemd-boot.enable = true;
   };
+
+  boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "xen_blkfront" ];
+  boot.initrd.kernelModules = [ "nvme" ];
+  nixpkgs.hostPlatform = "aarch64-linux";
 
   # buntspecht has very little storage
   nix.gc = {

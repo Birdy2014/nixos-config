@@ -5,7 +5,7 @@
     ../../secrets/rotkehlchen.nix
     ./borg.nix
     ./btrbk.nix
-    ./hardware-configuration.nix
+    ./filesystems.nix
     ./kdeconnect.nix
     ./network.nix
     ./smb-shares.nix
@@ -26,6 +26,15 @@
     systemd-boot.enable = true;
     virtualisation.enable = true;
   };
+
+  boot.initrd.availableKernelModules =
+    [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.swraid.enable = false;
+
+  nixpkgs.hostPlatform = "x86_64-linux";
+  hardware.enableRedistributableFirmware = true;
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 

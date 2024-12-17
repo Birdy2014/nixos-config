@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ ./filesystems.nix ];
 
   my = {
     desktop.screens = {
@@ -12,6 +12,15 @@
     sshd.enable = true;
     systemd-boot.enable = true;
   };
+
+  boot.initrd.availableKernelModules =
+    [ "xhci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.swraid.enable = false;
+  nixpkgs.hostPlatform = "x86_64-linux";
+  hardware.enableRedistributableFirmware = true;
+  hardware.cpu.intel.updateMicrocode = true;
+  hardware.graphics.extraPackages = with pkgs; [ vaapiIntel ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
