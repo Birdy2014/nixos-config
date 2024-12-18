@@ -82,7 +82,7 @@
         "${modifier}+Control+w" = "exec firefox";
         "${modifier}+Control+y" = "exec firefox -p persistent";
         "${modifier}+Control+n" = "exec ${terminal} ${pkgs.lf}/bin/lf";
-        "Print" = "exec ${pkgs.flameshot}/bin/flameshot gui";
+        "Print" = "exec flameshot gui";
 
         # Layout
         "${modifier}+c" = "split none";
@@ -340,6 +340,18 @@
     enable = true;
     latitude = "50.1";
     longitude = "8.7";
+  };
+
+  services.flameshot = {
+    enable = true;
+    package = pkgs.flameshot.override { enableWlrSupport = true; };
+    settings.General = {
+      disabledGrimWarning = true;
+      disabledTrayIcon = true;
+      saveAsFileExtension = ".png";
+      savePath = "${config.xdg.userDirs.pictures}/screenshots";
+      savePathFixed = true;
+    };
   };
 
   home.packages = with pkgs; [ swaybg libnotify wl-clipboard ];
