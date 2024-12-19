@@ -55,15 +55,9 @@
     services.gnome.gnome-keyring.enable = true;
     security.pam.services.swaylock = { };
 
-    xdg.portal = {
-      enable = true;
-      wlr.enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-      config = {
-        common.default = "*";
-        sway.default = [ "wlr" "gtk" ];
-      };
-    };
+    # Needed for home-manager configured xdg-desktop-portal
+    environment.pathsToLink =
+      [ "/share/xdg-desktop-portal" "/share/applications" ];
 
     fonts = {
       enableDefaultPackages = true;
