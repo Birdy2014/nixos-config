@@ -365,5 +365,8 @@
     };
   };
 
+  # The flameshot service always fails to start
+  systemd.user.services.flameshot = lib.mkForce { };
+
   home.packages = with pkgs; [ swaybg libnotify wl-clipboard ];
 }
