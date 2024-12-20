@@ -100,7 +100,8 @@
         "file://${config.home.homeDirectory}/Music"
         "file://${config.home.homeDirectory}/Pictures"
         "file://${config.home.homeDirectory}/Videos"
-        "smb://moritz@seidenschwanz.mvogel.dev/ seidenschwanz.mvogel.dev"
+        "file:///run/media/moritz/archive Archive"
+        "file:///run/media/moritz/smb-shares SMB shares"
       ];
 
       gtk3.extraCss = config.gtk.gtk4.extraCss;
