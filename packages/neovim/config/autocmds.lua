@@ -10,7 +10,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     group = "fmt",
     callback = function()
         -- FIXME: This is a bad solution, but sync format seems to cause the lsp server to crash. Or does it? What?
-        if vim.bo.filetype == "cpp" and vim.fn.filereadable(".clang-format") == 1 then
+        if (vim.bo.filetype == "cpp" or vim.bo.filetype == "c") and vim.fn.filereadable(".clang-format") == 1 then
             vim.lsp.buf.format({ timeout_ms = 2000 })
         elseif vim.bo.filetype == "rust" then
             vim.lsp.buf.format({ timeout_ms = 2000 })
