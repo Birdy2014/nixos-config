@@ -1,8 +1,12 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   services.paperless = {
     enable = true;
+
+    # Workaround for https://github.com/NixOS/nixpkgs/issues/361006
+    package = pkgs.paperless-ngx.overrideAttrs { doInstallCheck = false; };
+
     # Stored on ssd because the database and logs are written frequently
     dataDir = "/var/lib/paperless";
     settings = {
