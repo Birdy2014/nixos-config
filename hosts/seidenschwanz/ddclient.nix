@@ -10,7 +10,8 @@
     domains = [ "seidenschwanz.mvogel.dev" "ipv6.seidenschwanz.mvogel.dev" ]
       ++ (map (name: "${name}.seidenschwanz.mvogel.dev")
         (lib.attrNames config.my.proxy.domains));
-    usev4 = "webv4, webv4=https://checkip.dns.he.net/";
+    # ddns for ipv4 is not useful, as seidenschwanz is behind a CGNAT.
+    usev4 = "";
     usev6 = "ifv6, ifv6=lan";
   };
 
