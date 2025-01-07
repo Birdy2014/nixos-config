@@ -13,26 +13,25 @@ timestamps="$(nix eval --json system#nixosConfigurations.rotkehlchen._module.spe
 echo Flake last updated on: "$(git -C /etc/nixos log -1 --pretty='format:%ar' flake.lock)"
 echo ---
 
-current_day="10#$(date '+%j')"
-current_hour="10#$(date '+%H')"
+current_timestamp="10#$(date '+%s')"
 
 for i in $(seq 0 $(( $(echo "$timestamps" | jq length) - 1 )) ); do
     name="$(echo "$timestamps" | jq -r ".[$i].name")"
     timestamp="$(echo "$timestamps" | jq ".[$i].timestamp")"
-    day="10#$(date -d @"${timestamp}" '+%j')"
-    hour="10#$(date -d @"${timestamp}" '+%H')"
-    day_difference="$(( current_day - day ))"
-    hour_difference="$(( current_hour - hour ))"
+    timestamp_diff="$((current_timestamp - timestamp))"
+    total_hours="$((timestamp_diff / (60 * 60)))"
+    days="$((total_hours / 24))"
+    hours="$((total_hours - days * 24))"
     echo -n "$name: "
-    if [[ "$day_difference" -gt 0 ]]; then
-        echo -n "$day_difference days"
-        if [[ "$hour_difference" -gt 0 ]]; then
-            echo -n ", $hour_difference hours ago"
+    if [[ "$days" -gt 0 ]]; then
+        echo -n "$days days"
+        if [[ "$hours" -gt 0 ]]; then
+            echo -n ", $hours hours ago"
         else
             echo -n " ago"
         fi
-    elif [[ "$hour_difference" -gt 0 ]]; then
-        echo -n "$hour_difference hours ago"
+    elif [[ "$hours" -gt 0 ]]; then
+        echo -n "$hours hours ago"
     else
         echo -n 'now'
     fi
