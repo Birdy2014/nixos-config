@@ -4,6 +4,7 @@
   x86_64-linux =
     let callPackage = nixpkgs.legacyPackages.x86_64-linux.callPackage;
     in {
+      einkaufszettel = callPackage ./einkaufszettel.nix { };
       gruvbox-material-gtk = callPackage ./gruvbox-material-gtk.nix { };
       improtheater-frankfurt = callPackage ./improtheater-frankfurt.nix { };
       lepton-firefox-theme = callPackage ./lepton-firefox-theme.nix { };
