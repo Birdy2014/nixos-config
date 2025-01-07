@@ -4,7 +4,7 @@
   options.my.systemd-boot.enable = lib.mkEnableOption "systemd-boot";
 
   config = {
-    boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_6;
+    boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_12;
 
     powerManagement.cpuFreqGovernor = "schedutil";
 
