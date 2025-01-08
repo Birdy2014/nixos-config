@@ -97,10 +97,13 @@
 
   systemd.services.gpu-power-limit = {
     script = ''
-      echo 200000000 > /sys/class/drm/card1/device/hwmon/hwmon0/power1_cap
+      echo 253000000 > /sys/class/drm/card1/device/hwmon/hwmon0/power1_cap
     '';
     wantedBy = [ "multi-user.target" ];
-    serviceConfig = { Type = "oneshot"; };
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
   };
 
   # This value determines the NixOS release from which the default
