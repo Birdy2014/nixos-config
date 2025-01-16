@@ -1,20 +1,20 @@
 { ... }:
 
 {
-  services.borgbackup.jobs.var_lib = let base = "/var/lib";
-  in {
+  services.borgbackup.jobs.seidenschwanz-services = {
     user = "root";
     group = "root";
     paths = [
-      "${base}/authelia-main"
-      "${base}/jellyfin"
-      "${base}/paperless"
-      "${base}/private/lldap"
-      "${base}/private/mealie"
+      "/etc/ssh"
+      "/var/lib/authelia-main"
+      "/var/lib/jellyfin"
+      "/var/lib/paperless"
+      "/var/lib/private/lldap"
+      "/var/lib/private/mealie"
     ];
-    exclude = [ "${base}/jellyfin/transcodes" ];
+    exclude = [ "/var/lib/jellyfin/transcodes" ];
     compression = "zstd,10";
-    repo = "/zpool/backup/var_lib";
+    repo = "/zpool/backup/seidenschwanz-services";
     encryption.mode = "none";
     startAt = "*-*-* 00:00:00";
     persistentTimer = true;
