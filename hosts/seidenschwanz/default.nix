@@ -9,6 +9,7 @@
     ./ddclient.nix
     ./filesystems.nix
     ./hdd.nix
+    ./initrd-ssh-zfs-unlock.nix
     ./network.nix
     ./proxy.nix
     ./services
