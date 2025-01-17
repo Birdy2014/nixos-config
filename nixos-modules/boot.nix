@@ -19,6 +19,11 @@
 
       # Needed for some games
       "vm.max_map_count" = 2147483642;
+
+      # Same values as ArchLinux
+      # Workaround for paperless-ngx build, maybe useful for other applications?
+      "fs.inotify.max_user_instances" = 1024;
+      "fs.inotify.max_user_watches" = 524288;
     };
 
     boot.kernelParams = [
