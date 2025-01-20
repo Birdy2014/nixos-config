@@ -73,12 +73,6 @@
     openFirewall = true;
   };
 
-  home-manager.users.moritz.my.bubblewrap.feishin = {
-    applications = [ pkgs.feishin ];
-    allowDesktop = true;
-    extraBinds = [ "$HOME/.config/feishin" ];
-  };
-
   boot.kernelParams = [
     "amd_pstate=active"
 
