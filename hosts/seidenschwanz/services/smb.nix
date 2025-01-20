@@ -24,11 +24,11 @@
         "fruit:encoding" = "native";
       };
       family = sharedOptions // {
-        path = "/zpool/shares/family";
+        path = "/zpool/encrypted/shares/family";
         "valid users" = "@family";
       };
       homes = sharedOptions // {
-        path = "/zpool/shares/%S";
+        path = "/zpool/encrypted/shares/%S";
         "valid users" = "%S";
         browseable = "no";
       };
