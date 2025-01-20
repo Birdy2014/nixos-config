@@ -9,6 +9,7 @@ in {
     script =
       "${pkgsSelf.einkaufszettel}/bin/einkaufszettel ${address} '/var/lib/einkaufszettel/data.json'";
     serviceConfig = {
+      CapabilityBoundingSet = "CAP_WAKE_ALARM";
       DynamicUser = true;
       LockPersonality = true;
       PrivateDevices = true;
