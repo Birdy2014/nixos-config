@@ -18,6 +18,8 @@
       "${home}/Pictures"
       "${home}/misc"
       "${home}/src"
+      "/etc/nixos"
+      "/etc/nixos-secrets"
     ];
     exclude = [ "${home}/.local/share/containers" ];
     compression = "zstd,10";
