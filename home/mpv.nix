@@ -1,4 +1,4 @@
-{ lib, osConfig, pkgs, pkgsUnstable, pkgsSelf, ... }:
+{ lib, osConfig, pkgs, pkgsSelf, ... }:
 
 {
   programs.mpv = let
@@ -43,8 +43,7 @@
     };
     config = {
       keep-open = true;
-      script-opts-append =
-        "ytdl_hook-ytdl_path=${pkgsUnstable.yt-dlp}/bin/yt-dlp";
+      script-opts-append = "ytdl_hook-ytdl_path=${pkgs.yt-dlp}/bin/yt-dlp";
       autofit-larger = "100%x100%";
       hwdec = "auto-safe";
       vo = "gpu-next";

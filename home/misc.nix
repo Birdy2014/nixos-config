@@ -1,4 +1,4 @@
-{ osConfig, pkgs, pkgsUnstable, pkgsSelf, ... }:
+{ osConfig, pkgs, pkgsSelf, ... }:
 
 {
   services.easyeffects.enable = true;
@@ -14,7 +14,7 @@
   home.packages = with pkgs; [
     # CLI
     libqalculate
-    pkgsUnstable.yt-dlp
+    yt-dlp
     bashmount
     pkgsSelf.playerctl-current
     syncplay-nogui
