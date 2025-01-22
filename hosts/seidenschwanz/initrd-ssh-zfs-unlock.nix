@@ -1,17 +1,6 @@
 { config, ... }:
 
 {
-  # Needed so that the passphrase is prompted in stage1.
-  # Without it, the stage1 ssh server would just get stopped immediately.
-  fileSystems."/zpool/encrypted" = {
-    device = "zpool/encrypted";
-    fsType = "zfs";
-    # The "zfsutil" option is necessary because the mountpoint is managed by zfs
-    # (it is not a legacy mountpoint).
-    options = [ "zfsutil" ];
-    neededForBoot = true;
-  };
-
   boot.initrd = {
     kernelModules = [ "r8169" ];
 

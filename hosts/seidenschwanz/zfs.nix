@@ -1,9 +1,7 @@
-{ lib, pkgs, ... }:
+{ lib, ... }:
 
 {
   boot.supportedFilesystems = [ "zfs" ];
-  boot.zfs.extraPools = [ "zpool" ];
-  environment.systemPackages = with pkgs; [ zfs ];
 
   services.zfs = {
     autoScrub = {
