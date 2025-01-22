@@ -27,26 +27,4 @@
   };
 
   swapDevices = [{ device = "/swap/swapfile"; }];
-
-  fileSystems."/zpool/backup" = {
-    device = "zpool/backup";
-    fsType = "zfs";
-    options = [ "zfsutil" ];
-  };
-
-  fileSystems."/zpool/encrypted/media" = {
-    device = "zpool/encrypted/media";
-    fsType = "zfs";
-    options = [ "zfsutil" ];
-    # neededForBoot is necessary for encrypted datasets for the password prompt
-    # to show up in initrd.
-    neededForBoot = true;
-  };
-
-  fileSystems."/zpool/encrypted/shares" = {
-    device = "zpool/encrypted/shares";
-    fsType = "zfs";
-    options = [ "zfsutil" ];
-    neededForBoot = true;
-  };
 }
