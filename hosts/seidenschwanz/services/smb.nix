@@ -22,6 +22,14 @@
         # Fix special characters under linux
         "vfs objects" = "catia fruit";
         "fruit:encoding" = "native";
+
+        # Performance
+        "ea support" = "no";
+        "store dos attributes" = "no";
+        "map archive" = "no";
+        "map hidden" = "no";
+        "map readonly" = "no";
+        "map system" = "no";
       };
       family = sharedOptions // {
         path = "/zpool/encrypted/shares/family";
