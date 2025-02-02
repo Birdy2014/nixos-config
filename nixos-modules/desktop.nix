@@ -80,6 +80,7 @@
         noto-fonts-cjk-sans
         noto-fonts-emoji
         corefonts
+        vistafonts
       ];
     };
 

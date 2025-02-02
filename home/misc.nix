@@ -18,6 +18,7 @@
     bashmount
     pkgsSelf.playerctl-current
     syncplay-nogui
+    gdb
 
     # GUI
     pavucontrol
