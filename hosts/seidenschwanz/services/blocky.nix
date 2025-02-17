@@ -57,19 +57,18 @@
         clientGroupsBlock = { default = [ "ads" ]; };
       };
 
-      customDNS = {
-        rewrite = lib.listToAttrs (map (name: {
+      customDNS.mapping =
+        # "seidenschwanz.mvogel.dev" must not be set because then every subdomain will be resolved locally.
+        # This would break wireguard as the address resolved by wireguard must always be the external one.
+        (lib.listToAttrs (map (name: {
           name = "${name}.seidenschwanz.mvogel.dev";
-          value = "seidenschwanz.mvogel.dev";
-        }) (lib.attrNames config.my.proxy.domains));
-        mapping = {
-          "seidenschwanz.mvogel.dev" = "192.168.90.10,fd00:90::10";
+          value = "192.168.90.10,fd00:90::10";
+        }) (lib.attrNames config.my.proxy.domains))) // {
           "fritz.box" = "192.168.90.1,fd00:90::1eed:6fff:fe98:ee7e";
           "rotkehlchen.fritz.box" =
             "192.168.90.21,fd00:90::4247:4a9a:1e40:eeb6";
           "shelly-plug-rotkehlchen.fritz.box" = "192.168.90.166";
         };
-      };
     };
   };
 
