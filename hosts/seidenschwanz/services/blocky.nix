@@ -32,11 +32,10 @@
       caching = {
         minTime = "5m";
         maxTime = "30m";
-        prefetching = true;
       };
 
       blocking = {
-        blackLists = {
+        denylists = {
           ads = [
             "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
             "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt"
@@ -45,7 +44,7 @@
           ];
         };
 
-        whiteLists = {
+        allowlists = {
           ads = [''
             s.youtube.com # Youtube Histroy
             s2.youtube.com # Youtube Histroy
