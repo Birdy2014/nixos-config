@@ -28,13 +28,7 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  nixpkgs.overlays = [
-    inputs.self.overlays.blocky
-    inputs.self.overlays.imv
-    inputs.self.overlays.lf
-    inputs.self.overlays.swayidle
-    inputs.self.overlays.spicetify-cli
-  ];
+  nixpkgs.overlays = [ inputs.self.overlays.default ];
 
   nix.registry = {
     nixpkgs.flake = inputs.nixpkgs;
