@@ -1,4 +1,5 @@
 {
+  blocky = import ./blocky;
   imv = import ./imv;
   lf = import ./lf;
   swayidle = import ./swayidle;

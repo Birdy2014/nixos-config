@@ -1,0 +1,24 @@
+From d3c0e2b6917bd7790a0d9ff7d835ff135dde2885 Mon Sep 17 00:00:00 2001
+From: Moritz Vogel <moritzv7@gmail.com>
+Date: Mon, 17 Feb 2025 21:22:43 +0100
+Subject: [PATCH] Match customdns mappings precisely without wildcards
+
+---
+ resolver/custom_dns_resolver.go | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/resolver/custom_dns_resolver.go b/resolver/custom_dns_resolver.go
+index 8cc26df..2f7ffe7 100644
+--- a/resolver/custom_dns_resolver.go
++++ b/resolver/custom_dns_resolver.go
+@@ -152,6 +152,7 @@ func (r *CustomDNSResolver) processRequest(
+ 			return &model.Response{Res: response, RType: model.ResponseTypeCUSTOMDNS, Reason: "CUSTOM DNS"}, nil
+ 		}
+ 
++		break;
+ 		if i := strings.IndexRune(domain, '.'); i >= 0 {
+ 			domain = domain[i+1:]
+ 		} else {
+-- 
+2.47.2
+
