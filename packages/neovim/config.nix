@@ -29,14 +29,23 @@
     };
   in with vimPlugins;
   [
+    {
+      # TODO: Remove override when package is updated (NixOS 25.05?)
+      plugin = snacks-nvim.overrideAttrs (old: {
+        src = fetchFromGitHub {
+          owner = "folke";
+          repo = "snacks.nvim";
+          rev = "1b63b1811c58f661ad22f390a52aa6723703dc3d";
+          hash = "sha256-lK8IBGCxiUgB8zO72Ei7NOfDFi4Gs0IGL3fN2MReZNw=";
+        };
+      });
+      config = ./config/plugins/snacks.lua;
+    }
+
     # UI
     {
       plugin = [ noice-nvim nui-nvim ];
       config = ./config/plugins/noice.lua;
-    }
-    {
-      plugin = dressing-nvim;
-      config = ./config/plugins/dressing.lua;
     }
     {
       plugin = [ alpha-nvim nvim-web-devicons ];
@@ -71,10 +80,6 @@
       config = ./config/plugins/hop.lua;
     }
     { plugin = vim-tmux-navigator; }
-    {
-      plugin = [ telescope-nvim plenary-nvim ];
-      config = ./config/plugins/telescope.lua;
-    }
     {
       plugin = [ nvim-tree-lua nvim-web-devicons ];
       config = ./config/plugins/nvim-tree.lua;
