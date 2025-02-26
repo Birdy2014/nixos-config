@@ -48,10 +48,6 @@
       config = ./config/plugins/noice.lua;
     }
     {
-      plugin = [ alpha-nvim nvim-web-devicons ];
-      config = ./config/plugins/alpha.lua;
-    }
-    {
       plugin = indent-blankline-nvim;
       config = ./config/plugins/indent-blankline.lua;
     }

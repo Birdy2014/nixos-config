@@ -3,6 +3,24 @@ require("snacks").setup {
     picker = {
         ui_select = true,
     },
+
+    dashboard = {
+        sections = {
+            { section = "header" },
+            { icon = " ", title = "Recent Files", section = "recent_files", cwd = true, indent = 2, padding = 2 },
+            { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 2 },
+            { section = "keys", gap = 1 },
+        },
+        preset = {
+            keys = {
+                { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+                { icon = " ", key = "e", desc = "New File", action = ":ene | startinsert" },
+                { icon = " ", key = "l", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+                { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+                { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+            },
+        },
+    },
 }
 
 vim.keymap.set("n", "<leader>ff", Snacks.picker.files, { desc = "Find Files" })
