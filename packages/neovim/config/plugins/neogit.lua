@@ -1,6 +1,7 @@
 local neogit = require("neogit")
 
 neogit.setup {
+    graph_style = "kitty",
     ignored_settings = {
         "NeogitPushPopup--force-with-lease",
         "NeogitPushPopup--force",
@@ -9,7 +10,6 @@ neogit.setup {
     integrations = {
         diffview = true
     },
-    disable_commit_confirmation = true -- Workaround for https://github.com/folke/noice.nvim/issues/232
 }
 
 vim.api.nvim_create_autocmd("FileType", {
