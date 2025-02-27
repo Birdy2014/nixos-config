@@ -82,6 +82,7 @@
         "${modifier}+Control+w" = "exec firefox";
         "${modifier}+Control+y" = "exec firefox -p persistent";
         "${modifier}+Control+n" = "exec ${terminal} ${pkgs.lf}/bin/lf";
+        "${modifier}+Control+e" = "exec neovide";
         "Print" = "exec flameshot gui";
 
         # Layout
