@@ -124,6 +124,17 @@
       };
       config = ./config/plugins/direnv.lua;
     }
+    {
+      plugin = tiny-inline-diagnostic-nvim.overrideAttrs {
+        src = fetchFromGitHub {
+          owner = "rachartier";
+          repo = "tiny-inline-diagnostic.nvim";
+          rev = "a9ccdfd1f5d922ca3474eace59dd3a883446800c";
+          hash = "sha256-JgSOxJ9YRMynuxe+qtLWUjWMzrplKIs/opT0cSP5FPk=";
+        };
+      };
+      config = ./config/plugins/tiny-inline-diagnostic.lua;
+    }
 
     # Misc
     {
