@@ -30,6 +30,7 @@
     waypipe
     nix-tree
     htop
+    fd
 
     man-pages
   ];

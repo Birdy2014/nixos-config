@@ -17,6 +17,7 @@ require("snacks").setup {
                 { icon = " ", key = "e", desc = "New File", action = ":ene | startinsert" },
                 { icon = " ", key = "l", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
                 { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+                { icon = "  ", key = "p", desc = "Recent Projects", action = ":lua Snacks.dashboard.pick('projects')" },
                 { icon = " ", key = "q", desc = "Quit", action = ":qa" },
             },
         },
@@ -29,4 +30,5 @@ vim.keymap.set("n", "<leader>fb", Snacks.picker.buffers, { desc = "Find Buffers"
 vim.keymap.set("n", "<leader>fh", Snacks.picker.help, { desc = "Find Help" })
 vim.keymap.set("n", "<leader>fs", Snacks.picker.lsp_workspace_symbols, { desc = "Find LSP Symbols" })
 vim.keymap.set("n", "<leader>fm", Snacks.picker.man, { desc = "Find Man Pages" })
+vim.keymap.set("n", "<leader>fp", function() Snacks.picker.projects({ dev = { "~/src" } }) end, { desc = "Find Projects" }) -- requires `fd`
 vim.keymap.set("n", "gh", function () Snacks.picker.lsp_references({ auto_confirm = false, }) end, { desc = "Find LSP References" })
