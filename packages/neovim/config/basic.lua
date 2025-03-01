@@ -41,7 +41,10 @@ vim.opt.mousemodel = "extend"
 
 -- Gui settings
 vim.opt.guifont = "monospace:h10"
-vim.g.neovide_remember_window_size = false
+if vim.g.neovide then
+    vim.g.neovide_remember_window_size = false
+    vim.g.neovide_scroll_animation_length = 0.2
+end
 
 -- other
 vim.opt.inccommand = "nosplit"
