@@ -80,6 +80,19 @@
       plugin = [ nvim-tree-lua nvim-web-devicons ];
       config = ./config/plugins/nvim-tree.lua;
     }
+    {
+      plugin = buildVimPlugin {
+        pname = "multicursor-nvim";
+        version = "2025-02-19";
+        src = fetchFromGitHub {
+          owner = "jake-stewart";
+          repo = "multicursor.nvim";
+          rev = "86537c3771f1989592568c9d92da2e201297867a";
+          hash = "sha256-/UV+oHQ2Lr4zNiqgJM44o1RhkftrfSzf3U58loszEz8=";
+        };
+      };
+      config = ./config/plugins/multicursor.lua;
+    }
 
     # Git
     {
@@ -99,6 +112,7 @@
 
     # Coding
     {
+      # TODO: Switch to blink.cmp (when updating to NixOS 25.05)?
       plugin = [ nvim-cmp cmp-nvim-lsp cmp-buffer cmp-path cmp-cmdline ];
       config = ./config/plugins/cmp.lua;
     }
