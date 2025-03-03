@@ -12,6 +12,8 @@ let
 in wrapNeovimUnstable neovim-unwrapped {
   vimAlias = true;
   viAlias = true;
+  withPython3 = false;
+  withRuby = false;
 
   wrapperArgs = "--prefix PATH : ${
       lib.makeBinPath ([ git ripgrep libqalculate ]
