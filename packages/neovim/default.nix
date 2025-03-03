@@ -1,5 +1,5 @@
 { lib, wrapNeovimUnstable, neovim-unwrapped, vimPlugins, fetchFromGitHub
-, vimUtils, git, ripgrep, libqalculate, colorscheme ? "gruvbox-material-dark"
+, vimUtils, git, ripgrep, libqalculate, colorscheme ? "catppuccin-frappe"
 , withLanguageServers ? false, nil, bash-language-server, clang-tools
 , typescript-language-server, pyright }:
 
