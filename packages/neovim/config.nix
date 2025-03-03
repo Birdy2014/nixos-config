@@ -112,11 +112,12 @@
 
     # Coding
     {
-      # TODO: Switch to blink.cmp (when updating to NixOS 25.05)?
+      # TODO: Switch to blink.cmp (when updating to NixOS 25.05)? Or maybe to the native completion?
       plugin = [ nvim-cmp cmp-nvim-lsp cmp-buffer cmp-path cmp-cmdline ];
       config = ./config/plugins/cmp.lua;
     }
     {
+      # TODO: Replace lspconfig with native lsp configuration in nvim 0.11 (NixOS 25.05)?
       plugin = [ nvim-lspconfig cmp-nvim-lsp ];
       config = ./config/plugins/lsp.lua;
     }
@@ -124,7 +125,7 @@
       plugin = [ package-info-nvim nui-nvim ];
       config = "require('package-info').setup {}";
     }
-    { plugin = [ vim-bsv ]; }
+    { plugin = [ vim-bsv ]; } # TODO: Remove
     {
       plugin = buildVimPlugin {
         pname = "direnv-nvim";
