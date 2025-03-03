@@ -16,16 +16,15 @@ in {
         onBoot = "ignore";
 
         # libvirt 10.9.0 delays shutdown for 5 seconds
-        # should be fixed with the next version
         # https://bbs.archlinux.org/viewtopic.php?id=301825
         # https://gitlab.com/libvirt/libvirt/-/issues/695
         package = pkgs.libvirt.overrideAttrs {
-          version = "10.8.0";
+          version = "10.10.0";
           src = pkgs.fetchFromGitLab {
             owner = "libvirt";
             repo = "libvirt";
-            rev = "v10.8.0";
-            hash = "sha256-MzfkpWvj0RTjrse/TzoFDfPdfQk6PkOx0CsTF99zveA=";
+            rev = "v10.10.0";
+            hash = "sha256-czo5G+zL4NFkYehTfymgSwk3bGWcrnike2MYPzeQOPg=";
             fetchSubmodules = true;
           };
         };
