@@ -6,7 +6,10 @@ function project_picker()
 end
 
 require("snacks").setup {
-    input = { },
+    input = {
+        enabled = true,
+    },
+
     picker = {
         ui_select = true,
     },
