@@ -125,31 +125,9 @@
       plugin = [ package-info-nvim nui-nvim ];
       config = "require('package-info').setup {}";
     }
-    { plugin = [ vim-bsv ]; } # TODO: Remove
     {
-      plugin = buildVimPlugin {
-        pname = "direnv-nvim";
-        version = "2024-10-30";
-        src = fetchFromGitHub {
-          owner = "actionshrimp";
-          repo = "direnv.nvim";
-          rev = "eec36a38285457c4e5dea2c6856329a9a20bd3a4";
-          hash = "sha256-7NcVskgAurbIuEVIXxHvXZfYQBOEXLURGzllfVEQKNE=";
-        };
-      };
-      config = ./config/plugins/direnv.lua;
-    }
-    {
-      plugin = tiny-inline-diagnostic-nvim.overrideAttrs {
-        src = fetchFromGitHub {
-          owner = "rachartier";
-          repo = "tiny-inline-diagnostic.nvim";
-          rev = "a9ccdfd1f5d922ca3474eace59dd3a883446800c";
-          hash = "sha256-JgSOxJ9YRMynuxe+qtLWUjWMzrplKIs/opT0cSP5FPk=";
-        };
-      };
-      config = ./config/plugins/tiny-inline-diagnostic.lua;
-    }
+      plugin = [ vim-bsv ];
+    } # TODO: Remove
 
     # Misc
     {
