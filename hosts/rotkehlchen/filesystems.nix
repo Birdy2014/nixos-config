@@ -35,6 +35,19 @@
       [ "subvol=swap" "compress=zstd:1" "noatime" "nodev" "nosuid" "noexec" ];
   };
 
+  fileSystems."/vm-images" = {
+    device = "/dev/disk/by-uuid/b6d597be-f401-45a6-a7aa-e9c5498745f0";
+    fsType = "btrfs";
+    options = [
+      "subvol=vm-images"
+      "compress=zstd:1"
+      "noatime"
+      "nodev"
+      "nosuid"
+      "noexec"
+    ];
+  };
+
   fileSystems."/snapshots" = {
     device = "/dev/disk/by-uuid/b6d597be-f401-45a6-a7aa-e9c5498745f0";
     fsType = "btrfs";
