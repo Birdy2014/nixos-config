@@ -5,6 +5,5 @@
       (import ./imv final prev)
       (import ./lf final prev)
       (import ./swayidle final prev)
-      (import ./spicetify-cli final prev)
     ]);
 }

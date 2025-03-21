@@ -18,7 +18,7 @@
     home = {
       stateVersion = "23.05";
       max-volume = 40;
-      extraModules = [ ./home/spotify.nix ./home/ssh.nix ];
+      extraModules = [ ./home/ssh.nix ];
       mpv.enableExpensiveEffects = true;
     };
     scan.enable = true;

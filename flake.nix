@@ -13,11 +13,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    spicetify-nix = {
-      url = "github:Gerg-L/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-colorizer.url = "github:nutsalhan87/nix-colorizer/v0.2";
 
     rycee-nur-expressions = {

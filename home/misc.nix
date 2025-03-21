@@ -28,6 +28,7 @@
     zathura
     mcomix
     neovide
+    spotify
 
     libreoffice
     thunderbird
