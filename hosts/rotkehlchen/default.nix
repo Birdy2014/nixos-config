@@ -66,8 +66,6 @@
 
   services.fwupd.enable = true;
 
-  services.logind.powerKey = "ignore";
-
   programs.ausweisapp = {
     enable = true;
     openFirewall = true;
