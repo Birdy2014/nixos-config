@@ -21,6 +21,7 @@
         ${pkgs.alsa-utils}/bin/amixer -D hw:G6 sset 'Line In',0 Capture nocap
         ${pkgs.alsa-utils}/bin/amixer -D hw:G6 sset 'S/PDIF In',0 Capture nocap
         ${pkgs.alsa-utils}/bin/amixer -D hw:G6 sset 'What U Hear',0 Capture nocap
+        ${pkgs.alsa-utils}/bin/amixer -D hw:G6 sset 'Input Gain Control',0 Capture 3
 
         ${pkgs.alsa-utils}/bin/amixer -D hw:G6 sset 'Line In',0 Playback mute
         ${pkgs.alsa-utils}/bin/amixer -D hw:G6 sset 'External Mic',0 Playback mute
