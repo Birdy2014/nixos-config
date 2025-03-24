@@ -29,8 +29,6 @@
       group = "systemd-network";
     };
 
-    ddclient.sopsFile = file;
-
     syncthing-api-key = {
       sopsFile = file;
       owner = config.services.syncthing.user;
