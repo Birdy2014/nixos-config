@@ -61,7 +61,8 @@
       # Subtitles
       demuxer-mkv-subtitle-preroll = "yes";
       sub-visibility = false;
-      slang = "deu,de,eng,en";
+      slang =
+        "deu,de,enm,eng,en"; # enm is sometimes used for english with honorifics in anime
       sub-font-size = 40;
       sub-bold = true;
       sub-scale-with-window =
