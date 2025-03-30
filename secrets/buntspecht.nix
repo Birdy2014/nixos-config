@@ -20,5 +20,11 @@
       owner = "nextcloud";
       group = "nextcloud";
     };
+
+    coturn-auth-secret = {
+      sopsFile = file;
+      owner = "turnserver";
+      group = "turnserver";
+    };
   };
 }
