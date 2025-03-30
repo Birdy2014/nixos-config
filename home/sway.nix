@@ -123,7 +123,7 @@
 
       assigns = {
         "5" = [{ app_id = "^thunderbird$"; }];
-        "6" = [{ app_id = "^vesktop$"; }];
+        "6" = [ { app_id = "^vesktop$"; } { app_id = "^Element$"; } ];
         "7" = lib.mkIf osConfig.my.gaming.enable [{ class = "^[Ss]team$"; }];
       };
 
@@ -269,6 +269,7 @@
 
       # Make first workspace floating
       for_window [workspace="^1$"] floating enable
+      for_window [workspace="^6$"] layout tabbed
 
       # Force borders for all windows
       for_window [all] border normal

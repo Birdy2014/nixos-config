@@ -33,6 +33,7 @@
     libreoffice
     thunderbird
     mumble
+    element-desktop
   ];
 
   # TODO: Wrapper script that handles WINEPREFIX and binds the directory of the executable file to bwrap
