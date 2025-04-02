@@ -17,7 +17,6 @@
     yt-dlp
     bashmount
     pkgsSelf.playerctl-current
-    syncplay-nogui
     gdb
 
     # GUI
@@ -26,25 +25,10 @@
     obsidian
     keepassxc
     zathura
-    mcomix
     neovide
-    spotify
-
+    hotspot
     libreoffice
     thunderbird
-    mumble
     element-desktop
   ];
-
-  # TODO: Wrapper script that handles WINEPREFIX and binds the directory of the executable file to bwrap
-  /* my.bubblewrap.wine = {
-       applications = with pkgs; [ wineWowPackages.stable winetricks ];
-       allowDesktop = true;
-       persistentHome = true;
-       extraEnvBinds = [ "WINEPREFIX" ];
-       extraRoBinds = [ "$HOME/Downloads" ];
-       extraBinds = [ "/sys/class/input" ];
-       extraDevBinds = [ "/dev/input" "/dev/uinput" ];
-     };
-  */
 }

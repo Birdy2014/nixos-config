@@ -43,12 +43,20 @@
   hardware.bluetooth.enable = true;
 
   environment.systemPackages = with pkgs; [
+    # CLI
     ddcutil
-    gimp
-    vesktop
-    signal-desktop
     nvtopPackages.amd
     sops
+    syncplay-nogui
+
+    # GUI
+    gimp
+    spotify
+    mcomix
+
+    vesktop
+    signal-desktop
+    mumble
   ];
 
   programs.adb.enable = true;
