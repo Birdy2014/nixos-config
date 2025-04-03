@@ -4,6 +4,7 @@
       (import ./blocky final prev)
       (import ./imv final prev)
       (import ./lf final prev)
+      (import ./paperless-ngx final prev)
       (import ./swayidle final prev)
     ]);
 }

@@ -5,8 +5,11 @@
   in {
     ldap-admin-password = {
       sopsFile = file;
-      owner = config.services.authelia.instances.main.user;
+      # Ugly workaround to let both paperless and authelia read the file.
+      # TODO: Remove authelia?
+      owner = config.services.paperless.user;
       group = config.services.authelia.instances.main.group;
+      mode = "0440";
     };
 
     "recipes/secret-key".sopsFile = file;
