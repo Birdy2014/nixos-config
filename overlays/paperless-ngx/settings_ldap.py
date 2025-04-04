@@ -4,6 +4,12 @@ import ldap
 from django_auth_ldap.config import LDAPSearch
 
 
+# Reduce the ldap timeout so it doesn't hang forever if the connection
+# to the ldap server fails.
+ldap.set_option(ldap.OPT_NETWORK_TIMEOUT, 5)
+ldap.set_option(ldap.OPT_TIMEOUT, 5)
+
+
 logger = logging.getLogger(__name__)
 
 
@@ -19,7 +25,7 @@ AUTH_LDAP_SERVER_URI = getenv_required("AUTH_LDAP_SERVER_URI")
 AUTH_LDAP_BIND_DN = getenv_required("AUTH_LDAP_BIND_DN")
 password_file = getenv_required("AUTH_LDAP_BIND_PASSWORD_FILE")
 with open(password_file, "r") as file:
-    lines = file.readlines()
+    lines = file.read().splitlines()
     if len(lines) > 0:
         AUTH_LDAP_BIND_PASSWORD = lines[0]
 
@@ -36,4 +42,5 @@ AUTH_LDAP_USER_SEARCH = LDAPSearch(ldap_base_dn, ldap.SCOPE_SUBTREE, ldap_user_f
 from .settings import *
 
 
-AUTHENTICATION_BACKENDS = [ "django_auth_ldap.backend.LDAPBackend" ]
+# The Paperless mobile app fails when the AUTHENTICATION_BACKENDS when only the LDAPBackend is active
+AUTHENTICATION_BACKENDS.insert(2, "django_auth_ldap.backend.LDAPBackend")
