@@ -2,13 +2,13 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "lepton-firefox-theme";
-  version = "8.6.5";
+  version = "8.7.0";
 
   src = fetchFromGitHub {
     owner = "black7375";
     repo = "Firefox-UI-Fix";
     rev = "v${version}";
-    hash = "sha256-8sRUGrKcSBDzqIjACR7eRfn4VzFbL3zfRB8GDsNKO5A=";
+    hash = "sha256-NBPSKIxTNSuJahySyLqD45R/UmeyvkJBKehUIE/dI0I=";
   };
 
   installPhase = ''
