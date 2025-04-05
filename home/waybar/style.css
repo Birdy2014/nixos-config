@@ -39,7 +39,7 @@ window#waybar.hidden {
     color: @red;
 }
 
-#workspaces button.persistent {
+#workspaces button.persistent, #workspaces button.empty:not(.focused) {
     color: @text-inactive;
 }
 
