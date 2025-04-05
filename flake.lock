@@ -21,6 +21,34 @@
         "type": "github"
       }
     },
+    "niri-flake": {
+      "inputs": {
+        "niri-stable": [],
+        "niri-unstable": [],
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ],
+        "nixpkgs-stable": [
+          "nixpkgs"
+        ],
+        "xwayland-satellite-stable": [],
+        "xwayland-satellite-unstable": []
+      },
+      "locked": {
+        "lastModified": 1750316786,
+        "narHash": "sha256-Ll0QFpzdOH3KyqgR/JCiTGg9R3ia+h6uUyeYy1vUatE=",
+        "owner": "sodiboo",
+        "repo": "niri-flake",
+        "rev": "6726e54b5688dba41d5fa587613205d267590b39",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sodiboo",
+        "ref": "pull/1078/merge",
+        "repo": "niri-flake",
+        "type": "github"
+      }
+    },
     "nix-colorizer": {
       "locked": {
         "lastModified": 1722541529,
@@ -66,6 +94,7 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "niri-flake": "niri-flake",
         "nix-colorizer": "nix-colorizer",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",

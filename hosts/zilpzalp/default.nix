@@ -4,11 +4,19 @@
   imports = [ ./filesystems.nix ];
 
   my = {
-    desktop.screens = {
-      primary = "eDP-1";
-      secondary = "HDMI-A-1";
+    desktop = {
+      compositor = "niri";
+      screens = {
+        primary = "eDP-1";
+        secondary = "HDMI-A-1";
+      };
     };
-    home.stateVersion = "23.05";
+    home = {
+      stateVersion = "23.05";
+      extraModules = [
+        ./home/niri.nix
+      ];
+    };
     sshd.enable = true;
     systemd-boot.enable = true;
     virtualisation.enable = true;

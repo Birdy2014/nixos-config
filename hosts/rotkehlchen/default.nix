@@ -13,12 +13,18 @@
   ];
 
   my = {
-    desktop.colorscheme = "catppuccin-frappe";
+    desktop = {
+      colorscheme = "catppuccin-frappe";
+      compositor = "niri";
+    };
     gaming.enable = true;
     home = {
       stateVersion = "23.05";
       max-volume = 40;
-      extraModules = [ ./home/ssh.nix ];
+      extraModules = [
+        ./home/niri.nix
+        ./home/ssh.nix
+      ];
       mpv.enableExpensiveEffects = true;
     };
     scan.enable = true;

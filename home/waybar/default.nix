@@ -61,13 +61,14 @@
 
     settings = {
       mainBar = {
-        layer = "bottom";
+        layer = "top";
         position = "left";
         width = 30;
         margin = "5";
         modules-left = [
           "sway/workspaces"
           "sway/mode"
+          "niri/workspaces"
         ];
         modules-right = [
           "privacy#screenshare"
@@ -114,6 +115,19 @@
         "sway/mode" = {
           format = ''<span style="italic">{}</span>'';
           rotate = 90;
+        };
+        "niri/workspaces" = {
+          format = "{icon}";
+          format-icons = {
+            "01" = "󰋜";
+            "02" = "󰈹";
+            "03" = "󰗃";
+            "04" = "";
+            "05" = "󰇮";
+            "06" = "󰙯";
+            "07" = lib.mkIf osConfig.my.gaming.enable "󰓓";
+            default = "";
+          };
         };
         "custom/idle-inhibit" = {
           exec = pkgs.writeShellScript "waybar-idle-inhibit.sh" ''
