@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, osConfig, pkgs, ... }:
 
 {
   programs.zsh = {
@@ -122,7 +122,12 @@
 
     loginExtra = ''
       if [ "$TTY" = "/dev/tty1" ]; then
-        systemd-cat sway
+        systemd-cat ${
+          if osConfig.my.desktop.compositor == "sway" then
+            "sway"
+          else
+            "niri-session"
+        }
         systemctl --user stop graphical-session.target
         exit
       fi

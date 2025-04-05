@@ -13,7 +13,10 @@
   ];
 
   my = {
-    desktop.colorscheme = "catppuccin-frappe";
+    desktop = {
+      colorscheme = "catppuccin-frappe";
+      compositor = "niri";
+    };
     gaming.enable = true;
     home = {
       stateVersion = "23.05";

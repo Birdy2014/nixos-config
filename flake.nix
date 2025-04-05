@@ -19,6 +19,18 @@
       url = "gitlab:rycee/nur-expressions";
       flake = false;
     };
+
+    niri-flake = {
+      url = "github:sodiboo/niri-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-unstable";
+        nixpkgs-stable.follows = "nixpkgs";
+        niri-stable.follows = "";
+        niri-unstable.follows = "";
+        xwayland-satellite-stable.follows = "";
+        xwayland-satellite-unstable.follows = "";
+      };
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, ... }@inputs: {

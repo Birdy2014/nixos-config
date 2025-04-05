@@ -5,6 +5,7 @@
     ./btop.nix
     ./bubblewrap.nix
     ./colors
+    ./compositors
     ./direnv.nix
     ./dunst.nix
     ./firefox.nix
@@ -17,7 +18,6 @@
     ./misc.nix
     ./mpv.nix
     ./rofi
-    ./sway.nix
     ./waybar
     ./xdg.nix
     ./yazi.nix
