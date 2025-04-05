@@ -5,6 +5,7 @@
     ./btop.nix
     ./bubblewrap.nix
     ./colors
+    ./compositors
     ./direnv.nix
     ./dunst.nix
     ./firefox.nix
