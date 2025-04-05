@@ -12,19 +12,28 @@
   plugins = let
     colorschemes = {
       gruvbox-material-dark = [{
-        plugin = vimPlugins.gruvbox-material;
+        # Necessary for snacks-nvim picker support
+        # TODO: Remove override on NixOS 25.05
+        plugin = vimPlugins.gruvbox-material.overrideAttrs {
+          src = fetchFromGitHub {
+            owner = "sainnhe";
+            repo = "gruvbox-material";
+            rev = "146f40fd42cbef30fed69b4ef51329aeeaceb909";
+            hash = "sha256-PbuiOl16PWr/aFDbLUJV2Ud7AuB9BLMTphViralz/S0=";
+          };
+        };
         config = ''
           vim.g.gruvbox_material_disable_terminal_colors = 1
-          vim.cmd("colorscheme gruvbox-material")
+          vim.cmd.colorscheme("gruvbox-material")
         '';
       }];
       catppuccin-macchiato = [{
         plugin = vimPlugins.catppuccin-nvim;
-        config = ''vim.cmd("colorscheme catppuccin-macchiato")'';
+        config = ''vim.cmd.colorscheme("catppuccin-macchiato")'';
       }];
       catppuccin-frappe = [{
         plugin = vimPlugins.catppuccin-nvim;
-        config = ''vim.cmd("colorscheme catppuccin-frappe")'';
+        config = ''vim.cmd.colorscheme("catppuccin-frappe")'';
       }];
     };
   in with vimPlugins;
