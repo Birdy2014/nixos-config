@@ -102,8 +102,8 @@
         "${modifier}+space" = "focus mode_toggle";
         "${modifier}+Shift+space" = "floating toggle";
 
-        "${modifier}+p" = "mark --toggle replace";
-        "${modifier}+Shift+p" = ''
+        "${modifier}+m" = "mark --toggle replace";
+        "${modifier}+Shift+m" = ''
           swap container with mark replace; [con_mark="replace"] focus; unmark replace'';
 
         # System (Exit, Shutdown, ...)
@@ -117,7 +117,7 @@
         "Control+Mod4+Mod1+h" =
           "exec systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && systemctl hibernate";
 
-        "${modifier}+o" = "scratchpad show";
+        "${modifier}+odiaeresis" = "scratchpad show";
         "${modifier}+r" = "mode resize";
       };
 
@@ -225,7 +225,7 @@
         else if n == 10 then
           "0"
         else
-          "F${toString (n - 10)}";
+          lib.elemAt [ "u" "i" "o" "p" "udiaeresis" ] (n - 11);
 
       workspaceKeybinding = numbers:
         (lib.strings.concatLines (lib.flatten (map (n:
