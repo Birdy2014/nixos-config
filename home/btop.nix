@@ -65,7 +65,7 @@
     # CPU, Memory, Network, Proc box outline colors
     theme[cpu_box]="${magenta}"
     theme[mem_box]="${green}"
-    theme[net_box]="${orange}"
+    theme[net_box]="${yellow}"
     theme[proc_box]="${blue}"
 
     # Box divider line and small boxes line color
@@ -92,8 +92,8 @@
     theme[cached_end]="${blue}"
 
     # Mem/Disk available meter
-    theme[available_start]="${orange}"
-    theme[available_mid]="${mix orange red 0.5}"
+    theme[available_start]="${yellow}"
+    theme[available_mid]="${mix yellow red 0.5}"
     theme[available_end]="${red}"
 
     # Mem/Disk used meter
@@ -102,8 +102,8 @@
     theme[used_end]="${light-cyan}"
 
     # Download graph colors
-    theme[download_start]="${orange}"
-    theme[download_mid]="${mix orange red 0.5}"
+    theme[download_start]="${yellow}"
+    theme[download_mid]="${mix yellow red 0.5}"
     theme[download_end]="${red}"
 
     # Upload graph colors
