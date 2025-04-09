@@ -7,8 +7,18 @@
     userEmail = "moritzv7@gmail.com";
 
     extraConfig = {
+      branch.sort = "-committerdate";
+      column.ui = "auto";
       core.autocrlf = "input";
+      diff = {
+        algorithm = "histogram";
+        mnemonicPrefix = true;
+        renames = true;
+      };
+      fetch.all = true;
       pull.ff = "only";
+      push.autoSetupRemote = true;
+      tag.sort = "version:refname";
     };
 
     delta = {
