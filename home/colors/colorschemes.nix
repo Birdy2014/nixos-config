@@ -45,6 +45,46 @@
         light-white = "#928374";
       };
 
+      gruvbox-material-light = rec {
+        isLight = true;
+
+        accent = yellow;
+        accent-text = "#000000";
+        #accent-background = "#a96b2c";
+        accent-complementary = cyan;
+
+        background-primary = "#ebdbb2";
+        background-secondary = "#fbf1c7";
+        background-tertiary = "#f9f5d7";
+
+        text = "#282828";
+        text-inactive = "#3c3836";
+
+        black = "#fbf1c7";
+        light-black = "#928374";
+
+        red = "#cc241d";
+        light-red = "#9d0006";
+
+        green = "#98971a";
+        light-green = "#79740e";
+
+        yellow = "#d79921";
+        light-yellow = "#b57614";
+
+        blue = "#458588";
+        light-blue = "#076678";
+
+        magenta = "#b16286";
+        light-magenta = "#8f3f71";
+
+        cyan = "#689d6a";
+        light-cyan = "#427b58";
+
+        white = "#7c6f64";
+        light-white = "#3c3836";
+      };
+
       catppuccin-macchiato = rec {
         accent = green;
         accent-text = "#000000";
@@ -92,6 +132,32 @@
         cyan = "#81c8be";
         white = "#b5bfe2";
         light-white = "#b5bfe2";
+      };
+
+      catppuccin-latte = rec {
+        isLight = true;
+
+        accent = green;
+        accent-text = "#ffffff";
+        accent-complementary = "#8839ef";
+
+        background-primary = "#eff1f5";
+        background-secondary = "#e6e9ef";
+        background-tertiary = "#dce0e8";
+        text = "#4c4f69";
+        text-inactive = "#6c6f85";
+
+        black = "#bcc0cc";
+        light-black = "#acb0be";
+
+        red = "#d20f39";
+        green = "#40a02b";
+        yellow = "#df8e1d";
+        blue = "#1e66f5";
+        magenta = "#ea76cb";
+        cyan = "#179299";
+        white = "#5c5f77";
+        light-white = "#5c5f77";
       };
     };
   in colorschemes.${osConfig.my.desktop.colorscheme};

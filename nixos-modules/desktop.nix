@@ -11,8 +11,10 @@
     colorscheme = lib.mkOption {
       type = lib.types.enum [
         "gruvbox-material-dark"
+        "gruvbox-material-light"
         "catppuccin-frappe"
         "catppuccin-macchiato"
+        "catppuccin-latte"
       ];
       default = "gruvbox-material-dark";
       description = "Which colorscheme to use";

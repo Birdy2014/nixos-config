@@ -10,11 +10,11 @@
   ];
 
   plugins = let
-    colorschemes = {
-      gruvbox-material-dark = [{
-        # Necessary for snacks-nvim picker support
-        # TODO: Remove override on NixOS 25.05
-        plugin = vimPlugins.gruvbox-material.overrideAttrs {
+    colorschemes =
+      # Necessary for snacks-nvim picker support
+      # TODO: Remove override on NixOS 25.05
+      let
+        gruvbox-material = vimPlugins.gruvbox-material.overrideAttrs {
           src = fetchFromGitHub {
             owner = "sainnhe";
             repo = "gruvbox-material";
@@ -22,20 +22,35 @@
             hash = "sha256-PbuiOl16PWr/aFDbLUJV2Ud7AuB9BLMTphViralz/S0=";
           };
         };
-        config = ''
-          vim.g.gruvbox_material_disable_terminal_colors = 1
-          vim.cmd.colorscheme("gruvbox-material")
-        '';
-      }];
-      catppuccin-macchiato = [{
-        plugin = vimPlugins.catppuccin-nvim;
-        config = ''vim.cmd.colorscheme("catppuccin-macchiato")'';
-      }];
-      catppuccin-frappe = [{
-        plugin = vimPlugins.catppuccin-nvim;
-        config = ''vim.cmd.colorscheme("catppuccin-frappe")'';
-      }];
-    };
+      in {
+        gruvbox-material-dark = [{
+          plugin = gruvbox-material;
+          config = ''
+            vim.g.gruvbox_material_disable_terminal_colors = 1
+            vim.cmd.colorscheme("gruvbox-material")
+          '';
+        }];
+        gruvbox-material-light = [{
+          plugin = gruvbox-material;
+          config = ''
+            vim.opt.background = "light"
+            vim.g.gruvbox_material_disable_terminal_colors = 1
+            vim.cmd.colorscheme("gruvbox-material")
+          '';
+        }];
+        catppuccin-macchiato = [{
+          plugin = vimPlugins.catppuccin-nvim;
+          config = ''vim.cmd.colorscheme("catppuccin-macchiato")'';
+        }];
+        catppuccin-frappe = [{
+          plugin = vimPlugins.catppuccin-nvim;
+          config = ''vim.cmd.colorscheme("catppuccin-frappe")'';
+        }];
+        catppuccin-latte = [{
+          plugin = vimPlugins.catppuccin-nvim;
+          config = ''vim.cmd.colorscheme("catppuccin-latte")'';
+        }];
+      };
   in with vimPlugins;
   [
     {

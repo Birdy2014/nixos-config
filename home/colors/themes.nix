@@ -36,6 +36,12 @@
         type = lib.types.enum [ "#000000" "#ffffff" ];
         description = "color";
       };
+
+      isLight = lib.mkOption {
+        type = lib.types.bool;
+        description = "is a light theme";
+        default = false;
+      };
     };
 
   config = let
@@ -79,7 +85,7 @@
       enable = true;
 
       theme = {
-        name = "adw-gtk3-dark";
+        name = if cfg.isLight then "adw-gtk3" else "adw-gtk3-dark";
         package = pkgs.adw-gtk3;
       };
 
@@ -203,7 +209,8 @@
     };
 
     dconf.settings = {
-      "org/gnome/desktop/interface".color-scheme = "prefer-dark";
+      "org/gnome/desktop/interface".color-scheme =
+        if cfg.isLight then "prefer-light" else "prefer-dark";
 
       # Remove close button in GTK CSD titlebar
       "org/gnome/desktop/wm/preferences".button-layout = "appmenu";
