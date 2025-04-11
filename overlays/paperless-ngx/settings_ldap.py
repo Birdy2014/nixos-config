@@ -1,7 +1,7 @@
 import logging
 import os
 import ldap
-from django_auth_ldap.config import LDAPSearch
+from django_auth_ldap.config import LDAPSearch, GroupOfUniqueNamesType
 
 
 # Reduce the ldap timeout so it doesn't hang forever if the connection
@@ -30,9 +30,19 @@ with open(password_file, "r") as file:
         AUTH_LDAP_BIND_PASSWORD = lines[0]
 
 
-ldap_base_dn = getenv_required("AUTH_LDAP_BASE_DN")
+ldap_user_base_dn = getenv_required("AUTH_LDAP_USER_BASE_DN")
 ldap_user_filter = getenv_required("AUTH_LDAP_USER_FILTER")
-AUTH_LDAP_USER_SEARCH = LDAPSearch(ldap_base_dn, ldap.SCOPE_SUBTREE, ldap_user_filter)
+AUTH_LDAP_USER_SEARCH = LDAPSearch(ldap_user_base_dn, ldap.SCOPE_SUBTREE, ldap_user_filter)
+
+
+ldap_group_base_dn = getenv_required("AUTH_LDAP_GROUP_BASE_DN")
+ldap_group_filter = "(objectClass=groupOfUniqueNames)"
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch(ldap_group_base_dn, ldap.SCOPE_SUBTREE, ldap_group_filter)
+AUTH_LDAP_GROUP_TYPE = GroupOfUniqueNamesType()
+AUTH_LDAP_MIRROR_GROUPS = True
+
+
+AUTH_LDAP_REQUIRE_GROUP = getenv_required("AUTH_LDAP_REQUIRE_GROUP")
 
 
 #
