@@ -102,8 +102,8 @@
         "${modifier}+space" = "focus mode_toggle";
         "${modifier}+Shift+space" = "floating toggle";
 
-        "${modifier}+m" = "mark --toggle replace";
-        "${modifier}+Shift+m" = ''
+        "${modifier}+n" = "mark --toggle replace";
+        "${modifier}+Shift+n" = ''
           swap container with mark replace; [con_mark="replace"] focus; unmark replace'';
 
         # System (Exit, Shutdown, ...)
