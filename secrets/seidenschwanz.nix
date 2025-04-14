@@ -37,6 +37,8 @@
       owner = config.services.syncthing.user;
       group = config.services.syncthing.group;
     };
+
+    nullmailer-gmail-password.sopsFile = file;
   } // lib.genAttrs (map (n: "wireguard/psk${toString n}") [ 2 3 4 5 7 ]) (_: {
     sopsFile = file;
     owner = "systemd-network";
