@@ -49,4 +49,13 @@
       neededForBoot = true;
     };
   };
+
+  services.zfs.zed.settings = {
+    ZED_EMAIL_ADDR = [ "moritzv7+monitoring@gmail.com" ];
+    ZED_EMAIL_PROG = "sendmail";
+    ZED_EMAIL_OPTS = "@ADDRESS@";
+
+    ZED_NOTIFY_INTERVAL_SECS = 3600;
+    ZED_NOTIFY_VERBOSE = true;
+  };
 }
