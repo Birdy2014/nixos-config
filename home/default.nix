@@ -8,6 +8,7 @@
     ./direnv.nix
     ./dunst.nix
     ./firefox.nix
+    ./foot.nix
     ./gaming.nix
     ./git.nix
     ./gpg.nix
