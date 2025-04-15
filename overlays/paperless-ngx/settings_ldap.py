@@ -52,5 +52,5 @@ AUTH_LDAP_REQUIRE_GROUP = getenv_required("AUTH_LDAP_REQUIRE_GROUP")
 from .settings import *
 
 
-# The Paperless mobile app fails when the AUTHENTICATION_BACKENDS when only the LDAPBackend is active
+# The Paperless mobile app fails if only the LDAPBackend is available
 AUTHENTICATION_BACKENDS.insert(2, "django_auth_ldap.backend.LDAPBackend")
