@@ -3,13 +3,16 @@
 {
   programs.foot = {
     enable = true;
-    settings = {
+    settings = let color = lib.removePrefix "#";
+    in {
       main = {
-        font = "monospace:size=10";
+        font = "monospace:size=10:weight=medium";
+        font-bold = "monospace:size=10:weight=bold";
         initial-window-size-pixels = "720x480";
       };
-      colors = let color = lib.removePrefix "#";
-      in with config.my.theme; {
+      cursor.color = with config.my.theme;
+        "${color background-secondary} ${color text}";
+      colors = with config.my.theme; {
         background = color background-secondary;
         foreground = color text;
 
