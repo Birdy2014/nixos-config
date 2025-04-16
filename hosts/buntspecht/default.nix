@@ -30,5 +30,10 @@
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
+  # Reduce closure size
+  documentation.nixos.enable = false;
+  boot.enableContainers = false;
+  environment.stub-ld.enable = false;
+
   system.stateVersion = "23.05";
 }

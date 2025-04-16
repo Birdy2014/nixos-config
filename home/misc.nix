@@ -13,6 +13,15 @@
 
   home.packages = with pkgs; [
     # CLI
+    cifs-utils
+    unrar
+    unzip
+    _7zz
+    zip
+    alsa-utils
+    trash-cli
+    progress
+    ffmpeg
     libqalculate
     yt-dlp
     bashmount

@@ -1,4 +1,4 @@
-{ config, pkgs, pkgsSelf, ... }:
+{ config, lib, pkgs, pkgsSelf, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -10,24 +10,14 @@
     git
     file
     psmisc
-    unrar
-    unzip
-    _7zz
-    zip
     socat
     pciutils
     usbutils
-    alsa-utils
     compsize
-    trash-cli
-    ffmpeg
-    cifs-utils
-    keyutils
+    # keyutils # Brauche ich das?
     sshfs
     ldns # for drill
     binutils # for strings
-    progress
-    waypipe
     nix-tree
     htop
     fd
@@ -35,7 +25,7 @@
     man-pages
   ];
 
-  services.udisks2.enable = true;
+  programs.command-not-found.enable = false;
 
   documentation = {
     info.enable = false;
@@ -44,4 +34,11 @@
 
   # Needed for zsh completions
   environment.pathsToLink = [ "/share/zsh" ];
+
+  xdg = lib.mkIf (!config.my.desktop.enable) {
+    autostart.enable = false;
+    icons.enable = false;
+    mime.enable = false;
+    sounds.enable = false;
+  };
 }

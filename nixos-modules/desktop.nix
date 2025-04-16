@@ -57,6 +57,8 @@
     services.gnome.gnome-keyring.enable = true;
     security.pam.services.swaylock = { };
 
+    services.udisks2.enable = true;
+
     # Needed for home-manager configured xdg-desktop-portal
     environment.pathsToLink =
       [ "/share/xdg-desktop-portal" "/share/applications" ];

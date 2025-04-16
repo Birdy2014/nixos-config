@@ -16,8 +16,6 @@
   networking.wireless.enable = false;
   services.resolved.enable = true;
 
-  boot.swraid.enable = lib.mkForce false;
-
   isoImage = {
     squashfsCompression = "zstd -Xcompression-level 15";
     isoBaseName = "singdrossel-nixos-custom";
