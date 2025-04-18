@@ -54,3 +54,8 @@ from .settings import *
 
 # The Paperless mobile app fails if only the LDAPBackend is available
 AUTHENTICATION_BACKENDS.insert(2, "django_auth_ldap.backend.LDAPBackend")
+
+
+# Fixes Error 500 on /api/status/
+# https://github.com/paperless-ngx/paperless-ngx/discussions/7211
+_CHANNELS_REDIS_URL = os.getenv("PAPERLESS_REDIS", None)
