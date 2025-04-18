@@ -10,6 +10,7 @@
         font-bold = "monospace:size=10:weight=bold";
         initial-window-size-pixels = "720x480";
         resize-by-cells = false;
+        resize-keep-grid = false;
       };
       cursor.color = with config.my.theme;
         "${color background-secondary} ${color text}";
