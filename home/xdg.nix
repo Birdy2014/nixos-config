@@ -102,9 +102,9 @@
   home.packages = [
     pkgsSelf.xdg-open
 
-    # Make some applications find kitty when opening desktop files
+    # Make some applications find the default terminal when opening desktop files
     (pkgs.writeShellScriptBin "xdg-terminal-exec" ''
-      kitty "$@"
+      foot "$@"
     '')
   ];
 }

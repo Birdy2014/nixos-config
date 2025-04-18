@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-default_terminal = "kitty"
+default_terminal = "foot"
 
 import os
 import re

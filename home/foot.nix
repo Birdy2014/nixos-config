@@ -9,6 +9,7 @@
         font = "monospace:size=10:weight=medium";
         font-bold = "monospace:size=10:weight=bold";
         initial-window-size-pixels = "720x480";
+        resize-by-cells = false;
       };
       cursor.color = with config.my.theme;
         "${color background-secondary} ${color text}";

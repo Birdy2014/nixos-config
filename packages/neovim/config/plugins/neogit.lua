@@ -1,7 +1,7 @@
 local neogit = require("neogit")
 
 neogit.setup {
-    graph_style = "kitty",
+    graph_style = "unicode",
     ignored_settings = {
         "NeogitPushPopup--force-with-lease",
         "NeogitPushPopup--force",

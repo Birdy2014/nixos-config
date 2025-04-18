@@ -22,7 +22,7 @@
       @import "${./theme.rasi}"
     '')}";
 
-    terminal = "${pkgs.kitty}/bin/kitty";
+    terminal = "foot";
     extraConfig = {
       modi = "drun,run,ssh";
       show-icons = true;

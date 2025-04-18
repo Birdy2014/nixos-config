@@ -1,11 +1,9 @@
 { config, options, osConfig, lib, pkgs, ... }:
 
 {
-  imports = [ ./kitty.nix ./rofi ./waybar ];
-
   wayland.windowManager.sway = let
     modifier = "Mod4";
-    terminal = "kitty";
+    terminal = "foot";
     launcher = ''
       rofi -show drun -terminal ${terminal} -run-command "${pkgs.sway}/bin/swaymsg exec '{cmd}'" -run-shell-command "swaymsg exec {terminal} '{cmd}'"'';
     color-focused-background = config.my.theme.accent-background;

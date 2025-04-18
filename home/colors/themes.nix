@@ -398,7 +398,7 @@
 
         [General]
         ColorScheme=GruvboxColors
-        TerminalApplication=kitty
+        TerminalApplication=foot
         XftHintStyle=hintslight
         XftSubPixel=none
         fixed=Monospace,10,-1,5,50,0,0,0,0,0
