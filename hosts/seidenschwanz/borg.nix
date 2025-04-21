@@ -9,6 +9,7 @@
       "/var/lib/authelia-main"
       "/var/lib/jellyfin"
       "/var/lib/paperless"
+      "/var/lib/private/einkaufszettel"
       "/var/lib/private/lldap"
       "/var/lib/private/mealie"
     ];
