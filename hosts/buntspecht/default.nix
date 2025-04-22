@@ -30,6 +30,9 @@
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
+  # Holding the spacebar doesn't seem to work on the hetzner console
+  boot.loader.timeout = lib.mkForce 5;
+
   # Reduce closure size
   documentation.nixos.enable = false;
   boot.enableContainers = false;
