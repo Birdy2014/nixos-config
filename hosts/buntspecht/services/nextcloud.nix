@@ -6,7 +6,10 @@ in {
     enable = true;
     package = pkgs.nextcloud31;
     hostName = fqdn;
-    config.adminpassFile = config.sops.secrets.nextcloud-admin-password.path;
+    config = {
+      adminpassFile = config.sops.secrets.nextcloud-admin-password.path;
+      dbtype = "pgsql";
+    };
     extraApps = with config.services.nextcloud.package.packages.apps; {
       inherit contacts calendar notes;
     };
@@ -14,6 +17,7 @@ in {
     https = true;
     configureRedis = true;
     phpOptions."opcache.interned_strings_buffer" = "16";
+    database.createLocally = true;
 
     settings = {
       default_language = "de";
