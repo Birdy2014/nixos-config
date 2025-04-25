@@ -23,8 +23,8 @@
 
     coturn-auth-secret = {
       sopsFile = file;
-      owner = "turnserver";
-      group = "turnserver";
+      # needs to be readable by coturn and synapse
+      mode = "0444";
     };
   };
 }

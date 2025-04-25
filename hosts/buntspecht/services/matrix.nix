@@ -1,45 +1,67 @@
 { config, pkgs, ... }:
 
 {
-  services.matrix-conduit = {
+  services.matrix-synapse = {
     enable = true;
-    package = pkgs.conduwuit;
-    settings.global = {
-      address = "::1";
-      port = 6167;
+    settings = {
       server_name = "mvogel.dev";
-      database_backend = "rocksdb";
-      allow_encryption = true;
-      allow_federation = true;
-      new_user_displayname_suffix = "";
+      public_baseurl = "https://matrix.mvogel.dev";
 
-      # TODO: Use turn_secret_file with conduwuit 0.5.0
-      #       The turn secret is currently defined in my private config
+      listeners = [{
+        bind_addresses = [ "::1" ];
+        port = 6167;
+        type = "http";
+        tls = false;
+        x_forwarded = true;
+        resources = [{
+          names = [ "client" "federation" ];
+          compress = true;
+        }];
+      }];
+
+      database.name = "psycopg2";
+
+      # Disable federation
+      federation_domain_whitelist = [ ];
+
+      enable_registration = true;
+      registration_requires_token = true;
 
       turn_uris = [ "turn:matrix.mvogel.dev?transport=udp" ];
-
-      well_known = {
-        client = "https://matrix.mvogel.dev";
-        server = "matrix.mvogel.dev:443";
-      };
+      turn_shared_secret_path = config.sops.secrets.coturn-auth-secret.path;
     };
   };
+
+  environment.systemPackages = [ pkgs.synadm ];
+
+  services.postgresql.enable = true;
 
   services.nginx = {
     enable = true;
     virtualHosts = {
-      "matrix.mvogel.dev" = {
-        enableACME = true;
-        forceSSL = true;
-        locations."/" = {
+      "matrix.mvogel.dev" = let
+        proxy = {
           proxyPass = "http://[::1]:6167";
           recommendedProxySettings = true;
         };
+      in {
+        enableACME = true;
+        forceSSL = true;
+        locations."/".extraConfig = "return 404;";
+        locations."/_matrix" = proxy;
+        locations."/_synapse/client" = proxy;
       };
-      "mvogel.dev" = {
-        locations."/.well-known/matrix/" = {
-          proxyPass = "http://[::1]:6167";
-          recommendedProxySettings = true;
+      "mvogel.dev" = let
+        mkWellKnown = data: ''
+          add_header Content-Type application/json;
+          add_header Access-Control-Allow-Origin *;
+          return 200 '${builtins.toJSON data}';
+        '';
+      in {
+        locations."/.well-known/matrix/server".extraConfig =
+          mkWellKnown { "m.server" = "matrix.mvogel.dev:443"; };
+        locations."/.well-known/matrix/client".extraConfig = mkWellKnown {
+          "m.homeserver".base_url = "https://matrix.mvogel.dev/";
         };
       };
     };
