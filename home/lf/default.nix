@@ -170,7 +170,7 @@
           $EDITOR $fx;
         }}'';
 
-      drag = "&${pkgs.ripdrag}/bin/ripdrag $fx";
+      drag = "&${pkgs.ripdrag}/bin/ripdrag --no-click --all $fx";
 
       # extract the current file with the right command
       # (xkcd link: https://xkcd.com/1168/)
