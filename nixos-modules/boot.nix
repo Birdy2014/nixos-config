@@ -5,7 +5,7 @@
 
   config = {
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_12;
-    boot.swraid.enable = false;
+    boot.swraid.enable = lib.mkForce false;
 
     powerManagement.cpuFreqGovernor = "schedutil";
 
