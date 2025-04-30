@@ -19,16 +19,13 @@ in {
         # should be fixed with the next version
         # https://bbs.archlinux.org/viewtopic.php?id=301825
         # https://gitlab.com/libvirt/libvirt/-/issues/695
-        package = pkgs.libvirt.overrideAttrs {
+        package = pkgs.libvirt.overrideAttrs (oldAttrs: {
           version = "10.8.0";
-          src = pkgs.fetchFromGitLab {
-            owner = "libvirt";
-            repo = "libvirt";
+          src = oldAttrs.src.override {
             rev = "v10.8.0";
             hash = "sha256-MzfkpWvj0RTjrse/TzoFDfPdfQk6PkOx0CsTF99zveA=";
-            fetchSubmodules = true;
           };
-        };
+        });
 
         qemu = {
           package = pkgs.qemu_kvm;

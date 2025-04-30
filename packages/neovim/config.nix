@@ -14,14 +14,13 @@
       # Necessary for snacks-nvim picker support
       # TODO: Remove override on NixOS 25.05
       let
-        gruvbox-material = vimPlugins.gruvbox-material.overrideAttrs {
-          src = fetchFromGitHub {
-            owner = "sainnhe";
-            repo = "gruvbox-material";
-            rev = "146f40fd42cbef30fed69b4ef51329aeeaceb909";
-            hash = "sha256-PbuiOl16PWr/aFDbLUJV2Ud7AuB9BLMTphViralz/S0=";
-          };
-        };
+        gruvbox-material = vimPlugins.gruvbox-material.overrideAttrs
+          (oldAttrs: {
+            src = oldAttrs.src.override {
+              rev = "146f40fd42cbef30fed69b4ef51329aeeaceb909";
+              sha256 = "PbuiOl16PWr/aFDbLUJV2Ud7AuB9BLMTphViralz/S0=";
+            };
+          });
       in {
         gruvbox-material-dark = [{
           plugin = gruvbox-material;
@@ -55,12 +54,10 @@
   [
     {
       # TODO: Remove override when package is updated (NixOS 25.05?)
-      plugin = snacks-nvim.overrideAttrs (old: {
-        src = fetchFromGitHub {
-          owner = "folke";
-          repo = "snacks.nvim";
+      plugin = snacks-nvim.overrideAttrs (oldAttrs: {
+        src = oldAttrs.src.override {
           rev = "1b63b1811c58f661ad22f390a52aa6723703dc3d";
-          hash = "sha256-lK8IBGCxiUgB8zO72Ei7NOfDFi4Gs0IGL3fN2MReZNw=";
+          sha256 = "lK8IBGCxiUgB8zO72Ei7NOfDFi4Gs0IGL3fN2MReZNw=";
         };
       });
       config = ./config/plugins/snacks.lua;
