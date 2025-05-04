@@ -6,7 +6,6 @@
     ldap-admin-password = {
       sopsFile = file;
       # Ugly workaround to let both paperless and authelia read the file.
-      # TODO: Remove authelia?
       owner = config.services.paperless.user;
       group = config.services.authelia.instances.main.group;
       mode = "0440";

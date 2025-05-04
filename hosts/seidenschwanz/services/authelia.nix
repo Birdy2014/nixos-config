@@ -9,24 +9,7 @@
 
       theme = "auto";
 
-      access_control = {
-        default_policy = "deny";
-        rules = [
-          # Allow use of paperless mobile app when not using OIDC
-          {
-            domain = [ "paperless.seidenschwanz.mvogel.dev" ];
-            resources = [ "^/api([/?].*)?$" ];
-            policy = "bypass";
-          }
-
-          # Only allow ldap users in the 'paperless' group to access the paperless web interface
-          {
-            domain = [ "paperless.seidenschwanz.mvogel.dev" ];
-            subject = "group:paperless";
-            policy = "one_factor";
-          }
-        ];
-      };
+      access_control.default_policy = "one_factor";
 
       identity_providers.oidc = {
         authorization_policies.immich = {
