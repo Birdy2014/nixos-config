@@ -48,6 +48,12 @@
       fsType = "zfs";
       neededForBoot = true;
     };
+
+    "/zpool/encrypted/immich" = {
+      device = "zpool/encrypted/immich";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
   };
 
   services.zfs.zed.settings = {

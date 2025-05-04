@@ -26,6 +26,18 @@
       group = config.services.authelia.instances.main.group;
     };
 
+    "authelia/oidcIssuerPrivateKeyFile" = {
+      sopsFile = file;
+      owner = config.services.authelia.instances.main.user;
+      group = config.services.authelia.instances.main.group;
+    };
+
+    "authelia/oidcHmacSecretFile" = {
+      sopsFile = file;
+      owner = config.services.authelia.instances.main.user;
+      group = config.services.authelia.instances.main.group;
+    };
+
     "wireguard/private-key" = {
       sopsFile = file;
       owner = "systemd-network";

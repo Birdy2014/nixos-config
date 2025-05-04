@@ -6,6 +6,7 @@
     ./blocky.nix
     ./borg-repos.nix
     ./einkaufszettel.nix
+    ./immich.nix
     ./jellyfin.nix
     ./kodi.nix
     ./lldap.nix
