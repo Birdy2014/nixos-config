@@ -34,22 +34,6 @@
         extraBinds = [ "/run/media/moritz/games/Heroic" "/sys/class/input" ];
         extraDevBinds = [ "/dev/input" "/dev/uinput" ];
       };
-
-      lutris = {
-        applications = [
-          (pkgs.lutris.override {
-            extraPkgs = p: [ p.wineWowPackages.stable ];
-          })
-        ];
-        allowDesktop = true;
-        allowX11 = true;
-        extraBinds = [
-          "$HOME/.config/lutris"
-          "$HOME/.local/share/lutris"
-          "$HOME/.cache/lutris"
-          "/run/media/moritz/games/lutris"
-        ];
-      };
     };
 
     home.packages = with pkgs; [
