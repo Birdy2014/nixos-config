@@ -43,7 +43,7 @@ local servers = { "clangd", "pyright", "rust_analyzer", "ts_ls", "bashls", "texl
 local server_config = {
     rust_analyzer = {
         ["rust-analyzer"] = {
-            checkOnSave = {
+            check = {
                 command = "clippy",
             }
         }
