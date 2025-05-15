@@ -1,24 +1,37 @@
 local lspconfig = require("lspconfig")
 
-function on_lsp_attach()
-    local clients = vim.lsp.get_active_clients()
-    local bufnr = vim.api.nvim_get_current_buf()
+vim.api.nvim_create_autocmd("LspAttach", {
+    group = vim.api.nvim_create_augroup("my-lsp", {}),
+    callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        local bufnr = vim.api.nvim_get_current_buf()
 
-    for _, client in ipairs(clients) do
-        if client.server_capabilities.definitionProvider then
+        if client.supports_method("textDocument/definition") then
             vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
         end
 
-        if client.server_capabilities.documentFormattingProvider then
+        if client.supports_method("textDocument/formatting") then
             vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
         end
 
-        -- clangd sets client.server_capabilities.inlayHintProvider to true, rust_analyzer sets client.server_capabilities.inlayHintProvider.resolveProvider to true
-        if client.server_capabilities.inlayHintProvider or (type(client.server_capabilities.inlayHintProvider) == "table" and client.server_capabilities.inlayHintProvider.resolveProvider) then
+        if client.supports_method("textDocument/inlayHint") then
             vim.lsp.inlay_hint.enable(true, { bufnr })
         end
+
+        if client.supports_method("textDocument/formatting") then
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                group = vim.api.nvim_create_augroup("my-lsp", { clear = false }),
+                buffer = args.buf,
+                callback = function()
+                    if ((vim.bo.filetype == "cpp" or vim.bo.filetype == "c") and vim.fn.filereadable(".clang-format") == 1)
+                        or vim.bo.filetype == "rust" then
+                        vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
+                    end
+                end
+            })
+        end
     end
-end
+})
 
 -- Required for denols
 vim.g.markdown_fenced_languages = {
@@ -66,7 +79,6 @@ for _, lsp in ipairs(servers) do
     capabilities.textDocument.completion.completionItem.snippetSupport = false
     local conf = {
         capabilities,
-        on_attach = on_lsp_attach,
         settings = server_config[lsp] or {}
     }
     if lsp == "clangd" then
