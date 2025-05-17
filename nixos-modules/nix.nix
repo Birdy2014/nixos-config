@@ -46,4 +46,8 @@
       config.allowUnfree = true;
     };
   };
+
+  # electron 23.4.11 is required by heroic
+  # TODO: Remove when upgrading to NixOS 25.05
+  nixpkgs.config.permittedInsecurePackages = [ "electron-33.4.11" ];
 }
