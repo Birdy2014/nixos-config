@@ -35,6 +35,7 @@
   networking.hostId = "c1004e7c";
 
   environment.systemPackages = with pkgs; [ openseachest fatrace ];
+  services.thermald.enable = true;
 
   system.stateVersion = "23.11";
 }
