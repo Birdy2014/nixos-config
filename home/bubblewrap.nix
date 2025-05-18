@@ -71,6 +71,8 @@ let
 
     unshareIpc = [ "--unshare-ipc" "--unshare-pid" ];
 
+    unshareNet = [ "--unshare-net" ];
+
     theming = (lib.concatMap mkEnvBind [
       "QT_QPA_PLATFORMTHEME"
       "PLASMA_INTEGRATION_USE_PORTAL"
@@ -128,6 +130,7 @@ let
           args = commonArgs ++ desktopArgs ++ graphisArgs
             ++ (lib.optionals sandboxConfig.newSession defaultArgs.newSession)
             ++ (lib.optionals sandboxConfig.unshareIpc defaultArgs.unshareIpc)
+            ++ (lib.optionals sandboxConfig.unshareNet defaultArgs.unshareNet)
             ++ (lib.concatMap mkBind sandboxConfig.extraBinds)
             ++ (lib.concatMap mkRoBind sandboxConfig.extraRoBinds)
             ++ (lib.concatMap mkDevBind sandboxConfig.extraDevBinds)
@@ -211,6 +214,12 @@ in {
           type = lib.types.bool;
           default = true;
           description = "create new ipc and pid namespaces";
+        };
+
+        unshareNet = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = "create new network namespace";
         };
 
         allowDesktop = lib.mkOption {

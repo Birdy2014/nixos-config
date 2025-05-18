@@ -9,6 +9,7 @@
         allowDesktop = true;
         allowX11 = true;
         unshareIpc = false;
+        unshareNet = false;
         extraBinds = [
           "/run/media/moritz/games/Steam-Linux"
           "/run/media/moritz/games/Steam-Images"
@@ -22,6 +23,7 @@
         applications = [ pkgs.prismlauncher ];
         allowDesktop = true;
         allowX11 = true;
+        unshareNet = false;
         extraBinds = [ "$HOME/.local/share/PrismLauncher" ];
         extraRoBinds = [ "$HOME/Downloads" ];
       };
@@ -30,6 +32,7 @@
         applications = [ pkgs.heroic ];
         allowDesktop = true;
         allowX11 = true;
+        unshareNet = false;
         persistentHome = true;
         extraBinds = [ "/run/media/moritz/games/Heroic" "/sys/class/input" ];
         extraDevBinds = [ "/dev/input" "/dev/uinput" ];
