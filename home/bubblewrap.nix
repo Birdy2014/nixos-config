@@ -87,100 +87,98 @@ let
     ]);
   };
 
-  wrappedBins = pkgs.runCommand "bubblewrap-wrapped-binaries" {
-    preferLocalBuild = true;
-    allowSubstitutes = false;
-    meta.priority = -1;
-  } ''
-    mkdir -p $out/bin
-    mkdir -p $out/share/applications
+  wrapper = sandboxName: sandboxConfig:
+    let
+      mkHomeBind = dir: [ "--bind" dir "$HOME" "--chdir" "$HOME" ];
+      mkTmpHomeBind = [ "--tmpfs" "$HOME" "--chdir" "$HOME" ];
 
-    ${lib.concatStringsSep "\n" (lib.flatten (lib.mapAttrsToList
-      (sandboxName: sandboxConfig:
-        let
-          mkHomeBind = dir: [ "--bind" dir "$HOME" "--chdir" "$HOME" ];
-          mkTmpHomeBind = [ "--tmpfs" "$HOME" "--chdir" "$HOME" ];
+      commonArgs = defaultArgs.common ++ (if !sandboxConfig.persistentHome then
+        mkTmpHomeBind
+      else
+        mkHomeBind sandboxConfig.persistentHomeDir);
 
-          commonArgs = defaultArgs.common
-            ++ (if !sandboxConfig.persistentHome then
-              mkTmpHomeBind
-            else
-              mkHomeBind sandboxConfig.persistentHomeDir);
+      desktopArgs = (lib.optionals sandboxConfig.allowDesktop
+        (defaultArgs.desktopCommon ++ defaultArgs.dbus ++ defaultArgs.dconf
+          ++ defaultArgs.wayland ++ defaultArgs.sound ++ defaultArgs.gpu
+          ++ defaultArgs.theming))
+        ++ (lib.optionals sandboxConfig.allowX11 defaultArgs.xorg);
 
-          desktopArgs = (lib.optionals sandboxConfig.allowDesktop
-            (defaultArgs.desktopCommon ++ defaultArgs.dbus ++ defaultArgs.dconf
-              ++ defaultArgs.wayland ++ defaultArgs.sound ++ defaultArgs.gpu
-              ++ defaultArgs.theming))
-            ++ (lib.optionals sandboxConfig.allowX11 defaultArgs.xorg);
+      graphisArgs = if (isNull sandboxConfig.customMesaPkgsSet) then
+        (lib.concatMap mkRoBind [
+          "/run/opengl-driver"
+          "/run/opengl-driver-32"
+        ])
+      else [
+        "--ro-bind"
+        "${sandboxConfig.customMesaPkgsSet.mesa.drivers}"
+        "/run/opengl-driver"
+        "--ro-bind"
+        "${sandboxConfig.customMesaPkgsSet.pkgsi686Linux.mesa.drivers}"
+        "/run/opengl-driver-32"
+      ];
 
-          graphisArgs = if (isNull sandboxConfig.customMesaPkgsSet) then
-            (lib.concatMap mkRoBind [
-              "/run/opengl-driver"
-              "/run/opengl-driver-32"
-            ])
-          else [
-            "--ro-bind"
-            "${sandboxConfig.customMesaPkgsSet.mesa.drivers}"
-            "/run/opengl-driver"
-            "--ro-bind"
-            "${sandboxConfig.customMesaPkgsSet.pkgsi686Linux.mesa.drivers}"
-            "/run/opengl-driver-32"
-          ];
+      args = commonArgs ++ desktopArgs ++ graphisArgs
+        ++ (lib.optionals sandboxConfig.newSession defaultArgs.newSession)
+        ++ (lib.optionals sandboxConfig.unshareIpc defaultArgs.unshareIpc)
+        ++ (lib.optionals sandboxConfig.unshareNet defaultArgs.unshareNet)
+        ++ (lib.concatMap mkBind sandboxConfig.extraBinds)
+        ++ (lib.concatMap mkRoBind sandboxConfig.extraRoBinds)
+        ++ (lib.concatMap mkDevBind sandboxConfig.extraDevBinds)
+        ++ (lib.concatMap mkEnvBind sandboxConfig.extraEnvBinds)
+        ++ (lib.concatLists
+          (lib.mapAttrsToList (name: value: [ "--setenv" name value ])
+            sandboxConfig.extraEnv));
+    in pkgs.runCommand "bubblewrap-wrapped-${sandboxName}" {
+      preferLocalBuild = true;
+      allowSubstitutes = false;
+      meta.priority = -1;
+    } ''
+      mkdir -p $out/bin
+      mkdir -p $out/share/applications
 
-          args = commonArgs ++ desktopArgs ++ graphisArgs
-            ++ (lib.optionals sandboxConfig.newSession defaultArgs.newSession)
-            ++ (lib.optionals sandboxConfig.unshareIpc defaultArgs.unshareIpc)
-            ++ (lib.optionals sandboxConfig.unshareNet defaultArgs.unshareNet)
-            ++ (lib.concatMap mkBind sandboxConfig.extraBinds)
-            ++ (lib.concatMap mkRoBind sandboxConfig.extraRoBinds)
-            ++ (lib.concatMap mkDevBind sandboxConfig.extraDevBinds)
-            ++ (lib.concatMap mkEnvBind sandboxConfig.extraEnvBinds)
-            ++ (lib.concatLists
-              (lib.mapAttrsToList (name: value: [ "--setenv" name value ])
-                sandboxConfig.extraEnv));
-        in map (package: ''
-          declare -a executables_substitute_args
+      ${lib.concatLines (map (package: ''
+        declare -a executables_substitute_args
 
-          for executable in "${package}/bin/"*; do
-            executable_out_path="$out/bin/$(basename "$executable")"
-            executables_substitute_args+=("--replace-quiet" "$executable" "$executable_out_path")
+        for executable in "${package}/bin/"*; do
+          executable_out_path="$out/bin/$(basename "$executable")"
+          executables_substitute_args+=("--replace-quiet" "$executable" "$executable_out_path")
 
-            export executable
+          export executable
 
-            ${pkgs.gettext}/bin/envsubst '$executable' <<'  _EOF' >"$executable_out_path"
-              #! ${pkgs.runtimeShell} -e
-              ${
-                lib.optionalString sandboxConfig.persistentHome
-                ''mkdir -p "${sandboxConfig.persistentHomeDir}"''
-              }
-              export PATH="${
-                lib.concatStringsSep ":"
-                (lib.map (package: "${package}/bin") sandboxConfig.applications)
-              }:$PATH"
-              exec ${pkgs.bubblewrap}/bin/bwrap ${
-                lib.concatStringsSep " " (map (arg: ''"${arg}"'') args)
-              } "$executable" "$@"
-            _EOF
+          ${pkgs.gettext}/bin/envsubst '$executable' <<'  _EOF' >"$executable_out_path"
+            #! ${pkgs.runtimeShell} -e
+            ${
+              lib.optionalString sandboxConfig.persistentHome
+              ''mkdir -p "${sandboxConfig.persistentHomeDir}"''
+            }
+            export PATH="${
+              lib.concatStringsSep ":"
+              (lib.map (package: "${package}/bin") sandboxConfig.applications)
+            }:$PATH"
+            exec ${pkgs.bubblewrap}/bin/bwrap ${
+              lib.concatStringsSep " " (map (arg: ''"${arg}"'') args)
+            } "$executable" "$@"
+          _EOF
 
-            chmod 0755 "$executable_out_path"
-          done
+          chmod 0755 "$executable_out_path"
+        done
 
-          ${lib.optionalString (sandboxConfig.allowDesktop) ''
-            if [[ -d "${package}/share/applications" ]]; then
-              for desktop in "${package}/share/applications/"*; do
-                substitute "$desktop" $out/share/applications/$(basename "$desktop") \
-                  "''${executables_substitute_args[@]}"
-              done
-            fi
+        ${lib.optionalString (sandboxConfig.allowDesktop) ''
+          if [[ -d "${package}/share/applications" ]]; then
+            for desktop in "${package}/share/applications/"*; do
+              substitute "$desktop" $out/share/applications/$(basename "$desktop") \
+                "''${executables_substitute_args[@]}"
+            done
+          fi
 
-            if [[ -d "${package}/share/icons" ]]; then
-              mkdir -p "$out/share/icons"
-              cp -rL "${package}/share/icons/"* "$out/share/icons"
-              ${pkgs.findutils}/bin/find "$out/share/icons" -type d -print0 | ${pkgs.findutils}/bin/xargs -0 chmod 755
-            fi
-          ''}
-        '') sandboxConfig.applications) cfg))}
-  '';
+          if [[ -d "${package}/share/icons" ]]; then
+            mkdir -p "$out/share/icons"
+            cp -rL "${package}/share/icons/"* "$out/share/icons"
+            ${pkgs.findutils}/bin/find "$out/share/icons" -type d -print0 | ${pkgs.findutils}/bin/xargs -0 chmod 755
+          fi
+        ''}
+      '') sandboxConfig.applications)}
+    '';
 in {
   options.my.bubblewrap = lib.mkOption {
     description = "sandboxed applications";
@@ -270,9 +268,18 @@ in {
           default = { };
           description = "Extra environment variables to set in the sandbox";
         };
+
+        finalPackage = lib.mkOption {
+          type = lib.types.package;
+          default = wrapper name cfg.${name};
+          readOnly = true;
+          description = "wrapper package";
+        };
       };
     }));
   };
 
-  config = lib.mkIf (cfg != { }) { home.packages = [ wrappedBins ]; };
+  config = lib.mkIf (cfg != { }) {
+    home.packages = map (value: value.finalPackage) (lib.attrValues cfg);
+  };
 }
