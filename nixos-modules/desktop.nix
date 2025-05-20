@@ -110,7 +110,8 @@
             };
             "GroupOrder"."0" = "Default";
           };
-          globalOptions."Hotkey/TriggerKeys"."0" = "Super_R";
+          # The F13 key is called "Tools" for some reason
+          globalOptions."Hotkey/TriggerKeys"."0" = "Tools";
         };
       };
     };
