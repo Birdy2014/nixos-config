@@ -96,13 +96,13 @@
           "privacy.clearOnShutdown.sessions" = true;
           "privacy.clearOnShutdown.sitesettings" = false;
         };
-        extensions = commonExtensions ++ (with firefox-addons; [
+        extensions.packages = commonExtensions ++ (with firefox-addons; [
           keepassxc-browser
           tridactyl
           darkreader
           return-youtube-dislikes
         ]);
-        search.default = "DuckDuckGo";
+        search.default = "ddg";
         search.force = true;
         userChrome = ''
           @import "${pkgsSelf.lepton-firefox-theme}/userChrome.css";
@@ -119,12 +119,12 @@
         name = "persistent";
         isDefault = false;
         settings = commonSettings;
-        extensions = commonExtensions ++ (with firefox-addons; [
+        extensions.packages = commonExtensions ++ (with firefox-addons; [
           return-youtube-dislikes
           youtube-shorts-block
           sponsorblock
         ]);
-        search.default = "DuckDuckGo";
+        search.default = "ddg";
         search.force = true;
       };
     };

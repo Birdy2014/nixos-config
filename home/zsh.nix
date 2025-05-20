@@ -59,7 +59,7 @@
       bindkey -M menuselect '^[' undo
     '';
 
-    initExtra = ''
+    initContent = ''
       autoload -Uz tetriscurses
 
       function set_terminal_title() {

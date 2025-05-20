@@ -14,19 +14,6 @@ in {
       libvirtd = {
         enable = true;
         onBoot = "ignore";
-
-        # libvirt 10.9.0 delays shutdown for 5 seconds
-        # should be fixed with the next version
-        # https://bbs.archlinux.org/viewtopic.php?id=301825
-        # https://gitlab.com/libvirt/libvirt/-/issues/695
-        package = pkgs.libvirt.overrideAttrs (oldAttrs: {
-          version = "10.8.0";
-          src = oldAttrs.src.override {
-            rev = "v10.8.0";
-            hash = "sha256-MzfkpWvj0RTjrse/TzoFDfPdfQk6PkOx0CsTF99zveA=";
-          };
-        });
-
         qemu = {
           package = pkgs.qemu_kvm;
           ovmf.packages = [ pkgs.OVMFFull.fd ];

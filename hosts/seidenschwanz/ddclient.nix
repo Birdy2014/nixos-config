@@ -1,13 +1,8 @@
-{ config, pkgsUnstable, ... }:
+{ config, ... }:
 
 {
   services.ddclient = {
     enable = true;
-
-    # Workaround for https://github.com/ddclient/ddclient/issues/615
-    # TODO: Remove with NixOS 25.05
-    package = pkgsUnstable.ddclient;
-
     protocol = "nsupdate";
     server = "ns.mvogel.dev";
     zone = "seidenschwanz.mvogel.dev";

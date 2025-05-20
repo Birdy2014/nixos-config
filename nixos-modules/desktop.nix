@@ -79,7 +79,8 @@
       };
 
       packages = with pkgs; [
-        (nerdfonts.override { fonts = [ "JetBrainsMono" "Noto" ]; })
+        nerd-fonts.jetbrains-mono
+        nerd-fonts.noto
         noto-fonts
         noto-fonts-cjk-sans
         noto-fonts-emoji

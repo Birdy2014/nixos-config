@@ -4,10 +4,11 @@ final: prev: {
     src = prev.fetchFromGitHub {
       owner = "Birdy2014";
       repo = "imv";
-      rev = "3534c3f62b72529dc751878005d206510aa8c0d1";
-      hash = "sha256-fvlxUBkTEmr/vRAJ/Umc821rqqozsHRolHCoOyl1aNM=";
+      rev = "c804001c49fa0dc69db9fde19eb603d0bc67ae20";
+      hash = "sha256-HC4oiGlBEKoFh7e0nq9dDXBwtq8rcOM9Dmv0JHWmdzc=";
     };
     mesonFlags = old.mesonFlags ++ [ "-Dlibwebp=enabled" ];
+    patches = [ ];
   })).override {
     withBackends =
       [ "libjxl" "libtiff" "libjpeg" "libpng" "librsvg" "libheif" "libnsgif" ];
