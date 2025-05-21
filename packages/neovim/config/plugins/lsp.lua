@@ -1,30 +1,19 @@
-local lspconfig = require("lspconfig")
-
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("my-lsp", {}),
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         local bufnr = vim.api.nvim_get_current_buf()
 
-        if client.supports_method("textDocument/definition") then
-            vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
-        end
-
-        if client.supports_method("textDocument/formatting") then
-            vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
-        end
-
-        if client.supports_method("textDocument/inlayHint") then
+        if client:supports_method("textDocument/inlayHint") then
             vim.lsp.inlay_hint.enable(true, { bufnr })
         end
 
-        if client.supports_method("textDocument/formatting") then
+        if client:supports_method("textDocument/formatting") then
             vim.api.nvim_create_autocmd("BufWritePre", {
                 group = vim.api.nvim_create_augroup("my-lsp", { clear = false }),
                 buffer = args.buf,
                 callback = function()
-                    if ((vim.bo.filetype == "cpp" or vim.bo.filetype == "c") and vim.fn.filereadable(".clang-format") == 1)
-                        or vim.bo.filetype == "rust" then
+                    if (client.name == "clangd" and vim.uv.fs_stat(".clang-format")) or client.name == "rust_analyzer" then
                         vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
                     end
                 end
@@ -33,22 +22,18 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
 })
 
--- Required for denols
-vim.g.markdown_fenced_languages = {
-    "ts=typescript"
-}
-
-local servers = { "clangd", "pyright", "rust_analyzer", "ts_ls", "bashls", "texlab", "nil_ls", "denols", "zls", "svelte" }
-
-local server_config = {
-    rust_analyzer = {
+vim.lsp.config.rust_analyzer = {
+    settings = {
         ["rust-analyzer"] = {
             check = {
                 command = "clippy",
             }
         }
     },
-    texlab = {
+}
+
+vim.lsp.config.texlab = {
+    settings = {
         texlab = {
             build = {
                 executable = "latexmk",
@@ -74,49 +59,46 @@ local server_config = {
     }
 }
 
-for _, lsp in ipairs(servers) do
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
-    capabilities.textDocument.completion.completionItem.snippetSupport = false
-    local conf = {
-        capabilities,
-        settings = server_config[lsp] or {}
-    }
-    if lsp == "clangd" then
-        conf.cmd = { "clangd", "--header-insertion=never" }
+vim.lsp.config.clangd = {
+    cmd = { "clangd", "--header-insertion=never" },
 
-        -- possible workaround for stuck diagnostics with clangd
-        conf.flags = {
-            allow_incremental_sync = false,
-            debounce_text_changes = 500
-        }
+    -- possible workaround for stuck diagnostics
+    -- TODO: Is this still needed?
+    flags = {
+        allow_incremental_sync = false,
+        debounce_text_changes = 500
+    },
 
-        -- start clangd using the autocmd below
-        conf.autostart = false;
-    elseif lsp == "bashls" then
-        conf.filetypes = { "sh", "bash" }
-    elseif lsp == "denols" then
-        conf.root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc")
-    end
-    lspconfig[lsp].setup(conf)
-end
-
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = require("lspconfig.configs")["clangd"].filetypes,
-    callback = function()
-        local cwd = vim.loop.cwd()
-        for _, value in pairs({
+    root_dir = function(bufnr, cb)
+        for _, marker in pairs({
             "compile_commands.json",
             "compile_flags.txt",
             ".clangd",
-            "build/compile_commands.json"
+            { "build", "compile_commands.json" },
         }) do
-            if vim.fn.filereadable(value) == 1 then
-                require("lspconfig.configs")["clangd"].launch()
-                return
+            local depth = 1
+
+            if type(marker) == "table" then
+                depth = #marker
+                marker = vim.fs.joinpath(unpack(marker))
+            end
+
+            local root_dir = vim.fs.root(bufnr, marker)
+            if root_dir ~= nil then
+                while depth > 1 do
+                    root_dir = vim.fs.dirname(root_dir)
+                    depth = depth - 1
+                end
+                if vim.fn.filereadable(vim.fs.joinpath(root_dir, marker)) == 1 then
+                    cb(root_dir)
+                    return
+                end
             end
         end
     end
-})
+}
+
+vim.lsp.enable({ "clangd", "pyright", "rust_analyzer", "ts_ls", "bashls", "texlab", "nil_ls", "zls" })
 
 vim.diagnostic.config {
     virtual_text = true,

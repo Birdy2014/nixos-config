@@ -121,8 +121,7 @@
       config = ./config/plugins/cmp.lua;
     }
     {
-      # TODO: Replace lspconfig with native lsp configuration in nvim 0.11 (NixOS 25.05)?
-      plugin = [ nvim-lspconfig cmp-nvim-lsp ];
+      plugin = nvim-lspconfig;
       config = ./config/plugins/lsp.lua;
     }
     {
