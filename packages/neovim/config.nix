@@ -10,56 +10,39 @@
   ];
 
   plugins = let
-    colorschemes =
-      # Necessary for snacks-nvim picker support
-      # TODO: Remove override on NixOS 25.05
-      let
-        gruvbox-material = vimPlugins.gruvbox-material.overrideAttrs
-          (oldAttrs: {
-            src = oldAttrs.src.override {
-              rev = "146f40fd42cbef30fed69b4ef51329aeeaceb909";
-              sha256 = "PbuiOl16PWr/aFDbLUJV2Ud7AuB9BLMTphViralz/S0=";
-            };
-          });
-      in {
-        gruvbox-material-dark = [{
-          plugin = gruvbox-material;
-          config = ''
-            vim.g.gruvbox_material_disable_terminal_colors = 1
-            vim.cmd.colorscheme("gruvbox-material")
-          '';
-        }];
-        gruvbox-material-light = [{
-          plugin = gruvbox-material;
-          config = ''
-            vim.opt.background = "light"
-            vim.g.gruvbox_material_disable_terminal_colors = 1
-            vim.cmd.colorscheme("gruvbox-material")
-          '';
-        }];
-        catppuccin-macchiato = [{
-          plugin = vimPlugins.catppuccin-nvim;
-          config = ''vim.cmd.colorscheme("catppuccin-macchiato")'';
-        }];
-        catppuccin-frappe = [{
-          plugin = vimPlugins.catppuccin-nvim;
-          config = ''vim.cmd.colorscheme("catppuccin-frappe")'';
-        }];
-        catppuccin-latte = [{
-          plugin = vimPlugins.catppuccin-nvim;
-          config = ''vim.cmd.colorscheme("catppuccin-latte")'';
-        }];
-      };
+    colorschemes = {
+      gruvbox-material-dark = [{
+        plugin = vimPlugins.gruvbox-material;
+        config = ''
+          vim.g.gruvbox_material_disable_terminal_colors = 1
+          vim.cmd.colorscheme("gruvbox-material")
+        '';
+      }];
+      gruvbox-material-light = [{
+        plugin = vimPlugins.gruvbox-material;
+        config = ''
+          vim.opt.background = "light"
+          vim.g.gruvbox_material_disable_terminal_colors = 1
+          vim.cmd.colorscheme("gruvbox-material")
+        '';
+      }];
+      catppuccin-macchiato = [{
+        plugin = vimPlugins.catppuccin-nvim;
+        config = ''vim.cmd.colorscheme("catppuccin-macchiato")'';
+      }];
+      catppuccin-frappe = [{
+        plugin = vimPlugins.catppuccin-nvim;
+        config = ''vim.cmd.colorscheme("catppuccin-frappe")'';
+      }];
+      catppuccin-latte = [{
+        plugin = vimPlugins.catppuccin-nvim;
+        config = ''vim.cmd.colorscheme("catppuccin-latte")'';
+      }];
+    };
   in with vimPlugins;
   [
     {
-      # TODO: Remove override when package is updated (NixOS 25.05?)
-      plugin = snacks-nvim.overrideAttrs (oldAttrs: {
-        src = oldAttrs.src.override {
-          rev = "1b63b1811c58f661ad22f390a52aa6723703dc3d";
-          sha256 = "lK8IBGCxiUgB8zO72Ei7NOfDFi4Gs0IGL3fN2MReZNw=";
-        };
-      });
+      plugin = snacks-nvim;
       config = ./config/plugins/snacks.lua;
     }
 
@@ -104,12 +87,12 @@
     {
       plugin = buildVimPlugin {
         pname = "multicursor-nvim";
-        version = "2025-02-19";
+        version = "2025-05-13";
         src = fetchFromGitHub {
           owner = "jake-stewart";
           repo = "multicursor.nvim";
-          rev = "86537c3771f1989592568c9d92da2e201297867a";
-          hash = "sha256-/UV+oHQ2Lr4zNiqgJM44o1RhkftrfSzf3U58loszEz8=";
+          rev = "c731e52cee7b69fa05915affb09ba65e7cd31fa9";
+          hash = "sha256-rw7jE89Lj5F7bOCAx/rMO+Dpswfg9ohKDyQ3RJtaa3I=";
         };
       };
       config = ./config/plugins/multicursor.lua;
@@ -155,12 +138,12 @@
     {
       plugin = buildVimPlugin {
         pname = "qalc.nvim";
-        version = "2023-12-15";
+        version = "2025-03-09";
         src = fetchFromGitHub {
           owner = "Apeiros-46B";
           repo = "qalc.nvim";
-          rev = "d3072e5ac8dc1caa4b60f673c53f70c7e06f1367";
-          sha256 = "sha256-2ZBAa2J4thkEJqzs0bYZngtkuwslHVNqJjmZKSSzoO4=";
+          rev = "7697cff543b7089c858f3b26a013c1eb52fe86fa";
+          sha256 = "sha256-Qb254SyjhT4ao1BJ2r152Ca2B8IHikvnnO+9MQFj0vI=";
         };
         meta.homepage = "https://github.com/Apeiros-46B/qalc.nvim";
       };
