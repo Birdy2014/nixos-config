@@ -27,29 +27,16 @@ require("noice").setup {
         view = "mini",
     },
     lsp = {
-        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
         override = {
-            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-            ["vim.lsp.util.stylize_markdown"] = true,
-            ["cmp.entry.get_documentation"] = true,
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = false,
+            ["vim.lsp.util.stylize_markdown"] = false,
+            ["cmp.entry.get_documentation"] = false,
         },
         hover = {
-            enabled = true,
-            silent = false, -- set to true to not show a message if hover is not available
-            view = nil, -- when nil, use defaults from documentation
-            ---@type NoiceViewOptions
-            opts = { }, -- merged with defaults from documentation
+            enabled = false,
         },
         signature = {
-            enabled = true,
-            auto_open = {
-                enabled = true,
-                trigger = true, -- Automatically show signature help when typing a trigger character from the LSP
-                throttle = 50, -- Debounce lsp signature help request by 50ms
-            },
-            view = nil, -- when nil, use defaults from documentation
-            ---@type NoiceViewOptions
-            opts = { }, -- merged with defaults from documentation
+            enabled = false,
         }
     },
     -- you can enable a preset for easier configuration

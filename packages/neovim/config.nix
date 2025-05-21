@@ -116,9 +116,8 @@
 
     # Coding
     {
-      # TODO: Switch to blink.cmp (when updating to NixOS 25.05)? Or maybe to the native completion?
-      plugin = [ nvim-cmp cmp-nvim-lsp cmp-buffer cmp-path cmp-cmdline ];
-      config = ./config/plugins/cmp.lua;
+      plugin = blink-cmp;
+      config = ./config/plugins/blink.lua;
     }
     {
       plugin = nvim-lspconfig;
