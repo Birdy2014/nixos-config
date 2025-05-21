@@ -1,4 +1,4 @@
-From 2581fc7c9273ad9366b33eb9536970c41a7a930e Mon Sep 17 00:00:00 2001
+From 74658a1b5429782a535936f4c5f4af48273997b6 Mon Sep 17 00:00:00 2001
 From: Moritz Vogel <moritzv7@gmail.com>
 Date: Sun, 21 Jan 2024 00:07:41 +0100
 Subject: [PATCH 1/2] Show dirsize if dircounts is enabled
@@ -8,21 +8,21 @@ Subject: [PATCH 1/2] Show dirsize if dircounts is enabled
  1 file changed, 5 insertions(+)
 
 diff --git a/ui.go b/ui.go
-index 654e1d2..f1ae1c2 100644
+index 654e1d2..aae84de 100644
 --- a/ui.go
 +++ b/ui.go
-@@ -306,6 +306,11 @@ func fileInfo(f *file, d *dir, userWidth int, groupWidth int) string {
- 				default:
- 					info.WriteString(" 999+")
- 				}
-+
+@@ -296,6 +296,11 @@ func fileInfo(f *file, d *dir, userWidth int, groupWidth int) string {
+ 		switch s {
+ 		case "size":
+ 			if f.IsDir() && getDirCounts(d.path) {
 +				if f.dirSize > 0 {
 +					sz := humanize(f.TotalSize())
-+					fmt.Fprintf(&info, "[%4s]%s", sz, info)
++					fmt.Fprintf(&info, "[%4s] ", sz)
 +				}
- 				continue
- 			}
- 
++
+ 				switch {
+ 				case f.dirCount < -1:
+ 					info.WriteString("    !")
 -- 
-2.47.2
+2.49.0
 
