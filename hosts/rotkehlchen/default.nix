@@ -49,7 +49,7 @@
     syncplay-nogui
 
     # GUI
-    gimp
+    gimp3
     spotify
     mcomix
 
