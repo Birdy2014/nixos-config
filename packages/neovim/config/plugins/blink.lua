@@ -43,8 +43,8 @@ cmp.setup {
         list = {
             selection = {
                 preselect = function(ctx)
-                    local filetypes_without_preselect = { "", "plain", "markdown", }
-                    return not vim.list_contains(filetypes_without_preselect, vim.bo.filetype)
+                    local active_clients = vim.lsp.get_clients({ buffer = 0, })
+                    return #active_clients > 0
                 end,
                 auto_insert = false,
             },
