@@ -1,4 +1,4 @@
-{ buildVimPlugin, vimPlugins, fetchFromGitHub, colorscheme }:
+{ stdenvNoCC, buildVimPlugin, vimPlugins, fetchFromGitHub, colorscheme }:
 
 {
   configBefore = [
@@ -146,6 +146,33 @@
         meta.homepage = "https://github.com/Apeiros-46B/qalc.nvim";
       };
       config = "require('qalc').setup{}";
+    }
+    {
+      plugin = stdenvNoCC.mkDerivation {
+        pname = "spell";
+        version = "1.0";
+        srcs = [
+          (builtins.fetchurl {
+            url = "https://ftp.nluug.nl/vim/runtime/spell/de.utf-8.spl";
+            sha256 =
+              "sha256:1ld3hgv1kpdrl4fjc1wwxgk4v74k8lmbkpi1x7dnr19rldz11ivk";
+          })
+          (builtins.fetchurl {
+            url = "https://ftp.nluug.nl/vim/runtime/spell/de.utf-8.sug";
+            sha256 =
+              "sha256:0j592ibsias7prm1r3dsz7la04ss5bmsba6l1kv9xn3353wyrl0k";
+          })
+        ];
+        dontUnpack = true;
+        sourceRoot = ".";
+        buildPhase = ''
+          mkdir -p $out/spell
+
+          for _src in $srcs; do
+            cp "$_src" "$out/spell/$(stripHash "$_src")"
+          done
+        '';
+      };
     }
   ] ++ colorschemes.${colorscheme};
 }

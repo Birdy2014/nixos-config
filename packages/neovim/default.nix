@@ -1,11 +1,11 @@
 { lib, wrapNeovimUnstable, neovim-unwrapped, vimPlugins, fetchFromGitHub
-, vimUtils, git, ripgrep, libqalculate, colorscheme ? "catppuccin-frappe"
-, withLanguageServers ? false, nil, bash-language-server, clang-tools
-, typescript-language-server, pyright }:
+, stdenvNoCC, vimUtils, git, ripgrep, libqalculate
+, colorscheme ? "catppuccin-frappe", withLanguageServers ? false, nil
+, bash-language-server, clang-tools, typescript-language-server, pyright }:
 
 let
   config = import ./config.nix {
-    inherit vimPlugins fetchFromGitHub colorscheme;
+    inherit stdenvNoCC vimPlugins fetchFromGitHub colorscheme;
     buildVimPlugin = vimUtils.buildVimPlugin;
   };
   configBefore = config.configBefore;
