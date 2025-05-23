@@ -43,7 +43,7 @@ cmp.setup {
         list = {
             selection = {
                 preselect = function(ctx)
-                    local active_clients = vim.lsp.get_clients({ buffer = 0, })
+                    local active_clients = vim.lsp.get_clients({ bufnr = 0, })
                     return #active_clients > 0
                 end,
                 auto_insert = false,
