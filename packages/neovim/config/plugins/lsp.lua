@@ -22,8 +22,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
                 group = vim.api.nvim_create_augroup("my-lsp", { clear = false }),
                 buffer = args.buf,
                 callback = function()
-                    if (client.name == "clangd" and vim.uv.fs_stat(".clang-format")) or client.name == "rust_analyzer" then
-                        vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
+                    if (client.name == "clangd" and vim.uv.fs_stat(".clang-format"))
+                        or client.name == "rust_analyzer"
+                        or client.name == "nixd"
+                    then
+                        vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 2000 })
                     end
                 end
             })
@@ -107,7 +110,17 @@ vim.lsp.config.clangd = {
     end
 }
 
-vim.lsp.enable({ "clangd", "pyright", "rust_analyzer", "ts_ls", "bashls", "texlab", "nil_ls", "zls" })
+vim.lsp.config.nixd = {
+    settings = {
+        nixd = {
+            formatting = {
+                command = { "nix", "fmt", "--" }
+            }
+        }
+    }
+}
+
+vim.lsp.enable({ "clangd", "pyright", "rust_analyzer", "ts_ls", "bashls", "texlab", "nixd", "zls" })
 
 vim.diagnostic.config {
     virtual_text = true,

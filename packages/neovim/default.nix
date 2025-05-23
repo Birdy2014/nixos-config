@@ -1,6 +1,6 @@
 { lib, wrapNeovimUnstable, neovim-unwrapped, vimPlugins, fetchFromGitHub
 , stdenvNoCC, vimUtils, git, ripgrep, libqalculate
-, colorscheme ? "catppuccin-frappe", withLanguageServers ? false, nil
+, colorscheme ? "catppuccin-frappe", withLanguageServers ? false, nixd
 , bash-language-server, clang-tools, typescript-language-server, pyright }:
 
 let
@@ -18,7 +18,7 @@ in wrapNeovimUnstable neovim-unwrapped {
   wrapperArgs = "--prefix PATH : ${
       lib.makeBinPath ([ git ripgrep libqalculate ]
         ++ lib.optionals withLanguageServers [
-          nil
+          nixd
           bash-language-server
           clang-tools
           typescript-language-server
