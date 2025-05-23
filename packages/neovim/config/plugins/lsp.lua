@@ -4,6 +4,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         local bufnr = vim.api.nvim_get_current_buf()
 
+        if client:supports_method("textDocument/hover") then
+            vim.keymap.set("n", "K", function()
+                vim.lsp.buf.hover({
+                    max_width = math.floor(vim.o.columns * 0.75),
+                    max_height = math.floor(vim.o.lines * 0.5),
+                })
+            end, { desc = "LSP hover", buffer = bufnr })
+        end
+
         if client:supports_method("textDocument/inlayHint") then
             vim.lsp.inlay_hint.enable(true, { bufnr })
         end
