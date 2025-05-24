@@ -37,15 +37,28 @@
         extraBinds = [ "/run/media/moritz/games/Heroic" "/sys/class/input" ];
         extraDevBinds = [ "/dev/input" "/dev/uinput" ];
       };
+
+      dolphin-emu = {
+        applications = [ pkgs.dolphin-emu ];
+        allowDesktop = true;
+        allowX11 = true;
+        extraBinds = [
+          "$HOME/.config/dolphin-emu"
+          "$HOME/.local/share/dolphin-emu"
+          "$HOME/.cache/dolphin-emu"
+        ];
+        extraRoBinds =
+          [ "/run/media/moritz/games/wii" "/run/media/moritz/games/gc" ];
+        extraDevBinds = [ "/dev/input" "/dev/uinput" ];
+      };
+
+      rpcs3 = {
+        applications = [ pkgs.rpcs3 ];
+        allowDesktop = true;
+        extraBinds = [ "$HOME/.config/rpcs3" "$HOME/.cache/rpcs3" ];
+        extraRoBinds = [ "/run/media/moritz/games/ps3" ];
+        extraDevBinds = [ "/dev/input" "/dev/uinput" ];
+      };
     };
-
-    home.packages = with pkgs; [
-      # Emulators
-      dolphin-emu
-      rpcs3
-
-      # Tools
-      mangohud
-    ];
   };
 }
