@@ -7,7 +7,7 @@ vim.cmd [[autocmd FileType ssa syntax off]]
 --- Highlightedjank
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
-        vim.highlight.on_yank {
+        vim.hl.on_yank {
             higroup=(vim.fn["hlexists"]("HighlightedyankRegion") > 0 and "HighlightedyankRegion" or "IncSearch"),
             timeout=200
         }

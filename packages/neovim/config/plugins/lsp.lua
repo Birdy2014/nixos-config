@@ -144,19 +144,19 @@ vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Definition" })
 vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Implementation" })
 
 vim.keymap.set("n", "[d", function()
-    vim.diagnostic.goto_prev({ float = false })
+    vim.diagnostic.jump({ count = -1 })
 end, { desc = "Previous Diagnostic" })
 
 vim.keymap.set("n", "]d", function()
-    vim.diagnostic.goto_next({ float = false })
+    vim.diagnostic.jump({ count = 1 })
 end, { desc = "Next Diagnostic" })
 
 vim.keymap.set("n", "[D", function()
-    vim.diagnostic.goto_prev({ float = false, severity = vim.diagnostic.severity.ERROR })
+    vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR })
 end, { desc = "Previous Error Diagnostic" })
 
 vim.keymap.set("n", "]D", function()
-    vim.diagnostic.goto_next({ float = false, severity = vim.diagnostic.severity.ERROR })
+    vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR })
 end, { desc = "Next Error Diagnostic" })
 
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Open Diagnostic float" })
