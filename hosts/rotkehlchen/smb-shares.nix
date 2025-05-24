@@ -22,10 +22,4 @@
     username=moritz
     password=${config.sops.placeholder.seidenschwanz-smb-password}
   '';
-
-  home-manager.users.moritz.home.sessionVariables.TRASH_VOLUMES =
-    lib.concatStringsSep ":" [
-      "/run/media/moritz/smb-shares/moritz"
-      "/run/media/moritz/smb-shares/family"
-    ];
 }

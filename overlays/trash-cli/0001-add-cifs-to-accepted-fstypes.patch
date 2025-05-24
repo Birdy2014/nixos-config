@@ -1,0 +1,24 @@
+From b2cbb93a8dc3c2d441b44e4756871b7b5c6f0afb Mon Sep 17 00:00:00 2001
+From: Moritz Vogel <moritzv7@gmail.com>
+Date: Sat, 24 May 2025 18:24:11 +0200
+Subject: [PATCH] add cifs to accepted fstypes
+
+---
+ trashcli/fstab/mount_points_listing.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/trashcli/fstab/mount_points_listing.py b/trashcli/fstab/mount_points_listing.py
+index a53d0af..a2cb996 100644
+--- a/trashcli/fstab/mount_points_listing.py
++++ b/trashcli/fstab/mount_points_listing.py
+@@ -41,6 +41,7 @@ def os_mount_points():
+         # https://github.com/andreafrancia/trash-cli/issues/255
+         'fuse.mergerfs',
+         'fuse.gocryptfs',
++        'cifs',
+     ]
+ 
+     # Append fstypes of physical devices to list
+-- 
+2.49.0
+
