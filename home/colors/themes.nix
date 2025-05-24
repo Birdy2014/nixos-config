@@ -81,107 +81,81 @@
       gtk.enable = true;
     };
 
-    gtk = {
-      enable = true;
+    home.packages = [ pkgs.adw-gtk3 ];
 
-      theme = {
-        name = if cfg.isLight then "adw-gtk3" else "adw-gtk3-dark";
-        package = pkgs.adw-gtk3;
-      };
-
-      iconTheme = {
-        name = "Gruvbox-Material-Dark";
-        package = pkgsSelf.gruvbox-material-gtk;
-      };
-
-      font = {
-        name = "sans-serif";
-        size = 10;
-      };
-
-      gtk3.bookmarks = [
-        "file://${config.home.homeDirectory}/Documents"
-        "file://${config.home.homeDirectory}/Downloads"
-        "file://${config.home.homeDirectory}/Music"
-        "file://${config.home.homeDirectory}/Pictures"
-        "file://${config.home.homeDirectory}/Videos"
-        "file:///run/media/moritz/archive Archive"
-        "file:///run/media/moritz/smb-shares SMB shares"
-      ];
-
-      gtk3.extraCss = config.gtk.gtk4.extraCss;
-
+    gtk = let
       # Reference: https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/css-variables.html
-      gtk4.extraCss = ''
-        /* Accent */
-        @define-color accent_bg_color ${cfg.accent-background};
-        @define-color accent_fg_color ${cfg.accent-text}; /* accent_fg_color apparently must be either black or white */
-        @define-color accent_color ${cfg.accent};
+      cssVariables = rec {
+        # Accent
+        accent-bg-color = cfg.accent-background;
+        accent-fg-color =
+          cfg.accent-text; # accent-fg-color apparently must be either black or white
+        accent-color = cfg.accent;
 
-        /* Destructive */
-        @define-color destructive_color #ff7b63;
-        @define-color destructive_bg_color #c01c28;
-        @define-color destructive_fg_color ${cfg.text};
+        # Destructive
+        destructive-color = "#ff7b63";
+        destructive-bg-color = "#c01c28";
+        destructive-fg-color = cfg.text;
 
-        /* Success */
-        @define-color success_color #a9b665;
-        @define-color success_bg_color #26a269;
-        @define-color success_fg_color ${cfg.text};
+        # Success
+        success-color = "#a9b665";
+        success-bg-color = "#26a269";
+        success-fg-color = cfg.text;
 
-        /* Warning */
-        @define-color warning_color #d8a657;
-        @define-color warning_bg_color #cd9309;
-        @define-color warning_fg_color rgba(0, 0, 0, 0.8);
+        # Warning
+        warning-color = "#d8a657";
+        warning-bg-color = "#cd9309";
+        warning-fg-color = "rgba(0, 0, 0, 0.8)";
 
-        /* Error */
-        @define-color error_color ${cfg.error};
-        @define-color error_bg_color #e33e35;
-        @define-color error_fg_color ${cfg.text};
+        # Error
+        error-color = cfg.error;
+        error-bg-color = "#e33e35";
+        error-fg-color = cfg.text;
 
-        /* Window */
-        @define-color window_bg_color ${cfg.background-primary};
-        @define-color window_fg_color ${cfg.text};
+        # Window
+        window-bg-color = cfg.background-primary;
+        window-fg-color = cfg.text;
 
-        /* View */
-        @define-color view_bg_color ${cfg.background-secondary};
-        @define-color view_fg_color ${cfg.text};
+        # View
+        view-bg-color = cfg.background-secondary;
+        view-fg-color = cfg.text;
 
-        /* Headerbar */
-        @define-color headerbar_bg_color ${cfg.background-primary};
-        @define-color headerbar_fg_color ${cfg.text};
-        @define-color headerbar_border_color #D4BE98;
-        @define-color headerbar_backdrop_color ${cfg.background-tertiary};
-        @define-color headerbar_shade_color rgba(0, 0, 0, 0.36);
+        # Headerbar
+        headerbar-bg-color = cfg.background-primary;
+        headerbar-fg-color = cfg.text;
+        headerbar-border-color = "#D4BE98";
+        headerbar-backdrop-color = cfg.background-tertiary;
+        headerbar-shade-color = "rgba(0, 0, 0, 0.36)";
 
-        /* Card */
-        @define-color card_bg_color @dialog_bg_color;
-        @define-color card_fg_color ${cfg.text};
-        @define-color card_shade_color rgba(0, 0, 0, 0.36);
+        # Card
+        card-bg-color = dialog-bg-color;
+        card-fg-color = cfg.text;
+        card-shade-color = "rgba(0, 0, 0, 0.36)";
 
-        /* Dialog */
-        @define-color dialog_bg_color ${cfg.background-tertiary};
-        @define-color dialog_fg_color ${cfg.text};
+        # Dialog
+        dialog-bg-color = cfg.background-tertiary;
+        dialog-fg-color = cfg.text;
 
-        /* Popover */
-        @define-color popover_bg_color @dialog_bg_color;
-        @define-color popover_fg_color ${cfg.text};
+        # Popover
+        popover-bg-color = dialog-bg-color;
+        popover-fg-color = cfg.text;
 
-        /* Misc */
-        @define-color shade_color rgba(0, 0, 0, 0.36);
-        @define-color scrollbar_outline_color rgba(0, 0, 0, 0.5);
+        # Misc
+        shade-color = "rgba(0, 0, 0, 0.36)";
+        scrollbar-outline-color = "rgba(0, 0, 0, 0.5)";
 
-        /* Sidebar */
-        @define-color sidebar_bg_color ${cfg.background-primary};
-        @define-color sidebar_fg_color ${cfg.text};
-        @define-color sidebar_backdrop_color ${cfg.background-secondary};
-        @define-color sidebar_shade_color rgba(0, 0, 0, 0.36);
-        @define-color secondary_sidebar_bg_color ${cfg.background-secondary};
-        @define-color secondary_sidebar_fg_color ${cfg.text};
-        @define-color secondary_sidebar_backdrop_color ${
-          darken cfg.background-secondary 20
-        };
-        @define-color secondary_sidebar_shade_color @sidebar_shade_color;
+        # Sidebar
+        sidebar-bg-color = cfg.background-primary;
+        sidebar-fg-color = cfg.text;
+        sidebar-backdrop-color = cfg.background-secondary;
+        sidebar-shade-color = "rgba(0, 0, 0, 0.36)";
+        secondary-sidebar-bg-color = cfg.background-secondary;
+        secondary-sidebar-fg-color = cfg.text;
+        secondary-sidebar-backdrop-color = darken cfg.background-secondary 20;
+        secondary-sidebar-shade-color = sidebar-shade-color;
+      };
 
+      extraCss = ''
         /* Remove rounded borders */
         window.solid-csd, window.csd {
           border-radius: 0;
@@ -206,11 +180,55 @@
           padding: 4px 8px;
         }
       '';
+    in {
+      enable = true;
+
+      iconTheme = {
+        name = "Gruvbox-Material-Dark";
+        package = pkgsSelf.gruvbox-material-gtk;
+      };
+
+      font = {
+        name = "sans-serif";
+        size = 10;
+      };
+
+      gtk3.bookmarks = [
+        "file://${config.home.homeDirectory}/Documents"
+        "file://${config.home.homeDirectory}/Downloads"
+        "file://${config.home.homeDirectory}/Music"
+        "file://${config.home.homeDirectory}/Pictures"
+        "file://${config.home.homeDirectory}/Videos"
+        "file:///run/media/moritz/archive Archive"
+        "file:///run/media/moritz/smb-shares SMB shares"
+      ];
+
+      gtk3 = {
+        extraConfig.gtk-theme-name =
+          if cfg.isLight then "adw-gtk3" else "adw-gtk3-dark";
+        extraCss = lib.concatLines (lib.mapAttrsToList (variable: value:
+          "@define-color ${
+            lib.replaceStrings [ "-" ] [ "_" ] variable
+          } ${value};") cssVariables) + extraCss;
+      };
+
+      gtk4.extraCss = ''
+        :root {
+        ${lib.concatLines
+        (lib.mapAttrsToList (variable: value: "--${variable}: ${value};")
+          cssVariables)}
+        }
+
+        ${extraCss}
+      '';
     };
 
     dconf.settings = {
       "org/gnome/desktop/interface".color-scheme =
         if cfg.isLight then "prefer-light" else "prefer-dark";
+
+      "org/gnome/desktop/interface".gtk-theme =
+        if cfg.isLight then "adw-gtk3" else "adw-gtk3-dark";
 
       # Remove close button in GTK CSD titlebar
       "org/gnome/desktop/wm/preferences".button-layout = "appmenu";
