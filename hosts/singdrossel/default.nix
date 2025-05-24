@@ -16,10 +16,8 @@
   networking.wireless.enable = false;
   services.resolved.enable = true;
 
-  isoImage = {
-    squashfsCompression = "zstd -Xcompression-level 15";
-    isoBaseName = "singdrossel-nixos-custom";
-  };
+  isoImage.squashfsCompression = "zstd -Xcompression-level 15";
+  system.nixos.tags = [ "singdrossel" ];
 
   users.mutableUsers = lib.mkForce false;
   users.users.moritz.password = "";
