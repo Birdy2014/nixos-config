@@ -145,7 +145,7 @@ let
 
           export executable
 
-          ${pkgs.gettext}/bin/envsubst '$executable' <<'  _EOF' >"$executable_out_path"
+          ${pkgs.gettext}/bin/envsubst '$executable' <<'  _EOF' | sed -r 's/^ {4}//' >"$executable_out_path"
             #! ${pkgs.runtimeShell} -e
             ${
               lib.optionalString sandboxConfig.persistentHome
@@ -275,11 +275,18 @@ in {
           readOnly = true;
           description = "wrapper package";
         };
+
+        installPackage = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = "Add the wrapped package to `home.packages`";
+        };
       };
     }));
   };
 
   config = lib.mkIf (cfg != { }) {
-    home.packages = map (value: value.finalPackage) (lib.attrValues cfg);
+    home.packages = map (sandboxCfg: sandboxCfg.finalPackage)
+      (lib.filter (sandboxCfg: sandboxCfg.installPackage) (lib.attrValues cfg));
   };
 }
