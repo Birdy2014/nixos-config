@@ -41,26 +41,48 @@
     element-desktop
 
     (pkgs.writers.writePython3Bin "wine-sandbox" {
-      flakeIgnore = [ "E501" "E111" ];
+      flakeIgnore = [ "E501" "E111" "E114" ];
     } # python
       ''
-        # TODO: also wrap winetricks
-        # TODO: add option to allow network access
-
         import argparse
         import subprocess
         import os
+        import sys
 
-        WINE_WRAPPER = "${config.my.bubblewrap.wine.finalPackage}/bin/wine"
+        WINE_NO_NET_WRAPPER_BIN = "${config.my.bubblewrap.wine-no-net.finalPackage}/bin"
+        WINE_NET_WRAPPER_BIN = "${config.my.bubblewrap.wine-net.finalPackage}/bin"
 
         parser = argparse.ArgumentParser()
         parser.add_argument("-p", "--prefix", "--pfx", required=True, default=os.environ.get("WINEPREFIX"), dest="wineprefix")
-        parser.add_argument("-d", "--dir", required=False, dest="workdir")
+        parser.add_argument("-d", "--dir", dest="workdir")
+        parser.add_argument("-n", "--allow-network", action="store_true", dest="allow_network")
         parser.add_argument("command", nargs="+")
 
         args = parser.parse_args()
 
-        program_executable = os.path.abspath(args.command.pop(0))
+        program_executable = args.command.pop(0)
+        workdir = args.workdir
+        wine_wrapper_bin = WINE_NET_WRAPPER_BIN if args.allow_network else WINE_NO_NET_WRAPPER_BIN
+        wine_wrapper = os.path.join(wine_wrapper_bin, "wine")
+
+        if program_executable == "winecfg":
+          # winecfg can be executed with "wine winecfg"
+          pass
+        elif program_executable == "winetricks":
+          wine_wrapper = os.path.join(wine_wrapper_bin, "winetricks")
+          if len(args.command) == 0:
+            print("Invalid winetricks command", file=sys.stderr)
+            exit(1)
+          program_executable = args.command.pop(0)
+        else:
+          program_executable = os.path.abspath(program_executable)
+          if not os.path.isfile(program_executable):
+            print(f"Executable '{program_executable}' doesn't exist.", file=sys.stderr)
+            exit(1)
+          if workdir is None:
+            workdir = os.path.dirname(program_executable)
+
+        # -- Setup wineprefix
         wineprefix = os.path.abspath(args.wineprefix)
 
         os.makedirs(args.wineprefix, exist_ok=True)
@@ -75,9 +97,12 @@
             # Directory or file already exists, nothing to do here
             pass
 
+        # -- Setup child env
         child_env = os.environ
         child_env["WINEPREFIX"] = wineprefix
-        child_env["WORKDIR"] = args.workdir or os.path.dirname(program_executable)
+
+        # settings "wineprefix" here is a workaround in case there is not working directory
+        child_env["WORKDIR"] = os.path.dirname(workdir or wineprefix)
 
         if "WINEDLLOVERRIDES" not in child_env:
           child_env["WINEDLLOVERRIDES"] = ""
@@ -90,17 +115,22 @@
 
         print(f"Bind-mounting {child_env["WINEPREFIX"]} and {child_env["WORKDIR"]} and executing {program_executable}")
 
-        subprocess.run([WINE_WRAPPER, program_executable] + args.command, env=child_env)
+        subprocess.run([wine_wrapper, program_executable] + args.command, env=child_env)
       '')
   ];
 
-  my.bubblewrap.wine = {
-    applications = [ pkgs.wineWow64Packages.stable ];
-    allowDesktop = true;
-    allowX11 = true;
-    extraEnvBinds = [ "WINEPREFIX" "WINEDLLOVERRIDES" ];
-    extraBinds = [ "$WINEPREFIX" "$WORKDIR" ];
-    extraDevBinds = [ "/dev/input" "/dev/uinput" ];
-    installPackage = false;
+  my.bubblewrap = let
+    common = {
+      applications = [ pkgs.wineWowPackages.stable pkgs.winetricks ];
+      allowDesktop = true;
+      allowX11 = true;
+      extraEnvBinds = [ "WINEPREFIX" "WINEDLLOVERRIDES" ];
+      extraBinds = [ "$WINEPREFIX" "$WORKDIR" ];
+      extraDevBinds = [ "/dev/input" "/dev/uinput" ];
+      installPackage = false;
+    };
+  in {
+    wine-no-net = common;
+    wine-net = common // { unshareNet = false; };
   };
 }
