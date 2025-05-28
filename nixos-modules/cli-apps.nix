@@ -32,6 +32,8 @@
     dev.enable = true;
   };
 
+  security.pam.services.systemd-run0.enable = true;
+
   # Needed for zsh completions
   environment.pathsToLink = [ "/share/zsh" ];
 
