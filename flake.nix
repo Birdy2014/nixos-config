@@ -1,7 +1,8 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "https://channels.nixos.org/nixos-25.05/nixexprs.tar.xz";
+    nixpkgs-unstable.url =
+      "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
