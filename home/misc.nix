@@ -48,6 +48,7 @@
         import subprocess
         import os
         import sys
+        import signal
 
         WINE_NO_NET_WRAPPER_BIN = "${config.my.bubblewrap.wine-no-net.finalPackage}/bin"
         WINE_NET_WRAPPER_BIN = "${config.my.bubblewrap.wine-net.finalPackage}/bin"
@@ -115,18 +116,31 @@
 
         print(f"Bind-mounting {child_env["WINEPREFIX"]} and {child_env["WORKDIR"]} and executing {program_executable}")
 
-        subprocess.run([wine_wrapper, program_executable] + args.command, env=child_env)
+        with subprocess.Popen([wine_wrapper, program_executable] + args.command, env=child_env, process_group=0) as process:
+          signal.signal(signal.SIGINT, lambda signum, frame: os.killpg(os.getpgid(process.pid), signal.SIGINT))
       '')
   ];
 
   my.bubblewrap = let
     common = {
-      applications = [ pkgs.wineWowPackages.stable pkgs.winetricks ];
+      applications = [
+        (pkgs.writeShellScriptBin "wine" ''
+          ${pkgs.wineWowPackages.stable}/bin/wineserver -p1
+          ${pkgs.wineWowPackages.stable}/bin/wine "$@"
+
+          trap 'echo "waiting for wineserver to exit"' INT
+
+          # wait for wineserver and all wine processes to finish
+          ${pkgs.wineWowPackages.stable}/bin/wineserver -w
+        '')
+        pkgs.winetricks
+      ];
       allowDesktop = true;
       allowX11 = true;
       extraEnvBinds = [ "WINEPREFIX" "WINEDLLOVERRIDES" ];
       extraBinds = [ "$WINEPREFIX" "$WORKDIR" ];
       extraDevBinds = [ "/dev/input" "/dev/uinput" ];
+      newSession = false; # Needed to be able to kill pgid
       installPackage = false;
     };
   in {
