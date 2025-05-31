@@ -62,7 +62,7 @@
         args = parser.parse_args()
 
         program_executable = args.command.pop(0)
-        workdir = args.workdir
+        workdir = os.path.abspath(args.workdir) if args.workdir is not None else None
         wine_wrapper_bin = WINE_NET_WRAPPER_BIN if args.allow_network else WINE_NO_NET_WRAPPER_BIN
         wine_wrapper = os.path.join(wine_wrapper_bin, "wine")
 
@@ -103,7 +103,7 @@
         child_env["WINEPREFIX"] = wineprefix
 
         # settings "wineprefix" here is a workaround in case there is not working directory
-        child_env["WORKDIR"] = os.path.dirname(workdir or wineprefix)
+        child_env["WORKDIR"] = workdir or wineprefix
 
         if "WINEDLLOVERRIDES" not in child_env:
           child_env["WINEDLLOVERRIDES"] = ""
