@@ -2,13 +2,13 @@
 
 stdenvNoCC.mkDerivation {
   pname = "mpv-thumbfast-vanilla-osc";
-  version = "2023-12-21";
+  version = "2025-02-04";
 
   src = fetchFromGitHub {
     owner = "po5";
     repo = "thumbfast";
-    rev = "5fefc9b8e995cf5e663666aa10649af799e60186";
-    hash = "sha256-6nICOdtPzDQUMufqCJ+g2OnPasOgp3PegnRoWw8TVBU=";
+    rev = "9d78edc167553ccea6290832982d0bc15838b4ac";
+    hash = "sha256-AG3w5B8lBcSXV4cbvX3nQ9hri/895xDbTsdaqF+RL64=";
   };
 
   dontBuild = true;
