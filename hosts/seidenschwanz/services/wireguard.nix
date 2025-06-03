@@ -48,6 +48,9 @@ in {
   networking.firewall.allowedUDPPorts = [ 49626 ];
 
   systemd.network = {
+    # Required in addition to per-interface IPv6Forwarding
+    config.networkConfig.IPv6Forwarding = true;
+
     netdevs."50-wg0" = {
       netdevConfig = {
         Kind = "wireguard";
@@ -67,10 +70,7 @@ in {
     networks."50-wg0" = {
       matchConfig.Name = "wg0";
       address = [ "${vpnIp4Addr 1}/24" "${vpnIp6Addr 1}/120" ];
-      networkConfig = {
-        IPv6Forwarding = true;
-        IPMasquerade = "ipv4";
-      };
+      networkConfig.IPv6Forwarding = true;
     };
   };
 
@@ -124,23 +124,26 @@ in {
           }
         }
 
-        define WG_NET_IP4 = ${vpnIp4Addr 0}/24
-        define WG_NET_IP6 = ${vpnIp6Addr 0}/120
+        chain forward {
+          type filter hook forward priority 0; policy drop;
 
-        chain output {
-          type filter hook postrouting priority 0; policy accept;
+          ct state established,related accept
+          icmpv6 type { nd-neighbor-solicit, nd-neighbor-advert } accept
 
           iifname wg0 oifname lan ip saddr $ALLOWED_IPSV4 accept
           iifname wg0 oifname lan ip6 saddr $ALLOWED_IPSV6 accept
-          iifname wg0 oifname lan ip saddr $WG_NET_IP4 log prefix "forbidden IPv4 wireguard peer tries to connect to outside network: " drop
-          iifname wg0 oifname lan ip6 saddr $WG_NET_IP6 log prefix "forbidden IPv6 wireguard peer tries to connect to outside network: " drop
+
+          log prefix "not forwarding packet"
         }
 
         chain nat {
           type nat hook postrouting priority 100; policy accept;
 
-          iifname wg0 oifname lan ip6 saddr $ALLOWED_IPSV6 ip6 daddr fc00::/7 accept
-          iifname wg0 oifname lan ip6 saddr $ALLOWED_IPSV6 masquerade
+          iifname wg0 oifname lan ip6 saddr fd00:90::100:0/120 ip6 daddr fc00::/7 accept
+          iifname wg0 oifname lan ip6 saddr fd00:90::100:0/120 masquerade
+
+          iifname wg0 oifname lan ip saddr 10.100.0.0/24 ip daddr { 192.168.0.0/16, 10.0.0.0/8 } accept
+          iifname wg0 oifname lan ip saddr 10.100.0.0/24 masquerade
         }
       '';
     };
