@@ -33,7 +33,6 @@ in {
         serverName = "${domainName}.seidenschwanz.mvogel.dev";
         onlySSL = true;
         useACMEHost = "seidenschwanz.mvogel.dev";
-        listenAddresses = [ "[fd00:90::10]" "192.168.90.10" ];
         locations."/" = {
           proxyPass = "${domainConfig.proxyPass}";
           extraConfig = lib.mkIf domainConfig.enableAuthelia ''
@@ -78,10 +77,14 @@ in {
             proxy_set_header Connection "";
           '';
         };
+        extraConfig = ''
+          allow fd00:90::/64;
+          deny all;
+        '';
       }) cfg.domains;
     };
 
-    networking.firewall.allowedTCPPorts = [ 80 443 ];
+    networking.firewall.allowedTCPPorts = [ 443 ];
 
     security.acme.certs."seidenschwanz.mvogel.dev" = {
       extraDomainNames = [ "*.seidenschwanz.mvogel.dev" ];
