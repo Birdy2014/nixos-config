@@ -14,6 +14,16 @@
 
   services.jellyfin.enable = true;
 
+  systemd.services.jellyfin.serviceConfig = {
+    ProtectHome = true; # make home directories inaccessible
+    ProtectSystem = "strict"; # make nearly everything read-only
+    ReadOnlyPaths = [ "/zpool/encrypted/media" ];
+    StateDirectory =
+      "jellyfin"; # services.jellyfin.dataDir is /var/lib/jellyfin
+    CacheDirectory =
+      "jellyfin"; # services.jellyfin.cacheDir is /var/cache/jellyfin
+  };
+
   # auto-discovery https://jellyfin.org/docs/general/networking/index.html
   networking.firewall.allowedUDPPorts = [ 1900 7359 ];
 
