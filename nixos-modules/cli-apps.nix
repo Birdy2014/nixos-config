@@ -25,6 +25,11 @@
     man-pages
   ];
 
+  environment.variables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+  };
+
   programs.command-not-found.enable = false;
 
   documentation = {
