@@ -33,7 +33,7 @@ in {
         serverName = "${domainName}.seidenschwanz.mvogel.dev";
         onlySSL = true;
         useACMEHost = "seidenschwanz.mvogel.dev";
-        listenAddresses = [ "[fd00:90::10]" "192.168.90.10" ];
+        listenAddresses = [ "[fd00:90::10]" ];
         locations."/" = {
           proxyPass = "${domainConfig.proxyPass}";
           extraConfig = lib.mkIf domainConfig.enableAuthelia ''

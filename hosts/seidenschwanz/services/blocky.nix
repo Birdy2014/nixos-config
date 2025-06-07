@@ -59,13 +59,13 @@
 
       customDNS.mapping = (lib.listToAttrs (map (name: {
         name = "${name}.seidenschwanz.mvogel.dev";
-        value = "192.168.90.10,fd00:90::10";
+        value = "fd00:90::10";
       }) (lib.attrNames config.my.proxy.domains))) // {
         "seidenschwanz.mvogel.dev" =
-          "192.168.90.10,fd00:90::10"; # This is not a wildcard because of my patch
-        "fritz.box" = "192.168.90.1,fd00:90::1eed:6fff:fe98:ee7e";
-        "rotkehlchen.fritz.box" = "192.168.90.21,fd00:90::4247:4a9a:1e40:eeb6";
-        "shelly-plug-rotkehlchen.fritz.box" = "192.168.90.166";
+          "fd00:90::10"; # This is not a wildcard because of my patch
+        "fritz.box" = "fd00:90::1eed:6fff:fe98:ee7e";
+        "rotkehlchen.fritz.box" = "fd00:90::4247:4a9a:1e40:eeb6";
+        "rotkehlchen.mvogel.dev" = "fd00:90::4247:4a9a:1e40:eeb6";
       };
     };
   };
