@@ -5,6 +5,7 @@
     ./authelia.nix
     ./blocky.nix
     ./borg-repos.nix
+    ./dashboard
     ./einkaufszettel.nix
     ./immich.nix
     ./jellyfin.nix
