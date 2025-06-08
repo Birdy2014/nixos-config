@@ -5,21 +5,158 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </head>
     <body>
-        <h1>Webseiten</h1>
-        <ul>
-            <li><a href="https://jellyfin.seidenschwanz.mvogel.dev">Medien / Jellyfin</a></li>
-            <li><a href="https://immich.seidenschwanz.mvogel.dev">Fotos / Immich</a></li>
-            <li><a href="https://recipes.seidenschwanz.mvogel.dev">Rezepte / Mealie</a></li>
-            <li><a href="https://paperless.seidenschwanz.mvogel.dev">Dokumente / Paperless</a></li>
-            <li><a href="https://einkaufszettel.seidenschwanz.mvogel.dev">Einkaufszettel</a></li>
-            <li><a href="https://ldap.seidenschwanz.mvogel.dev">Account / LLDAP</a></li>
-            <li><a href="https://syncthing.seidenschwanz.mvogel.dev">Syncthing</a></li>
-        </ul>
-        <h1>Weitere Dienste</h1>
-        <ul>
-            <li>SMB - <code>\\seidenschwanz.mvogel.dev</code></li>
-            <li>Borgbackup</li>
-            <li>Wireguard</li>
-        </ul>
+        <div id="container">
+            <h1>seidenschwanz.mvogel.dev</h1>
+            <div id="cards">
+                <card-element logo="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/immich.png" title="Immich" description="Fotos" href="https://immich.seidenschwanz.mvogel.dev"></card-element>
+                <card-element logo="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/jellyfin.png" title="Jellyfin" description="Medien" href="https://jellyfin.seidenschwanz.mvogel.dev"></card-element>
+                <card-element logo="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/mealie.png" title="Mealie" description="Rezepte" href="https://recipes.seidenschwanz.mvogel.dev"></card-element>
+                <card-element logo="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/paperless-ngx.png" title="Paperless-ngx" description="Dokumente" href="https://paperless.seidenschwanz.mvogel.dev"></card-element>
+                <card-element logo="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/syncthing.png" title="Syncthing" description="Dateisynchronisierung" href="https://syncthing.seidenschwanz.mvogel.dev"></card-element>
+                <card-element title="Einkaufszettel" description="" href="https://einkaufszettel.seidenschwanz.mvogel.dev"></card-element>
+                <card-element title="LLDAP" description="Account" href="https://ldap.seidenschwanz.mvogel.dev"></card-element>
+            </div>
+            <h1>Weitere Dienste</h1>
+            <ul>
+                <li>SMB - <code>\\seidenschwanz.mvogel.dev</code></li>
+                <li>Borgbackup</li>
+                <li>Wireguard</li>
+            </ul>
+        </div>
+
+        <style>
+        :root {
+            --color-background: #f9f5d7;
+            --color-foreground: #282828;
+            --color-card-background: #00000020;
+            --color-card-shadow: #000000a0;
+            --color-card-description: #282828a0;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-background: #1d2021;
+                --color-foreground: #ebdbb2;
+                --color-card-background: #ffffff20;
+                --color-card-shadow: #000000a0;
+                --color-card-description: #ebdbb2a0;
+            }
+        }
+
+        body {
+            margin: 20px 20px;
+            background-color: var(--color-background);
+            color: var(--color-foreground);
+            font-family: Roboto, Helvetica, Noto Sans, sans-serif;
+        }
+
+        #container {
+            margin: auto;
+            max-width: 400px;
+        }
+
+        #cards {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-size: 1.7em;
+        }
+        </style>
+
+        <template id="template-card">
+            <a id="link">
+                <div id="card">
+                    <div id="logo">
+                        <img id="logo-image" />
+                    </div>
+                    <div id="side">
+                        <div id="title"></div>
+                        <div id="description"></div>
+                    </div>
+                </div>
+            </a>
+
+            <style>
+            #card {
+                margin: 10px;
+                height: 5em;
+                display: flex;
+                flex-direction: row;
+                gap: 10px;
+                border-radius: 2px;
+                box-shadow: 10px 5px 5px var(--color-card-shadow);
+                background-color: var(--color-card-background);
+            }
+
+            #link {
+                text-decoration: none;
+                color: unset;
+            }
+
+            #logo {
+                width: 100px;
+                margin: 10px;
+            }
+
+            #logo-image {
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+            }
+
+            #side {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+            }
+
+            #title {
+                font-weight: bold;
+            }
+
+            #description {
+                color: var(--color-card-description);
+            }
+
+            img:not([src]) {
+              opacity: 0;
+            }
+            </style>
+        </template>
+
+        <script>
+            class CardElement extends HTMLElement {
+                static observedAttributes = [ "logo", "title", "description", "href" ]
+
+                constructor() {
+                    super()
+
+                    const template = document.querySelector("#template-card")
+                    this.root = this.attachShadow({ mode: "open" })
+                    this.root.appendChild(template.content.cloneNode(true))
+                }
+
+                attributeChangedCallback(name, oldValue, newValue) {
+                    switch (name) {
+                    case "logo":
+                        this.root.querySelector("#logo-image").setAttribute("src", newValue)
+                        break
+                    case "title":
+                        this.root.querySelector("#title").innerText = newValue
+                        break
+                    case "description":
+                        this.root.querySelector("#description").innerText = newValue
+                        break
+                    case "href":
+                        this.root.querySelector("#link").setAttribute("href", newValue)
+                        break
+                    }
+                }
+            }
+
+            customElements.define("card-element", CardElement)
+        </script>
     </body>
 </html>
