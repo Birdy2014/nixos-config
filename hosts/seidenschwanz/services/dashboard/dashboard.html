@@ -5,23 +5,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </head>
     <body>
-        <div id="container">
-            <h1>seidenschwanz.mvogel.dev</h1>
-            <div id="cards">
-                <card-element logo="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/immich.png" title="Immich" description="Fotos" href="https://immich.seidenschwanz.mvogel.dev"></card-element>
-                <card-element logo="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/jellyfin.png" title="Jellyfin" description="Medien" href="https://jellyfin.seidenschwanz.mvogel.dev"></card-element>
-                <card-element logo="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/mealie.png" title="Mealie" description="Rezepte" href="https://recipes.seidenschwanz.mvogel.dev"></card-element>
-                <card-element logo="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/paperless-ngx.png" title="Paperless-ngx" description="Dokumente" href="https://paperless.seidenschwanz.mvogel.dev"></card-element>
-                <card-element logo="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/syncthing.png" title="Syncthing" description="Dateisynchronisierung" href="https://syncthing.seidenschwanz.mvogel.dev"></card-element>
-                <card-element title="Einkaufszettel" description="" href="https://einkaufszettel.seidenschwanz.mvogel.dev"></card-element>
-                <card-element title="LLDAP" description="Account" href="https://ldap.seidenschwanz.mvogel.dev"></card-element>
+        <div id="container-outer">
+            <div id="container-inner">
+                <h1>seidenschwanz.mvogel.dev</h1>
+                <div id="cards">
+                    <card-element logo="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/immich.png" title="Immich" description="Fotos" href="https://immich.seidenschwanz.mvogel.dev"></card-element>
+                    <card-element logo="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/jellyfin.png" title="Jellyfin" description="Medien" href="https://jellyfin.seidenschwanz.mvogel.dev"></card-element>
+                    <card-element logo="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/mealie.png" title="Mealie" description="Rezepte" href="https://recipes.seidenschwanz.mvogel.dev"></card-element>
+                    <card-element logo="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/paperless-ngx.png" title="Paperless-ngx" description="Dokumente" href="https://paperless.seidenschwanz.mvogel.dev"></card-element>
+                    <card-element logo="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/syncthing.png" title="Syncthing" description="Dateisynchronisierung" href="https://syncthing.seidenschwanz.mvogel.dev"></card-element>
+                    <card-element title="Einkaufszettel" description="" href="https://einkaufszettel.seidenschwanz.mvogel.dev"></card-element>
+                    <card-element title="LLDAP" description="Account" href="https://ldap.seidenschwanz.mvogel.dev"></card-element>
+                </div>
+                <h1>Weitere Dienste</h1>
+                <ul>
+                    <li>SMB - <code>\\seidenschwanz.mvogel.dev</code></li>
+                    <li>Borgbackup</li>
+                    <li>Wireguard</li>
+                </ul>
             </div>
-            <h1>Weitere Dienste</h1>
-            <ul>
-                <li>SMB - <code>\\seidenschwanz.mvogel.dev</code></li>
-                <li>Borgbackup</li>
-                <li>Wireguard</li>
-            </ul>
         </div>
 
         <style>
@@ -31,6 +33,8 @@
             --color-card-background: #00000020;
             --color-card-shadow: #000000a0;
             --color-card-description: #282828a0;
+
+            --card-width: 400px;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -50,14 +54,31 @@
             font-family: Roboto, Helvetica, Noto Sans, sans-serif;
         }
 
-        #container {
+        #container-outer {
+            container: container-outer / size;
+        }
+
+        #container-inner {
             margin: auto;
-            max-width: 400px;
+            max-width: calc(var(--card-width) * 2);
+        }
+
+        @container container-outer (width < 800px) {
+            #container-inner {
+                max-width: 400px;
+            }
         }
 
         #cards {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        card-element {
+            display: block;
+            max-width: var(--card-width);
+            width: 100%;
         }
 
         h1 {
