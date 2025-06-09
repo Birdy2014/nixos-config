@@ -108,6 +108,8 @@ in {
 
           iifname wg0 ip6 saddr ${vpnIp6Addr 0}/120 accept
           iifname wg0 drop
+
+          iifname lan ip6 saddr ${vpnIp6Addr 0}/120 drop
         }
 
         chain forward {
