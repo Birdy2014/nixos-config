@@ -11,6 +11,7 @@
     home.stateVersion = "23.05";
     sshd.enable = true;
     systemd-boot.enable = true;
+    virtualisation.enable = true;
   };
 
   boot.initrd.availableKernelModules =
