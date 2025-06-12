@@ -7,6 +7,7 @@
     ../../secrets/buntspecht.nix
     ./filesystems.nix
     ./network.nix
+    ./nginx.nix
     ./services
   ];
 
