@@ -7,20 +7,23 @@
 
     font = "monospace 12";
 
-    theme = "${pkgs.writeText "rofi-theme.rasi" (with config.my.theme; ''
-      * {
-        bg-col: ${background-primary};
-        bg-col-light: ${background-primary};
-        border-col: ${accent-background};
-        selected-col: ${background-primary};
-        selected-mode: ${accent};
-        text: ${text};
-        text-selected: ${accent};
-        text-inactive: ${text-inactive};
-      }
+    theme = "${pkgs.writeText "rofi-theme.rasi" (
+      with config.my.theme;
+      ''
+        * {
+          bg-col: ${background-primary};
+          bg-col-light: ${background-primary};
+          border-col: ${accent-background};
+          selected-col: ${background-primary};
+          selected-mode: ${accent};
+          text: ${text};
+          text-selected: ${accent};
+          text-inactive: ${text-inactive};
+        }
 
-      @import "${./theme.rasi}"
-    '')}";
+        @import "${./theme.rasi}"
+      ''
+    )}";
 
     terminal = "foot";
     extraConfig = {

@@ -22,16 +22,30 @@ vim.api.nvim_create_autocmd("LspAttach", {
                 group = vim.api.nvim_create_augroup("my-lsp", { clear = false }),
                 buffer = args.buf,
                 callback = function()
-                    if (client.name == "clangd" and vim.uv.fs_stat(".clang-format"))
+                    if
+                        (client.name == "clangd" and vim.uv.fs_stat(".clang-format"))
                         or client.name == "rust_analyzer"
-                        or client.name == "nixd"
                     then
-                        vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 2000 })
+                        vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
                     end
-                end
+                end,
             })
         end
-    end
+    end,
+})
+
+-- nixd and treefmt are pretty bad at integrating into neovim...
+-- When using vim.lsp.buf.format, it will just clear the current file,
+-- so this is the best I could come up with.
+vim.api.nvim_create_autocmd("BufWritePost", {
+    group = vim.api.nvim_create_augroup("format-post", {}),
+    callback = function(args)
+        if vim.bo.filetype == "nix" then
+            -- TODO: Use `nix formatter build` to cache formatter
+            vim.system({ "nix", "fmt", args.file }):wait(10000)
+            vim.cmd("e")
+        end
+    end,
 })
 
 vim.lsp.config.rust_analyzer = {
@@ -39,8 +53,8 @@ vim.lsp.config.rust_analyzer = {
         ["rust-analyzer"] = {
             check = {
                 command = "clippy",
-            }
-        }
+            },
+        },
     },
 }
 
@@ -51,24 +65,29 @@ vim.lsp.config.texlab = {
                 executable = "latexmk",
                 args = {
                     "-pdflua",
-                    "-bibtex-cond", "-bibfudge",
+                    "-bibtex-cond",
+                    "-bibfudge",
                     "-interaction=nonstopmode",
-                    "-auxdir=./build/", "-outdir=./build/",
-                    "-synctex=1", "%f"
+                    "-auxdir=./build/",
+                    "-outdir=./build/",
+                    "-synctex=1",
+                    "%f",
                 },
                 auxDirectory = "./build/",
                 logDirectory = "./build/",
                 pdfDirectory = "./build/",
-                onSave = true
+                onSave = true,
             },
             forwardSearch = {
                 executable = "zathura",
                 args = {
-                    "--synctex-forward", "%l:1:%f", "%p"
+                    "--synctex-forward",
+                    "%l:1:%f",
+                    "%p",
                 },
             },
-        }
-    }
+        },
+    },
 }
 
 vim.lsp.config.clangd = {
@@ -78,7 +97,7 @@ vim.lsp.config.clangd = {
     -- TODO: Is this still needed?
     flags = {
         allow_incremental_sync = false,
-        debounce_text_changes = 500
+        debounce_text_changes = 500,
     },
 
     root_dir = function(bufnr, cb)
@@ -107,22 +126,12 @@ vim.lsp.config.clangd = {
                 end
             end
         end
-    end
-}
-
-vim.lsp.config.nixd = {
-    settings = {
-        nixd = {
-            formatting = {
-                command = { "nix", "fmt", "--" }
-            }
-        }
-    }
+    end,
 }
 
 vim.lsp.enable({ "clangd", "pyright", "rust_analyzer", "ts_ls", "bashls", "texlab", "nixd", "zls" })
 
-vim.diagnostic.config {
+vim.diagnostic.config({
     virtual_text = true,
     underline = true,
     update_in_insert = true,
@@ -133,9 +142,9 @@ vim.diagnostic.config {
             [vim.diagnostic.severity.WARN] = " ",
             [vim.diagnostic.severity.INFO] = " ",
             [vim.diagnostic.severity.HINT] = "󰠠 ",
-        }
-    }
-}
+        },
+    },
+})
 
 vim.keymap.set("n", "ga", vim.lsp.buf.code_action, { desc = "Code Action" })
 vim.keymap.set("n", "gr", vim.lsp.buf.rename, { desc = "Rename symbol" })

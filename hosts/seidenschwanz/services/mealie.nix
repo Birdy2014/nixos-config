@@ -16,13 +16,11 @@
       LDAP_BASE_DN = "ou=people,dc=mvogel,dc=dev";
       LDAP_QUERY_BIND = "cn=admin,ou=people,dc=mvogel,dc=dev";
       LDAP_USER_FILTER = "(memberOf=cn=mealie,ou=groups,dc=mvogel,dc=dev)";
-      LDAP_ADMIN_FILTER =
-        "(memberOf=cn=lldap_admin,ou=groups,dc=mvogel,dc=dev)";
+      LDAP_ADMIN_FILTER = "(memberOf=cn=lldap_admin,ou=groups,dc=mvogel,dc=dev)";
       LDAP_NAME_ATTRIBUTE = "displayName";
     };
 
-    credentialsFile =
-      config.sops.templates."mealie-ldap-admin-password.env".path;
+    credentialsFile = config.sops.templates."mealie-ldap-admin-password.env".path;
   };
 
   my.proxy.domains.recipes.proxyPass = "http://localhost:8134";

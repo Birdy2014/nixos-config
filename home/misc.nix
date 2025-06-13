@@ -1,4 +1,10 @@
-{ config, osConfig, pkgs, pkgsSelf, ... }:
+{
+  config,
+  osConfig,
+  pkgs,
+  pkgsSelf,
+  ...
+}:
 
 {
   services.easyeffects.enable = true;
@@ -39,9 +45,15 @@
     thunderbird
     element-desktop
 
-    (pkgs.writers.writePython3Bin "wine-sandbox" {
-      flakeIgnore = [ "E501" "E111" "E114" ];
-    } # python
+    (pkgs.writers.writePython3Bin "wine-sandbox"
+      {
+        flakeIgnore = [
+          "E501"
+          "E111"
+          "E114"
+        ];
+      }
+      # python
       ''
         import argparse
         import subprocess
@@ -117,33 +129,47 @@
 
         with subprocess.Popen([wine_wrapper, program_executable] + args.command, env=child_env, process_group=0) as process:
           signal.signal(signal.SIGINT, lambda signum, frame: os.killpg(os.getpgid(process.pid), signal.SIGINT))
-      '')
+      ''
+    )
   ];
 
-  my.bubblewrap = let
-    common = {
-      applications = [
-        (pkgs.writeShellScriptBin "wine" ''
-          ${pkgs.wineWowPackages.stable}/bin/wineserver -p1
-          ${pkgs.wineWowPackages.stable}/bin/wine "$@"
+  my.bubblewrap =
+    let
+      common = {
+        applications = [
+          (pkgs.writeShellScriptBin "wine" ''
+            ${pkgs.wineWowPackages.stable}/bin/wineserver -p1
+            ${pkgs.wineWowPackages.stable}/bin/wine "$@"
 
-          trap 'echo "waiting for wineserver to exit"' INT
+            trap 'echo "waiting for wineserver to exit"' INT
 
-          # wait for wineserver and all wine processes to finish
-          ${pkgs.wineWowPackages.stable}/bin/wineserver -w
-        '')
-        pkgs.winetricks
-      ];
-      allowDesktop = true;
-      allowX11 = true;
-      extraEnvBinds = [ "WINEPREFIX" "WINEDLLOVERRIDES" ];
-      extraBinds = [ "$WINEPREFIX" "$WORKDIR" ];
-      extraDevBinds = [ "/dev/input" "/dev/uinput" ];
-      newSession = false; # Needed to be able to kill pgid
-      installPackage = false;
+            # wait for wineserver and all wine processes to finish
+            ${pkgs.wineWowPackages.stable}/bin/wineserver -w
+          '')
+          pkgs.winetricks
+        ];
+        allowDesktop = true;
+        allowX11 = true;
+        extraEnvBinds = [
+          "WINEPREFIX"
+          "WINEDLLOVERRIDES"
+        ];
+        extraBinds = [
+          "$WINEPREFIX"
+          "$WORKDIR"
+        ];
+        extraDevBinds = [
+          "/dev/input"
+          "/dev/uinput"
+        ];
+        newSession = false; # Needed to be able to kill pgid
+        installPackage = false;
+      };
+    in
+    {
+      wine-no-net = common;
+      wine-net = common // {
+        unshareNet = false;
+      };
     };
-  in {
-    wine-no-net = common;
-    wine-net = common // { unshareNet = false; };
-  };
 }

@@ -1,6 +1,12 @@
 # Build using `nix build .#nixosConfigurations.singdrossel.config.system.build.isoImage`
 
-{ config, lib, pkgs, modulesPath, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}:
 
 {
   imports = [ (modulesPath + "/installer/cd-dvd/installation-cd-base.nix") ];
@@ -26,7 +32,10 @@
   security.pam.services.login.allowNullPassword = true;
   security.pam.services.swaylock.allowNullPassword = true;
 
-  environment.systemPackages = [ pkgs.gparted pkgs.glxinfo ];
+  environment.systemPackages = [
+    pkgs.gparted
+    pkgs.glxinfo
+  ];
 
   home-manager.users.moritz.wayland.windowManager.sway.extraConfig =
     "output * bg ${pkgs.nixos-artwork.wallpapers.gear}/share/backgrounds/nixos/nix-wallpaper-gear.png fill";

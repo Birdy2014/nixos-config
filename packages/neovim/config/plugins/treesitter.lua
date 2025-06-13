@@ -1,4 +1,4 @@
-require("nvim-treesitter.configs").setup {
+require("nvim-treesitter.configs").setup({
     highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,
@@ -13,8 +13,8 @@ require("nvim-treesitter.configs").setup {
             node_incremental = "+",
             node_decremental = "-",
         },
-    }
-}
+    },
+})
 
 vim.wo.foldmethod = "expr"
 vim.wo.foldexpr = "nvim_treesitter#foldexpr()"

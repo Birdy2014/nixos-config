@@ -1,4 +1,9 @@
-{ config, pkgs, pkgsSelf, ... }:
+{
+  config,
+  pkgs,
+  pkgsSelf,
+  ...
+}:
 
 let
   hostname = "improtheater-frankfurt.de";
@@ -15,8 +20,7 @@ let
         secure = true;
         user = "accounts@improtheater-frankfurt.de";
         password_file = config.sops.secrets."itf/email-auth".path;
-        from =
-          "Improtheater Frankfurt accounts <accounts@improtheater-frankfurt.de>";
+        from = "Improtheater Frankfurt accounts <accounts@improtheater-frankfurt.de>";
       };
       itf = {
         host = "smtp.strato.de";
@@ -24,8 +28,7 @@ let
         secure = true;
         user = "newsletter@improtheater-frankfurt.de";
         password_file = config.sops.secrets."itf/email-newsletter".path;
-        from =
-          "Improtheater Frankfurt Newsletter <newsletter@improtheater-frankfurt.de>";
+        from = "Improtheater Frankfurt Newsletter <newsletter@improtheater-frankfurt.de>";
       };
       improglycerin = {
         host = "smtp.strato.de";
@@ -42,7 +45,8 @@ let
     name = "improtheater-frankfurt-config.json";
     text = builtins.toJSON itf-config;
   };
-in {
+in
+{
   users.groups.itf = { };
   users.users.itf = {
     isSystemUser = true;

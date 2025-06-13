@@ -1,4 +1,4 @@
-require("barbar").setup {
+require("barbar").setup({
     icons = {
         button = "",
         modified = {
@@ -6,7 +6,7 @@ require("barbar").setup {
         },
     },
     letters = "asdfjklöghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERUTYQP",
-}
+})
 
 vim.keymap.set("n", "<m-q>", "<cmd>BufferClose<cr>", { desc = "Close Buffer" })
 vim.keymap.set("n", "<m-Q>", "<cmd>BufferClose!<cr>", { desc = "Force Close Buffer" })

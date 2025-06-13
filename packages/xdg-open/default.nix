@@ -1,4 +1,12 @@
-{ lib, stdenvNoCC, makeWrapper, coreutils, python3, xdg-utils, libnotify }:
+{
+  lib,
+  stdenvNoCC,
+  makeWrapper,
+  coreutils,
+  python3,
+  xdg-utils,
+  libnotify,
+}:
 
 stdenvNoCC.mkDerivation {
   pname = "xdg-open";
@@ -12,7 +20,13 @@ stdenvNoCC.mkDerivation {
     install -Dm755 ${./xdg-open.py} $out/bin/xdg-open
 
     wrapProgram $out/bin/xdg-open \
-      --prefix PATH : ${lib.makeBinPath [ coreutils xdg-utils libnotify ]}
+      --prefix PATH : ${
+        lib.makeBinPath [
+          coreutils
+          xdg-utils
+          libnotify
+        ]
+      }
   '';
 
   meta = {

@@ -7,10 +7,17 @@
     group = "kodi";
     home = "/var/lib/kodi";
     createHome = true;
-    extraGroups = [ "video" "input" "pipewire" ];
+    extraGroups = [
+      "video"
+      "input"
+      "pipewire"
+    ];
   };
 
-  networking.firewall.allowedTCPPorts = [ 8080 9090 ];
+  networking.firewall.allowedTCPPorts = [
+    8080
+    9090
+  ];
   networking.firewall.allowedUDPPorts = [ 9777 ];
 
   hardware.graphics.enable = true;
@@ -29,30 +36,31 @@
   # -> disable automatic refresh rate adjustment in kodi!
   # Also, kodi will segfault when trying to set the display refresh rate to 23.976Hz.
 
-  systemd.services.kodi = let
-    package = pkgs.kodi-gbm.withPackages
-      (kodiPackages: with kodiPackages; [ inputstream-adaptive ]);
-  in {
-    description = "Kodi media center";
+  systemd.services.kodi =
+    let
+      package = pkgs.kodi-gbm.withPackages (kodiPackages: with kodiPackages; [ inputstream-adaptive ]);
+    in
+    {
+      description = "Kodi media center";
 
-    after = [
-      "network-online.target"
-      "sound.target"
-      "systemd-user-sessions.service"
-    ];
-    wants = [ "network-online.target" ];
+      after = [
+        "network-online.target"
+        "sound.target"
+        "systemd-user-sessions.service"
+      ];
+      wants = [ "network-online.target" ];
 
-    conflicts = [ "kodi.socket" ];
+      conflicts = [ "kodi.socket" ];
 
-    serviceConfig = {
-      Type = "simple";
-      User = "kodi";
-      ExecStart = "${package}/bin/kodi-standalone";
-      Restart = "always";
-      TimeoutStopSec = "15s";
-      TimeoutStopFailureMode = "kill";
+      serviceConfig = {
+        Type = "simple";
+        User = "kodi";
+        ExecStart = "${package}/bin/kodi-standalone";
+        Restart = "always";
+        TimeoutStopSec = "15s";
+        TimeoutStopFailureMode = "kill";
+      };
     };
-  };
 
   systemd.sockets.kodi = {
     wantedBy = [ "sockets.target" ];

@@ -17,7 +17,11 @@
     systemd-boot.enable = true;
   };
 
-  boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "xen_blkfront" ];
+  boot.initrd.availableKernelModules = [
+    "ata_piix"
+    "uhci_hcd"
+    "xen_blkfront"
+  ];
   boot.initrd.kernelModules = [ "nvme" ];
   nixpkgs.hostPlatform = "aarch64-linux";
 
@@ -29,7 +33,10 @@
 
   services.openssh.ports = [ 46773 ];
 
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
 
   # Holding the spacebar doesn't seem to work on the hetzner console
   boot.loader.timeout = lib.mkForce 5;

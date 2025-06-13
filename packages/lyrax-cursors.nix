@@ -1,4 +1,9 @@
-{ stdenvNoCC, fetchFromGitHub, inkscape, xcursorgen }:
+{
+  stdenvNoCC,
+  fetchFromGitHub,
+  inkscape,
+  xcursorgen,
+}:
 
 stdenvNoCC.mkDerivation {
   pname = "LyraX Cursors";
@@ -11,7 +16,10 @@ stdenvNoCC.mkDerivation {
     hash = "sha256-lfaX8ouE0JaQwVBpAGsrLIExQZ2rCSFKPs3cch17eYg=";
   };
 
-  buildInputs = [ inkscape xcursorgen ];
+  buildInputs = [
+    inkscape
+    xcursorgen
+  ];
 
   buildPhase = ''
     rm -rf ./dist/*

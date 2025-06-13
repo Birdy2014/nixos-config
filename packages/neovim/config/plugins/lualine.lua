@@ -7,7 +7,7 @@ local function package_info_status()
 end
 
 local lualine = require("lualine")
-lualine.setup {
+lualine.setup({
     options = {
         section_separators = {},
         component_separators = "|",
@@ -15,14 +15,18 @@ lualine.setup {
         globalstatus = true,
     },
     sections = {
-        lualine_a = { {"mode", upper = true} },
-        lualine_b = { {"branch", icon = ""}, { "diff" } },
+        lualine_a = { { "mode", upper = true } },
+        lualine_b = { { "branch", icon = "" }, { "diff" } },
         lualine_c = {
             { "filename", path = 1, file_status = true },
             { "diagnostics", sources = { "nvim_diagnostic" } },
             { "aerial", sep = " ❯ " },
             { package_info_status },
-            { function() return vim.fn["vm#themes#statusline"]() end }
+            {
+                function()
+                    return vim.fn["vm#themes#statusline"]()
+                end,
+            },
         },
         lualine_x = {
             {
@@ -32,14 +36,14 @@ lualine.setup {
                         return ""
                     end
                     return "@" .. recording_register
-                end
+                end,
             },
             "encoding",
             "fileformat",
-            "filetype"
+            "filetype",
         },
         lualine_y = { "progress" },
-        lualine_z = { "location"  },
+        lualine_z = { "location" },
     },
-    extensions = { "nvim-tree", "aerial", "man", "quickfix" }
-}
+    extensions = { "nvim-tree", "aerial", "man", "quickfix" },
+})

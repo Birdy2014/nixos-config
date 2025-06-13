@@ -14,8 +14,13 @@
     virtualisation.enable = true;
   };
 
-  boot.initrd.availableKernelModules =
-    [ "xhci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "ahci"
+    "usb_storage"
+    "sd_mod"
+    "rtsx_pci_sdmmc"
+  ];
   boot.kernelModules = [ "kvm-intel" ];
   nixpkgs.hostPlatform = "x86_64-linux";
   hardware.enableRedistributableFirmware = true;
@@ -24,7 +29,10 @@
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  boot.blacklistedKernelModules = [ "nouveau" "acer_wmi" ];
+  boot.blacklistedKernelModules = [
+    "nouveau"
+    "acer_wmi"
+  ];
   boot.kernelParams = [ "intel_pstate=passive" ];
 
   networking.networkmanager.enable = true;

@@ -1,6 +1,6 @@
 local neogit = require("neogit")
 
-neogit.setup {
+neogit.setup({
     graph_style = "unicode",
     ignored_settings = {
         "NeogitPushPopup--force-with-lease",
@@ -8,15 +8,15 @@ neogit.setup {
         "NeogitCommitPopup--allow-empty",
     },
     integrations = {
-        diffview = true
+        diffview = true,
     },
-}
+})
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "NeogitCommitMessage",
     callback = function()
         vim.opt_local.spell = true
-    end
+    end,
 })
 
 vim.keymap.set("n", "<leader>tg", function()

@@ -140,20 +140,25 @@
 
     autosuggestion = {
       enable = true;
-      strategy = [ "history" "completion" ];
+      strategy = [
+        "history"
+        "completion"
+      ];
     };
     syntaxHighlighting.enable = true;
 
-    plugins = [{
-      name = "per-directory-history";
-      file = "per-directory-history.zsh";
-      src = pkgs.fetchFromGitHub {
-        owner = "jimhester";
-        repo = "per-directory-history";
-        rev = "0687bbfd736da566472a6d67c2b45c501b73d405";
-        sha256 = "sha256-7Z0qaDhgopKt9BDKSqdziw9jsVgiLLafs30wPPbz+oo=";
-      };
-    }];
+    plugins = [
+      {
+        name = "per-directory-history";
+        file = "per-directory-history.zsh";
+        src = pkgs.fetchFromGitHub {
+          owner = "jimhester";
+          repo = "per-directory-history";
+          rev = "0687bbfd736da566472a6d67c2b45c501b73d405";
+          sha256 = "sha256-7Z0qaDhgopKt9BDKSqdziw9jsVgiLLafs30wPPbz+oo=";
+        };
+      }
+    ];
   };
 
   programs.starship = {
@@ -177,7 +182,9 @@
         "$status"
         "$character"
       ];
-      username = { show_always = true; };
+      username = {
+        show_always = true;
+      };
       custom.lf = {
         when = ''test -n "$lf"'';
         format = "via [lf](bold green) ";

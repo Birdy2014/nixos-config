@@ -7,7 +7,11 @@
 
     settings = {
       manager = {
-        ratio = [ 2 4 6 ];
+        ratio = [
+          2
+          4
+          6
+        ];
         sort_by = "natural";
         sort_dir_first = true;
         linemode = "size";
@@ -17,11 +21,13 @@
         max_height = 720;
         image_filter = "lanczos3";
       };
-      opener.play = [{
-        run = ''xdg-open "$@"'';
-        desc = "Open";
-        for = "linux";
-      }];
+      opener.play = [
+        {
+          run = ''xdg-open "$@"'';
+          desc = "Open";
+          for = "linux";
+        }
+      ];
     };
 
     keymap = {
@@ -32,7 +38,10 @@
           desc = "Enter the child directory, or open the file";
         }
         {
-          on = [ "g" "i" ];
+          on = [
+            "g"
+            "i"
+          ];
           run = "cd /run/media/$USER";
           desc = "Go to the media directory";
         }

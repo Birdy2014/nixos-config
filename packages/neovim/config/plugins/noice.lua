@@ -1,4 +1,4 @@
-require("noice").setup {
+require("noice").setup({
     cmdline = {
         enabled = true,
         view = "cmdline_popup",
@@ -37,7 +37,7 @@ require("noice").setup {
         },
         signature = {
             enabled = false,
-        }
+        },
     },
     -- you can enable a preset for easier configuration
     presets = {
@@ -50,6 +50,6 @@ require("noice").setup {
     views = {
         mini = {
             timeout = 5000,
-        }
+        },
     },
-}
+})

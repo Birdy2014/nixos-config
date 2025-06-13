@@ -1,134 +1,148 @@
-{ inputs, pkgs, pkgsSelf, ... }:
+{
+  inputs,
+  pkgs,
+  pkgsSelf,
+  ...
+}:
 
 {
-  programs.firefox = let
-    commonSettings = {
-      # Deactivate disk cache to reduce unnecessary disk writes
-      "browser.cache.disk.enable" = false;
-      "browser.cache.memory.enable" = true;
-      "browser.cache.memory.capacity" = 1048576; # 1GiB
+  programs.firefox =
+    let
+      commonSettings = {
+        # Deactivate disk cache to reduce unnecessary disk writes
+        "browser.cache.disk.enable" = false;
+        "browser.cache.memory.enable" = true;
+        "browser.cache.memory.capacity" = 1048576; # 1GiB
 
-      # Disable fullscreen
-      "full-screen-api.ignore-widgets" = true;
+        # Disable fullscreen
+        "full-screen-api.ignore-widgets" = true;
 
-      # Autoplay
-      "media.autoplay.block-event.enabled" = true;
-      "media.autoplay.default" = 5;
+        # Autoplay
+        "media.autoplay.block-event.enabled" = true;
+        "media.autoplay.default" = 5;
 
-      # Hardware accelerated video playback
-      # Will be enabled by default on AMD with https://bugzilla.mozilla.org/show_bug.cgi?id=1837140
-      "media.ffmpeg.vaapi.enabled" = true;
+        # Hardware accelerated video playback
+        # Will be enabled by default on AMD with https://bugzilla.mozilla.org/show_bug.cgi?id=1837140
+        "media.ffmpeg.vaapi.enabled" = true;
 
-      # UI
-      "browser.uidensity" = 1;
-      "browser.tabs.inTitlebar" = 0;
+        # UI
+        "browser.uidensity" = 1;
+        "browser.tabs.inTitlebar" = 0;
 
-      # Enable DRM :(
-      "media.eme.enabled" = true;
+        # Enable DRM :(
+        "media.eme.enabled" = true;
 
-      # Ask where to save files
-      "browser.download.useDownloadDir" = false;
+        # Ask where to save files
+        "browser.download.useDownloadDir" = false;
 
-      # Enable HTTPS only mode
-      "dom.security.https_only_mode" = true;
+        # Enable HTTPS only mode
+        "dom.security.https_only_mode" = true;
 
-      # Show punycode in URLs to prevent homograph attacks
-      "network.IDN_show_punycode" = true;
+        # Show punycode in URLs to prevent homograph attacks
+        "network.IDN_show_punycode" = true;
 
-      # Extensions
-      "extensions.enabledScopes" = 5;
-      "extensions.autoDisableScopes" =
-        0; # Auto-enable extensions that are installed via home-manager
-      "extensions.webextensions.restrictedDomains" = "";
+        # Extensions
+        "extensions.enabledScopes" = 5;
+        "extensions.autoDisableScopes" = 0; # Auto-enable extensions that are installed via home-manager
+        "extensions.webextensions.restrictedDomains" = "";
 
-      # Disable annoying firefox functionality
-      "browser.aboutConfig.showWarning" = false; # about:config warning
-      "browser.aboutwelcome.enabled" = false;
-      "browser.formfill.enable" = false;
-      "browser.newtabpage.activity-stream.feeds.topsites" = false;
-      "browser.translations.automaticallyPopup" = false;
-      "extensions.formautofill.creditCards.enabled" = false;
-      "extensions.pocket.enabled" = false;
-      "identity.fxaccounts.enabled" = false; # Firefox sync
-      "privacy.webrtc.legacyGlobalIndicator" = false; # Sharing indicator
-      "signon.autofillForms" = false;
-      "signon.rememberSignons" = false;
+        # Disable annoying firefox functionality
+        "browser.aboutConfig.showWarning" = false; # about:config warning
+        "browser.aboutwelcome.enabled" = false;
+        "browser.formfill.enable" = false;
+        "browser.newtabpage.activity-stream.feeds.topsites" = false;
+        "browser.translations.automaticallyPopup" = false;
+        "extensions.formautofill.creditCards.enabled" = false;
+        "extensions.pocket.enabled" = false;
+        "identity.fxaccounts.enabled" = false; # Firefox sync
+        "privacy.webrtc.legacyGlobalIndicator" = false; # Sharing indicator
+        "signon.autofillForms" = false;
+        "signon.rememberSignons" = false;
 
-      # Disable telemetry
-      "app.shield.optoutstudies.enabled" = false;
-      "browser.discovery.enabled" = false;
-      "datareporting.healthreport.uploadEnabled" = false;
-      "extensions.getAddons.showPane" = false;
-      "extensions.htmlaboutaddons.recommendations.enabled" = false;
-      "dom.private-attribution.submission.enabled" = false;
+        # Disable telemetry
+        "app.shield.optoutstudies.enabled" = false;
+        "browser.discovery.enabled" = false;
+        "datareporting.healthreport.uploadEnabled" = false;
+        "extensions.getAddons.showPane" = false;
+        "extensions.htmlaboutaddons.recommendations.enabled" = false;
+        "dom.private-attribution.submission.enabled" = false;
 
-      # Tracking and fingerprinting protection
-      "privacy.fingerprintingProtection" = true;
-      "privacy.trackingprotection.enabled" = true;
-      "privacy.trackingprotection.emailtracking.enabled" = true;
-      "privacy.trackingprotection.socialtracking.enabled" = true;
-    };
+        # Tracking and fingerprinting protection
+        "privacy.fingerprintingProtection" = true;
+        "privacy.trackingprotection.enabled" = true;
+        "privacy.trackingprotection.emailtracking.enabled" = true;
+        "privacy.trackingprotection.socialtracking.enabled" = true;
+      };
 
-    inherit (import "${inputs.rycee-nur-expressions}/default.nix" {
-      inherit pkgs;
-    })
-      firefox-addons;
+      inherit
+        (import "${inputs.rycee-nur-expressions}/default.nix" {
+          inherit pkgs;
+        })
+        firefox-addons
+        ;
 
-    commonExtensions = with firefox-addons; [ ublock-origin ];
-  in {
-    enable = true;
-    nativeMessagingHosts = with pkgs; [ tridactyl-native keepassxc ];
-    profiles = {
-      default = {
-        id = 0;
-        name = "default";
-        isDefault = true;
-        settings = commonSettings // {
-          # History customisation
-          "privacy.history.custom" = true;
-          "privacy.sanitize.sanitizeOnShutdown" = true;
-          "privacy.clearOnShutdown.cache" = true;
-          "privacy.clearOnShutdown.cookies" = true;
-          "privacy.clearOnShutdown.downloads" = true;
-          "privacy.clearOnShutdown.formdata" = true;
-          "privacy.clearOnShutdown.history" = true;
-          "privacy.clearOnShutdown.offlineApps" = true;
-          "privacy.clearOnShutdown.sessions" = true;
-          "privacy.clearOnShutdown.sitesettings" = false;
+      commonExtensions = with firefox-addons; [ ublock-origin ];
+    in
+    {
+      enable = true;
+      nativeMessagingHosts = with pkgs; [
+        tridactyl-native
+        keepassxc
+      ];
+      profiles = {
+        default = {
+          id = 0;
+          name = "default";
+          isDefault = true;
+          settings = commonSettings // {
+            # History customisation
+            "privacy.history.custom" = true;
+            "privacy.sanitize.sanitizeOnShutdown" = true;
+            "privacy.clearOnShutdown.cache" = true;
+            "privacy.clearOnShutdown.cookies" = true;
+            "privacy.clearOnShutdown.downloads" = true;
+            "privacy.clearOnShutdown.formdata" = true;
+            "privacy.clearOnShutdown.history" = true;
+            "privacy.clearOnShutdown.offlineApps" = true;
+            "privacy.clearOnShutdown.sessions" = true;
+            "privacy.clearOnShutdown.sitesettings" = false;
+          };
+          extensions.packages =
+            commonExtensions
+            ++ (with firefox-addons; [
+              keepassxc-browser
+              tridactyl
+              darkreader
+              return-youtube-dislikes
+            ]);
+          search.default = "ddg";
+          search.force = true;
+          userChrome = ''
+            @import "${pkgsSelf.lepton-firefox-theme}/userChrome.css";
+          '';
+          userContent = ''
+            @import "${pkgsSelf.lepton-firefox-theme}/userContent.css";
+          '';
+          extraConfig = builtins.readFile "${pkgsSelf.lepton-firefox-theme}/user.js";
         };
-        extensions.packages = commonExtensions ++ (with firefox-addons; [
-          keepassxc-browser
-          tridactyl
-          darkreader
-          return-youtube-dislikes
-        ]);
-        search.default = "ddg";
-        search.force = true;
-        userChrome = ''
-          @import "${pkgsSelf.lepton-firefox-theme}/userChrome.css";
-        '';
-        userContent = ''
-          @import "${pkgsSelf.lepton-firefox-theme}/userContent.css";
-        '';
-        extraConfig =
-          builtins.readFile "${pkgsSelf.lepton-firefox-theme}/user.js";
-      };
 
-      persistent = {
-        id = 1;
-        name = "persistent";
-        isDefault = false;
-        settings = commonSettings;
-        extensions.packages = commonExtensions ++ (with firefox-addons; [
-          return-youtube-dislikes
-          youtube-shorts-block
-          sponsorblock
-        ]);
-        search.default = "ddg";
-        search.force = true;
+        persistent = {
+          id = 1;
+          name = "persistent";
+          isDefault = false;
+          settings = commonSettings;
+          extensions.packages =
+            commonExtensions
+            ++ (with firefox-addons; [
+              return-youtube-dislikes
+              youtube-shorts-block
+              sponsorblock
+            ]);
+          search.default = "ddg";
+          search.force = true;
+        };
       };
     };
-  };
 
   xdg.configFile."tridactyl/tridactylrc".text = ''
     set smoothscroll true

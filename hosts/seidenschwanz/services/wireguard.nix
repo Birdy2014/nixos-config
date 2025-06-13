@@ -1,4 +1,10 @@
-{ config, lib, myLib, pkgs, ... }:
+{
+  config,
+  lib,
+  myLib,
+  pkgs,
+  ...
+}:
 
 let
   peers = [
@@ -35,7 +41,8 @@ let
   ];
 
   vpnIp6Addr = n: "fd00:90::100:${myLib.decToHex n}";
-in {
+in
+{
   environment.systemPackages = [ pkgs.wireguard-tools ];
 
   networking.firewall.allowedUDPPorts = [ 49626 ];
@@ -53,11 +60,19 @@ in {
         PrivateKeyFile = config.sops.secrets."wireguard/private-key".path;
         ListenPort = 49626;
       };
-      wireguardPeers = map ({ publicKey, pskFile, n, ... }: {
-        PublicKey = publicKey;
-        PresharedKeyFile = lib.mkIf (pskFile != null) pskFile;
-        AllowedIPs = [ (vpnIp6Addr n) ];
-      }) peers;
+      wireguardPeers = map (
+        {
+          publicKey,
+          pskFile,
+          n,
+          ...
+        }:
+        {
+          PublicKey = publicKey;
+          PresharedKeyFile = lib.mkIf (pskFile != null) pskFile;
+          AllowedIPs = [ (vpnIp6Addr n) ];
+        }
+      ) peers;
     };
 
     networks."50-wg0" = {
@@ -83,20 +98,21 @@ in {
       auth.token = "{{ .Envs.FRP_TOKEN }}";
       transport.protocol = "kcp";
 
-      proxies = [{
-        name = "wireguard";
-        type = "udp";
-        localIp = "127.0.0.1";
-        localPort = 49626;
-        remotePort = 49626;
-        transport.useEncryption = false;
-        transport.useCompression = false;
-      }];
+      proxies = [
+        {
+          name = "wireguard";
+          type = "udp";
+          localIp = "127.0.0.1";
+          localPort = 49626;
+          remotePort = 49626;
+          transport.useEncryption = false;
+          transport.useCompression = false;
+        }
+      ];
     };
   };
 
-  systemd.services.frp.serviceConfig.EnvironmentFile =
-    config.sops.templates."frp-token.env".path;
+  systemd.services.frp.serviceConfig.EnvironmentFile = config.sops.templates."frp-token.env".path;
 
   networking.nftables = {
     enable = true;

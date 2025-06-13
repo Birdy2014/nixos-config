@@ -5,8 +5,15 @@
     enable = true;
 
     settings =
-      let inherit (config.my.theme) background-secondary text accent red;
-      in {
+      let
+        inherit (config.my.theme)
+          background-secondary
+          text
+          accent
+          red
+          ;
+      in
+      {
         global = {
           width = 300;
           height = 200;

@@ -1,10 +1,22 @@
-{ config, inputs, lib, pkgs, ... }:
+{
+  config,
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   nix.settings = {
-    allowed-users = [ "root" "@wheel" ];
+    allowed-users = [
+      "root"
+      "@wheel"
+    ];
     auto-optimise-store = true;
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     keep-derivations = true;
     keep-outputs = true;
     flake-registry = "";
@@ -16,8 +28,7 @@
   # to be able to rebuild the system while offline.
   environment.etc.flake-inputs.source = pkgs.runCommand "flake-inputs" { } ''
     mkdir $out
-    ${lib.concatLines
-    (lib.mapAttrsToList (name: input: "ln -s ${input} $out/${name}") inputs)}
+    ${lib.concatLines (lib.mapAttrsToList (name: input: "ln -s ${input} $out/${name}") inputs)}
   '';
 
   nix.gc = {
@@ -38,12 +49,15 @@
 
   system.tools.nixos-option.enable = false;
 
-  _module.args = let inherit (config.nixpkgs.hostPlatform) system;
-  in {
-    pkgsSelf = inputs.self.packages.${system};
-    pkgsUnstable = import inputs.nixpkgs-unstable {
-      system = system;
-      config.allowUnfree = true;
+  _module.args =
+    let
+      inherit (config.nixpkgs.hostPlatform) system;
+    in
+    {
+      pkgsSelf = inputs.self.packages.${system};
+      pkgsUnstable = import inputs.nixpkgs-unstable {
+        system = system;
+        config.allowUnfree = true;
+      };
     };
-  };
 }

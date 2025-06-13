@@ -2,24 +2,28 @@
 
 # TODO: Add `my.proxy.domains.<name>.localOnly` or `allowPublic`?
 
-let cfg = config.my.proxy;
-in {
+let
+  cfg = config.my.proxy;
+in
+{
   options.my.proxy.domains = lib.mkOption {
     description = "Domains to proxy";
     default = { };
-    type = lib.types.attrsOf (lib.types.submodule {
-      options = {
-        proxyPass = lib.mkOption {
-          type = lib.types.str;
-          description = "The target url of the proxy.";
+    type = lib.types.attrsOf (
+      lib.types.submodule {
+        options = {
+          proxyPass = lib.mkOption {
+            type = lib.types.str;
+            description = "The target url of the proxy.";
+          };
+          enableAuthelia = lib.mkOption {
+            type = lib.types.bool;
+            default = false;
+            description = "Whether to enable authelia with trusted header sso";
+          };
         };
-        enableAuthelia = lib.mkOption {
-          type = lib.types.bool;
-          default = false;
-          description = "Whether to enable authelia with trusted header sso";
-        };
-      };
-    });
+      }
+    );
   };
 
   config = {
@@ -95,9 +99,7 @@ in {
       RFC2136_NAMESERVER=ns.mvogel.dev
       RFC2136_TSIG_ALGORITHM=hmac-sha256.
       RFC2136_TSIG_KEY=seidenschwanz.mvogel.dev
-      RFC2136_TSIG_SECRET=${
-        config.sops.placeholder."bind-dnskey_seidenschwanz.mvogel.dev"
-      }
+      RFC2136_TSIG_SECRET=${config.sops.placeholder."bind-dnskey_seidenschwanz.mvogel.dev"}
     '';
   };
 }

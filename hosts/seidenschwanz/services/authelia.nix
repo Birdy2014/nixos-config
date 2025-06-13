@@ -14,36 +14,44 @@
       identity_providers.oidc = {
         authorization_policies.immich = {
           default_policy = "deny";
-          rules = [{
-            subject = "group:immich";
-            policy = "one_factor";
-          }];
+          rules = [
+            {
+              subject = "group:immich";
+              policy = "one_factor";
+            }
+          ];
         };
 
-        clients = [{
-          client_name = "immich";
-          client_id =
-            "WKt0QaP4K0gVvOMPSKb0RA4DSj.pSzqfQP1Z-9QK1tSL0-guUAqN2b22maNyGner";
-          client_secret =
-            "$pbkdf2-sha512$310000$mD0NvJt7jqVOTguxSh7XOA$nH3Cg0FlQ/MM41prPpC75fIbNCO/Gw7Bt9Y1WnmNNC3paJ7oe7cCSsOksRKpKxHqUDSTAHZhQsol.M9sl3BWrw";
-          public = false;
-          authorization_policy = "immich";
-          redirect_uris = [
-            "https://immich.seidenschwanz.mvogel.dev/auth/login"
-            "https://immich.seidenschwanz.mvogel.dev/user-settings"
-            "app.immich:///oauth-callback"
-          ];
-          scopes = [ "openid" "profile" "email" ];
-          userinfo_signed_response_alg = "none";
-          token_endpoint_auth_method = "client_secret_post";
-          consent_mode = "pre-configured";
-        }];
+        clients = [
+          {
+            client_name = "immich";
+            client_id = "WKt0QaP4K0gVvOMPSKb0RA4DSj.pSzqfQP1Z-9QK1tSL0-guUAqN2b22maNyGner";
+            client_secret = "$pbkdf2-sha512$310000$mD0NvJt7jqVOTguxSh7XOA$nH3Cg0FlQ/MM41prPpC75fIbNCO/Gw7Bt9Y1WnmNNC3paJ7oe7cCSsOksRKpKxHqUDSTAHZhQsol.M9sl3BWrw";
+            public = false;
+            authorization_policy = "immich";
+            redirect_uris = [
+              "https://immich.seidenschwanz.mvogel.dev/auth/login"
+              "https://immich.seidenschwanz.mvogel.dev/user-settings"
+              "app.immich:///oauth-callback"
+            ];
+            scopes = [
+              "openid"
+              "profile"
+              "email"
+            ];
+            userinfo_signed_response_alg = "none";
+            token_endpoint_auth_method = "client_secret_post";
+            consent_mode = "pre-configured";
+          }
+        ];
       };
 
-      session.cookies = [{
-        domain = "seidenschwanz.mvogel.dev";
-        authelia_url = "https://auth.seidenschwanz.mvogel.dev";
-      }];
+      session.cookies = [
+        {
+          domain = "seidenschwanz.mvogel.dev";
+          authelia_url = "https://auth.seidenschwanz.mvogel.dev";
+        }
+      ];
 
       storage.local.path = "/var/lib/authelia-main/authelia.db";
 
@@ -64,8 +72,7 @@
           start_tls = false;
           base_dn = "dc=mvogel,dc=dev";
           additional_users_dn = "ou=people";
-          users_filter =
-            "(&({username_attribute}={input})(objectClass=person))";
+          users_filter = "(&({username_attribute}={input})(objectClass=person))";
           additional_groups_dn = "ou=groups";
           groups_filter = "(member={dn})";
           user = "uid=admin,ou=people,dc=mvogel,dc=dev";
@@ -75,20 +82,16 @@
 
     secrets = with config.sops; {
       jwtSecretFile = secrets."authelia/jwtSecretFile".path;
-      storageEncryptionKeyFile =
-        secrets."authelia/storageEncryptionKeyFile".path;
-      oidcIssuerPrivateKeyFile =
-        secrets."authelia/oidcIssuerPrivateKeyFile".path;
+      storageEncryptionKeyFile = secrets."authelia/storageEncryptionKeyFile".path;
+      oidcIssuerPrivateKeyFile = secrets."authelia/oidcIssuerPrivateKeyFile".path;
       oidcHmacSecretFile = secrets."authelia/oidcHmacSecretFile".path;
     };
 
     environmentVariables = {
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE =
-        config.sops.secrets.ldap-admin-password.path;
+      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE = config.sops.secrets.ldap-admin-password.path;
     };
   };
 
   my.proxy.domains.auth.proxyPass = "http://localhost:9091";
-  services.nginx.virtualHosts.auth.locations."/".recommendedProxySettings =
-    true;
+  services.nginx.virtualHosts.auth.locations."/".recommendedProxySettings = true;
 }

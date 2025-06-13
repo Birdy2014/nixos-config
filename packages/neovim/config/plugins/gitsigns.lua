@@ -1,6 +1,6 @@
 local gitsigns = require("gitsigns")
 
-gitsigns.setup {
+gitsigns.setup({
     signs = {
         add = { text = "▎" },
         change = { text = "▎" },
@@ -9,7 +9,7 @@ gitsigns.setup {
         changedelete = { text = "▎" },
         untracked = { text = "▎" },
     },
-}
+})
 
 vim.keymap.set("n", "[h", gitsigns.prev_hunk, { desc = "Previous git hunk" })
 vim.keymap.set("n", "]h", gitsigns.next_hunk, { desc = "Next git hunk" })

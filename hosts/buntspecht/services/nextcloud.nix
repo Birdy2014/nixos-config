@@ -1,7 +1,9 @@
 { config, pkgs, ... }:
 
-let fqdn = "cloud.mvogel.dev";
-in {
+let
+  fqdn = "cloud.mvogel.dev";
+in
+{
   services.nextcloud = {
     enable = true;
     package = pkgs.nextcloud31;

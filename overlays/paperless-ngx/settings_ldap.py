@@ -32,12 +32,16 @@ with open(password_file, "r") as file:
 
 ldap_user_base_dn = getenv_required("AUTH_LDAP_USER_BASE_DN")
 ldap_user_filter = getenv_required("AUTH_LDAP_USER_FILTER")
-AUTH_LDAP_USER_SEARCH = LDAPSearch(ldap_user_base_dn, ldap.SCOPE_SUBTREE, ldap_user_filter)
+AUTH_LDAP_USER_SEARCH = LDAPSearch(
+    ldap_user_base_dn, ldap.SCOPE_SUBTREE, ldap_user_filter
+)
 
 
 ldap_group_base_dn = getenv_required("AUTH_LDAP_GROUP_BASE_DN")
 ldap_group_filter = "(objectClass=groupOfUniqueNames)"
-AUTH_LDAP_GROUP_SEARCH = LDAPSearch(ldap_group_base_dn, ldap.SCOPE_SUBTREE, ldap_group_filter)
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
+    ldap_group_base_dn, ldap.SCOPE_SUBTREE, ldap_group_filter
+)
 AUTH_LDAP_GROUP_TYPE = GroupOfUniqueNamesType()
 AUTH_LDAP_MIRROR_GROUPS = True
 

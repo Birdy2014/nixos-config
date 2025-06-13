@@ -1,5 +1,5 @@
 local cmp = require("blink-cmp")
-cmp.setup {
+cmp.setup({
     keymap = {
         preset = "none",
 
@@ -17,15 +17,15 @@ cmp.setup {
                 end
             end,
             function(cmp)
-                return cmp.select_next({ on_ghost_text = true, })
+                return cmp.select_next({ on_ghost_text = true })
             end,
-            "fallback"
+            "fallback",
         },
         ["<S-Tab>"] = {
             function(cmp)
-                return cmp.select_prev({ on_ghost_text = true, })
+                return cmp.select_prev({ on_ghost_text = true })
             end,
-            "fallback"
+            "fallback",
         },
         ["<C-Tab>"] = { "snippet_forward", "fallback" },
 
@@ -33,17 +33,17 @@ cmp.setup {
     },
 
     appearance = {
-        nerd_font_variant = "normal";
+        nerd_font_variant = "normal",
     },
 
     completion = {
         keyword = {
-            range = "full";
+            range = "full",
         },
         list = {
             selection = {
                 preselect = function(ctx)
-                    local active_clients = vim.lsp.get_clients({ bufnr = 0, })
+                    local active_clients = vim.lsp.get_clients({ bufnr = 0 })
                     return #active_clients > 0
                 end,
                 auto_insert = false,
@@ -86,4 +86,4 @@ cmp.setup {
             },
         },
     },
-}
+})

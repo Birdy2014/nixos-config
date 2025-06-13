@@ -13,10 +13,19 @@
 
     networks."10-lan" = {
       matchConfig.Name = "lan";
-      address = [ "192.168.90.21/24" "fd00:90::21/64" ];
-      gateway = [ "192.168.90.1" "fe80::1eed:6fff:fe98:ee7e" ];
+      address = [
+        "192.168.90.21/24"
+        "fd00:90::21/64"
+      ];
+      gateway = [
+        "192.168.90.1"
+        "fe80::1eed:6fff:fe98:ee7e"
+      ];
       domains = [ "fritz.box" ];
-      dns = [ "fd00:90::10" "192.168.90.10" ];
+      dns = [
+        "fd00:90::10"
+        "192.168.90.10"
+      ];
       networkConfig = {
         IPv6PrivacyExtensions = true;
         MulticastDNS = true;

@@ -45,28 +45,35 @@
         };
 
         allowlists = {
-          ads = [''
-            s.youtube.com # Youtube Histroy
-            s2.youtube.com # Youtube Histroy
-            cdn.jsdelivr.net # Breaks some websites
-            tagm.tchibo.de # Tchibo Password reset email
-            click.discord.com # Für Discord E-Mail Verifikation
-          ''];
+          ads = [
+            ''
+              s.youtube.com # Youtube Histroy
+              s2.youtube.com # Youtube Histroy
+              cdn.jsdelivr.net # Breaks some websites
+              tagm.tchibo.de # Tchibo Password reset email
+              click.discord.com # Für Discord E-Mail Verifikation
+            ''
+          ];
         };
 
-        clientGroupsBlock = { default = [ "ads" ]; };
+        clientGroupsBlock = {
+          default = [ "ads" ];
+        };
       };
 
-      customDNS.mapping = (lib.listToAttrs (map (name: {
-        name = "${name}.seidenschwanz.mvogel.dev";
-        value = "fd00:90::10";
-      }) (lib.attrNames config.my.proxy.domains))) // {
-        "seidenschwanz.mvogel.dev" =
-          "fd00:90::10"; # This is not a wildcard because of my patch
-        "fritz.box" = "fd00:90::1eed:6fff:fe98:ee7e";
-        "rotkehlchen.fritz.box" = "fd00:90::4247:4a9a:1e40:eeb6";
-        "rotkehlchen.mvogel.dev" = "fd00:90::4247:4a9a:1e40:eeb6";
-      };
+      customDNS.mapping =
+        (lib.listToAttrs (
+          map (name: {
+            name = "${name}.seidenschwanz.mvogel.dev";
+            value = "fd00:90::10";
+          }) (lib.attrNames config.my.proxy.domains)
+        ))
+        // {
+          "seidenschwanz.mvogel.dev" = "fd00:90::10"; # This is not a wildcard because of my patch
+          "fritz.box" = "fd00:90::1eed:6fff:fe98:ee7e";
+          "rotkehlchen.fritz.box" = "fd00:90::4247:4a9a:1e40:eeb6";
+          "rotkehlchen.mvogel.dev" = "fd00:90::4247:4a9a:1e40:eeb6";
+        };
     };
   };
 

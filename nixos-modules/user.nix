@@ -1,7 +1,18 @@
-{ config, lib, myLib, pkgs, pkgsSelf, pkgsUnstable, inputs, ... }:
+{
+  config,
+  lib,
+  myLib,
+  pkgs,
+  pkgsSelf,
+  pkgsUnstable,
+  inputs,
+  ...
+}:
 
-let cfg = config.my.home;
-in {
+let
+  cfg = config.my.home;
+in
+{
   options.my.home = {
     stateVersion = lib.mkOption {
       type = lib.types.str;
@@ -20,8 +31,7 @@ in {
       description = "The maximum audio playback volume.";
     };
 
-    mpv.enableExpensiveEffects =
-      lib.mkEnableOption "expensive effects in mpv for high video quality.";
+    mpv.enableExpensiveEffects = lib.mkEnableOption "expensive effects in mpv for high video quality.";
   };
 
   imports = [ inputs.home-manager.nixosModules.home-manager ];
@@ -29,7 +39,11 @@ in {
   config = lib.mkIf config.my.desktop.enable {
     users.users.moritz = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "networkmanager" "i2c" ];
+      extraGroups = [
+        "wheel"
+        "networkmanager"
+        "i2c"
+      ];
       shell = pkgs.zsh;
       # Needed because zsh is not enabled globally to prevent issues with
       # duplicate completion settings in system and home-manager configuration
@@ -41,10 +55,19 @@ in {
     home-manager = {
       useUserPackages = true;
       useGlobalPkgs = true;
-      extraSpecialArgs = { inherit inputs myLib pkgsSelf pkgsUnstable; };
+      extraSpecialArgs = {
+        inherit
+          inputs
+          myLib
+          pkgsSelf
+          pkgsUnstable
+          ;
+      };
       users.moritz = {
-        imports = [ ../home { home.stateVersion = cfg.stateVersion; } ]
-          ++ cfg.extraModules;
+        imports = [
+          ../home
+          { home.stateVersion = cfg.stateVersion; }
+        ] ++ cfg.extraModules;
       };
     };
 

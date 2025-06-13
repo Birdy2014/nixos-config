@@ -25,8 +25,13 @@
     systemd-boot.enable = true;
   };
 
-  boot.initrd.availableKernelModules =
-    [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "ahci"
+    "nvme"
+    "usb_storage"
+    "sd_mod"
+  ];
   boot.kernelModules = [ "kvm-intel" ];
   nixpkgs.hostPlatform = "x86_64-linux";
   hardware.enableRedistributableFirmware = true;
@@ -34,7 +39,10 @@
 
   networking.hostId = "c1004e7c";
 
-  environment.systemPackages = with pkgs; [ openseachest fatrace ];
+  environment.systemPackages = with pkgs; [
+    openseachest
+    fatrace
+  ];
   services.thermald.enable = true;
 
   system.stateVersion = "23.11";

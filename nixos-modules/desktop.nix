@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.my.desktop = {
@@ -24,15 +29,13 @@
       primary = lib.mkOption {
         type = with lib.types; nullOr str;
         default = null;
-        description =
-          "Name of primary screen as shown by `swaymsg -t get_outputs`";
+        description = "Name of primary screen as shown by `swaymsg -t get_outputs`";
       };
 
       secondary = lib.mkOption {
         type = with lib.types; nullOr str;
         default = null;
-        description =
-          "Name of secondary screen as shown by `swaymsg -t get_outputs`";
+        description = "Name of secondary screen as shown by `swaymsg -t get_outputs`";
       };
     };
   };
@@ -60,8 +63,10 @@
     services.udisks2.enable = true;
 
     # Needed for home-manager configured xdg-desktop-portal
-    environment.pathsToLink =
-      [ "/share/xdg-desktop-portal" "/share/applications" ];
+    environment.pathsToLink = [
+      "/share/xdg-desktop-portal"
+      "/share/applications"
+    ];
 
     fonts = {
       enableDefaultPackages = true;
@@ -71,10 +76,18 @@
       fontconfig = {
         enable = true;
 
-        defaultFonts.serif = [ "NotoSerif Nerd Font" "Noto Serif CJK JP" ];
-        defaultFonts.sansSerif = [ "NotoSans Nerd Font" "Noto Sans CJK JP" ];
-        defaultFonts.monospace =
-          [ "JetBrainsMono Nerd Font" "Noto Sans Mono CJK JP" ];
+        defaultFonts.serif = [
+          "NotoSerif Nerd Font"
+          "Noto Serif CJK JP"
+        ];
+        defaultFonts.sansSerif = [
+          "NotoSans Nerd Font"
+          "Noto Sans CJK JP"
+        ];
+        defaultFonts.monospace = [
+          "JetBrainsMono Nerd Font"
+          "Noto Sans Mono CJK JP"
+        ];
         defaultFonts.emoji = [ "Noto Color Emoji" ];
       };
 
@@ -93,7 +106,10 @@
       enable = true;
       type = "fcitx5";
       fcitx5 = {
-        addons = with pkgs; [ fcitx5-mozc fcitx5-gtk ];
+        addons = with pkgs; [
+          fcitx5-mozc
+          fcitx5-gtk
+        ];
         settings = {
           inputMethod = {
             "Groups/0" = {

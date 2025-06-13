@@ -7,10 +7,12 @@
     mediaLocation = "/zpool/encrypted/immich";
   };
 
-  users.users.immich.extraGroups = [ "video" "render" ];
+  users.users.immich.extraGroups = [
+    "video"
+    "render"
+  ];
 
-  my.proxy.domains.immich.proxyPass = with config.services.immich;
-    "http://${host}:${toString port}";
+  my.proxy.domains.immich.proxyPass = with config.services.immich; "http://${host}:${toString port}";
 
   services.nginx.virtualHosts.immich = {
     locations."/" = {

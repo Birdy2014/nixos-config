@@ -4,8 +4,7 @@
   # Workaround for Creative Sound BlasterX G6
   systemd = {
     services.soundblaster-reset-usb = {
-      script =
-        "${pkgs.usb-modeswitch}/bin/usb_modeswitch -v 0x041e -p 0x3256 --reset-usb";
+      script = "${pkgs.usb-modeswitch}/bin/usb_modeswitch -v 0x041e -p 0x3256 --reset-usb";
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "oneshot";
@@ -30,9 +29,17 @@
       # Wait until wireplumber has set the alsa options.
       preStart = "${pkgs.coreutils-full}/bin/sleep 5";
       # pipewire.service reached on initial startup sound.target is reached on subsequent soundcard events
-      wantedBy = [ "sound.target" "pipewire.service" ];
-      after = [ "pipewire.service" "wireplumber.service" ];
-      serviceConfig = { Type = "oneshot"; };
+      wantedBy = [
+        "sound.target"
+        "pipewire.service"
+      ];
+      after = [
+        "pipewire.service"
+        "wireplumber.service"
+      ];
+      serviceConfig = {
+        Type = "oneshot";
+      };
     };
   };
 
@@ -46,27 +53,26 @@
 
   # From ArchWiki: https://wiki.archlinux.org/title/PipeWire#Noticeable_audio_delay_or_audible_pop/crack_when_starting_playback
   services.pipewire.wireplumber.configPackages = [
-    (pkgs.writeTextDir
-      "share/wireplumber/wireplumber.conf.d/51-disable-suspension.conf" ''
-        monitor.alsa.rules = [
-          {
-            matches = [
-              {
-                # Matches all sources
-                node.name = "~alsa_input.*"
-              },
-              {
-                # Matches all sinks
-                node.name = "~alsa_output.*"
-              }
-            ]
-            actions = {
-              update-props = {
-                session.suspend-timeout-seconds = 0
-              }
+    (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/51-disable-suspension.conf" ''
+      monitor.alsa.rules = [
+        {
+          matches = [
+            {
+              # Matches all sources
+              node.name = "~alsa_input.*"
+            },
+            {
+              # Matches all sinks
+              node.name = "~alsa_output.*"
+            }
+          ]
+          actions = {
+            update-props = {
+              session.suspend-timeout-seconds = 0
             }
           }
-        ]
-      '')
+        }
+      ]
+    '')
   ];
 }

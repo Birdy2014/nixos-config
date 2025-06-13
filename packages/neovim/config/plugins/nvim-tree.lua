@@ -2,10 +2,10 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
     pattern = "NvimTree*",
     callback = function()
         vim.opt_local.cursorline = true
-    end
+    end,
 })
 
-require("nvim-tree").setup {
+require("nvim-tree").setup({
     hijack_cursor = true,
     sync_root_with_cwd = true,
     diagnostics = {
@@ -15,7 +15,7 @@ require("nvim-tree").setup {
             info = "",
             warning = "",
             error = "",
-        }
+        },
     },
     update_focused_file = {
         enable = true,
@@ -26,15 +26,15 @@ require("nvim-tree").setup {
             "^%.git$",
             "^node_modules$",
             "^%.cache$",
-            "^%.ccls-cache$"
+            "^%.ccls-cache$",
         },
     },
     actions = {
         change_dir = {
-            global = true
+            global = true,
         },
         open_file = {
-            resize_window = true
+            resize_window = true,
         },
     },
     view = {
@@ -95,8 +95,8 @@ require("nvim-tree").setup {
                 end
 
                 -- sort files with numbers correctly
-                local chars_a = {string.byte(a.name, 1, #a.name)}
-                local chars_b = {string.byte(b.name, 1, #b.name)}
+                local chars_a = { string.byte(a.name, 1, #a.name) }
+                local chars_b = { string.byte(b.name, 1, #b.name) }
                 local i_a = 1
                 local i_b = 1
                 for i = 1, math.max(#chars_a, #chars_b) do
@@ -140,8 +140,8 @@ require("nvim-tree").setup {
                     i_b = i_b + 1
                 end
             end)
-        end
-    }
-}
+        end,
+    },
+})
 
 vim.keymap.set("n", "<leader>tt", "<cmd>NvimTreeToggle<cr>", { desc = "Toggle NvimTree" })

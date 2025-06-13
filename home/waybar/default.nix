@@ -1,44 +1,59 @@
-{ config, inputs, osConfig, lib, pkgs, ... }:
+{
+  config,
+  inputs,
+  osConfig,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   programs.waybar = {
     enable = true;
-    style = let
-      colorizer = inputs.nix-colorizer;
-      increaseChroma = hex:
-        colorizer.oklchToHex (let okclh = colorizer.hexToOklch hex;
-        in {
-          inherit (okclh) L h;
-          C = okclh.C + 5.0e-2;
-        });
-    in with config.my.theme;
-    ''
-      @define-color accent ${accent};
-      @define-color accent-text ${accent-text};
-      @define-color background-primary ${background-primary};
-      @define-color background-secondary ${background-secondary};
-      @define-color background-tertiary ${background-tertiary};
-      @define-color text ${text};
-      @define-color text-inactive ${text-inactive};
-      @define-color black ${black};
-      @define-color light-black ${light-black};
-      @define-color red ${red};
-      @define-color light-red ${light-red};
-      @define-color green ${green};
-      @define-color light-green ${light-green};
-      @define-color yellow ${yellow};
-      @define-color light-yellow ${light-yellow};
-      @define-color blue ${blue};
-      @define-color light-blue ${light-blue};
-      @define-color magenta ${magenta};
-      @define-color light-magenta ${light-magenta};
-      @define-color cyan ${cyan};
-      @define-color light-cyan ${light-cyan};
-      @define-color white ${white};
-      @define-color light-white ${light-white};
-      @define-color accent ${increaseChroma accent};
-      @define-color accent-complementary ${increaseChroma accent-complementary};
-    '' + builtins.readFile ./style.css;
+    style =
+      let
+        colorizer = inputs.nix-colorizer;
+        increaseChroma =
+          hex:
+          colorizer.oklchToHex (
+            let
+              okclh = colorizer.hexToOklch hex;
+            in
+            {
+              inherit (okclh) L h;
+              C = okclh.C + 5.0e-2;
+            }
+          );
+      in
+      with config.my.theme;
+      ''
+        @define-color accent ${accent};
+        @define-color accent-text ${accent-text};
+        @define-color background-primary ${background-primary};
+        @define-color background-secondary ${background-secondary};
+        @define-color background-tertiary ${background-tertiary};
+        @define-color text ${text};
+        @define-color text-inactive ${text-inactive};
+        @define-color black ${black};
+        @define-color light-black ${light-black};
+        @define-color red ${red};
+        @define-color light-red ${light-red};
+        @define-color green ${green};
+        @define-color light-green ${light-green};
+        @define-color yellow ${yellow};
+        @define-color light-yellow ${light-yellow};
+        @define-color blue ${blue};
+        @define-color light-blue ${light-blue};
+        @define-color magenta ${magenta};
+        @define-color light-magenta ${light-magenta};
+        @define-color cyan ${cyan};
+        @define-color light-cyan ${light-cyan};
+        @define-color white ${white};
+        @define-color light-white ${light-white};
+        @define-color accent ${increaseChroma accent};
+        @define-color accent-complementary ${increaseChroma accent-complementary};
+      ''
+      + builtins.readFile ./style.css;
     systemd.enable = true;
 
     # Waybar doesn't properly reload when the settings are changed and has to be restarted.
@@ -50,7 +65,10 @@
         position = "left";
         width = 30;
         margin = "5";
-        modules-left = [ "sway/workspaces" "sway/mode" ];
+        modules-left = [
+          "sway/workspaces"
+          "sway/mode"
+        ];
         modules-right = [
           "privacy#screenshare"
           "privacy#audio-in"
@@ -65,21 +83,23 @@
         "sway/workspaces" = {
           disable-scroll = true;
           format = "{icon}";
-          persistent-workspaces = let
-            primaryOutputList =
-              if (isNull osConfig.my.desktop.screens.primary) then
-                [ ]
-              else
-                [ osConfig.my.desktop.screens.primary ];
-          in {
-            "1" = primaryOutputList;
-            "2" = primaryOutputList;
-            "3" = primaryOutputList;
-            "4" = primaryOutputList;
-            "5" = primaryOutputList;
-            "6" = primaryOutputList;
-            "7" = lib.mkIf osConfig.my.gaming.enable primaryOutputList;
-          };
+          persistent-workspaces =
+            let
+              primaryOutputList =
+                if (isNull osConfig.my.desktop.screens.primary) then
+                  [ ]
+                else
+                  [ osConfig.my.desktop.screens.primary ];
+            in
+            {
+              "1" = primaryOutputList;
+              "2" = primaryOutputList;
+              "3" = primaryOutputList;
+              "4" = primaryOutputList;
+              "5" = primaryOutputList;
+              "6" = primaryOutputList;
+              "7" = lib.mkIf osConfig.my.gaming.enable primaryOutputList;
+            };
           format-icons = {
             "1" = "󰋜";
             "2" = "󰈹";
@@ -116,7 +136,9 @@
           '';
           signal = 10;
         };
-        tray = { spacing = 10; };
+        tray = {
+          spacing = 10;
+        };
         clock = {
           format = "{:%Y-%m-%d %H:%M} 󰃰";
           tooltip-format = ''
@@ -126,7 +148,10 @@
         };
         backlight = {
           format = "{percent:>3}% {icon}";
-          format-icons = [ "" "" ];
+          format-icons = [
+            ""
+            ""
+          ];
           rotate = 90;
         };
         battery = {
@@ -140,18 +165,22 @@
           format-charging = "{capacity:>3}% 󰃨";
           format-plugged = "{capacity:>3}% ";
           format-alt = "{time} {icon}";
-          format-icons = [ " " " " " " " " " " ];
+          format-icons = [
+            " "
+            " "
+            " "
+            " "
+            " "
+          ];
           rotate = 90;
         };
         network = {
           interval = 10;
           format-wifi = "{essid} ({signalStrength:>3}%) 󰖩";
-          format-ethernet =
-            "{ifname} 󰌘 {bandwidthDownOctets:>3} 󰇚 {bandwidthUpOctets:>3} 󰕒";
+          format-ethernet = "{ifname} 󰌘 {bandwidthDownOctets:>3} 󰇚 {bandwidthUpOctets:>3} 󰕒";
           format-linked = "{ifname} (No IP) 󰌚";
           format-disconnected = "Disconnected 󰌙";
-          format-tooltip =
-            "{ifname} {ipaddr} {bandwidthDownOctets} 󰇚 {bandwidthUpOctets} 󰕒";
+          format-tooltip = "{ifname} {ipaddr} {bandwidthDownOctets} 󰇚 {bandwidthUpOctets} 󰕒";
           rotate = 90;
         };
         pulseaudio = {
@@ -167,29 +196,36 @@
             headset = "󰋎";
             phone = "󰏲";
             portable = "󰏲";
-            default = [ "" "" "" ];
+            default = [
+              ""
+              ""
+              ""
+            ];
           };
           max-volume = osConfig.my.home.max-volume;
-          on-click =
-            "${pkgs.sway}/bin/swaymsg exec ${pkgs.pavucontrol}/bin/pavucontrol";
+          on-click = "${pkgs.sway}/bin/swaymsg exec ${pkgs.pavucontrol}/bin/pavucontrol";
           rotate = 90;
           ignored-sinks = [ "Easy Effects Sink" ];
         };
         "privacy#screenshare" = {
           icon-size = 12;
-          modules = [{
-            type = "screenshare";
-            tooltip = true;
-            tooltip-icon-size = 24;
-          }];
+          modules = [
+            {
+              type = "screenshare";
+              tooltip = true;
+              tooltip-icon-size = 24;
+            }
+          ];
         };
         "privacy#audio-in" = {
           icon-size = 12;
-          modules = [{
-            type = "audio-in";
-            tooltip = true;
-            tooltip-icon-size = 24;
-          }];
+          modules = [
+            {
+              type = "audio-in";
+              tooltip = true;
+              tooltip-icon-size = 24;
+            }
+          ];
         };
       };
     };

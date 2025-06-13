@@ -1,7 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.my.virtualisation;
-in {
+let
+  cfg = config.my.virtualisation;
+in
+{
   options.my.virtualisation.enable = lib.mkEnableOption "podman, qemu, etc.";
 
   config = lib.mkIf cfg.enable {

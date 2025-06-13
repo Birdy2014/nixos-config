@@ -8,8 +8,12 @@
     };
 
     groups = {
-      data = { gid = 1001; };
-      family = { gid = 1002; };
+      data = {
+        gid = 1001;
+      };
+      family = {
+        gid = 1002;
+      };
     };
   };
 }

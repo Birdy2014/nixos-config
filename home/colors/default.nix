@@ -1,5 +1,8 @@
 { ... }:
 
 {
-  imports = [ ./colorschemes.nix ./themes.nix ];
+  imports = [
+    ./colorschemes.nix
+    ./themes.nix
+  ];
 }
