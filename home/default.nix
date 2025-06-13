@@ -13,6 +13,7 @@
     ./git.nix
     ./gpg.nix
     ./imv.nix
+    ./keepassxc.nix
     ./kitty.nix
     ./lf
     ./misc.nix

@@ -32,7 +32,6 @@
     pavucontrol
     helvum
     obsidian
-    keepassxc
     zathura
     neovide
     hotspot

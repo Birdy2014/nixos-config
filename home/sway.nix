@@ -206,7 +206,7 @@
           command =
             "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
         }
-        { command = "${pkgs.keepassxc}/bin/keepassxc"; }
+        { command = "${pkgs.keepassxc}/bin/keepassxc --minimized"; }
       ];
     };
 
@@ -284,7 +284,7 @@
       for_window [app_id="^org.yuzu_emu.yuzu$"] inhibit_idle visible
 
       # Scratchpad
-      for_window [app_id="org.keepassxc.KeePassXC"] move scratchpad
+      for_window [app_id="org.keepassxc.KeePassXC"] floating enable
       for_window [app_id="org.keepassxc.KeePassXC" title=".*Unlock Database.*"] move workspace current; move position center
 
       seat * shortcuts_inhibitor disable
