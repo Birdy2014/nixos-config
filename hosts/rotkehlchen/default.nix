@@ -42,6 +42,15 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
+  systemd.services.lact = {
+    description = "GPU Control Daemon";
+    after = [ "multi-user.target" ];
+    wantedBy = [ "multi-user.target" ];
+    script = "${pkgs.lact}/bin/lact daemon";
+    serviceConfig.Nice = -10;
+  };
+  boot.extraModprobeConfig = "options amdgpu ppfeaturemask=0xFFF7FFFF";
+
   environment.systemPackages = with pkgs; [
     # CLI
     ddcutil
@@ -57,6 +66,8 @@
     vesktop
     signal-desktop
     mumble
+
+    lact
   ];
 
   programs.adb.enable = true;
