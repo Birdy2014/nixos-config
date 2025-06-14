@@ -45,6 +45,10 @@
 
   security.pam.services.systemd-run0.enable = true;
 
+  security.sudo.extraConfig = ''
+    Defaults env_keep += "EDITOR"
+  '';
+
   # Needed for zsh completions
   environment.pathsToLink = [ "/share/zsh" ];
 
