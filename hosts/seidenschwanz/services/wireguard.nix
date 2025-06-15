@@ -95,13 +95,15 @@ in
           PresharedKeyFile = config.sops.secrets."wireguard/psk1-8".path;
           AllowedIPs = [ "fd00:90::100:100/120" ];
           Endpoint = "mvogel.dev:49626";
+          # buntspecht might send a request at any time, so connection must be kept open
+          PersistentKeepalive = 25;
         }
       ];
     };
 
     networks."50-wg-client" = {
       matchConfig.Name = "wg-client";
-      address = [ "fd00:90::100:8/128" ];
+      address = [ "fd00:90::100:108/128" ];
       networkConfig.IPv6Forwarding = true;
       routes = [ { Destination = "fd00:90::100:100/120"; } ];
     };

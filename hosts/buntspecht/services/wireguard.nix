@@ -79,10 +79,10 @@ in
         chain input {
           type filter hook input priority 0; policy accept;
 
-          iifname wg-server ip6 saddr ${vpnIp6Addr 0}/119 accept
+          iifname wg-server ip6 saddr fd00:90::/64 accept
           iifname wg-server drop
 
-          ip6 saddr ${vpnIp6Addr 0}/119 drop
+          ip6 saddr fd00:90::/64 drop
         }
 
         chain forward {
