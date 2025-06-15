@@ -5,6 +5,7 @@
     (modulesPath + "/profiles/qemu-guest.nix")
     ../../secrets/buntspecht-seidenschwanz.nix
     ../../secrets/buntspecht.nix
+    ./borg.nix
     ./filesystems.nix
     ./network.nix
     ./nginx.nix

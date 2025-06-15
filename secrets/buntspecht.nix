@@ -30,6 +30,8 @@
         mode = "0444";
       };
 
+      borgbackup-data-key.sopsFile = file;
+
       "wireguard/private-key-server" = {
         sopsFile = file;
         owner = "systemd-network";
