@@ -7,6 +7,6 @@
     ./improtheater-frankfurt.nix
     ./matrix.nix
     ./nextcloud.nix
-    ./seidenschwanz-proxy.nix
+    ./wireguard.nix
   ];
 }

@@ -25,6 +25,8 @@ let
 
   decToHex = dec: if dec == 0 then "0" else (decToHexHelper dec);
 
+  zeroPad = len: str: if len > (lib.stringLength str) then zeroPad len "0${str}" else str;
+
   mix =
     oklch1: oklch2: ratio:
     let
@@ -37,5 +39,10 @@ let
     };
 in
 {
-  inherit hexToDec decToHex mix;
+  inherit
+    hexToDec
+    decToHex
+    zeroPad
+    mix
+    ;
 }

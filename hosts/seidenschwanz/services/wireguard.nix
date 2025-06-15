@@ -60,59 +60,45 @@ in
         PrivateKeyFile = config.sops.secrets."wireguard/private-key".path;
         ListenPort = 49626;
       };
-      wireguardPeers = map (
-        {
-          publicKey,
-          pskFile,
-          n,
-          ...
-        }:
-        {
-          PublicKey = publicKey;
-          PresharedKeyFile = lib.mkIf (pskFile != null) pskFile;
-          AllowedIPs = [ (vpnIp6Addr n) ];
-        }
-      ) peers;
+      wireguardPeers =
+        (map (
+          {
+            publicKey,
+            pskFile,
+            n,
+            ...
+          }:
+          {
+            PublicKey = publicKey;
+            PresharedKeyFile = lib.mkIf (pskFile != null) pskFile;
+            AllowedIPs = [ (vpnIp6Addr n) ];
+          }
+        ) peers)
+        ++ [
+          {
+            PublicKey = "q8qzjVMDQHbhdw9m//d5iPdiqf1ZYtXY7jpllsaIgkQ=";
+            PresharedKeyFile = config.sops.secrets."wireguard/psk1-8".path;
+            AllowedIPs = [
+              (vpnIp6Addr 8)
+              "fd00:90::100:100/120"
+            ];
+          }
+        ];
     };
 
     networks."50-wg0" = {
       matchConfig.Name = "wg0";
       address = [ "${vpnIp6Addr 1}/120" ];
       networkConfig.IPv6Forwarding = true;
+      routes = [ { Destination = "fd00:90::100:100/120"; } ];
     };
   };
 
   services.ndppd = {
     enable = true;
     # Use method "static" to reserve all adresses in this range
-    proxies.lan.rules."${vpnIp6Addr 0}/120".method = "static";
+    proxies.lan.rules."${vpnIp6Addr 0}/119".method = "static";
   };
-
-  # NAT traversal
-  services.frp = {
-    enable = true;
-    role = "client";
-    settings = {
-      serverAddr = "mvogel.dev";
-      serverPort = 7000;
-      auth.token = "{{ .Envs.FRP_TOKEN }}";
-      transport.protocol = "kcp";
-
-      proxies = [
-        {
-          name = "wireguard";
-          type = "udp";
-          localIp = "127.0.0.1";
-          localPort = 49626;
-          remotePort = 49626;
-          transport.useEncryption = false;
-          transport.useCompression = false;
-        }
-      ];
-    };
-  };
-
-  systemd.services.frp.serviceConfig.EnvironmentFile = config.sops.templates."frp-token.env".path;
 
   networking.nftables = {
     enable = true;
@@ -122,10 +108,10 @@ in
         chain input {
           type filter hook input priority 0; policy accept;
 
-          iifname wg0 ip6 saddr ${vpnIp6Addr 0}/120 accept
+          iifname wg0 ip6 saddr ${vpnIp6Addr 0}/119 accept
           iifname wg0 drop
 
-          iifname lan ip6 saddr ${vpnIp6Addr 0}/120 drop
+          ip6 saddr ${vpnIp6Addr 0}/119 drop
         }
 
         chain forward {

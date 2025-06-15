@@ -9,6 +9,12 @@
       {
         frp-token.sopsFile = file;
         "bind-dnskey_seidenschwanz.mvogel.dev".sopsFile = file;
+
+        "wireguard/psk1-8" = {
+          sopsFile = file;
+          owner = "systemd-network";
+          group = "systemd-network";
+        };
       };
 
     templates."frp-token.env".content = ''

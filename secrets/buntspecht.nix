@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 
 {
   sops.secrets =
@@ -29,5 +29,27 @@
         # needs to be readable by coturn and synapse
         mode = "0444";
       };
-    };
+
+      "wireguard/private-key-client" = {
+        sopsFile = file;
+        owner = "systemd-network";
+        group = "systemd-network";
+      };
+
+      "wireguard/private-key-server" = {
+        sopsFile = file;
+        owner = "systemd-network";
+        group = "systemd-network";
+      };
+    }
+    //
+      lib.genAttrs
+        (map (n: "wireguard/psk${toString n}") [
+          2
+        ])
+        (_: {
+          sopsFile = file;
+          owner = "systemd-network";
+          group = "systemd-network";
+        });
 }
