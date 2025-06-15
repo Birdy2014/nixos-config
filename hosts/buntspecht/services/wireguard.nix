@@ -31,35 +31,6 @@ in
     # Required in addition to per-interface IPv6Forwarding
     config.networkConfig.IPv6Forwarding = true;
 
-    netdevs."50-wg-client" = {
-      netdevConfig = {
-        Kind = "wireguard";
-        Name = "wg-client";
-      };
-      wireguardConfig = {
-        PrivateKeyFile = config.sops.secrets."wireguard/private-key-client".path;
-      };
-      wireguardPeers = [
-        {
-          PublicKey = "5zLNIKJVT7tE1hLW5GVZWJpkDVL9SEAPgNDeaoQYLAI=";
-          PresharedKeyFile = config.sops.secrets."wireguard/psk1-8".path;
-          AllowedIPs = [ "fd00:90::/64" ];
-          Endpoint = "ipv6.seidenschwanz.mvogel.dev:49626";
-        }
-      ];
-    };
-
-    networks."50-wg-client" = {
-      matchConfig.Name = "wg-client";
-      address = [ "fd00:90::100:8/128" ];
-      networkConfig.IPv6Forwarding = true;
-      routes = [
-        {
-          Destination = "fd00:90::/64";
-        }
-      ];
-    };
-
     netdevs."50-wg-server" = {
       netdevConfig = {
         Kind = "wireguard";
@@ -69,25 +40,34 @@ in
         PrivateKeyFile = config.sops.secrets."wireguard/private-key-server".path;
         ListenPort = 49626;
       };
-      wireguardPeers = map (
-        {
-          publicKey,
-          pskFile,
-          n,
-          ...
-        }:
-        {
-          PublicKey = publicKey;
-          PresharedKeyFile = lib.mkIf (pskFile != null) pskFile;
-          AllowedIPs = [ (vpnIp6Addr n) ];
-        }
-      ) peers;
+      wireguardPeers =
+        (map (
+          {
+            publicKey,
+            pskFile,
+            n,
+            ...
+          }:
+          {
+            PublicKey = publicKey;
+            PresharedKeyFile = lib.mkIf (pskFile != null) pskFile;
+            AllowedIPs = [ (vpnIp6Addr n) ];
+          }
+        ) peers)
+        ++ [
+          {
+            PublicKey = "q8qzjVMDQHbhdw9m//d5iPdiqf1ZYtXY7jpllsaIgkQ=";
+            PresharedKeyFile = config.sops.secrets."wireguard/psk1-8".path;
+            AllowedIPs = [ "fd00:90::/64" ];
+          }
+        ];
     };
 
     networks."50-wg-server" = {
       matchConfig.Name = "wg-server";
       address = [ "${vpnIp6Addr 1}/120" ];
       networkConfig.IPv6Forwarding = true;
+      routes = [ { Destination = "fd00:90::/64"; } ];
     };
   };
 
@@ -99,10 +79,10 @@ in
         chain input {
           type filter hook input priority 0; policy accept;
 
-          iifname wg-server ip6 saddr ${vpnIp6Addr 0}/120 accept
+          iifname wg-server ip6 saddr ${vpnIp6Addr 0}/119 accept
           iifname wg-server drop
 
-          ip6 saddr ${vpnIp6Addr 0}/120 drop
+          ip6 saddr ${vpnIp6Addr 0}/119 drop
         }
 
         chain forward {

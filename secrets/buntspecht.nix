@@ -30,12 +30,6 @@
         mode = "0444";
       };
 
-      "wireguard/private-key-client" = {
-        sopsFile = file;
-        owner = "systemd-network";
-        group = "systemd-network";
-      };
-
       "wireguard/private-key-server" = {
         sopsFile = file;
         owner = "systemd-network";
