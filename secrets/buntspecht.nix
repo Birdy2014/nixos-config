@@ -46,6 +46,7 @@
       lib.genAttrs
         (map (n: "wireguard/psk${toString n}") [
           2
+          7
         ])
         (_: {
           sopsFile = file;
