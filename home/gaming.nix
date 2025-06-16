@@ -9,7 +9,10 @@
   config = lib.mkIf osConfig.my.gaming.enable {
     my.bubblewrap = {
       steam = {
-        applications = [ pkgs.steam ];
+        applications = [
+          pkgs.steam
+          pkgs.protontricks
+        ];
         persistentHome = true;
         allowDesktop = true;
         allowX11 = true;
