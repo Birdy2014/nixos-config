@@ -44,6 +44,7 @@
     libreoffice
     thunderbird
     element-desktop
+    foliate
 
     (pkgs.writers.writePython3Bin "wine-sandbox"
       {
