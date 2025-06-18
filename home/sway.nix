@@ -126,7 +126,6 @@
           "Control+Mod4+Mod1+h" =
             "exec systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && systemctl hibernate";
 
-          "${modifier}+odiaeresis" = "scratchpad show";
           "${modifier}+r" = "mode resize";
         };
 
@@ -321,7 +320,6 @@
 
           for_window [app_id="^org.yuzu_emu.yuzu$"] inhibit_idle visible
 
-          # Scratchpad
           for_window [app_id="org.keepassxc.KeePassXC"] floating enable
           for_window [app_id="org.keepassxc.KeePassXC" title=".*Unlock Database.*"] move workspace current; move position center
 
