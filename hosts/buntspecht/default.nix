@@ -8,7 +8,6 @@
     ./borg.nix
     ./filesystems.nix
     ./network.nix
-    ./nginx.nix
     ./services
   ];
 
@@ -38,6 +37,10 @@
     80
     443
   ];
+
+  services.nginx.commonHttpConfig = ''
+    access_log off;
+  '';
 
   # Holding the spacebar doesn't seem to work on the hetzner console
   boot.loader.timeout = lib.mkForce 5;
