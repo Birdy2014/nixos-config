@@ -24,7 +24,10 @@
         "/etc/nixos"
         "/etc/nixos-secrets"
       ];
-      exclude = [ "${home}/.local/share/containers" ];
+      exclude = [
+        "${home}/.local/share/containers"
+        "${home}/.local/share/Trash"
+      ];
       compression = "zstd,10";
       repo = "borg@seidenschwanz.mvogel.dev:.";
       environment.BORG_RSH = "ssh -i ${config.sops.secrets.borgbackup-home-key.path}";
