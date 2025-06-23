@@ -119,13 +119,13 @@
         "niri/workspaces" = {
           format = "{icon}";
           format-icons = {
-            "01" = "󰋜";
-            "02" = "󰈹";
-            "03" = "󰗃";
-            "04" = "";
-            "05" = "󰇮";
-            "06" = "󰙯";
-            "07" = lib.mkIf osConfig.my.gaming.enable "󰓓";
+            "1" = "󰋜";
+            "2" = "󰈹";
+            "3" = "󰗃";
+            "4" = "";
+            "5" = "󰇮";
+            "6" = "󰙯";
+            "7" = lib.mkIf osConfig.my.gaming.enable "󰓓";
             default = "";
           };
         };
