@@ -439,8 +439,8 @@
           }
           {
             timeout = 600;
-            command = "niri msg action power-off-monitors";
-            resumeCommand = "niri msg action power-on-monitors && ${pkgs.systemd}/bin/systemctl --user restart wlsunset.service";
+            command = "${niri} msg action power-off-monitors";
+            resumeCommand = "${niri} msg action power-on-monitors && ${pkgs.systemd}/bin/systemctl --user restart wlsunset.service";
           }
           {
             timeout = 605;
