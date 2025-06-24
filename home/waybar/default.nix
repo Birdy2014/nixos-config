@@ -217,7 +217,7 @@
             ];
           };
           max-volume = osConfig.my.home.max-volume;
-          on-click = "${pkgs.sway}/bin/swaymsg exec ${pkgs.pavucontrol}/bin/pavucontrol";
+          on-click = lib.getExe pkgs.pavucontrol;
           rotate = 90;
           ignored-sinks = [ "Easy Effects Sink" ];
         };
