@@ -5,6 +5,8 @@
     enable = true;
     enableZshIntegration = true;
 
+    plugins.smart-enter = pkgs.yaziPlugins.smart-enter;
+
     settings = {
       manager = {
         ratio = [
@@ -34,7 +36,7 @@
       manager.prepend_keymap = [
         {
           on = [ "l" ];
-          run = "plugin --sync smart-enter";
+          run = "plugin smart-enter";
           desc = "Enter the child directory, or open the file";
         }
         {
@@ -69,13 +71,4 @@
       };
     };
   };
-
-  xdg.configFile."yazi/plugins/smart-enter.yazi/init.lua".text = ''
-    return {
-      entry = function()
-        local h = cx.active.current.hovered
-        ya.manager_emit(h and h.cha.is_dir and "enter" or "open", { hovered = true })
-      end,
-    }
-  '';
 }
