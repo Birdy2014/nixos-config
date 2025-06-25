@@ -52,9 +52,9 @@
 
           workspaces = lib.listToAttrs (
             map (n: {
-              name = toString n;
+              name = "0" + toString n;
               value.open-on-output = osConfig.my.desktop.screens.primary;
-            }) (lib.range 1 7)
+            }) (lib.range 1 6)
           );
 
           cursor.hide-after-inactive-ms = 5000;
@@ -132,19 +132,19 @@
             }
             {
               matches = [ { app-id = "^thunderbird$"; } ];
-              open-on-workspace = "5";
+              open-on-workspace = "05";
               open-maximized = true;
               open-focused = false;
             }
             {
               matches = [ { app-id = "^vesktop$"; } ];
-              open-on-workspace = "6";
+              open-on-workspace = "05";
               default-column-width.proportion = 1. / 2.;
               open-focused = false;
             }
             {
               matches = [ { app-id = "^Element$"; } ];
-              open-on-workspace = "6";
+              open-on-workspace = "05";
               default-column-width.proportion = 1. / 2.;
               open-focused = false;
             }
@@ -160,7 +160,7 @@
                   app-id = "^steam$";
                 }
               ];
-              open-on-workspace = "7";
+              open-on-workspace = "06";
               open-maximized = true;
             }
             {
@@ -267,23 +267,23 @@
             "Mod+U".action = focus-workspace-down;
             "Mod+Shift+I".action = move-column-to-workspace-up;
             "Mod+Shift+U".action = move-column-to-workspace-down;
-            "Mod+1".action = focus-workspace "1";
-            "Mod+2".action = focus-workspace "2";
-            "Mod+3".action = focus-workspace "3";
-            "Mod+4".action = focus-workspace "4";
-            "Mod+5".action = focus-workspace "5";
-            "Mod+6".action = focus-workspace "6";
-            "Mod+7".action = focus-workspace "7";
+            "Mod+1".action = focus-workspace 1;
+            "Mod+2".action = focus-workspace 2;
+            "Mod+3".action = focus-workspace 3;
+            "Mod+4".action = focus-workspace 4;
+            "Mod+5".action = focus-workspace 5;
+            "Mod+6".action = focus-workspace 6;
+            "Mod+7".action = focus-workspace 7;
             "Mod+8".action = focus-workspace 8;
             "Mod+9".action = focus-workspace 9;
             "Mod+0".action = focus-workspace 10;
-            "Mod+Shift+1".action = move-column-to-workspace "1";
-            "Mod+Shift+2".action = move-column-to-workspace "2";
-            "Mod+Shift+3".action = move-column-to-workspace "3";
-            "Mod+Shift+4".action = move-column-to-workspace "4";
-            "Mod+Shift+5".action = move-column-to-workspace "5";
-            "Mod+Shift+6".action = move-column-to-workspace "6";
-            "Mod+Shift+7".action = move-column-to-workspace "7";
+            "Mod+Shift+1".action = move-column-to-workspace 1;
+            "Mod+Shift+2".action = move-column-to-workspace 2;
+            "Mod+Shift+3".action = move-column-to-workspace 3;
+            "Mod+Shift+4".action = move-column-to-workspace 4;
+            "Mod+Shift+5".action = move-column-to-workspace 5;
+            "Mod+Shift+6".action = move-column-to-workspace 6;
+            "Mod+Shift+7".action = move-column-to-workspace 7;
             "Mod+Shift+8".action = move-column-to-workspace 8;
             "Mod+Shift+9".action = move-column-to-workspace 9;
             "Mod+Shift+0".action = move-column-to-workspace 10;
