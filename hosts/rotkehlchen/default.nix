@@ -23,6 +23,7 @@
       max-volume = 40;
       extraModules = [
         ./home/niri.nix
+        ./home/sandboxes.nix
         ./home/ssh.nix
       ];
       mpv.enableExpensiveEffects = true;
@@ -72,10 +73,8 @@
 
     # GUI
     gimp3
-    spotify
     mcomix
 
-    vesktop
     signal-desktop
     mumble
 
