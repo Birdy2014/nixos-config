@@ -14,6 +14,7 @@
       mpv-thumbfast-vanilla-osc = callPackage ./mpv-thumbfast-vanilla-osc.nix { };
       neovim = callPackage ./neovim { };
       playerctl-current = callPackage ./playerctl-current { };
+      wine-sandbox = callPackage ./wine-sandbox { };
       xdg-open = callPackage ./xdg-open { };
     };
 
