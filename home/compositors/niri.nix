@@ -234,9 +234,9 @@
               "-terminal"
               terminal
               "-run-command"
-              "niri msg action spawn -- '{cmd}'"
+              "niri msg action spawn -- {cmd}"
               "-run-shell-command"
-              "niri msg action spawn -- {terminal} '{cmd}'"
+              "niri msg action spawn -- {terminal} {cmd}"
             ];
             "Mod+Ctrl+W".action = spawn "firefox";
             "Mod+Ctrl+Y".action = spawn [
