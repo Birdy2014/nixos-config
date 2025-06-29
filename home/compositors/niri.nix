@@ -137,6 +137,17 @@
               open-focused = false;
             }
             {
+              matches = [
+                {
+                  app-id = "^thunderbird$";
+                  title = "^Verfassen: ";
+                }
+              ];
+              open-maximized = false;
+              default-column-width.proportion = 0.5;
+              open-focused = true;
+            }
+            {
               matches = [ { app-id = "^vesktop$"; } ];
               open-on-workspace = "05";
               default-column-width.proportion = 1. / 2.;
