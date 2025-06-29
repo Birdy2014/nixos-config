@@ -5,6 +5,7 @@
   python3,
   bubblewrap,
   wineWow64Packages,
+  winetricks,
 }:
 
 stdenvNoCC.mkDerivation {
@@ -23,6 +24,7 @@ stdenvNoCC.mkDerivation {
         lib.makeBinPath [
           bubblewrap
           wineWow64Packages.stable
+          winetricks
         ]
       }
   '';

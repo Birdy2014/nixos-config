@@ -84,14 +84,14 @@ parser.add_argument(
     "-p",
     "--prefix",
     "--pfx",
-    required=True,
+    required=os.environ.get("WINEPREFIX") is None,
     default=os.environ.get("WINEPREFIX"),
     dest="wineprefix",
 )
 parser.add_argument("-d", "--dir", dest="bind_dir")
 parser.add_argument("-n", "--allow-network", action="store_true", dest="allow_network")
-parser.add_argument("-w", "--cwd", dest="cwd", required=True, default=os.getcwd())
-parser.add_argument("command", nargs="+")
+parser.add_argument("-w", "--cwd", dest="cwd", default=os.getcwd())
+parser.add_argument("command", nargs="...")
 
 args = parser.parse_args()
 
@@ -111,23 +111,18 @@ bwrap_args = [
     os.path.abspath(args.cwd),
 ] + build_bwrap_bind_args(
     [
-        Bind(BindType.RO, True, "/usr", None),
-        Bind(BindType.RO, True, "/bin", None),
         Bind(BindType.RO, True, "/nix", None),
-        Bind(BindType.RO, True, "/run/current-system", None),
         Bind(BindType.RO, True, "/etc", None),
         Bind(BindType.RO, True, "/run/systemd/resolve", None),
         Bind(BindType.TMP, True, "/tmp", None),
         Bind(BindType.ENV, True, "PATH", None),
         Bind(BindType.ENV, True, "LANG", None),
         # home
-        Bind(BindType.TMP, True, home, None),
-        Bind(BindType.ENV, True, "HOME", None),
+        Bind(BindType.ENV, True, "HOME", os.path.abspath(args.cwd)),
         # desktop
         Bind(BindType.ENV, True, "XDG_RUNTIME_DIR", None),
         Bind(BindType.ENV, True, "XDG_SESSION_TYPE", None),
         Bind(BindType.ENV, True, "XDG_DATA_DIRS", None),
-        Bind(BindType.ENV, True, "NIXOS_XDG_OPEN_USE_PORTAL", "1"),
         Bind(BindType.TMP, True, xdg_runtime_dir, None),
         # wayland
         Bind(BindType.RO, True, f"{xdg_runtime_dir}/{wayland_display}", None),
