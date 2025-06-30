@@ -52,7 +52,10 @@
 
   environment.systemPackages = with pkgs; [ nvtopPackages.intel ];
 
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "client";
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
