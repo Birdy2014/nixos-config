@@ -106,7 +106,11 @@ bwrap_args = [
     "--dev",
     "/dev",
     "--clearenv",
-    "--unshare-all",
+    "--unshare-user",
+    "--unshare-ipc",
+    # --unshare-pid seems to break cleanly killing the process
+    "--unshare-uts",
+    "--unshare-cgroup",
     "--chdir",
     os.path.abspath(args.cwd),
 ] + build_bwrap_bind_args(
@@ -143,8 +147,8 @@ bwrap_args = [
     ]
 )
 
-if args.allow_network:
-    bwrap_args += ["--share-net"]
+if not args.allow_network:
+    bwrap_args += ["--unshare-net"]
 
 # --- wine command
 wine_command: list[str] = args.command
@@ -183,10 +187,16 @@ bwrap_args += build_bwrap_bind_args(
 
 print(f"Executing '{wine_command}' in wineprefix '{wineprefix}'")
 
+
+def kill_process(process):
+    pgid = os.getpgid(process.pid)
+    os.killpg(pgid, signal.SIGINT)
+
+
 with subprocess.Popen(
     ["bwrap"] + bwrap_args + wine_command, process_group=0
 ) as process:
     signal.signal(
         signal.SIGINT,
-        lambda signum, frame: os.killpg(os.getpgid(process.pid), signal.SIGINT),
+        lambda signum, frame: kill_process(process),
     )
