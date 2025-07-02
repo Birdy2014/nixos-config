@@ -49,7 +49,7 @@
 
   services.postgresql = {
     enable = true;
-    package = pkgs.postgresql_14;
+    package = pkgs.postgresql_15;
   };
 
   # Holding the spacebar doesn't seem to work on the hetzner console
