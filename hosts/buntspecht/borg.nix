@@ -10,7 +10,7 @@
     let
       # This directory must exist and be owned by postgres:postgres
       dbBackupDir = "/var/backup/postgresqldump";
-      pg_dump = lib.getExe' pkgs.postgresql "pg_dump";
+      pg_dump = lib.getExe' config.services.postgresql.finalPackage "pg_dump";
     in
     {
       user = "root";
