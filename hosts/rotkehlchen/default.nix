@@ -111,6 +111,11 @@
     "mitigations=off"
   ];
 
+  boot.kernel.sysctl = {
+    # Improve performance in some broken windows games
+    "kernel.split_lock_mitigate" = 0;
+  };
+
   services.static-web-server = {
     enable = true;
     listen = "[::]:8787";
