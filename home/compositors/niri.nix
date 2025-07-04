@@ -41,6 +41,7 @@
 
             touchpad = {
               natural-scroll = false;
+              dwt = true;
             };
           };
 
