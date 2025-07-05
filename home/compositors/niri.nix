@@ -228,32 +228,14 @@
             # Start Applications
             "Mod+Q".action = close-window;
             "Mod+Return".action = spawn terminal;
-            "Mod+D".action = spawn [
-              "rofi"
-              "-show"
-              "drun"
-              "-terminal"
-              terminal
-              "-run-command"
-              "niri msg action spawn -- {cmd}"
-              "-run-shell-command"
-              "niri msg action spawn -- {terminal} {cmd}"
-            ];
+            "Mod+D".action =
+              spawn "rofi" "-show" "drun" "-terminal" terminal "-run-command" "niri msg action spawn -- {cmd}"
+                "-run-shell-command"
+                "niri msg action spawn -- {terminal} {cmd}";
             "Mod+Ctrl+W".action = spawn "firefox";
-            "Mod+Ctrl+Y".action = spawn [
-              "firefox"
-              "-p"
-              "persistent"
-            ];
-            "Mod+Ctrl+N".action = spawn [
-              terminal
-              "${pkgs.lf}/bin/lf"
-            ];
-            "Mod+Ctrl+E".action = spawn [
-              "neovide"
-              "--grid"
-              "140x60"
-            ];
+            "Mod+Ctrl+Y".action = spawn "firefox" "-p" "persistent";
+            "Mod+Ctrl+N".action = spawn terminal "${pkgs.lf}/bin/lf";
+            "Mod+Ctrl+E".action = spawn "neovide" "--grid" "140x60";
             "Print".action = screenshot-screen;
             "Shift+Print".action = screenshot;
 
@@ -308,115 +290,61 @@
 
             # System
             "Mod+Ctrl+Alt+Q".action = quit;
-            "Mod+Ctrl+Alt+L".action = spawn [
-              "sh"
-              "-c"
-              "systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && loginctl lock-session"
-            ];
-            "Mod+Ctrl+Alt+S".action = spawn [
-              "sh"
-              "-c"
-              "systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && systemctl suspend"
-            ];
-            "Mod+Ctrl+Alt+P".action = spawn [
-              "systemctl"
-              "poweroff"
-            ];
-            "Mod+Ctrl+Alt+R".action = spawn [
-              "systemctl"
-              "reboot"
-            ];
-            "Mod+Ctrl+Alt+H".action = spawn [
-              "sh"
-              "-c"
-              "systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && systemctl hibernate"
-            ];
+            "Mod+Ctrl+Alt+L".action =
+              spawn "sh" "-c"
+                "systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && loginctl lock-session";
+            "Mod+Ctrl+Alt+S".action =
+              spawn "sh" "-c"
+                "systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && systemctl suspend";
+            "Mod+Ctrl+Alt+P".action = spawn "systemctl" "poweroff";
+            "Mod+Ctrl+Alt+R".action = spawn "systemctl" "reboot";
+            "Mod+Ctrl+Alt+H".action =
+              spawn "sh" "-c"
+                "systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && systemctl hibernate";
 
             # Multimedia Keys
             "Mod+M" = {
-              action = spawn [
-                "${pkgs.wireplumber}/bin/wpctl"
-                "set-mute"
-                "@DEFAULT_SOURCE@"
-                "toggle"
-              ];
+              action = spawn "${pkgs.wireplumber}/bin/wpctl" "set-mute" "@DEFAULT_SOURCE@" "toggle";
               allow-when-locked = true;
             };
             "XF86AudioMicMute" = {
-              action = spawn [
-                "${pkgs.wireplumber}/bin/wpctl"
-                "set-mute"
-                "@DEFAULT_SOURCE@"
-                "toggle"
-              ];
+              action = spawn "${pkgs.wireplumber}/bin/wpctl" "set-mute" "@DEFAULT_SOURCE@" "toggle";
               allow-when-locked = true;
             };
             "XF86AudioMute" = {
-              action = spawn [
-                "${pkgs.wireplumber}/bin/wpctl"
-                "set-mute"
-                "@DEFAULT_SINK@"
-                "toggle"
-              ];
+              action = spawn "${pkgs.wireplumber}/bin/wpctl" "set-mute" "@DEFAULT_SINK@" "toggle";
               allow-when-locked = true;
             };
             "XF86AudioLowerVolume" = {
-              action = spawn [
-                "${pkgs.wireplumber}/bin/wpctl"
-                "set-volume"
-                "@DEFAULT_SINK@"
-                "1%-"
-                "--limit"
-                (toString (osConfig.my.home.max-volume / 100.0))
-              ];
+              action = spawn "${pkgs.wireplumber}/bin/wpctl" "set-volume" "@DEFAULT_SINK@" "1%-" "--limit" (
+                toString (osConfig.my.home.max-volume / 100.0)
+              );
               allow-when-locked = true;
             };
             "XF86AudioRaiseVolume" = {
-              action = spawn [
-                "${pkgs.wireplumber}/bin/wpctl"
-                "set-volume"
-                "@DEFAULT_SINK@"
-                "1%+"
-                "--limit"
-                (toString (osConfig.my.home.max-volume / 100.0))
-              ];
+              action = spawn "${pkgs.wireplumber}/bin/wpctl" "set-volume" "@DEFAULT_SINK@" "1%+" "--limit" (
+                toString (osConfig.my.home.max-volume / 100.0)
+              );
               allow-when-locked = true;
             };
             "XF86AudioPlay" = {
-              action = spawn [
-                "playerctl-current"
-                "play-pause"
-              ];
+              action = spawn "playerctl-current" "play-pause";
               allow-when-locked = true;
             };
             "XF86AudioPrev" = {
-              action = spawn [
-                "playerctl-current"
-                "previous"
-              ];
+              action = spawn "playerctl-current" "previous";
               allow-when-locked = true;
             };
             "XF86AudioNext" = {
-              action = spawn [
-                "playerctl-current"
-                "next"
-              ];
+              action = spawn "playerctl-current" "next";
               allow-when-locked = true;
             };
             "XF86MonBrightnessDown" = {
-              action = spawn [
-                "${pkgs.brightnessctl}/bin/brightnessctl"
-                "set"
-                "5%-"
-              ];
+              action = spawn "${pkgs.brightnessctl}/bin/brightnessctl" "set" "5%-";
               allow-when-locked = true;
             };
             "XF86MonBrightnessUp" = {
-              action = spawn [
-                "${pkgs.brightnessctl}/bin/brightnessctl"
-                "set"
-                "+5%"
-              ];
+              action = spawn "${pkgs.brightnessctl}/bin/brightnessctl" "set" "+5%";
               allow-when-locked = true;
             };
 
