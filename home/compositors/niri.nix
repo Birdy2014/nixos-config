@@ -422,6 +422,21 @@
 
             # misc
             "Mod+Shift+Z".action = toggle-keyboard-shortcuts-inhibit;
+            "Mod+Alt+1".action =
+              spawn "sh" "-c"
+                "niri msg action set-window-width 3440; niri msg action set-window-height 1440";
+            "Mod+Alt+2".action =
+              spawn "sh" "-c"
+                "niri msg action set-window-width 2560; niri msg action set-window-height 1080";
+            "Mod+Alt+3".action =
+              spawn "sh" "-c"
+                "niri msg action set-window-width 2560; niri msg action set-window-height 1440";
+            "Mod+Alt+4".action =
+              spawn "sh" "-c"
+                "niri msg action set-window-width 1920; niri msg action set-window-height 1080";
+            "Mod+Alt+5".action =
+              spawn "sh" "-c"
+                "niri msg action set-window-width 1280; niri msg action set-window-height 720";
           };
         };
       };
