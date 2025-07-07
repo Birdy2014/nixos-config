@@ -17,17 +17,18 @@
         "https://one.one.one.one/dns-query"
 
         # Cloudflare DoT
-        "tcp-tls:2606:4700:4700::1111"
-        "tcp-tls:1.1.1.1"
+        "tcp-tls:2606:4700:4700::1111#one.one.one.one"
+        "tcp-tls:1.1.1.1#one.one.one.one"
 
         # Quad9 DoH
         "https://dns.quad9.net/dns-query"
 
         # Quad9 DoT
-        "tcp-tls:2620:fe::fe"
+        "tcp-tls:2620:fe::fe#dns.quad9.net"
+        "tcp-tls:9.9.9.9#dns.quad9.net"
       ];
 
-      bootstrapDns.upstream = "tcp-tls:1.1.1.1";
+      bootstrapDns.upstream = "tcp-tls:1.1.1.1#one.one.one.one";
 
       caching = {
         minTime = "5m";
