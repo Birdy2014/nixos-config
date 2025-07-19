@@ -238,6 +238,7 @@
             "Mod+Ctrl+E".action = spawn "neovide" "--grid" "140x60";
             "Print".action = screenshot-screen;
             "Shift+Print".action = screenshot;
+            "Ctrl+Print".action = screenshot-window;
 
             # layout
             "Mod+W".action = toggle-column-tabbed-display;
