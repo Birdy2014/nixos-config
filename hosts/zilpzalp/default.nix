@@ -1,7 +1,11 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./filesystems.nix ];
+  imports = [
+    ../../secrets/zilpzalp.nix
+    ./borg.nix
+    ./filesystems.nix
+  ];
 
   my = {
     desktop = {

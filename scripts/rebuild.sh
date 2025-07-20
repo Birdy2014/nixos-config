@@ -43,6 +43,7 @@ for host in "$@"; do
             commands+=("nixos-rebuild $mode --flake $flake_path#buntspecht --target-host buntspecht --build-host buntspecht --use-substitutes")
             ;;
         zilpzalp)
+            commands+=("ssh zilpzalp git -C /etc/nixos-secrets pull")
             commands+=("nixos-rebuild $mode --flake $flake_path#zilpzalp --target-host root@zilpzalp.local")
             ;;
         *)

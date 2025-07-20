@@ -15,5 +15,12 @@
       ];
       path = "/zpool/backup/buntspecht-data";
     };
+
+    zilpzalp-moritz-home = {
+      authorizedKeys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDyGjxCdTnpzhofvJMq29tHQnjTqOk0lC15L1OJPgfX8 moritz@zilpzalp"
+      ];
+      path = "/zpool/backup/zilpzalp-moritz-home";
+    };
   };
 }
