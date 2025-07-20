@@ -42,6 +42,10 @@
           "valid users" = "%S";
           browseable = "no";
         };
+        medien = sharedOptions // {
+          path = "/zpool/encrypted/media";
+          "valid users" = "moritz";
+        };
       };
   };
 }
