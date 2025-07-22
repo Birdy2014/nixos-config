@@ -8,7 +8,7 @@
     plugins.smart-enter = pkgs.yaziPlugins.smart-enter;
 
     settings = {
-      manager = {
+      mgr = {
         ratio = [
           2
           4
@@ -33,7 +33,7 @@
     };
 
     keymap = {
-      manager.prepend_keymap = [
+      mgr.prepend_keymap = [
         {
           on = [ "l" ];
           run = "plugin smart-enter";
@@ -54,11 +54,11 @@
           '';
         }
       ];
-      manager.append_keymap = [ ];
+      mgr.append_keymap = [ ];
     };
 
     theme = {
-      manager = {
+      mgr = {
         preview_hovered = {
           reversed = true;
           underline = false;
