@@ -41,6 +41,9 @@
         # Show punycode in URLs to prevent homograph attacks
         "network.IDN_show_punycode" = true;
 
+        # Disable search suggestions
+        "browser.search.suggest.enabled" = false;
+
         # Extensions
         "extensions.enabledScopes" = 5;
         "extensions.autoDisableScopes" = 0; # Auto-enable extensions that are installed via home-manager
