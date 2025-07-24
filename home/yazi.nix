@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   programs.yazi = {
@@ -57,18 +57,64 @@
       mgr.append_keymap = [ ];
     };
 
-    theme = {
-      mgr = {
-        preview_hovered = {
-          reversed = true;
-          underline = false;
+    theme =
+      let
+        inherit (config.my) theme;
+
+        symbols = {
+          open = "█";
+          close = "█";
         };
-        border_symbol = " ";
+      in
+      {
+        mgr = {
+          preview_hovered = {
+            reversed = true;
+            underline = false;
+          };
+          border_symbol = " ";
+        };
+        status = {
+          sep_left = symbols;
+          sep_right = symbols;
+        };
+        tabs = {
+          sep_inner = symbols;
+          sep_outer = symbols;
+        };
+
+        mode = {
+          # Normal mode
+          normal_main = {
+            fg = theme.background-primary;
+            bg = "blue";
+            bold = true;
+          };
+          normal_alt = {
+            fg = "blue";
+            bg = "black";
+          };
+          # Select mode
+          select_main = {
+            fg = theme.background-primary;
+            bg = "green";
+            bold = true;
+          };
+          select_alt = {
+            fg = "green";
+            bg = "black";
+          };
+          # Unset mode
+          unset_main = {
+            fg = theme.background-primary;
+            bg = "magenta";
+            bold = true;
+          };
+          unset_alt = {
+            fg = "magenta";
+            bg = "black";
+          };
+        };
       };
-      status = {
-        separator_open = "█";
-        separator_close = "█";
-      };
-    };
   };
 }
