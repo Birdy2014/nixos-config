@@ -22,6 +22,7 @@
         max_width = 1280;
         max_height = 720;
         image_filter = "lanczos3";
+        cache_dir = "$XDG_CACHE_HOME/yazi_images";
       };
       opener.play = [
         {
