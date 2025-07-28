@@ -20,6 +20,8 @@
         "catppuccin-frappe"
         "catppuccin-macchiato"
         "catppuccin-latte"
+        "kanso-mist"
+        "kanso-pearl"
       ];
       default = "gruvbox-material-dark";
       description = "Which colorscheme to use";

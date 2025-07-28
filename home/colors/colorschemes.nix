@@ -160,6 +160,79 @@
           white = "#5c5f77";
           light-white = "#5c5f77";
         };
+
+        kanso-mist = rec {
+          accent = green;
+          accent-text = "#000000";
+
+          background-primary = "#393B44";
+          background-secondary = "#2a2c35";
+          background-tertiary = "#22262D";
+          text = "#f2f1ef";
+          text-inactive = "#C5C9C7";
+
+          black = "#22262d";
+          light-black = "#5C6066";
+
+          red = "#c4746e";
+          light-red = "#e46876";
+
+          green = "#8a9a7b";
+          light-green = "#87a987";
+
+          yellow = "#c4b28a";
+          light-yellow = "#e6c384";
+
+          blue = "#8ba4b0";
+          light-blue = "#7fb4ca";
+
+          magenta = "#a292a3";
+          light-magenta = "#938aa9";
+
+          cyan = "#8ea4a2";
+          light-cyan = "#7aa89f";
+
+          white = "#a4a7a4";
+          light-white = "#C5C9C7";
+        };
+
+        kanso-pearl = rec {
+          isLight = true;
+
+          accent = light-green;
+          accent-text = "#ffffff";
+          accent-complementary = blue;
+
+          background-primary = "#f2f1ef";
+          background-secondary = "#e2e1df";
+          background-tertiary = "#dddddb";
+          text = black;
+          text-inactive = "#545464";
+
+          black = "#14171d";
+          light-black = "#8a8980";
+
+          red = "#D72436";
+          light-red = "#E42D2C";
+
+          green = "#5E8F2F";
+          light-green = "#5B9945";
+
+          yellow = "#656720";
+          light-yellow = "#72612B";
+
+          blue = "#2A73B1";
+          light-blue = "#469FD3";
+
+          magenta = "#C04062";
+          light-magenta = "#44418F";
+
+          cyan = "#3E8366";
+          light-cyan = "#428F6A";
+
+          white = "#545464";
+          light-white = "#43436c";
+        };
       };
     in
     colorschemes.${osConfig.my.desktop.colorscheme};

@@ -9,6 +9,7 @@
 
   my = {
     desktop = {
+      colorscheme = "kanso-pearl";
       compositor = "niri";
       screens = {
         primary = "eDP-1";

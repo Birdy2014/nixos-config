@@ -18,6 +18,17 @@
 
   plugins =
     let
+      kanso-nvim = buildVimPlugin {
+        pname = "kanso-nvim";
+        version = "2025-07-25";
+        src = fetchFromGitHub {
+          owner = "webhooked";
+          repo = "kanso.nvim";
+          rev = "925b8a210027ec51959697250c1cd9f56d17f6cd";
+          hash = "sha256-gNef33nCJvrjaMCldjRm+5OKxltmDg3UnPd3cFsVO20=";
+        };
+      };
+
       colorschemes = {
         gruvbox-material-dark = [
           {
@@ -54,6 +65,23 @@
           {
             plugin = vimPlugins.catppuccin-nvim;
             config = ''vim.cmd.colorscheme("catppuccin-latte")'';
+          }
+        ];
+        kanso-mist = [
+          {
+            plugin = kanso-nvim;
+            config = ''vim.cmd.colorscheme("kanso-mist")'';
+          }
+        ];
+        kanso-pearl = [
+          {
+            plugin = kanso-nvim;
+            config = ''
+              require('kanso').setup({
+                foreground = "contrast",
+              })
+              vim.cmd.colorscheme("kanso-pearl")
+            '';
           }
         ];
       };
