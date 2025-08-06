@@ -48,72 +48,70 @@
           pkgsSelf.mpv-thumbfast-vanilla-osc
         ];
       };
-      config =
-        {
-          keep-open = true;
-          script-opts-append = "ytdl_hook-ytdl_path=${pkgs.yt-dlp}/bin/yt-dlp";
-          autofit-larger = "100%x100%";
-          hwdec = "auto-safe";
-          vo = "gpu-next";
-          osc = "no"; # Use thumbfast osc
-          screenshot-format = "png";
-          screenshot-template = "%F - [%P] (%#01n)";
+      config = {
+        keep-open = true;
+        script-opts-append = "ytdl_hook-ytdl_path=${pkgs.yt-dlp}/bin/yt-dlp";
+        autofit-larger = "100%x100%";
+        hwdec = "auto-safe";
+        vo = "gpu-next";
+        osc = "no"; # Use thumbfast osc
+        screenshot-format = "png";
+        screenshot-template = "%F - [%P] (%#01n)";
 
-          # Fix slow screenshots
-          screenshot-high-bit-depth = "no";
-          screenshot-png-compression = 5;
+        # Fix slow screenshots
+        screenshot-high-bit-depth = "no";
+        screenshot-png-compression = 5;
 
-          # Languages
-          alang = "jpn,eng,en,deu,de";
+        # Languages
+        alang = "jpn,eng,en,deu,de";
 
-          # Subtitles
-          demuxer-mkv-subtitle-preroll = "yes";
-          sub-visibility = false;
-          slang = "deu,de,enm,eng,en"; # enm is sometimes used for english with honorifics in anime
-          sub-font-size = 40;
-          sub-bold = true;
-          sub-scale-with-window = false; # This is confusing, but seems to fix the wired behaviour when using panscan
+        # Subtitles
+        demuxer-mkv-subtitle-preroll = "yes";
+        sub-visibility = false;
+        slang = "deu,de,enm,eng,en"; # enm is sometimes used for english with honorifics in anime
+        sub-font-size = 40;
+        sub-bold = true;
+        sub-scale-with-window = false; # This is confusing, but seems to fix the wired behaviour when using panscan
 
-          # HDR
-          hdr-compute-peak = "no";
-          tone-mapping = "bt.2446a";
+        # HDR
+        hdr-compute-peak = "no";
+        tone-mapping = "bt.2446a";
 
-          # Scaling
-          scale = if enableExpensive then "ewa_lanczos4sharpest" else "lanczos";
-          dscale = "hermite";
-        }
-        // lib.optionalAttrs enableExpensive {
-          # Interpolation
-          video-sync = "display-resample";
-          interpolation = "yes";
-          tscale = "triangle";
+        # Scaling
+        scale = if enableExpensive then "ewa_lanczos4sharpest" else "lanczos";
+        dscale = "hermite";
+      }
+      // lib.optionalAttrs enableExpensive {
+        # Interpolation
+        video-sync = "display-resample";
+        interpolation = "yes";
+        tscale = "triangle";
 
-          # HDR
-          hdr-compute-peak = "auto";
-          allow-delayed-peak-detect = true;
-        };
+        # HDR
+        hdr-compute-peak = "auto";
+        allow-delayed-peak-detect = true;
+      };
 
-      bindings =
-        {
-          LEFT = "seek -5";
-          RIGHT = "seek +5";
+      bindings = {
+        LEFT = "seek -5";
+        RIGHT = "seek +5";
 
-          h = "seek -5 exact";
-          l = "seek +5 exact";
-          H = "seek -1 exact";
-          L = "seek +1 exact";
+        h = "seek -5 exact";
+        l = "seek +5 exact";
+        H = "seek -1 exact";
+        L = "seek +1 exact";
 
-          WHEEL_UP = "ignore";
-          WHEEL_DOWN = "ignore";
-          WHEEL_LEFT = "ignore";
-          WHEEL_RIGHT = "ignore";
+        WHEEL_UP = "ignore";
+        WHEEL_DOWN = "ignore";
+        WHEEL_LEFT = "ignore";
+        WHEEL_RIGHT = "ignore";
 
-          u = "cycle-values sub-ass-override force strip no";
-          D = "cycle deband";
-        }
-        // lib.optionalAttrs enableExpensive {
-          "Ctrl+i" =
-            "vf toggle vapoursynth=${vapoursynthMvtoolsConfig}:buffered-frames=4:concurrent-frames=32";
-        };
+        u = "cycle-values sub-ass-override force strip no";
+        D = "cycle deband";
+      }
+      // lib.optionalAttrs enableExpensive {
+        "Ctrl+i" =
+          "vf toggle vapoursynth=${vapoursynthMvtoolsConfig}:buffered-frames=4:concurrent-frames=32";
+      };
     };
 }

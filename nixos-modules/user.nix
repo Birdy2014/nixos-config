@@ -67,7 +67,8 @@ in
         imports = [
           ../home
           { home.stateVersion = cfg.stateVersion; }
-        ] ++ cfg.extraModules;
+        ]
+        ++ cfg.extraModules;
       };
     };
 
