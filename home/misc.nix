@@ -28,7 +28,6 @@
     progress
     ffmpeg
     libqalculate
-    yt-dlp
     bashmount
     pkgsSelf.playerctl-current
     gdb

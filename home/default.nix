@@ -23,6 +23,7 @@
     ./waybar
     ./xdg.nix
     ./yazi.nix
+    ./yt-dlp.nix
     ./zsh.nix
   ];
 }
