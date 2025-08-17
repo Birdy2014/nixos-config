@@ -16,6 +16,7 @@
     experimental-features = [
       "nix-command"
       "flakes"
+      "pipe-operators"
     ];
     keep-derivations = true;
     keep-outputs = true;

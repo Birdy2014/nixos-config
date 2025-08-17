@@ -193,180 +193,183 @@
             }
           ];
 
-          binds = with config.lib.niri.actions; {
-            "Mod+Shift+ssharp".action = show-hotkey-overlay;
+          binds =
+            with config.lib.niri.actions;
+            {
+              "Mod+Shift+ssharp".action = show-hotkey-overlay;
 
-            # Moving Windows
-            "Mod+H".action = focus-column-left;
-            "Mod+J".action = focus-window-down;
-            "Mod+K".action = focus-window-up;
-            "Mod+L".action = focus-column-right;
-            "Mod+Shift+H".action = move-column-left;
-            "Mod+Shift+J".action = move-window-down;
-            "Mod+Shift+K".action = move-window-up;
-            "Mod+Shift+L".action = move-column-right;
+              # Moving Windows
+              "Mod+H".action = focus-column-left;
+              "Mod+J".action = focus-window-down;
+              "Mod+K".action = focus-window-up;
+              "Mod+L".action = focus-column-right;
+              "Mod+Shift+H".action = move-column-left;
+              "Mod+Shift+J".action = move-window-down;
+              "Mod+Shift+K".action = move-window-up;
+              "Mod+Shift+L".action = move-column-right;
 
-            "Mod+Tab".action = focus-workspace-previous;
+              "Mod+Tab".action = focus-workspace-previous;
 
-            "Mod+WheelScrollDown" = {
-              cooldown-ms = 150;
-              action = focus-column-right;
-            };
-            "Mod+WheelScrollUp" = {
-              cooldown-ms = 150;
-              action = focus-column-left;
-            };
-            "Mod+Shift+WheelScrollDown" = {
-              cooldown-ms = 150;
-              action = move-column-right;
-            };
-            "Mod+Shift+WheelScrollUp" = {
-              cooldown-ms = 150;
-              action = move-column-left;
-            };
+              "Mod+WheelScrollDown" = {
+                cooldown-ms = 150;
+                action = focus-column-right;
+              };
+              "Mod+WheelScrollUp" = {
+                cooldown-ms = 150;
+                action = focus-column-left;
+              };
+              "Mod+Shift+WheelScrollDown" = {
+                cooldown-ms = 150;
+                action = move-column-right;
+              };
+              "Mod+Shift+WheelScrollUp" = {
+                cooldown-ms = 150;
+                action = move-column-left;
+              };
 
-            # Start Applications
-            "Mod+Q".action = close-window;
-            "Mod+Return".action = spawn terminal;
-            "Mod+D".action =
-              spawn "rofi" "-show" "drun" "-terminal" terminal "-run-command" "niri msg action spawn -- {cmd}"
-                "-run-shell-command"
-                "niri msg action spawn -- {terminal} {cmd}";
-            "Mod+Ctrl+W".action = spawn "firefox";
-            "Mod+Ctrl+Y".action = spawn "firefox" "-p" "persistent";
-            "Mod+Ctrl+N".action = spawn terminal "${pkgs.lf}/bin/lf";
-            "Mod+Ctrl+E".action = spawn "neovide" "--grid" "140x60";
-            "Print".action = screenshot-screen;
-            "Shift+Print".action = screenshot;
-            "Ctrl+Print".action = screenshot-window;
+              # Start Applications
+              "Mod+Q".action = close-window;
+              "Mod+Return".action = spawn terminal;
+              "Mod+D".action =
+                spawn "rofi" "-show" "drun" "-terminal" terminal "-run-command" "niri msg action spawn -- {cmd}"
+                  "-run-shell-command"
+                  "niri msg action spawn -- {terminal} {cmd}";
+              "Mod+Ctrl+W".action = spawn "firefox";
+              "Mod+Ctrl+Y".action = spawn "firefox" "-p" "persistent";
+              "Mod+Ctrl+N".action = spawn terminal "${pkgs.lf}/bin/lf";
+              "Mod+Ctrl+E".action = spawn "neovide" "--grid" "140x60";
+              "Print".action = screenshot-screen;
+              "Shift+Print".action = screenshot;
+              "Ctrl+Print".action = screenshot-window;
 
-            # layout
-            "Mod+W".action = toggle-column-tabbed-display;
-            "Mod+odiaeresis".action = consume-or-expel-window-left;
-            "Mod+adiaeresis".action = consume-or-expel-window-right;
-            "Mod+Ctrl+H".action = set-column-width "-5%";
-            "Mod+Ctrl+L".action = set-column-width "+5%";
-            "Mod+R".action = switch-preset-column-width;
-            "Mod+Shift+R".action = expand-column-to-available-width;
-            "Mod+Ctrl+K".action = set-window-height "-5%";
-            "Mod+Ctrl+J".action = set-window-height "+5%";
-            "Mod+C".action = center-column;
-            "Mod+Shift+F".action = fullscreen-window;
-            "Mod+F".action = maximize-column;
-            "Mod+Space".action = switch-focus-between-floating-and-tiling;
-            "Mod+Shift+Space".action = toggle-window-floating;
-            "Mod+Shift+tab".action = toggle-overview;
+              # layout
+              "Mod+W".action = toggle-column-tabbed-display;
+              "Mod+odiaeresis".action = consume-or-expel-window-left;
+              "Mod+adiaeresis".action = consume-or-expel-window-right;
+              "Mod+Ctrl+H".action = set-column-width "-5%";
+              "Mod+Ctrl+L".action = set-column-width "+5%";
+              "Mod+R".action = switch-preset-column-width;
+              "Mod+Shift+R".action = expand-column-to-available-width;
+              "Mod+Ctrl+K".action = set-window-height "-5%";
+              "Mod+Ctrl+J".action = set-window-height "+5%";
+              "Mod+C".action = center-column;
+              "Mod+Shift+F".action = fullscreen-window;
+              "Mod+F".action = maximize-column;
+              "Mod+Space".action = switch-focus-between-floating-and-tiling;
+              "Mod+Shift+Space".action = toggle-window-floating;
+              "Mod+Shift+tab".action = toggle-overview;
 
-            # workspaces
-            "Mod+I".action = focus-workspace-up;
-            "Mod+U".action = focus-workspace-down;
-            "Mod+Shift+I".action = move-column-to-workspace-up;
-            "Mod+Shift+U".action = move-column-to-workspace-down;
-            "Mod+1".action = focus-workspace 1;
-            "Mod+2".action = focus-workspace 2;
-            "Mod+3".action = focus-workspace 3;
-            "Mod+4".action = focus-workspace 4;
-            "Mod+5".action = focus-workspace 5;
-            "Mod+6".action = focus-workspace 6;
-            "Mod+7".action = focus-workspace 7;
-            "Mod+8".action = focus-workspace 8;
-            "Mod+9".action = focus-workspace 9;
-            "Mod+0".action = focus-workspace 10;
-            "Mod+Shift+1".action = move-column-to-workspace 1;
-            "Mod+Shift+2".action = move-column-to-workspace 2;
-            "Mod+Shift+3".action = move-column-to-workspace 3;
-            "Mod+Shift+4".action = move-column-to-workspace 4;
-            "Mod+Shift+5".action = move-column-to-workspace 5;
-            "Mod+Shift+6".action = move-column-to-workspace 6;
-            "Mod+Shift+7".action = move-column-to-workspace 7;
-            "Mod+Shift+8".action = move-column-to-workspace 8;
-            "Mod+Shift+9".action = move-column-to-workspace 9;
-            "Mod+Shift+0".action = move-column-to-workspace 10;
+              # workspaces
+              "Mod+I".action = focus-workspace-up;
+              "Mod+U".action = focus-workspace-down;
+              "Mod+Shift+I".action = move-column-to-workspace-up;
+              "Mod+Shift+U".action = move-column-to-workspace-down;
+              "Mod+1".action = focus-workspace 1;
+              "Mod+2".action = focus-workspace 2;
+              "Mod+3".action = focus-workspace 3;
+              "Mod+4".action = focus-workspace 4;
+              "Mod+5".action = focus-workspace 5;
+              "Mod+6".action = focus-workspace 6;
+              "Mod+7".action = focus-workspace 7;
+              "Mod+8".action = focus-workspace 8;
+              "Mod+9".action = focus-workspace 9;
+              "Mod+0".action = focus-workspace 10;
+              "Mod+Shift+1".action = move-column-to-workspace 1;
+              "Mod+Shift+2".action = move-column-to-workspace 2;
+              "Mod+Shift+3".action = move-column-to-workspace 3;
+              "Mod+Shift+4".action = move-column-to-workspace 4;
+              "Mod+Shift+5".action = move-column-to-workspace 5;
+              "Mod+Shift+6".action = move-column-to-workspace 6;
+              "Mod+Shift+7".action = move-column-to-workspace 7;
+              "Mod+Shift+8".action = move-column-to-workspace 8;
+              "Mod+Shift+9".action = move-column-to-workspace 9;
+              "Mod+Shift+0".action = move-column-to-workspace 10;
 
-            # monitors
-            "Mod+Comma".action = focus-monitor-left;
-            "Mod+Period".action = focus-monitor-right;
-            "Mod+Shift+Comma".action = move-column-to-monitor-left;
-            "Mod+Shift+Period".action = move-column-to-monitor-right;
+              # monitors
+              "Mod+Comma".action = focus-monitor-left;
+              "Mod+Period".action = focus-monitor-right;
+              "Mod+Shift+Comma".action = move-column-to-monitor-left;
+              "Mod+Shift+Period".action = move-column-to-monitor-right;
 
-            # System
-            "Mod+Ctrl+Alt+Q".action = quit;
-            "Mod+Ctrl+Alt+L".action =
-              spawn "sh" "-c"
-                "systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && loginctl lock-session";
-            "Mod+Ctrl+Alt+S".action =
-              spawn "sh" "-c"
-                "systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && systemctl suspend";
-            "Mod+Ctrl+Alt+P".action = spawn "systemctl" "poweroff";
-            "Mod+Ctrl+Alt+R".action = spawn "systemctl" "reboot";
-            "Mod+Ctrl+Alt+H".action =
-              spawn "sh" "-c"
-                "systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && systemctl hibernate";
+              # System
+              "Mod+Ctrl+Alt+Q".action = quit;
+              "Mod+Ctrl+Alt+L".action =
+                spawn "sh" "-c"
+                  "systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && loginctl lock-session";
+              "Mod+Ctrl+Alt+S".action =
+                spawn "sh" "-c"
+                  "systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && systemctl suspend";
+              "Mod+Ctrl+Alt+P".action = spawn "systemctl" "poweroff";
+              "Mod+Ctrl+Alt+R".action = spawn "systemctl" "reboot";
+              "Mod+Ctrl+Alt+H".action =
+                spawn "sh" "-c"
+                  "systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && systemctl hibernate";
 
-            # Multimedia Keys
-            "Mod+M" = {
-              action = spawn "${pkgs.wireplumber}/bin/wpctl" "set-mute" "@DEFAULT_SOURCE@" "toggle";
-              allow-when-locked = true;
-            };
-            "XF86AudioMicMute" = {
-              action = spawn "${pkgs.wireplumber}/bin/wpctl" "set-mute" "@DEFAULT_SOURCE@" "toggle";
-              allow-when-locked = true;
-            };
-            "XF86AudioMute" = {
-              action = spawn "${pkgs.wireplumber}/bin/wpctl" "set-mute" "@DEFAULT_SINK@" "toggle";
-              allow-when-locked = true;
-            };
-            "XF86AudioLowerVolume" = {
-              action = spawn "${pkgs.wireplumber}/bin/wpctl" "set-volume" "@DEFAULT_SINK@" "1%-" "--limit" (
-                toString (osConfig.my.home.max-volume / 100.0)
-              );
-              allow-when-locked = true;
-            };
-            "XF86AudioRaiseVolume" = {
-              action = spawn "${pkgs.wireplumber}/bin/wpctl" "set-volume" "@DEFAULT_SINK@" "1%+" "--limit" (
-                toString (osConfig.my.home.max-volume / 100.0)
-              );
-              allow-when-locked = true;
-            };
-            "XF86AudioPlay" = {
-              action = spawn "playerctl-current" "play-pause";
-              allow-when-locked = true;
-            };
-            "XF86AudioPrev" = {
-              action = spawn "playerctl-current" "previous";
-              allow-when-locked = true;
-            };
-            "XF86AudioNext" = {
-              action = spawn "playerctl-current" "next";
-              allow-when-locked = true;
-            };
-            "XF86MonBrightnessDown" = {
-              action = spawn "${pkgs.brightnessctl}/bin/brightnessctl" "set" "5%-";
-              allow-when-locked = true;
-            };
-            "XF86MonBrightnessUp" = {
-              action = spawn "${pkgs.brightnessctl}/bin/brightnessctl" "set" "+5%";
-              allow-when-locked = true;
-            };
+              # Multimedia Keys
+              "Mod+M" = {
+                action = spawn "${pkgs.wireplumber}/bin/wpctl" "set-mute" "@DEFAULT_SOURCE@" "toggle";
+                allow-when-locked = true;
+              };
+              "XF86AudioMicMute" = {
+                action = spawn "${pkgs.wireplumber}/bin/wpctl" "set-mute" "@DEFAULT_SOURCE@" "toggle";
+                allow-when-locked = true;
+              };
+              "XF86AudioMute" = {
+                action = spawn "${pkgs.wireplumber}/bin/wpctl" "set-mute" "@DEFAULT_SINK@" "toggle";
+                allow-when-locked = true;
+              };
+              "XF86AudioLowerVolume" = {
+                action = spawn "${pkgs.wireplumber}/bin/wpctl" "set-volume" "@DEFAULT_SINK@" "1%-" "--limit" (
+                  toString (osConfig.my.home.max-volume / 100.0)
+                );
+                allow-when-locked = true;
+              };
+              "XF86AudioRaiseVolume" = {
+                action = spawn "${pkgs.wireplumber}/bin/wpctl" "set-volume" "@DEFAULT_SINK@" "1%+" "--limit" (
+                  toString (osConfig.my.home.max-volume / 100.0)
+                );
+                allow-when-locked = true;
+              };
+              "XF86AudioPlay" = {
+                action = spawn "playerctl-current" "play-pause";
+                allow-when-locked = true;
+              };
+              "XF86AudioPrev" = {
+                action = spawn "playerctl-current" "previous";
+                allow-when-locked = true;
+              };
+              "XF86AudioNext" = {
+                action = spawn "playerctl-current" "next";
+                allow-when-locked = true;
+              };
+              "XF86MonBrightnessDown" = {
+                action = spawn "${pkgs.brightnessctl}/bin/brightnessctl" "set" "5%-";
+                allow-when-locked = true;
+              };
+              "XF86MonBrightnessUp" = {
+                action = spawn "${pkgs.brightnessctl}/bin/brightnessctl" "set" "+5%";
+                allow-when-locked = true;
+              };
 
-            # misc
-            "Mod+Shift+Z".action = toggle-keyboard-shortcuts-inhibit;
-            "Mod+Alt+1".action =
-              spawn "sh" "-c"
-                "niri msg action set-window-width 3440; niri msg action set-window-height 1440";
-            "Mod+Alt+2".action =
-              spawn "sh" "-c"
-                "niri msg action set-window-width 2560; niri msg action set-window-height 1080";
-            "Mod+Alt+3".action =
-              spawn "sh" "-c"
-                "niri msg action set-window-width 2560; niri msg action set-window-height 1440";
-            "Mod+Alt+4".action =
-              spawn "sh" "-c"
-                "niri msg action set-window-width 1920; niri msg action set-window-height 1080";
-            "Mod+Alt+5".action =
-              spawn "sh" "-c"
-                "niri msg action set-window-width 1280; niri msg action set-window-height 720";
-          };
+              # misc
+              "Mod+Shift+Z".action = toggle-keyboard-shortcuts-inhibit;
+              "Mod+Alt+1".action =
+                spawn "sh" "-c"
+                  "niri msg action set-window-width 3440; niri msg action set-window-height 1440";
+              "Mod+Alt+2".action =
+                spawn "sh" "-c"
+                  "niri msg action set-window-width 2560; niri msg action set-window-height 1080";
+              "Mod+Alt+3".action =
+                spawn "sh" "-c"
+                  "niri msg action set-window-width 2560; niri msg action set-window-height 1440";
+              "Mod+Alt+4".action =
+                spawn "sh" "-c"
+                  "niri msg action set-window-width 1920; niri msg action set-window-height 1080";
+              "Mod+Alt+5".action =
+                spawn "sh" "-c"
+                  "niri msg action set-window-width 1280; niri msg action set-window-height 720";
+            }
+            |> lib.mapAttrs (_: bind: bind // { allow-inhibiting = false; });
         };
       };
 
