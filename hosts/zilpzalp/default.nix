@@ -10,6 +10,7 @@
   my = {
     desktop = {
       compositor = "niri";
+      colorscheme = "gruvbox-material-light";
       screens = {
         primary = "eDP-1";
         secondary = "HDMI-A-1";

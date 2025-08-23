@@ -45,6 +45,7 @@
             config = ''
               vim.opt.background = "light"
               vim.g.gruvbox_material_disable_terminal_colors = 1
+              vim.g.gruvbox_material_foreground = "original"
               vim.cmd.colorscheme("gruvbox-material")
             '';
           }

@@ -50,13 +50,13 @@
           isLight = true;
 
           accent = yellow;
-          accent-text = "#000000";
-          #accent-background = "#a96b2c";
+          accent-text = "#ffffff";
           accent-complementary = cyan;
 
-          background-primary = "#ebdbb2";
+          background-primary = "#f9f5d7";
           background-secondary = "#fbf1c7";
-          background-tertiary = "#f9f5d7";
+          # background-tertiary = "#ebdbb2";
+          background-tertiary = "#ddccab";
 
           text = "#282828";
           text-inactive = "#3c3836";
@@ -64,23 +64,23 @@
           black = "#fbf1c7";
           light-black = "#928374";
 
-          red = "#cc241d";
-          light-red = "#9d0006";
+          red = "#9d0006";
+          light-red = "#cc241d";
 
-          green = "#98971a";
-          light-green = "#79740e";
+          green = "#79740e";
+          light-green = "#98971a";
 
-          yellow = "#d79921";
-          light-yellow = "#b57614";
+          yellow = "#b57614";
+          light-yellow = "#d79921";
 
-          blue = "#458588";
-          light-blue = "#076678";
+          blue = "#076678";
+          light-blue = "#458588";
 
-          magenta = "#b16286";
-          light-magenta = "#8f3f71";
+          magenta = "#8f3f71";
+          light-magenta = "#b16286";
 
-          cyan = "#689d6a";
-          light-cyan = "#427b58";
+          cyan = "#427b58";
+          light-cyan = "#689d6a";
 
           white = "#7c6f64";
           light-white = "#3c3836";
