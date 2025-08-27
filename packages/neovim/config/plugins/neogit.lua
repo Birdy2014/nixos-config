@@ -7,9 +7,6 @@ neogit.setup({
         "NeogitPushPopup--force",
         "NeogitCommitPopup--allow-empty",
     },
-    integrations = {
-        diffview = true,
-    },
 })
 
 vim.api.nvim_create_autocmd("FileType", {
