@@ -54,7 +54,13 @@
       ACTION=="add|change", KERNEL=="sd[a-z]*", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="mq-deadline"
     '';
 
-    systemd.oomd.enableUserSlices = true;
+    systemd.oomd = {
+      enableUserSlices = true;
+      extraConfig = {
+        SwapUsedLimit = "80%";
+        DefaultMemoryPressureDurationSec = "10s";
+      };
+    };
 
     boot.loader = lib.mkIf config.my.systemd-boot.enable {
       efi = {
