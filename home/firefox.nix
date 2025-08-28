@@ -21,10 +21,6 @@
         "media.autoplay.block-event.enabled" = true;
         "media.autoplay.default" = 5;
 
-        # Hardware accelerated video playback
-        # Will be enabled by default on AMD with https://bugzilla.mozilla.org/show_bug.cgi?id=1837140
-        "media.ffmpeg.vaapi.enabled" = true;
-
         # UI
         "browser.uidensity" = 1;
         "browser.tabs.inTitlebar" = 0;
