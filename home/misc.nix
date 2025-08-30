@@ -32,6 +32,7 @@
     pkgsSelf.playerctl-current
     gdb
     pkgsSelf.wine-sandbox
+    kiwix-tools
 
     # GUI
     pavucontrol
@@ -44,6 +45,7 @@
     thunderbird
     element-desktop
     foliate
+    kiwix
   ];
 
   i18n.inputMethod = {
