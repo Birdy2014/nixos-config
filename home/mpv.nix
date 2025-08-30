@@ -34,6 +34,50 @@
 
         clip.set_output()
       '';
+
+      # https://github.com/mpv-player/mpv/issues/4019#issuecomment-2469841936
+      backstep = pkgs.writeTextFile {
+        name = "backstep";
+        destination = "/share/mpv/scripts/backstep.lua";
+        passthru.scriptName = "backstep.lua";
+        text = ''
+          -- backstep.lua
+          --
+          -- Faster frame-back-step for mpv
+
+          local mp = require('mp')
+
+          function change_direction(direction)
+            if mp.get_property('play-direction') ~= direction then
+              mp.command('cycle play-direction')
+              osd_message = string.format('P: %s', direction:gsub('^%l', string.upper))
+              mp.osd_message(osd_message)
+            end
+          end
+
+          function frame_step(event, direction)
+            change_direction(direction)
+            if event.event == 'down' or event.event == 'repeat' then
+              mp.command('frame-step')
+            elseif event.event == 'up' then -- counters imprecision of 'repeat'
+              mp.set_property('pause', 'yes')
+            end
+          end
+
+          mp.add_key_binding(nil, 'frame-forestep', function(event)
+            frame_step(event, 'forward')
+          end, {complex = true})
+
+          mp.add_key_binding(nil, 'frame-backstep', function(event)
+            frame_step(event, 'backward')
+          end, {complex = true})
+
+          mp.add_key_binding(nil, 'fore-play', function(event)
+            change_direction('forward')
+            mp.command('cycle pause')
+          end)
+        '';
+      };
     in
     {
       enable = true;
@@ -46,6 +90,7 @@
           pkgs.mpvScripts.mpris
           pkgs.mpvScripts.thumbfast
           pkgsSelf.mpv-thumbfast-vanilla-osc
+          backstep
         ];
       };
       config = {
@@ -108,6 +153,18 @@
 
         u = "cycle-values sub-ass-override force strip no";
         D = "cycle deband";
+
+        # backstep.lua - frame stepping
+        "," = "script_binding frame-backstep";
+        "." = "script_binding frame-forestep";
+
+        # backstep.lua - pause cycling
+        MBTN_RIGHT = "script_binding fore-play";
+        p = "script_binding fore-play";
+        SPACE = "script_binding fore-play";
+        PLAY = "script_binding fore-play";
+        PAUSE = "script_binding fore-play";
+        PLAYPAUSE = "script_binding fore-play";
       }
       // lib.optionalAttrs enableExpensive {
         "Ctrl+i" =
