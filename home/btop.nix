@@ -18,6 +18,9 @@
       graph_symbold = "braille";
       update_ms = 500;
 
+      # cpu
+      cpu_graph_lower = "iowait";
+
       # mem
       swap_disk = false;
 
