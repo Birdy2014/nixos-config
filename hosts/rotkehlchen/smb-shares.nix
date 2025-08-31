@@ -16,7 +16,7 @@
             [
               "${automount_opts},credentials=${
                 config.sops.templates."seidenschwanz-smb-credentials".path
-              },uid=1000,gid=100,file_mode=0644"
+              },uid=1000,gid=100,file_mode=0644,fsc"
             ];
         };
       })
@@ -31,4 +31,10 @@
     username=moritz
     password=${config.sops.placeholder.seidenschwanz-smb-password}
   '';
+
+  services.cachefilesd = {
+    enable = true;
+    # .fscache must be a subvolume, so that is isn't snapshotted
+    cacheDir = "/run/media/moritz/archive/.fscache";
+  };
 }
