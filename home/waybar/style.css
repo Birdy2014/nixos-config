@@ -50,7 +50,8 @@ window#waybar.hidden {
 #network,
 #pulseaudio,
 #tray,
-#mode {
+#mode,
+#systemd-failed-units {
     padding: 10px 0;
     color: @text;
 }
@@ -137,5 +138,9 @@ label:focus {
 }
 
 #custom-idle-inhibit.active {
+    color: @red;
+}
+
+#systemd-failed-units.degraded {
     color: @red;
 }

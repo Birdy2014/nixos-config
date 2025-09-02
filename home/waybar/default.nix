@@ -74,6 +74,7 @@
           "privacy#screenshare"
           "privacy#audio-in"
           "custom/idle-inhibit"
+          "systemd-failed-units"
           "pulseaudio"
           "network"
           "backlight"
@@ -239,6 +240,10 @@
               tooltip-icon-size = 24;
             }
           ];
+        };
+        systemd-failed-units = {
+          hide-on-ok = true;
+          format = "{nr_failed}";
         };
       };
     };
