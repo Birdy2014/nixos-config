@@ -5,8 +5,8 @@ final: prev: {
       src = prev.fetchFromGitHub {
         owner = "Birdy2014";
         repo = "imv";
-        rev = "c804001c49fa0dc69db9fde19eb603d0bc67ae20";
-        hash = "sha256-HC4oiGlBEKoFh7e0nq9dDXBwtq8rcOM9Dmv0JHWmdzc=";
+        rev = "3af0fdda375226718d11396e6df93393d57812b2";
+        hash = "sha256-EIqW8KRolDMF2Xo4Zv3Xfh9KYL7mHVIrbi80XtNdo8A=";
       };
       mesonFlags = old.mesonFlags ++ [ "-Dlibwebp=enabled" ];
       patches = [ ];
