@@ -103,7 +103,6 @@
             ELECTRON_OZONE_PLATFORM_HINT = "auto";
             _JAVA_AWT_WM_NONREPARENTING = "1";
             QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-            DISPLAY = ":0"; # xwayland-satellite
           };
 
           switch-events.lid-close.action.spawn = [
@@ -121,10 +120,9 @@
                 "--minimized"
               ];
             }
-            {
-              command = [ (lib.getExe pkgs.xwayland-satellite) ];
-            }
           ];
+
+          xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
 
           window-rules = [
             {
@@ -295,16 +293,13 @@
               # System
               "Mod+Ctrl+Alt+Q".action = quit;
               "Mod+Ctrl+Alt+L".action =
-                spawn "sh" "-c"
-                  "systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && loginctl lock-session";
+                spawn-sh "systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && loginctl lock-session";
               "Mod+Ctrl+Alt+S".action =
-                spawn "sh" "-c"
-                  "systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && systemctl suspend";
+                spawn-sh "systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && systemctl suspend";
               "Mod+Ctrl+Alt+P".action = spawn "systemctl" "poweroff";
               "Mod+Ctrl+Alt+R".action = spawn "systemctl" "reboot";
               "Mod+Ctrl+Alt+H".action =
-                spawn "sh" "-c"
-                  "systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && systemctl hibernate";
+                spawn-sh "systemctl --user --quiet start swayidle.service && pkill -SIGRTMIN+10 waybar && systemctl hibernate";
 
               # Multimedia Keys
               "Mod+M" = {
@@ -355,20 +350,15 @@
               # misc
               "Mod+Shift+Z".action = toggle-keyboard-shortcuts-inhibit;
               "Mod+Alt+1".action =
-                spawn "sh" "-c"
-                  "niri msg action set-window-width 3440; niri msg action set-window-height 1440";
+                spawn-sh "niri msg action set-window-width 3440; niri msg action set-window-height 1440";
               "Mod+Alt+2".action =
-                spawn "sh" "-c"
-                  "niri msg action set-window-width 2560; niri msg action set-window-height 1080";
+                spawn-sh "niri msg action set-window-width 2560; niri msg action set-window-height 1080";
               "Mod+Alt+3".action =
-                spawn "sh" "-c"
-                  "niri msg action set-window-width 2560; niri msg action set-window-height 1440";
+                spawn-sh "niri msg action set-window-width 2560; niri msg action set-window-height 1440";
               "Mod+Alt+4".action =
-                spawn "sh" "-c"
-                  "niri msg action set-window-width 1920; niri msg action set-window-height 1080";
+                spawn-sh "niri msg action set-window-width 1920; niri msg action set-window-height 1080";
               "Mod+Alt+5".action =
-                spawn "sh" "-c"
-                  "niri msg action set-window-width 1280; niri msg action set-window-height 720";
+                spawn-sh "niri msg action set-window-width 1280; niri msg action set-window-height 720";
             }
             |> lib.mapAttrs (_: bind: bind // { allow-inhibiting = false; });
         };
