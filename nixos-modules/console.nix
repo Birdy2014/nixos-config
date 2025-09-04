@@ -22,6 +22,9 @@
 
         # The menu key is "compose", not "menu"
         compose = "f13";
+
+        # Upper mouse side button
+        mouse2 = "layer(meta)";
       };
     };
   };
