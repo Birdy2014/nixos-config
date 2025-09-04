@@ -2,13 +2,13 @@
 
 rustPlatform.buildRustPackage {
   name = "einkaufszettel";
-  version = "2025-04-21";
+  version = "2025-09-04";
 
   src = fetchFromGitHub {
     owner = "Birdy2014";
     repo = "einkaufszettel";
-    rev = "e425cf65d2c2bd224e9745f3b091d5aecd951837";
-    hash = "sha256-NPpk4t67HiPghTpT43dz4QxcwMd219qcrAeQXyNL26E=";
+    rev = "1f2ca6ad9e2a8942e38c57789b52135370499fde";
+    hash = "sha256-yX393Ji2uBLQ2rHQLzkS4TGMUipEcLXTF4yB7Obd7m0=";
   };
 
   cargoHash = "sha256-r6jG4NChrIDTpNenLE/Zij8ryXgaKpd10mEIL7ueMAo=";
