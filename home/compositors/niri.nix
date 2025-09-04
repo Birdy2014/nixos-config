@@ -90,6 +90,7 @@
             };
 
             preset-column-widths = [
+              { proportion = 1. / 6.; }
               { proportion = 1. / 3.; }
               { proportion = 1. / 2.; }
               { proportion = 2. / 3.; }
@@ -244,10 +245,9 @@
               "Mod+W".action = toggle-column-tabbed-display;
               "Mod+odiaeresis".action = consume-or-expel-window-left;
               "Mod+adiaeresis".action = consume-or-expel-window-right;
-              "Mod+Ctrl+H".action = set-column-width "-5%";
-              "Mod+Ctrl+L".action = set-column-width "+5%";
-              "Mod+R".action = switch-preset-column-width;
-              "Mod+Shift+R".action = expand-column-to-available-width;
+              "Mod+Ctrl+H".action = switch-preset-column-width-back;
+              "Mod+Ctrl+L".action = switch-preset-column-width;
+              "Mod+R".action = expand-column-to-available-width;
               "Mod+Ctrl+K".action = set-window-height "-5%";
               "Mod+Ctrl+J".action = set-window-height "+5%";
               "Mod+C".action = center-column;
