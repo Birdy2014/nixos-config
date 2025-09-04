@@ -238,7 +238,7 @@
               "Mod+Ctrl+Y".action = spawn "firefox" "-p" "persistent";
               "Mod+Ctrl+N".action = spawn terminal "${pkgs.lf}/bin/lf";
               "Mod+Ctrl+E".action = spawn "neovide" "--grid" "140x60";
-              "Print".action = screenshot-screen;
+              "Print".action.screenshot-screen = [ ]; # FIXME: Replace with `.. = screenshot-screen` when https://github.com/sodiboo/niri-flake/pull/1078 is merged
               "Shift+Print".action = screenshot;
               "Ctrl+Print".action = screenshot-window;
 
@@ -274,16 +274,17 @@
               "Mod+8".action = focus-workspace 8;
               "Mod+9".action = focus-workspace 9;
               "Mod+0".action = focus-workspace 10;
-              "Mod+Shift+1".action = move-column-to-workspace 1;
-              "Mod+Shift+2".action = move-column-to-workspace 2;
-              "Mod+Shift+3".action = move-column-to-workspace 3;
-              "Mod+Shift+4".action = move-column-to-workspace 4;
-              "Mod+Shift+5".action = move-column-to-workspace 5;
-              "Mod+Shift+6".action = move-column-to-workspace 6;
-              "Mod+Shift+7".action = move-column-to-workspace 7;
-              "Mod+Shift+8".action = move-column-to-workspace 8;
-              "Mod+Shift+9".action = move-column-to-workspace 9;
-              "Mod+Shift+0".action = move-column-to-workspace 10;
+              # FIXME: Replace with `..action = move-column-to-workspace 1`... when https://github.com/sodiboo/niri-flake/pull/1078 is merged
+              "Mod+Shift+1".action.move-column-to-workspace = 1;
+              "Mod+Shift+2".action.move-column-to-workspace = 2;
+              "Mod+Shift+3".action.move-column-to-workspace = 3;
+              "Mod+Shift+4".action.move-column-to-workspace = 4;
+              "Mod+Shift+5".action.move-column-to-workspace = 5;
+              "Mod+Shift+6".action.move-column-to-workspace = 6;
+              "Mod+Shift+7".action.move-column-to-workspace = 7;
+              "Mod+Shift+8".action.move-column-to-workspace = 8;
+              "Mod+Shift+9".action.move-column-to-workspace = 9;
+              "Mod+Shift+0".action.move-column-to-workspace = 10;
 
               # monitors
               "Mod+Comma".action = focus-monitor-left;

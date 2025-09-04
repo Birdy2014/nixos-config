@@ -25,9 +25,8 @@
       inputs.nixpkgs.follows = "";
     };
 
-    # TODO: remove ref... once this issue is fixed: https://github.com/sodiboo/niri-flake/issues/1018
     niri-flake = {
-      url = "github:sodiboo/niri-flake?ref=pull/1078/merge";
+      url = "github:sodiboo/niri-flake";
       inputs = {
         nixpkgs.follows = "nixpkgs-unstable";
         nixpkgs-stable.follows = "nixpkgs";
