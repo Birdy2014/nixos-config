@@ -85,21 +85,9 @@ in
       }) cfg.domains;
     };
 
+    systemd.services.nginx.serviceConfig.SupplementaryGroups = [ "acme" ];
+    systemd.services.nginx-config-reload.serviceConfig.SupplementaryGroups = [ "acme" ];
+
     networking.firewall.allowedTCPPorts = [ 443 ];
-
-    security.acme.certs."seidenschwanz.mvogel.dev" = {
-      extraDomainNames = [ "*.seidenschwanz.mvogel.dev" ];
-      dnsProvider = "rfc2136";
-      dnsResolver = "1.1.1.1:53";
-      environmentFile = config.sops.templates."bind-acme-certs".path;
-      group = "nginx";
-    };
-
-    sops.templates."bind-acme-certs".content = ''
-      RFC2136_NAMESERVER=ns.mvogel.dev
-      RFC2136_TSIG_ALGORITHM=hmac-sha256.
-      RFC2136_TSIG_KEY=seidenschwanz.mvogel.dev
-      RFC2136_TSIG_SECRET=${config.sops.placeholder."bind-dnskey_seidenschwanz.mvogel.dev"}
-    '';
   };
 }

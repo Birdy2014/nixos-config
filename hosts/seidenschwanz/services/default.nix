@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./acme.nix
     ./authelia.nix
     ./blocky.nix
     ./borg-repos.nix
