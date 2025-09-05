@@ -23,10 +23,11 @@
       ];
       domains = [ "fritz.box" ];
       dns = [
-        "fd00:90::10"
-        "192.168.90.10"
+        "fd00:90::10#seidenschwanz.mvogel.dev"
+        "192.168.90.10#seidenschwanz.mvogel.dev"
       ];
       networkConfig = {
+        DNSOverTLS = true;
         IPv6PrivacyExtensions = true;
         MulticastDNS = true;
       };
