@@ -54,13 +54,14 @@
       ACTION=="add|change", KERNEL=="sd[a-z]*", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="mq-deadline"
     '';
 
-    systemd.oomd = {
-      enableUserSlices = true;
-      extraConfig = {
-        SwapUsedLimit = "80%";
-        DefaultMemoryPressureDurationSec = "10s";
-      };
+    # Because systemd-oomd kills whole cgroups, unexpected things can happen.
+    # earlyoom seems to work better
+    systemd.oomd.enable = false;
+    services.earlyoom = {
+      enable = true;
+      enableNotifications = true;
     };
+    services.systembus-notify.enable = true;
 
     boot.loader = lib.mkIf config.my.systemd-boot.enable {
       efi = {
