@@ -27,34 +27,66 @@ shift
 
 flake_path='/etc/nixos'
 
-declare -a commands
+set +e
+curl -f https://github.com >/dev/null 2>&1
+resolvectl_code="$?"
+set -e
+has_network() {
+    return $resolvectl_code
+}
+
+pull_secrets() {
+    local host="$1"
+    if has_network; then
+        echo "Pulling secrets"
+        ssh "$host" git -C /etc/nixos-secrets pull
+    else
+        echo "Offline - skipping secrets"
+    fi
+}
+
+run_rebuild() {
+    local mode="$1"
+    shift
+    local host="$1"
+    shift
+
+    local args=(
+        "$mode"
+        "--flake"
+        "$flake_path#$host"
+    )
+
+    has_network || args+=("--offline")
+
+    command="nixos-rebuild ${args[*]} $*"
+    echo "Running '$command'"
+    $command
+}
 
 for host in "$@"; do
     case "$host" in
         rotkehlchen)
-            commands+=("nixos-rebuild $mode --flake $flake_path#rotkehlchen --use-remote-sudo")
+            run_rebuild "$mode" rotkehlchen --use-remote-sudo
             ;;
         seidenschwanz)
-            commands+=("ssh seidenschwanz git -C /etc/nixos-secrets pull")
-            commands+=("nixos-rebuild $mode --flake $flake_path#seidenschwanz --target-host seidenschwanz")
+            pull_secrets seidenschwanz
+            echo
+            run_rebuild "$mode" seidenschwanz --target-host seidenschwanz
             ;;
         buntspecht)
-            commands+=("ssh buntspecht git -C /etc/nixos-secrets pull")
-            commands+=("nixos-rebuild $mode --flake $flake_path#buntspecht --target-host buntspecht --build-host buntspecht --use-substitutes")
+            pull_secrets buntspecht
+            echo
+            run_rebuild "$mode" buntspecht --target-host buntspecht --build-host buntspecht --use-substitutes
             ;;
         zilpzalp)
-            commands+=("ssh zilpzalp git -C /etc/nixos-secrets pull")
-            commands+=("nixos-rebuild $mode --flake $flake_path#zilpzalp --target-host root@zilpzalp.local")
+            pull_secrets zilpzalp
+            echo
+            run_rebuild "$mode" zilpzalp --target-host root@zilpzalp.local
             ;;
         *)
             echo "Invalid hostname '$host'" >&2
             exit 1
             ;;
     esac
-done
-
-for command in "${commands[@]}"; do
-    echo "Executing '$command'..."
-    $command
-    echo
 done
