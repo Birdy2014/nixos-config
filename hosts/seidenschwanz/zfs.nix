@@ -11,7 +11,8 @@
   services.zfs = {
     autoScrub = {
       enable = true;
-      interval = "Sun *-*-1..7 02:00";
+      interval = "Sun *-*-1..7 01:00";
+      randomizedDelaySec = "2h";
     };
 
     autoSnapshot = {
