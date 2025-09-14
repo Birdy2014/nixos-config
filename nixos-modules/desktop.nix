@@ -124,6 +124,8 @@
       dataDir = "${config.users.users.moritz.home}/.local/state/syncthing";
     };
 
+    services.resolved.dnsovertls = "opportunistic";
+
     # Needed for mDNS
     networking.firewall.allowedUDPPorts = [ 5353 ];
     services.resolved.llmnr = "false";

@@ -27,10 +27,6 @@
         "192.168.90.10#seidenschwanz.mvogel.dev"
       ];
       networkConfig = {
-        # dns sometimes fails with DNSSEC when DNSOverTLS is set to true, despite DNSSEC being off by default...
-        DNSOverTLS = "opportunistic";
-        DNSSEC = false;
-
         IPv6PrivacyExtensions = true;
         MulticastDNS = true;
       };
