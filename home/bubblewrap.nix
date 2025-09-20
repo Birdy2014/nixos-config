@@ -177,6 +177,38 @@ let
             "/run/opengl-driver-32"
           ];
 
+      # Order binds by their specificity
+      binds =
+        let
+          mapMode =
+            mode:
+            map (path: {
+              inherit path mode;
+            });
+        in
+        mapMode "rw" sandboxConfig.extraBinds
+        ++ mapMode "ro" sandboxConfig.extraRoBinds
+        ++ mapMode "dev" sandboxConfig.extraDevBinds
+        |> map (
+          { path, mode }:
+          {
+            inherit path mode;
+            depth = path |> lib.stringToCharacters |> lib.count (c: c == "/");
+          }
+        )
+        |> lib.sort (a: b: a.depth < b.depth)
+        |> map (
+          { path, mode, ... }:
+          let
+            functions = {
+              rw = mkBind;
+              ro = mkRoBind;
+              dev = mkDevBind;
+            };
+          in
+          builtins.getAttr mode functions path
+        );
+
       args =
         commonArgs
         ++ desktopArgs
@@ -184,9 +216,7 @@ let
         ++ (lib.optionals sandboxConfig.newSession defaultArgs.newSession)
         ++ (lib.optionals sandboxConfig.unshareIpc defaultArgs.unshareIpc)
         ++ (lib.optionals sandboxConfig.unshareNet defaultArgs.unshareNet)
-        ++ (lib.concatMap mkBind sandboxConfig.extraBinds)
-        ++ (lib.concatMap mkRoBind sandboxConfig.extraRoBinds)
-        ++ (lib.concatMap mkDevBind sandboxConfig.extraDevBinds)
+        ++ (lib.concatLists binds)
         ++ (lib.concatMap mkEnvBind sandboxConfig.extraEnvBinds)
         ++ (lib.concatLists (
           lib.mapAttrsToList (name: value: [

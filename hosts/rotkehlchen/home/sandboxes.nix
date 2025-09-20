@@ -19,6 +19,10 @@
       extraBinds = [
         "$HOME/.config/vesktop"
       ];
+      extraRoBinds = [
+        # Needed to be able to share files in the home directory
+        "$HOME"
+      ];
     };
   };
 }
