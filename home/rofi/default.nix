@@ -27,14 +27,16 @@
 
     terminal = "foot";
     extraConfig = {
-      modi = "drun,run,ssh";
+      modi = "combi,drun,run,ssh";
+      combi-modes = "drun,ssh,window";
       show-icons = true;
       parse-known-hosts = false;
       drun-display-format = "{icon} {name}";
+      combi-hide-mode-prefix = true;
+      window-format = "{c:10} {t}";
       display-drun = "   Apps ";
       display-run = "   Run ";
-      display-ssh = "  SSH";
-      sidebar-mode = true;
+      display-ssh = "  SSH ";
     };
   };
 }
