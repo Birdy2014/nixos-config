@@ -230,7 +230,7 @@
               "Mod+Q".action = close-window;
               "Mod+Return".action = spawn terminal;
               "Mod+D".action =
-                spawn "rofi" "-show" "drun" "-terminal" terminal "-run-command" "niri msg action spawn -- {cmd}"
+                spawn "rofi" "-show" "combi" "-terminal" terminal "-run-command" "niri msg action spawn -- {cmd}"
                   "-run-shell-command"
                   "niri msg action spawn -- {terminal} {cmd}";
               "Mod+Ctrl+W".action = spawn "firefox";
