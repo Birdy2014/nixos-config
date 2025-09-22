@@ -325,12 +325,14 @@
       extraPortals = with pkgs; [
         xdg-desktop-portal-wlr
         xdg-desktop-portal-gtk
+        kdePackages.xdg-desktop-portal-kde
       ];
       config.sway = {
         default = "gtk";
         "org.freedesktop.impl.portal.ScreenCast" = "wlr";
         "org.freedesktop.impl.portal.Screenshot" = "wlr";
         "org.freedesktop.impl.portal.Inhibit" = "none";
+        "org.freedesktop.impl.portal.Settings" = "kde";
       };
     };
 

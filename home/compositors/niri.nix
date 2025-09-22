@@ -369,6 +369,7 @@
       extraPortals = with pkgs; [
         xdg-desktop-portal-gnome
         xdg-desktop-portal-gtk
+        kdePackages.xdg-desktop-portal-kde
       ];
       config.niri = {
         default = [
@@ -380,6 +381,7 @@
         "org.freedesktop.impl.portal.Notification" = "gtk";
         "org.freedesktop.impl.portal.Secret" = "gnome-keyring";
         "org.freedesktop.impl.portal.FileChooser" = "gtk";
+        "org.freedesktop.impl.portal.Settings" = "kde";
       };
     };
 

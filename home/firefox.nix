@@ -25,6 +25,9 @@
         "browser.uidensity" = 1;
         "browser.tabs.inTitlebar" = 0;
 
+        # Fix system theme
+        "widget.gtk.libadwaita-colors.enabled" = false;
+
         # Enable DRM :(
         "media.eme.enabled" = true;
 
@@ -57,6 +60,9 @@
         "privacy.webrtc.legacyGlobalIndicator" = false; # Sharing indicator
         "signon.autofillForms" = false;
         "signon.rememberSignons" = false;
+        "browser.ml.enable" = false;
+        "browser.ml.chat.enalbed" = false;
+        "browser.tabs.groups.smart.enabled" = false;
 
         # Disable telemetry
         "app.shield.optoutstudies.enabled" = false;
