@@ -11,7 +11,7 @@ let
   itf-config = {
     base_url = "https://${hostname}";
     port = 6314;
-    dbpath = "/var/lib/improtheater-frankfurt/improtheater-frankfurt.db";
+    data_directory = "/var/lib/improtheater-frankfurt";
 
     email = {
       auth = {
