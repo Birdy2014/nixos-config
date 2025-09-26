@@ -11,6 +11,7 @@
     ./gaming.nix
     ./locale.nix
     ./nix.nix
+    ./pull-deploy.nix
     ./scan.nix
     ./ssh.nix
     ./tmux

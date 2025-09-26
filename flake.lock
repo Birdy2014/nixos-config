@@ -64,6 +64,26 @@
         "type": "github"
       }
     },
+    "nixos-pull-deploy": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1758625568,
+        "narHash": "sha256-TLMjCLYLbcvLSlfwB3w+G+CbyDwLrgddOUCEGcZAWTQ=",
+        "owner": "Birdy2014",
+        "repo": "nixos-pull-deploy",
+        "rev": "1a0b3ff00aeb5e730a526fd7e3d4c763906f4ca2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Birdy2014",
+        "repo": "nixos-pull-deploy",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1758284420,
@@ -95,6 +115,7 @@
         "home-manager": "home-manager",
         "niri-flake": "niri-flake",
         "nix-colorizer": "nix-colorizer",
+        "nixos-pull-deploy": "nixos-pull-deploy",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "rycee-nur-expressions": "rycee-nur-expressions",

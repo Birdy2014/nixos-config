@@ -36,6 +36,11 @@
         xwayland-satellite-unstable.follows = "";
       };
     };
+
+    nixos-pull-deploy = {
+      url = "github:Birdy2014/nixos-pull-deploy";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

@@ -24,6 +24,7 @@
     desktop.enable = false;
     sshd.enable = true;
     systemd-boot.enable = true;
+    pull-deploy.enable = true;
   };
 
   boot.initrd.availableKernelModules = [
