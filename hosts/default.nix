@@ -7,6 +7,7 @@ let
     "singdrossel"
     "seidenschwanz"
     "buntspecht"
+    "bergfink"
   ];
 in
 (builtins.listToAttrs (
