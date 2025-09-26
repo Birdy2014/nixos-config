@@ -32,7 +32,9 @@ in
           testing = "testing-";
         };
         hook = pkgs.writeShellScript "hook.sh" ''
-          [[ "$DEPLOY_STATUS" == 'pre' ]] && git -C /etc/nixos-secrets pull
+          if [[ "$DEPLOY_STATUS" == 'pre' ]] && [[ -d '/etc/nixos-secrets' ]]; then
+            git -C /etc/nixos-secrets pull
+          fi
         '';
       };
     };
