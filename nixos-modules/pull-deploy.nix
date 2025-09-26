@@ -14,6 +14,11 @@ in
 
   options.my.pull-deploy = {
     enable = lib.mkEnableOption "automatic pull deployments";
+    notify = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Send a desktop notification of success and failure";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -35,6 +40,20 @@ in
           if [[ "$DEPLOY_STATUS" == 'pre' ]] && [[ -d '/etc/nixos-secrets' ]]; then
             git -C /etc/nixos-secrets pull
           fi
+
+          ${lib.optionalString cfg.notify ''
+            if [[ "$DEPLOY_STATUS" == 'success' ]]; then
+              ${lib.getExe' pkgs.dbus "dbus-send"} \
+                --system / net.nuetzlich.SystemNotifications.Notify \
+                'string:nixos-pull-deploy' 'string:Aktualisierung erfolgreich abgeschlossen'
+            fi
+
+            if [[ "$DEPLOY_STATUS" == 'failed' ]]; then
+              ${lib.getExe' pkgs.dbus "dbus-send"} \
+                --system / net.nuetzlich.SystemNotifications.Notify \
+                'string:nixos-pull-deploy' 'string:Aktualisierung fehlgeschlagen'
+            fi
+          ''}
         '';
       };
     };
