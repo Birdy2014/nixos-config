@@ -17,6 +17,8 @@
     sounds.enable = lib.mkForce true;
   };
 
+  services.nixos-pull-deploy.settings.deploy_modes.main = "boot";
+
   networking.networkmanager.enable = true;
   services.resolved.enable = true;
 
