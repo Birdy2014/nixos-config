@@ -43,6 +43,11 @@ let
       pskFile = config.sops.secrets."wireguard/psk9".path;
       n = 9;
     }
+    {
+      publicKey = "BJ88Gd3UueMFc8JwoYoECHXNdKVfc6hPKKUdOS7/7HM=";
+      pskFile = null;
+      n = 10;
+    }
   ];
 
   vpnIp6Addr = n: "fd00:90::100:${myLib.decToHex n}";
