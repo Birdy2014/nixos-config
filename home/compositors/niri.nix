@@ -20,6 +20,7 @@
         color-focused-inactive = config.my.theme.background-primary;
         color-background-dark = config.my.theme.background-tertiary;
         color-urgent = config.my.theme.error;
+        color-red = config.my.theme.red;
       in
       {
         enable = true;
@@ -129,7 +130,15 @@
           window-rules = [
             {
               clip-to-geometry = true;
-              shadow.enable = true;
+              shadow = {
+                enable = true;
+                softness = 20;
+                spread = 5;
+              };
+            }
+            {
+              matches = [ { is-window-cast-target = true; } ];
+              shadow.color = color-red;
             }
             {
               matches = [ { app-id = "^thunderbird$"; } ];
