@@ -8,6 +8,7 @@
     {
       einkaufszettel = callPackage ./einkaufszettel.nix { };
       gruvbox-material-gtk = callPackage ./gruvbox-material-gtk.nix { };
+      improglycerin = callPackage ./improglycerin.nix { };
       improtheater-frankfurt = callPackage ./improtheater-frankfurt.nix { };
       lepton-firefox-theme = callPackage ./lepton-firefox-theme.nix { };
       lyrax-cursors = callPackage ./lyrax-cursors.nix { };
@@ -23,6 +24,7 @@
       callPackage = nixpkgs.legacyPackages.aarch64-linux.callPackage;
     in
     {
+      improglycerin = callPackage ./improglycerin.nix { };
       improtheater-frankfurt = callPackage ./improtheater-frankfurt.nix { };
       neovim = callPackage ./neovim { };
     };
