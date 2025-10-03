@@ -18,6 +18,12 @@
         group = "itf";
       };
 
+      improglycerin-yesticket-api-key = {
+        sopsFile = file;
+        owner = "improglycerin";
+        group = "improglycerin";
+      };
+
       nextcloud-admin-password = {
         sopsFile = file;
         owner = "nextcloud";
