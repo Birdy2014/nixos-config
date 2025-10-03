@@ -56,6 +56,9 @@
   # Holding the spacebar doesn't seem to work on the hetzner console
   boot.loader.timeout = lib.mkForce 5;
 
+  # Too little ram. Remove after nix 2.30?
+  boot.tmp.useTmpfs = lib.mkForce false;
+
   # Reduce closure size
   documentation.nixos.enable = false;
   boot.enableContainers = false;
