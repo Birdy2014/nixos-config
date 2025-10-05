@@ -27,6 +27,7 @@
     nix-tree
     htop
     fd
+    jq
 
     man-pages
   ];
