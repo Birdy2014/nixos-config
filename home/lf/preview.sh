@@ -154,8 +154,8 @@ handle_extension() {
             preview_audio
             ;;
 
-        *.stl|*.obj)
-            f3d --quiet --ambient-occlusion --up +Z --output "$FILE_CACHE_PATH" "$FILE_PATH" && display_image_cache
+        *.stl|*.obj|*.STL|*.OBJ)
+            f3d --verbose=quiet --ambient-occlusion --up +Z --output "$FILE_CACHE_PATH" "$FILE_PATH" && display_image_cache
             exit 1;;
     esac
 }
