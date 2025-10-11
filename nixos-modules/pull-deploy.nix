@@ -48,6 +48,15 @@ in
       default = false;
       description = "Send a desktop notification of success and failure";
     };
+    mainDeployMode = lib.mkOption {
+      type = lib.types.enum [
+        "boot"
+        "switch"
+        "reboot_on_kernel_change"
+      ];
+      default = "switch";
+      description = "How to deploy from the main branch";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -66,6 +75,11 @@ in
           testing = "testing-";
         };
         hook = "${hook}/bin/hook.sh";
+
+        deploy_modes = {
+          main = cfg.mainDeployMode;
+          testing = "switch";
+        };
       };
     };
 
