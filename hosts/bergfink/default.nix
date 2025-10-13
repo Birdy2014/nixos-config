@@ -28,6 +28,8 @@
 
   services.flatpak.enable = true;
 
+  i18n.defaultLocale = lib.mkForce "de_DE.UTF-8";
+
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "ehci_pci"
