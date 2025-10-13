@@ -14,13 +14,6 @@
     };
   };
 
-  xdg = {
-    autostart.enable = lib.mkForce true;
-    icons.enable = lib.mkForce true;
-    mime.enable = lib.mkForce true;
-    sounds.enable = lib.mkForce true;
-  };
-
   networking.networkmanager.enable = true;
   services.resolved.enable = true;
 

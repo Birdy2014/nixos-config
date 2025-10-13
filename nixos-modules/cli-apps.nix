@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   pkgs,
   pkgsSelf,
   ...
@@ -52,11 +51,4 @@
 
   # Needed for zsh completions
   environment.pathsToLink = [ "/share/zsh" ];
-
-  xdg = lib.mkIf (!config.my.desktop.enable) {
-    autostart.enable = false;
-    icons.enable = false;
-    mime.enable = false;
-    sounds.enable = false;
-  };
 }
