@@ -8,6 +8,7 @@
     ./improtheater-frankfurt.nix
     ./matrix.nix
     ./nextcloud.nix
+    ./umami.nix
     ./wireguard.nix
   ];
 }

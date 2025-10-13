@@ -38,6 +38,8 @@
 
       borgbackup-data-key.sopsFile = file;
 
+      umami-app-secret.sopsFile = file;
+
       "wireguard/private-key-server" = {
         sopsFile = file;
         owner = "systemd-network";
