@@ -72,7 +72,7 @@ in
         origin = {
           url = "https://github.com/Birdy2014/nixos-config";
           main = "main";
-          testing = "testing-";
+          testing_prefix = "testing-";
         };
         hook = "${hook}/bin/hook.sh";
 
