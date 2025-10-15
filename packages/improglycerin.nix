@@ -14,8 +14,8 @@ buildNpmPackage {
   src = fetchFromGitHub {
     owner = "Birdy2014";
     repo = "improglycerin.de";
-    rev = "48c0649d4e7497a7efe9fffb6862dfd7c673c2d5";
-    hash = "sha256-IrDoJsu7R2zuqNRZdhv/ozsKR1GaFg2w6lRxRe+Acyw=";
+    rev = "759149ec4b271c310e491dfe97225a5aa2a303f8";
+    hash = "sha256-eNA4bfK9Ft0eeAbfB/d13Nhw9O7j7xlP8MguutjhQh8=";
   };
 
   npmDepsHash = "sha256-rV5r88pNBA2qZaXgW8L03AIKkzVMhY9QRkn10Xsgs84=";
