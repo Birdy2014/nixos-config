@@ -14,6 +14,7 @@
 
   my = {
     desktop = {
+      enable = true;
       colorscheme = "catppuccin-frappe";
       compositor = "niri";
     };

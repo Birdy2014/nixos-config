@@ -12,6 +12,7 @@
   imports = [ (modulesPath + "/installer/cd-dvd/installation-cd-base.nix") ];
 
   my = {
+    desktop.enable = true;
     home.stateVersion = config.system.stateVersion;
     sshd.enable = true;
   };

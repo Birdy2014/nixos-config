@@ -7,11 +7,7 @@
 
 {
   options.my.desktop = {
-    enable = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Whether to enable the desktop and user 'moritz'";
-    };
+    enable = lib.mkEnableOption "the desktop and user 'moritz'";
 
     colorscheme = lib.mkOption {
       type = lib.types.enum [
