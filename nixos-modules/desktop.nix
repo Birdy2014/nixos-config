@@ -120,6 +120,23 @@
       dataDir = "${config.users.users.moritz.home}/.local/state/syncthing";
     };
 
+    services.keyd = {
+      enable = true;
+      keyboards.default = {
+        ids = [ "*" ];
+        settings.main = {
+          capslock = "esc";
+          rightmeta = "f13";
+
+          # The menu key is "compose", not "menu"
+          compose = "f13";
+
+          # Upper mouse side button
+          mouse2 = "overload(meta, mouse2)";
+        };
+      };
+    };
+
     services.resolved.dnsovertls = "opportunistic";
 
     # Needed for mDNS
