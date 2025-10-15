@@ -19,7 +19,6 @@
     pciutils
     usbutils
     compsize
-    # keyutils # Brauche ich das?
     sshfs
     ldns # for drill
     binutils # for strings

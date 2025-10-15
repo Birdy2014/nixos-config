@@ -39,6 +39,7 @@
       "zswap.enabled=1"
     ];
 
+    # TODO: nix 2.30: build-dir is moved to /nix/var/nix/builds, so /tmp can be mounted as noexec?
     boot.tmp.useTmpfs = true;
 
     services.dbus.implementation = "broker";
