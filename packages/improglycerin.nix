@@ -9,13 +9,13 @@
 
 buildNpmPackage {
   pname = "improglycerin";
-  version = "2025-10-13";
+  version = "2025-10-18";
 
   src = fetchFromGitHub {
     owner = "Birdy2014";
     repo = "improglycerin.de";
-    rev = "759149ec4b271c310e491dfe97225a5aa2a303f8";
-    hash = "sha256-eNA4bfK9Ft0eeAbfB/d13Nhw9O7j7xlP8MguutjhQh8=";
+    rev = "97dcdcec50ffca41ea909465af8d8f4a42c07d08";
+    hash = "sha256-FJ7Xcvl1QvMHXQGPlas+Mz7jCB6p99WMZFjvhYzmi4c=";
   };
 
   npmDepsHash = "sha256-rV5r88pNBA2qZaXgW8L03AIKkzVMhY9QRkn10Xsgs84=";
