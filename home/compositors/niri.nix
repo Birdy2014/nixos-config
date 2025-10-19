@@ -248,8 +248,8 @@
               "Mod+Ctrl+N".action = spawn terminal "${pkgs.lf}/bin/lf";
               "Mod+Ctrl+E".action = spawn "neovide" "--grid" "140x60";
               "Print".action.screenshot-screen = [ ]; # FIXME: Replace with `.. = screenshot-screen` when https://github.com/sodiboo/niri-flake/pull/1078 is merged
-              "Shift+Print".action = screenshot;
-              "Ctrl+Print".action = screenshot-window;
+              "Shift+Print".action.screenshot = [ ];
+              "Ctrl+Print".action.screenshot-window = [ ];
 
               # layout
               "Mod+W".action = toggle-column-tabbed-display;
