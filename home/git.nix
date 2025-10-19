@@ -7,6 +7,7 @@
     userEmail = "moritzv7@gmail.com";
 
     extraConfig = {
+      alias.l = "log --all --graph --oneline";
       branch.sort = "-committerdate";
       column.ui = "auto";
       core.autocrlf = "input";
