@@ -74,6 +74,7 @@
 
         # Tracking and fingerprinting protection
         "privacy.fingerprintingProtection" = true;
+        "privacy.globalprivacycontrol.enabled" = true;
         "privacy.trackingprotection.enabled" = true;
         "privacy.trackingprotection.emailtracking.enabled" = true;
         "privacy.trackingprotection.socialtracking.enabled" = true;
