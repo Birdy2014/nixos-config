@@ -61,7 +61,8 @@
         "signon.autofillForms" = false;
         "signon.rememberSignons" = false;
         "browser.ml.enable" = false;
-        "browser.ml.chat.enalbed" = false;
+        "browser.ml.chat.enabled" = false;
+        "browser.ml.chat.menu" = false;
         "browser.tabs.groups.smart.enabled" = false;
 
         # Disable telemetry
