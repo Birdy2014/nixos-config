@@ -29,6 +29,27 @@
 
   i18n.defaultLocale = lib.mkForce "de_DE.UTF-8";
 
+  virtualisation.vmVariant = {
+    virtualisation = {
+      cores = 2;
+      memorySize = 4096;
+      qemu.options = [ "-vga qxl" ];
+    };
+    users = {
+      users.root.password = "test";
+      users.moritz = {
+        isNormalUser = true;
+        extraGroups = [
+          "wheel"
+          "networkmanager"
+        ];
+        home = "/home/moritz";
+        createHome = true;
+        password = "test";
+      };
+    };
+  };
+
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "ehci_pci"
