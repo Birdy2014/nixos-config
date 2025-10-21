@@ -7,7 +7,7 @@
   makeWrapper,
 }:
 
-buildNpmPackage {
+buildNpmPackage rec {
   pname = "improglycerin";
   version = "2025-10-22";
 
@@ -45,6 +45,9 @@ buildNpmPackage {
     chmod +x $out/share/improglycerin.de/server.js
 
     cp -r .next/static $out/share/improglycerin.de/.next/static
+
+    # This is the ugliest way to move the cache, but it works
+    ln -s /tmp/next-cache-${pname}-${version} $out/share/improglycerin.de/.next/cache
 
     makeWrapper ${lib.getExe nodejs_20} $out/bin/improglycerin.de \
       --add-flags "$out/share/improglycerin.de/server.js"

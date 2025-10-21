@@ -21,6 +21,14 @@ in
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
     environment.PORT = port;
+    preStart =
+      let
+        cache = "/tmp/next-cache-${pkgsSelf.improglycerin.pname}-${pkgsSelf.improglycerin.version}";
+      in
+      ''
+        rm -rf ${cache}
+        mkdir -p ${cache}
+      '';
     script = lib.getExe pkgsSelf.improglycerin;
     serviceConfig = {
       DynamicUser = true;
