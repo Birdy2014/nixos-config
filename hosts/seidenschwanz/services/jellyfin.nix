@@ -12,6 +12,7 @@
     ];
   };
 
+  # TODO: Jellyfin 10.11.0 (NixOS 25.11) upgrade will mirgrate the database - don't interrupt!
   services.jellyfin.enable = true;
 
   systemd.services.jellyfin.serviceConfig = {
