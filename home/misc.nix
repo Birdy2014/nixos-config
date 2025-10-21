@@ -46,6 +46,7 @@
     element-desktop
     foliate
     kiwix
+    zotero
   ];
 
   i18n.inputMethod = {
