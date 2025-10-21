@@ -434,18 +434,16 @@
     systemd.user.services.niri-process-adjustments = {
       Unit = {
         Description = "Adjust nice and oom_score_adj for niri";
-        PartOf = "graphical-session.target";
         After = "niri.service";
       };
       Install.WantedBy = [ "graphical-session.target" ];
       Service = {
         ExecStart = pkgs.writeShellScript "start-niri-process-adjustments.sh" ''
+          sleep 5 # The script fails on zilpzalp when run immediately
           pid="$(${lib.getExe' pkgs.procps "pidof"} -s niri)"
           ${lib.getExe' pkgs.util-linux "renice"} -n -10 -p $pid
           ${lib.getExe' pkgs.util-linux "choom"} -n 100 -p $pid
         '';
-        Type = "oneshot";
-        RemainAfterExit = true;
       };
     };
   };
