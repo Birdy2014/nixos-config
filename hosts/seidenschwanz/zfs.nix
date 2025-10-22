@@ -61,64 +61,37 @@
     };
   };
 
-  services.zfs.zed.settings =
-    let
-      # The email subject has to be translated into a sendmail-style format
-      zedMail =
-        pkgs.writers.writePython3 "zed-mail.py"
-          {
-            flakeIgnore = [
-              "E111"
-              "E501"
-              "E121"
-            ];
-          }
-          # python
-          ''
-            import sys
-            import subprocess
+  services.zfs.zed.settings = {
+    ZED_NTFY_URL = "https://ntfy.mvogel.dev";
+    ZED_NTFY_TOPIC = "monitoring";
 
-            message: list[str] = []
-            email_subject: str = ""
-            email_from = "${config.services.nullmailer.config.allmailfrom}"
-            email_to = "${config.services.nullmailer.config.adminaddr}"
+    ZED_NOTIFY_INTERVAL_SECS = 3600;
+    ZED_NOTIFY_VERBOSE = true;
+  };
 
-            for line in sys.stdin:
-              message.append(line)
+  environment.etc."zfs/zed.d/zed.rc" = {
+    text = lib.mkForce null;
+    source = config.sops.templates.zed-config.path;
+  };
 
-            is_subject = False
-            for arg in sys.argv[1:]:
-              if is_subject:
-                email_subject = arg
-                is_subject = False
-                continue
-
-              if arg == "-s":
-                is_subject = True
-                continue
-
-            envelope_head = [
-              f"From: {email_from}",
-              f"To: {email_to}",
-              f"Subject: {email_subject}",
-            ]
-
-            sendmail_message = "\r\n".join(envelope_head) + "\r\n\r\n" + "\r\n".join(message)
-
-            process = subprocess.Popen(["/run/wrappers/bin/sendmail", "-v", email_to], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
-            out, err = process.communicate(input=sendmail_message)
-            code = process.returncode
-            print(out)
-            print(err, file=sys.stderr)
-            exit(code)
-          '';
-    in
-    {
-      ZED_EMAIL_ADDR = [ config.services.nullmailer.config.adminaddr ];
-      ZED_EMAIL_PROG = "${zedMail}";
-      ZED_EMAIL_OPTS = "-s @SUBJECT@";
-
-      ZED_NOTIFY_INTERVAL_SECS = 3600;
-      ZED_NOTIFY_VERBOSE = true;
-    };
+  sops.templates."zed-config".content = ''
+    ZED_NTFY_ACCESS_TOKEN="${config.sops.placeholder.ntfy-sender-token}"
+  ''
+  + (lib.concatMapAttrsStringSep "\n" (
+    name: value:
+    name
+    + "="
+    + (
+      if lib.isInt value then
+        toString value
+      else if lib.isString value then
+        "\"${value}\""
+      else if true == value then
+        "1"
+      else if false == value then
+        "0"
+      else
+        lib.err "this value is" (toString value)
+    )
+  ) config.services.zfs.zed.settings);
 }
