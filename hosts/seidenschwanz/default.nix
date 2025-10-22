@@ -11,7 +11,6 @@
     ./hdd.nix
     ./initrd-ssh-zfs-unlock.nix
     ./network.nix
-    ./nullmailer.nix
     ./postgresql.nix
     ./proxy.nix
     ./services

@@ -57,8 +57,6 @@
         owner = config.services.syncthing.user;
         group = config.services.syncthing.group;
       };
-
-      nullmailer-gmail-password.sopsFile = file;
     }
     //
       lib.genAttrs
