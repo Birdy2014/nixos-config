@@ -82,15 +82,5 @@ in
         };
       };
     };
-
-    # TODO: upstream this if it works
-    systemd.timers.nixos-pull-deploy = {
-      wants = [ "network-online.target" ];
-      after = [ "network-online.target" ];
-      timerConfig = {
-        Persistent = true;
-        RandomizedDelaySec = "10min";
-      };
-    };
   };
 }
