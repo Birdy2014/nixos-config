@@ -14,11 +14,22 @@ let
     runtimeInputs = [
       pkgs.git
       pkgs.openssh
+      pkgs.curl
     ]
     ++ (lib.optional cfg.notify pkgs.dbus);
     text = ''
       if [[ "$DEPLOY_STATUS" == 'pre' ]] && [[ -d '/etc/nixos-secrets' ]]; then
         git -C /etc/nixos-secrets pull
+      fi
+
+      if [[ "$DEPLOY_SCHEDULED" == '1' ]] \
+        && [[ "$DEPLOY_STATUS" == 'failed' ]] \
+        && [[ -e '${config.sops.secrets.ntfy-sender-token.path}' ]]; then
+        curl -s \
+          -u ":$(< ${config.sops.secrets.ntfy-sender-token.path})" \
+          -H "Title: deployment on $(hostname) failed" \
+          -d "type: $DEPLOY_TYPE\ncommit: $DEPLOY_COMMIT\nmode: $DEPLOY_MODE" \
+          https://ntfy.mvogel.dev/monitoring
       fi
 
       ${lib.optionalString cfg.notify ''
