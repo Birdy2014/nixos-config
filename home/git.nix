@@ -7,7 +7,7 @@
     userEmail = "moritzv7@gmail.com";
 
     extraConfig = {
-      alias.l = "log --all --graph --oneline";
+      alias.l = "log --all --graph --pretty='format:%C(yellow)%h%Creset %C(magenta)%aN%C(auto)%d%Creset %s %Cblue(%ah)'";
       branch.sort = "-committerdate";
       column.ui = "auto";
       core.autocrlf = "input";
