@@ -47,3 +47,5 @@ lualine.setup({
     },
     extensions = { "nvim-tree", "aerial", "man", "quickfix" },
 })
+
+require("aerial").setup()

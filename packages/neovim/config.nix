@@ -139,6 +139,7 @@
           lualine-nvim
           package-info-nvim
           nvim-web-devicons
+          aerial-nvim
         ];
         config = ./config/plugins/lualine.lua;
       }
@@ -197,6 +198,10 @@
       {
         plugin = nvim-treesitter.withAllGrammars;
         config = ./config/plugins/treesitter.lua;
+      }
+      {
+        plugin = nvim-treesitter-context;
+        config = ./config/plugins/treesitter-context.lua;
       }
 
       # Coding
