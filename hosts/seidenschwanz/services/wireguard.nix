@@ -125,33 +125,24 @@ in
     proxies.lan.rules."${vpnIp6Addr 0}/119".method = "static";
   };
 
-  networking.nftables = {
-    enable = true;
-    tables.wireguard = {
-      family = "inet";
-      content = ''
-        chain input {
-          type filter hook input priority 0; policy accept;
+  networking.firewall = {
+    extraInputRules = ''
+      iifname wg-server ip6 saddr ${vpnIp6Addr 0}/120 accept
+      iifname wg-server drop
 
-          iifname wg-server ip6 saddr ${vpnIp6Addr 0}/120 accept
-          iifname wg-server drop
+      iifname wg-client ip6 saddr fd00:90::100:100/120 accept
+      iifname wg-client drop
 
-          iifname wg-client ip6 saddr fd00:90::100:100/120 accept
-          iifname wg-client drop
+      ip6 saddr ${vpnIp6Addr 0}/119 drop
+    '';
 
-          ip6 saddr ${vpnIp6Addr 0}/119 drop
-        }
+    filterForward = true;
+    extraForwardRules = ''
+      ct state established,related accept
 
-        chain forward {
-          type filter hook forward priority 0; policy drop;
+      ip6 daddr fd00:90::/64 accept
 
-          ct state established,related accept
-
-          ip6 daddr fd00:90::/64 accept
-
-          log prefix "not forwarding packet"
-        }
-      '';
-    };
+      log prefix "not forwarding packet"
+    '';
   };
 }

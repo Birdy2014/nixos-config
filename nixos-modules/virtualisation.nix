@@ -30,8 +30,16 @@ in
       spiceUSBRedirection.enable = true;
     };
 
+    networking.firewall = {
+      trustedInterfaces = [ "virbr0" ];
+      extraForwardRules = lib.mkBefore ''
+        iifname virbr0 accept
+        oifname virbr0 accept
+      '';
+    };
+
     programs.dconf.enable = true;
-    users.users.moritz.extraGroups = [ "libvirtd" ];
+    users.users = lib.mkIf config.my.desktop.enable { moritz.extraGroups = [ "libvirtd" ]; };
 
     environment.systemPackages = with pkgs; [
       distrobox
