@@ -71,30 +71,22 @@ in
     };
   };
 
-  networking.nftables = {
-    enable = true;
-    tables.wireguard = {
-      family = "inet";
-      content = ''
-        chain input {
-          type filter hook input priority 0; policy accept;
+  networking.nftables.enable = true;
+  networking.firewall = {
+    extraInputRules = ''
+      iifname wg-server ip6 saddr fd00:90::/64 accept
+      iifname wg-server drop
 
-          iifname wg-server ip6 saddr fd00:90::/64 accept
-          iifname wg-server drop
+      ip6 saddr fd00:90::/64 drop
+    '';
 
-          ip6 saddr fd00:90::/64 drop
-        }
+    filterForward = true;
+    extraForwardRules = ''
+      ct state established,related accept
 
-        chain forward {
-          type filter hook forward priority 0; policy drop;
+      ip6 daddr fd00:90::/64 accept
 
-          ct state established,related accept
-
-          ip6 daddr fd00:90::/64 accept
-
-          log prefix "not forwarding packet"
-        }
-      '';
-    };
+      log prefix "not forwarding packet"
+    '';
   };
 }
