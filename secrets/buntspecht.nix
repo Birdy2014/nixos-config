@@ -50,6 +50,7 @@
       lib.genAttrs
         (map (n: "wireguard/psk${toString n}") [
           2
+          6
           7
         ])
         (_: {

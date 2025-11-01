@@ -14,6 +14,11 @@ let
       n = 2;
     }
     {
+      publicKey = "9IC9pI03tpeGKk2obXtcHvQ5O63fW06bk4q7l1UhX2Y=";
+      pskFile = config.sops.secrets."wireguard/psk6".path;
+      n = 6;
+    }
+    {
       publicKey = "zef1la/06RNbT20ufaL14pinQ421EILNw49Flm5k12U=";
       pskFile = config.sops.secrets."wireguard/psk7".path;
       n = 7;
