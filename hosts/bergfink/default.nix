@@ -23,6 +23,10 @@
     libreoffice
     firefox
     kdePackages.discover
+
+    (pkgs.mpv.override {
+      scripts = [ pkgs.mpvScripts.modernx ];
+    })
   ];
 
   services.flatpak.enable = true;
