@@ -15,6 +15,7 @@
         "d" = "";
         "<plus>" = "zoom 1";
         "<minus>" = "zoom -1";
+        "<Shift+R>" = "rotate by 90";
       };
     };
   };
