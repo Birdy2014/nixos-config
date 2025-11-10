@@ -18,6 +18,17 @@ let
     ]
     ++ (lib.optional cfg.notify pkgs.dbus);
     text = ''
+      ${lib.optionalString cfg.notify ''
+        send_notification() {
+          dbus-send --system / net.nuetzlich.SystemNotifications.Notify \
+            'string:nixos-pull-deploy' "string:$1"
+        }
+
+        if [[ "$DEPLOY_STATUS" == 'pre' ]]; then
+          send_notification 'Aktualisierung startet'
+        fi
+      ''}
+
       if [[ "$DEPLOY_STATUS" == 'pre' ]] && [[ -d '/etc/nixos-secrets' ]]; then
         git -C /etc/nixos-secrets pull
       fi
@@ -33,11 +44,6 @@ let
       fi
 
       ${lib.optionalString cfg.notify ''
-        send_notification() {
-          dbus-send --system / net.nuetzlich.SystemNotifications.Notify \
-            'string:nixos-pull-deploy' "string:$1"
-        }
-
         if [[ "$DEPLOY_STATUS" == 'success' ]]; then
           send_notification 'Aktualisierung erfolgreich abgeschlossen'
         fi
