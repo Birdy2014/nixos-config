@@ -20,10 +20,10 @@
   ];
 
   my = {
+    libvirt.enable = true;
+    pull-deploy.enable = true;
     sshd.enable = true;
     systemd-boot.enable = true;
-    pull-deploy.enable = true;
-    virtualisation.enable = true;
   };
 
   boot.initrd.availableKernelModules = [

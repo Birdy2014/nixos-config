@@ -6,18 +6,13 @@
 }:
 
 let
-  cfg = config.my.virtualisation;
+  cfg = config.my.libvirt;
 in
 {
-  options.my.virtualisation.enable = lib.mkEnableOption "podman, qemu, etc.";
+  options.my.libvirt.enable = lib.mkEnableOption "libvirt";
 
   config = lib.mkIf cfg.enable {
     virtualisation = {
-      podman = {
-        enable = true;
-        dockerCompat = true;
-      };
-
       libvirtd = {
         enable = true;
         onBoot = "ignore";
@@ -42,9 +37,6 @@ in
     programs.dconf.enable = true;
     users.users = lib.mkIf config.my.desktop.enable { moritz.extraGroups = [ "libvirtd" ]; };
 
-    environment.systemPackages = with pkgs; [
-      distrobox
-      virt-manager
-    ];
+    environment.systemPackages = with pkgs; [ virt-manager ];
   };
 }

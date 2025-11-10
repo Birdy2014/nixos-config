@@ -22,9 +22,9 @@
         ./home/niri.nix
       ];
     };
+    podman.enable = true;
     sshd.enable = true;
     systemd-boot.enable = true;
-    virtualisation.enable = true;
   };
 
   boot.initrd.availableKernelModules = [

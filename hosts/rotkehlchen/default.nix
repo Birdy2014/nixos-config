@@ -29,10 +29,11 @@
       ];
       mpv.enableExpensiveEffects = true;
     };
+    libvirt.enable = true;
+    podman.enable = true;
     scan.enable = true;
     sshd.enable = false;
     systemd-boot.enable = true;
-    virtualisation.enable = true;
   };
 
   boot.initrd.availableKernelModules = [
