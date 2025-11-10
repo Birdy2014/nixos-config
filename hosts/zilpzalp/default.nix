@@ -23,6 +23,11 @@
       ];
     };
     podman.enable = true;
+    pull-deploy = {
+      enable = true;
+      notify = true;
+      mainDeployMode = "boot";
+    };
     sshd.enable = true;
     systemd-boot.enable = true;
   };
