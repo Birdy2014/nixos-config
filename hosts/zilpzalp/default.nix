@@ -26,7 +26,7 @@
     pull-deploy = {
       enable = true;
       notify = true;
-      mainDeployMode = "boot";
+      laptopMode = true;
     };
     sshd.enable = true;
     systemd-boot.enable = true;

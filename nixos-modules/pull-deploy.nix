@@ -48,6 +48,20 @@ let
       ''}
     '';
   };
+
+  acPowerCondition = pkgs.writeShellScript "nixos-pull-deploy-condition.sh" ''
+    shopt -s nullglob
+
+    for ac in /sys/class/power_supply/AC*; do
+        [[ "$(< "$ac/online")" == 1 ]] && exit 0
+    done
+
+    for bat in /sys/class/power_supply/BAT*; do
+        [[ "$(< "$bat/status")" == 'Charging' ]] && exit 0
+    done
+
+    exit 1
+  '';
 in
 {
   imports = [ inputs.nixos-pull-deploy.nixosModules.default ];
@@ -65,8 +79,13 @@ in
         "switch"
         "reboot_on_kernel_change"
       ];
-      default = "switch";
+      default = if cfg.laptopMode then "boot" else "switch";
       description = "How to deploy from the main branch";
+    };
+    laptopMode = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Only run on AC power and limit cpu usage";
     };
   };
 
@@ -76,8 +95,13 @@ in
       autoUpgrade = {
         enable = true;
 
-        # on seidenschwanz, jellyfin indexes the media library and zfs snapshots at 02:00
-        startAt = "*-*-* 01:30:00";
+        startAt =
+          if cfg.laptopMode then
+            # Run overy hour on laptops
+            "*-*-* *:00:00"
+          else
+            # on seidenschwanz, jellyfin indexes the media library and zfs snapshots at 02:00
+            "*-*-* 01:30:00";
       };
       settings = {
         origin = {
@@ -92,6 +116,11 @@ in
           testing = "switch";
         };
       };
+    };
+
+    systemd.services.nixos-pull-deploy.serviceConfig = lib.mkIf cfg.laptopMode {
+      CPUQuota = "50%";
+      ExecCondition = acPowerCondition;
     };
   };
 }
