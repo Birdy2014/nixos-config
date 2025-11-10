@@ -25,6 +25,7 @@ in
           package = pkgs.qemu_kvm;
           ovmf.packages = [ pkgs.OVMFFull.fd ];
           swtpm.enable = true;
+          vhostUserPackages = [ pkgs.virtiofsd ];
         };
       };
       spiceUSBRedirection.enable = true;
@@ -44,7 +45,6 @@ in
     environment.systemPackages = with pkgs; [
       distrobox
       virt-manager
-      virtiofsd
     ];
   };
 }
