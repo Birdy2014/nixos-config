@@ -24,12 +24,6 @@
         group = "improglycerin";
       };
 
-      nextcloud-admin-password = {
-        sopsFile = file;
-        owner = "nextcloud";
-        group = "nextcloud";
-      };
-
       coturn-auth-secret = {
         sopsFile = file;
         # needs to be readable by coturn and synapse

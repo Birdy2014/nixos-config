@@ -21,7 +21,6 @@
         "/root/wireguard"
         "/var/db/bind"
         "/var/lib/matrix-synapse"
-        "/var/lib/nextcloud"
         "/var/lib/private/improtheater-frankfurt"
         dbBackupDir
       ];
@@ -43,7 +42,6 @@
           (dbName: "${lib.getExe pkgs.sudo} -u postgres ${pg_dump} -f ${dbBackupDir}/${dbName} ${dbName}")
           [
             "matrix-synapse"
-            "nextcloud"
           ];
     };
 }
