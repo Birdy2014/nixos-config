@@ -67,6 +67,7 @@
     # GUI
     gimp3
     mcomix
+    feishin
 
     signal-desktop
     mumble
