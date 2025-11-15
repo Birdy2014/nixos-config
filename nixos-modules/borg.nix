@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   # Borgbackup sometimes fails without delay
@@ -14,5 +19,9 @@
     |> map (name: "borgbackup-job-${name}")
     |> lib.flip lib.genAttrs (_: {
       onFailure = [ "notify-failure@%N.service" ];
+      serviceConfig = {
+        ExecStartPre = "${pkgs.coreutils}/bin/sleep 10";
+        TimeoutStartSec = "1min";
+      };
     });
 }
