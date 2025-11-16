@@ -18,6 +18,7 @@
       paths = [
         "/etc/ssh"
         "/var/lib/authelia-main"
+        "/var/lib/bitwarden_rs"
         "/var/lib/jellyfin"
         "/var/lib/paperless"
         "/var/lib/private/einkaufszettel"

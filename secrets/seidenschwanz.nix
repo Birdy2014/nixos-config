@@ -57,6 +57,12 @@
         owner = config.services.syncthing.user;
         group = config.services.syncthing.group;
       };
+
+      vaultwarden-env = {
+        sopsFile = file;
+        owner = "vaultwarden";
+        group = "vaultwarden";
+      };
     }
     //
       lib.genAttrs

@@ -16,6 +16,7 @@
     ./paperless.nix
     ./smb.nix
     ./syncthing.nix
+    ./vaultwarden.nix
     ./wireguard.nix
   ];
 }
