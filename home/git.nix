@@ -17,6 +17,7 @@
         renames = true;
       };
       fetch.all = true;
+      init.defaultBranch = "main";
       pull.ff = "only";
       push.autoSetupRemote = true;
       tag.sort = "version:refname";
