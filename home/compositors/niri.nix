@@ -99,6 +99,8 @@
             ];
 
             default-column-width.proportion = 1. / 3.;
+
+            struts.right = 8;
           };
 
           environment = {
