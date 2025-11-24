@@ -28,6 +28,9 @@
         hostname = "zilpzalp.local";
         user = "moritz";
       };
+
+      # Needed for dircolors to work in foot when connecting over ssh
+      "*".sendEnv = [ "COLORTERM" ];
     };
   };
 }

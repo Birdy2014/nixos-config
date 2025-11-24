@@ -15,6 +15,9 @@ in
       settings = {
         PasswordAuthentication = false;
         KbdInteractiveAuthentication = false;
+
+        # Needed for dircolors to work in foot when connecting over ssh
+        AcceptEnv = "COLORTERM";
       };
     };
 
