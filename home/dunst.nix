@@ -16,8 +16,8 @@
       {
         global = {
           width = 300;
-          height = 200;
-          offset = "30x20";
+          height = "(0, 200)";
+          offset = "(30, 20)";
           frame_width = 1;
           font = "monospace 10";
           dmenu = "${pkgs.rofi}/bin/rofi -dmenu -p dunst";
