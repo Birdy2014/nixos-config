@@ -124,9 +124,12 @@ in
       };
     };
 
-    systemd.services.nixos-pull-deploy.serviceConfig = lib.mkIf cfg.laptopMode {
-      CPUQuota = "50%";
-      ExecCondition = acPowerCondition;
+    systemd.services.nixos-pull-deploy = {
+      onFailure = [ "notify-failure@%N.service" ];
+      serviceConfig = lib.mkIf cfg.laptopMode {
+        CPUQuota = "50%";
+        ExecCondition = acPowerCondition;
+      };
     };
   };
 }
