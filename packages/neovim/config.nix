@@ -3,7 +3,6 @@
   buildVimPlugin,
   vimPlugins,
   fetchFromGitHub,
-  fetchurl,
   colorscheme,
 }:
 
@@ -86,24 +85,6 @@
           }
         ];
       };
-
-      # Fix deprecation warnings for vim.tbl_islist
-      # TODO: Remove once nui-nvim is updated in nixpkgs stable (NixOS 25.11?)
-      nui-nvim-v0_4_0 = vimPlugins.nui-nvim.overrideAttrs (
-        final: prev: {
-          version = "0.4.0-1";
-          rockspecVersion = final.version;
-          knownRockspec =
-            (fetchurl {
-              url = "mirror://luarocks/nui.nvim-0.4.0-1.rockspec";
-              sha256 = "sha256-Ll8j93K9whJlooWPl7hTYryqHUlDFZYsLTCevJg6SC8=";
-            }).outPath;
-          src = prev.src.override {
-            rev = "0.4.0";
-            hash = "sha256-SJc9nfV6cnBKYwRWsv0iHy+RbET8frNV85reICf+pt8=";
-          };
-        }
-      );
     in
     with vimPlugins;
     [
@@ -116,7 +97,7 @@
       {
         plugin = [
           noice-nvim
-          nui-nvim-v0_4_0
+          nui-nvim
         ];
         config = ./config/plugins/noice.lua;
       }
@@ -216,7 +197,7 @@
       {
         plugin = [
           package-info-nvim
-          nui-nvim-v0_4_0
+          nui-nvim
         ];
         config = "require('package-info').setup {}";
       }

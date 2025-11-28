@@ -4,7 +4,6 @@
   neovim-unwrapped,
   vimPlugins,
   fetchFromGitHub,
-  fetchurl,
   stdenvNoCC,
   vimUtils,
   git,
@@ -25,7 +24,6 @@ let
       stdenvNoCC
       vimPlugins
       fetchFromGitHub
-      fetchurl
       colorscheme
       ;
     buildVimPlugin = vimUtils.buildVimPlugin;
