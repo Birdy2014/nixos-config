@@ -1,7 +1,5 @@
 { config, lib, ... }:
 
-# TODO: Add `my.proxy.domains.<name>.localOnly` or `allowPublic`?
-
 let
   cfg = config.my.proxy;
 in
@@ -15,6 +13,11 @@ in
           proxyPass = lib.mkOption {
             type = lib.types.str;
             description = "The target url of the proxy.";
+          };
+          proxyWebsockets = lib.mkOption {
+            type = lib.types.bool;
+            default = false;
+            description = "enable proxyWebsockets";
           };
           enableAuthelia = lib.mkOption {
             type = lib.types.bool;
@@ -39,7 +42,8 @@ in
         useACMEHost = "seidenschwanz.mvogel.dev";
         listenAddresses = [ "[fd00:90::10]" ];
         locations."/" = {
-          proxyPass = "${domainConfig.proxyPass}";
+          inherit (domainConfig) proxyPass proxyWebsockets;
+          recommendedProxySettings = true;
           extraConfig = lib.mkIf domainConfig.enableAuthelia ''
             ## Send a subrequest to Authelia to verify if the user is authenticated and has permission to access the resource.
             auth_request /authelia;

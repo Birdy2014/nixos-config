@@ -22,8 +22,8 @@
     };
   };
 
-  my.proxy.domains.paperless.proxyPass =
-    "http://${config.services.paperless.address}:${toString config.services.paperless.port}";
-
-  services.nginx.virtualHosts.paperless.locations."/".proxyWebsockets = true;
+  my.proxy.domains.paperless = {
+    proxyPass = "http://${config.services.paperless.address}:${toString config.services.paperless.port}";
+    proxyWebsockets = true;
+  };
 }

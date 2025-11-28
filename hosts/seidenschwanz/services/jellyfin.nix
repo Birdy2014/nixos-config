@@ -38,13 +38,10 @@
 
     locations = {
       # Is this necessary?
-      "/" = {
-        recommendedProxySettings = true;
-        extraConfig = ''
-          # Disable buffering when the nginx proxy gets very resource heavy upon streaming
-          proxy_buffering off;
-        '';
-      };
+      "/".extraConfig = ''
+        # Disable buffering when the nginx proxy gets very resource heavy upon streaming
+        proxy_buffering off;
+      '';
 
       # Required for jellyfin-mpv-shim
       "/socket" = {

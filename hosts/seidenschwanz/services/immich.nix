@@ -12,15 +12,12 @@
     "render"
   ];
 
-  my.proxy.domains.immich.proxyPass = with config.services.immich; "http://${host}:${toString port}";
-
-  services.nginx.virtualHosts.immich = {
-    locations."/" = {
-      recommendedProxySettings = true;
-      proxyWebsockets = true;
-    };
-    extraConfig = ''
-      client_max_body_size 50000M;
-    '';
+  my.proxy.domains.immich = {
+    proxyPass = with config.services.immich; "http://${host}:${toString port}";
+    proxyWebsockets = true;
   };
+
+  services.nginx.virtualHosts.immich.extraConfig = ''
+    client_max_body_size 50000M;
+  '';
 }
