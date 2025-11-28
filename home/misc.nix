@@ -11,9 +11,7 @@
   services.gnome-keyring.enable = true;
 
   nix.gc = {
-    automatic = osConfig.nix.gc.automatic;
-    frequency = osConfig.nix.gc.dates;
-    options = osConfig.nix.gc.options;
+    inherit (osConfig.nix.gc) automatic dates options;
   };
 
   home.packages = with pkgs; [

@@ -3,8 +3,6 @@
 {
   programs.rofi = {
     enable = true;
-    package = pkgs.rofi-wayland;
-
     font = "monospace 12";
 
     theme = "${pkgs.writeText "rofi-theme.rasi" (

@@ -43,7 +43,7 @@
   nixpkgs.hostPlatform = "x86_64-linux";
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.intel.updateMicrocode = true;
-  hardware.graphics.extraPackages = with pkgs; [ vaapiIntel ];
+  hardware.graphics.extraPackages = with pkgs; [ intel-vaapi-driver ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 

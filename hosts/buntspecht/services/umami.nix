@@ -1,17 +1,8 @@
-{
-  config,
-  inputs,
-  pkgsUnstable,
-  ...
-}:
+{ config, ... }:
 
 {
-  # TODO: Switch to stable on NixOS 25.11
-  imports = [ "${inputs.nixpkgs-unstable}/nixos/modules/services/web-apps/umami.nix" ];
-
   services.umami = {
     enable = true;
-    package = pkgsUnstable.umami;
     settings = {
       APP_SECRET_FILE = config.sops.secrets.umami-app-secret.path;
       PORT = 3010;

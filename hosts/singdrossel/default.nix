@@ -35,7 +35,7 @@
 
   environment.systemPackages = [
     pkgs.gparted
-    pkgs.glxinfo
+    pkgs.mesa-demos
   ];
 
   home-manager.users.moritz.wayland.windowManager.sway.extraConfig =

@@ -1,8 +1,9 @@
-{ ... }:
+{ pkgsSelf, ... }:
 
 {
   programs.imv = {
     enable = true;
+    package = pkgsSelf.imv;
 
     settings = {
       options.overlay_font = "monospace:10";

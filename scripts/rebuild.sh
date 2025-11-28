@@ -67,7 +67,7 @@ run_rebuild() {
 for host in "$@"; do
     case "$host" in
         rotkehlchen)
-            run_rebuild "$mode" rotkehlchen --use-remote-sudo
+            run_rebuild "$mode" rotkehlchen --sudo
             ;;
         seidenschwanz)
             pull_secrets seidenschwanz

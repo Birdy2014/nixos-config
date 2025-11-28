@@ -18,6 +18,11 @@
       enable = true;
       createDirectories = true;
     };
+
+    terminal-exec = {
+      enable = true;
+      settings.default = [ "foot.desktop" ];
+    };
   };
 
   xdg.configFile =
@@ -112,11 +117,5 @@
 
   home.packages = [
     pkgsSelf.xdg-open
-
-    # TODO: Replace with `xdg.terminal-exec` on NixOS 25.11
-    # Make some applications find the default terminal when opening desktop files
-    (pkgs.writeShellScriptBin "xdg-terminal-exec" ''
-      foot "$@"
-    '')
   ];
 }

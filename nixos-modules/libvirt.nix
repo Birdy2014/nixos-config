@@ -18,7 +18,6 @@ in
         onBoot = "ignore";
         qemu = {
           package = pkgs.qemu_kvm;
-          ovmf.packages = [ pkgs.OVMFFull.fd ];
           swtpm.enable = true;
           vhostUserPackages = [ pkgs.virtiofsd ];
         };

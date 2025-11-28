@@ -1,4 +1,4 @@
-From b8917e8f48a2ee5f73ce8d7c1fb02d3ac4f2d93e Mon Sep 17 00:00:00 2001
+From 0b866ebda4072fd04deea28231cfca6a13e425c9 Mon Sep 17 00:00:00 2001
 From: Moritz Vogel <moritzv7@gmail.com>
 Date: Thu, 13 Jun 2024 01:22:31 +0200
 Subject: [PATCH 2/2] Add file path to exec in desktop file
@@ -20,5 +20,5 @@ index e41e56a..f94d884 100644
  Categories=ConsoleOnly;System;FileTools;FileManager
  MimeType=inode/directory;
 -- 
-2.47.0
+2.50.1
 

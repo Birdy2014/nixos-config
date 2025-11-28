@@ -15,10 +15,10 @@
           resize-by-cells = false;
           resize-keep-grid = false;
         };
-        cursor.color = with config.my.theme; "${color background-secondary} ${color text}";
         colors = with config.my.theme; {
           background = color background-secondary;
           foreground = color text;
+          cursor = "${color background-secondary} ${color text}";
 
           regular0 = color black;
           regular1 = color red;

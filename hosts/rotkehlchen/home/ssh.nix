@@ -3,8 +3,7 @@
 {
   programs.ssh = {
     enable = true;
-
-    serverAliveInterval = 20;
+    enableDefaultConfig = false;
 
     matchBlocks = {
       seidenschwanz = {
@@ -29,8 +28,12 @@
         user = "moritz";
       };
 
-      # Needed for dircolors to work in foot when connecting over ssh
-      "*".sendEnv = [ "COLORTERM" ];
+      "*" = {
+        serverAliveInterval = 20;
+
+        # Needed for dircolors to work in foot when connecting over ssh
+        sendEnv = [ "COLORTERM" ];
+      };
     };
   };
 }

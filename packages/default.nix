@@ -10,6 +10,7 @@
       gruvbox-material-gtk = callPackage ./gruvbox-material-gtk.nix { };
       improglycerin = callPackage ./improglycerin.nix { };
       improtheater-frankfurt = callPackage ./improtheater-frankfurt.nix { };
+      imv = callPackage ./imv.nix { };
       lepton-firefox-theme = callPackage ./lepton-firefox-theme.nix { };
       lyrax-cursors = callPackage ./lyrax-cursors.nix { };
       mpv-thumbfast-vanilla-osc = callPackage ./mpv-thumbfast-vanilla-osc.nix { };

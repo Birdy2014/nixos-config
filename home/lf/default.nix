@@ -54,7 +54,7 @@
           kitty
           chafa
           highlight
-          poppler_utils
+          poppler-utils
           imagemagick
           ffmpeg
           ffmpegthumbnailer

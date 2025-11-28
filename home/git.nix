@@ -3,10 +3,12 @@
 {
   programs.git = {
     enable = true;
-    userName = "Moritz Vogel";
-    userEmail = "moritzv7@gmail.com";
 
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Moritz Vogel";
+        email = "moritzv7@gmail.com";
+      };
       alias.l = "log --all --graph --pretty='format:%C(yellow)%h%Creset %C(magenta)%aN%C(auto)%d%Creset %s %Cblue(%ah)'";
       branch.sort = "-committerdate";
       column.ui = "auto";
@@ -22,13 +24,13 @@
       push.autoSetupRemote = true;
       tag.sort = "version:refname";
     };
+  };
 
-    delta = {
-      enable = true;
-      options = {
-        line-numbers = true;
-        hunk-header-style = "";
-      };
+  programs.delta = {
+    enable = true;
+    options = {
+      line-numbers = true;
+      hunk-header-style = "";
     };
   };
 }

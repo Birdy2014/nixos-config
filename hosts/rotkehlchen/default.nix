@@ -84,11 +84,6 @@
     motherboard = "amd";
   };
 
-  # Required for openrgb, remove with NixOS 25.11
-  nixpkgs.config.permittedInsecurePackages = [
-    "mbedtls-2.28.10"
-  ];
-
   services.printing.enable = true;
 
   services.fwupd.enable = true;
