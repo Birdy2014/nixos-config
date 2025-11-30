@@ -54,6 +54,7 @@
         "browser.formfill.enable" = false;
         "browser.newtabpage.activity-stream.feeds.topsites" = false;
         "browser.translations.automaticallyPopup" = false;
+        "extensions.formautofill.addresses.enabled" = false;
         "extensions.formautofill.creditCards.enabled" = false;
         "extensions.pocket.enabled" = false;
         "identity.fxaccounts.enabled" = false; # Firefox sync
