@@ -40,7 +40,6 @@ in
         serverName = "${domainName}.seidenschwanz.mvogel.dev";
         onlySSL = true;
         useACMEHost = "seidenschwanz.mvogel.dev";
-        listenAddresses = [ "[fd00:90::10]" ];
         locations."/" = {
           inherit (domainConfig) proxyPass proxyWebsockets;
           recommendedProxySettings = true;

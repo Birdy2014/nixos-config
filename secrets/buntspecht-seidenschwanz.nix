@@ -9,7 +9,7 @@
       {
         "bind-dnskey_seidenschwanz.mvogel.dev".sopsFile = file;
 
-        "wireguard/psk1-8" = {
+        "wireguard/psk2" = {
           sopsFile = file;
           owner = "systemd-network";
           group = "systemd-network";
