@@ -40,12 +40,6 @@
         group = config.services.authelia.instances.main.group;
       };
 
-      "wireguard/private-key-server" = {
-        sopsFile = file;
-        owner = "systemd-network";
-        group = "systemd-network";
-      };
-
       "wireguard/private-key-client" = {
         sopsFile = file;
         owner = "systemd-network";
@@ -63,20 +57,5 @@
         owner = "vaultwarden";
         group = "vaultwarden";
       };
-    }
-    //
-      lib.genAttrs
-        (map (n: "wireguard/psk${toString n}") [
-          2
-          3
-          4
-          5
-          7
-          9
-        ])
-        (_: {
-          sopsFile = file;
-          owner = "systemd-network";
-          group = "systemd-network";
-        });
+    };
 }

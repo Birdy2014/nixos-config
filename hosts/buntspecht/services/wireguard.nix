@@ -7,30 +7,33 @@
 }:
 
 let
+  server-port = 49626;
+
   peers = [
+    # seidenschwanz
     {
-      publicKey = "ShKhJqkATheapke0wOhASBVB+fmd3nO1DjdNKU8C6nw=";
+      publicKey = "q8qzjVMDQHbhdw9m//d5iPdiqf1ZYtXY7jpllsaIgkQ=";
       pskFile = config.sops.secrets."wireguard/psk2".path;
       n = 2;
     }
     {
-      publicKey = "9IC9pI03tpeGKk2obXtcHvQ5O63fW06bk4q7l1UhX2Y=";
-      pskFile = config.sops.secrets."wireguard/psk6".path;
-      n = 6;
+      publicKey = "fV4pFC3gytY0x5QR1KokVqhQapbHn68cslyPQaxkAGk=";
+      pskFile = config.sops.secrets."wireguard/psk3".path;
+      n = 3;
     }
     {
-      publicKey = "zef1la/06RNbT20ufaL14pinQ421EILNw49Flm5k12U=";
-      pskFile = config.sops.secrets."wireguard/psk7".path;
-      n = 7;
+      publicKey = "K6i5rQwz8Yuhv0CDp8PhWPGYIcIjjXQl63G37nUvxGk=";
+      pskFile = config.sops.secrets."wireguard/psk4".path;
+      n = 4;
     }
   ];
 
-  vpnIp6Addr = n: "fd00:90::100:1${myLib.zeroPad 2 (myLib.decToHex n)}";
+  vpnIp6Addr = n: "2a01:4f8:c012:2dfe:1::${myLib.zeroPad 4 (myLib.decToHex n)}";
 in
 {
   environment.systemPackages = [ pkgs.wireguard-tools ];
 
-  networking.firewall.allowedUDPPorts = [ 49626 ];
+  networking.firewall.allowedUDPPorts = [ server-port ];
 
   systemd.network = {
     # Required in addition to per-interface IPv6Forwarding
@@ -43,10 +46,10 @@ in
       };
       wireguardConfig = {
         PrivateKeyFile = config.sops.secrets."wireguard/private-key-server".path;
-        ListenPort = 49626;
+        ListenPort = server-port;
       };
-      wireguardPeers =
-        (map (
+      wireguardPeers = (
+        map (
           {
             publicKey,
             pskFile,
@@ -56,40 +59,39 @@ in
           {
             PublicKey = publicKey;
             PresharedKeyFile = lib.mkIf (pskFile != null) pskFile;
-            AllowedIPs = [ (vpnIp6Addr n) ];
+            AllowedIPs = [ "${vpnIp6Addr n}/128" ];
           }
-        ) peers)
-        ++ [
-          {
-            PublicKey = "q8qzjVMDQHbhdw9m//d5iPdiqf1ZYtXY7jpllsaIgkQ=";
-            PresharedKeyFile = config.sops.secrets."wireguard/psk1-8".path;
-            AllowedIPs = [ "fd00:90::/64" ];
-          }
-        ];
+        ) peers
+      );
     };
 
     networks."50-wg-server" = {
       matchConfig.Name = "wg-server";
-      address = [ "${vpnIp6Addr 1}/120" ];
+      address = [ "${vpnIp6Addr 1}/110" ];
       networkConfig.IPv6Forwarding = true;
-      routes = [ { Destination = "fd00:90::/64"; } ];
+      routes = [ { Destination = "${vpnIp6Addr 0}/110"; } ];
     };
   };
 
   networking.nftables.enable = true;
   networking.firewall = {
     extraInputRules = ''
-      iifname wg-server ip6 saddr fd00:90::/64 accept
+      iifname wg-server ip6 saddr ${vpnIp6Addr 0}/110 accept
       iifname wg-server drop
 
-      ip6 saddr fd00:90::/64 drop
+      ip6 saddr ${vpnIp6Addr 0}/110 drop
     '';
 
     filterForward = true;
     extraForwardRules = ''
       ct state established,related accept
 
-      ip6 daddr fd00:90::/64 accept
+      define SERVERS = {
+        ${vpnIp6Addr 2}/128
+      }
+
+      ip6 saddr ${vpnIp6Addr 0}/110 ip6 daddr $SERVERS accept
+      ip6 saddr $SERVERS ip6 daddr ${vpnIp6Addr 0}/110 accept
 
       log prefix "not forwarding packet"
     '';

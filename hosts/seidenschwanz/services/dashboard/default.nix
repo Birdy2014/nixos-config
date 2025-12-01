@@ -6,7 +6,6 @@
     serverName = "seidenschwanz.mvogel.dev";
     onlySSL = true;
     useACMEHost = "seidenschwanz.mvogel.dev";
-    listenAddresses = [ "[fd00:90::10]" ];
     locations."/".root =
       let
         dashboard-icons = pkgs.fetchFromGitHub {
