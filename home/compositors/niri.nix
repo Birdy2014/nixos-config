@@ -63,7 +63,10 @@
 
           prefer-no-csd = true;
 
-          overview.backdrop-color = color-background-dark;
+          overview = {
+            backdrop-color = color-background-dark;
+            workspace-shadow.enable = false;
+          };
 
           hotkey-overlay.skip-at-startup = true;
 
@@ -101,6 +104,9 @@
             default-column-width.proportion = 1. / 3.;
 
             struts.right = 8;
+
+            # wallpaper is moved to backdrop by layer-rule
+            background-color = "transparent";
           };
 
           environment = {
@@ -201,6 +207,13 @@
             {
               matches = [ { app-id = "^mpv$"; } ];
               open-floating = true;
+            }
+          ];
+
+          layer-rules = [
+            {
+              matches = [ { namespace = "^swww-daemon$"; } ];
+              place-within-backdrop = true;
             }
           ];
 
