@@ -125,12 +125,6 @@
             {
               command = [ "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1" ];
             }
-            {
-              command = [
-                "${pkgs.keepassxc}/bin/keepassxc"
-                "--minimized"
-              ];
-            }
           ];
 
           xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
@@ -176,11 +170,6 @@
               open-on-workspace = "05";
               default-column-width.proportion = 1. / 2.;
               open-focused = false;
-            }
-            {
-              matches = [ { app-id = "^org.keepassxc.KeePassXC$"; } ];
-              open-floating = true;
-              block-out-from = "screen-capture";
             }
             {
               matches = [

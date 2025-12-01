@@ -95,7 +95,6 @@
       enable = true;
       nativeMessagingHosts = with pkgs; [
         tridactyl-native
-        keepassxc
       ];
       profiles = {
         default = {
@@ -118,7 +117,7 @@
           extensions.packages =
             commonExtensions
             ++ (with firefox-addons; [
-              keepassxc-browser
+              bitwarden
               tridactyl
               darkreader
               return-youtube-dislikes

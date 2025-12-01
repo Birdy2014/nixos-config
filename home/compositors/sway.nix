@@ -225,7 +225,6 @@
             {
               command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
             }
-            { command = "${pkgs.keepassxc}/bin/keepassxc --minimized"; }
           ];
         };
 
@@ -305,9 +304,6 @@
             for_window [app_id="^xdg-desktop-portal-gtk$"] floating enable
 
             for_window [app_id="^org.yuzu_emu.yuzu$"] inhibit_idle visible
-
-            for_window [app_id="org.keepassxc.KeePassXC"] floating enable
-            for_window [app_id="org.keepassxc.KeePassXC" title=".*Unlock Database.*"] move workspace current; move position center
 
             seat * shortcuts_inhibitor disable
             set $mode_hotkeygrab Hotkey grab: mod+Shift+z to exit
