@@ -1,0 +1,25 @@
+From b6460e200451004b48b5ceb78720e0f57423c335 Mon Sep 17 00:00:00 2001
+From: Moritz Vogel <moritzv7@gmail.com>
+Date: Wed, 3 Dec 2025 15:35:41 +0100
+Subject: [PATCH] show file sizes in copy progress
+
+---
+ ui.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ui.go b/ui.go
+index 3fcf90d..2362cea 100644
+--- a/ui.go
++++ b/ui.go
+@@ -966,7 +966,7 @@ func (ui *ui) drawRuler(nav *nav) {
+ 		if nav.copyTotal == 0 {
+ 			progress = append(progress, fmt.Sprintf("[0%%]"))
+ 		} else {
+-			progress = append(progress, fmt.Sprintf("[%d%%]", nav.copyBytes*100/nav.copyTotal))
++			progress = append(progress, fmt.Sprintf("[%s/%s - %d%%]", humanize(uint64(nav.copyBytes)), humanize(uint64(nav.copyTotal)), nav.copyBytes*100/nav.copyTotal))
+ 		}
+ 	}
+ 
+-- 
+2.51.2
+
