@@ -41,6 +41,7 @@
 
   services.openssh.ports = [ 46773 ];
 
+  networking.firewall.logRefusedConnections = false;
   networking.firewall.allowedTCPPorts = [
     80
     443
