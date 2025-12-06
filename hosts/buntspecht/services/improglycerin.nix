@@ -21,15 +21,15 @@ in
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
     environment.PORT = port;
-    preStart =
+    script =
       let
         cache = "/tmp/next-cache-${pkgsSelf.improglycerin.pname}-${pkgsSelf.improglycerin.version}";
       in
       ''
         rm -rf ${cache}
         mkdir -p ${cache}
+        ${lib.getExe pkgsSelf.improglycerin}
       '';
-    script = lib.getExe pkgsSelf.improglycerin;
     serviceConfig = {
       DynamicUser = true;
       EnvironmentFile = config.sops.templates."improglycerin-yesticket-api-key".path;
