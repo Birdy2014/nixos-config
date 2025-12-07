@@ -16,12 +16,13 @@
       user = "root";
       group = "root";
       paths = [
-        "/etc/nixos"
         "/etc/nixos-secrets"
+        "/etc/ssh"
         "/root/wireguard"
         "/var/db/bind"
         "/var/lib/matrix-synapse"
         "/var/lib/private/improtheater-frankfurt"
+        "/var/lib/private/ntfy-sh"
         dbBackupDir
       ];
       compression = "zstd,10";
@@ -42,6 +43,7 @@
           (dbName: "${lib.getExe pkgs.sudo} -u postgres ${pg_dump} -f ${dbBackupDir}/${dbName} ${dbName}")
           [
             "matrix-synapse"
+            "umami"
           ];
     };
 }
