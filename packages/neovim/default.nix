@@ -16,6 +16,7 @@
   clang-tools,
   typescript-language-server,
   pyright,
+  withAllTreesitterGrammars ? false,
 }:
 
 let
@@ -25,6 +26,7 @@ let
       vimPlugins
       fetchFromGitHub
       colorscheme
+      withAllTreesitterGrammars
       ;
     buildVimPlugin = vimUtils.buildVimPlugin;
   };

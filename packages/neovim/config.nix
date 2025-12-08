@@ -4,6 +4,7 @@
   vimPlugins,
   fetchFromGitHub,
   colorscheme,
+  withAllTreesitterGrammars,
 }:
 
 {
@@ -177,7 +178,16 @@
 
       # Treesitter
       {
-        plugin = nvim-treesitter.withAllGrammars;
+        plugin =
+          if withAllTreesitterGrammars then
+            nvim-treesitter.withAllGrammars
+          else
+            nvim-treesitter.withPlugins (
+              parsers: with parsers; [
+                nix
+                bash
+              ]
+            );
         config = ./config/plugins/treesitter.lua;
       }
       {

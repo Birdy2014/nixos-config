@@ -23,6 +23,7 @@
       ];
     };
     podman.enable = true;
+    programs.neovim.full = true;
     pull-deploy = {
       enable = true;
       notify = true;

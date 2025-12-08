@@ -31,6 +31,7 @@
     };
     libvirt.enable = true;
     podman.enable = true;
+    programs.neovim.full = true;
     scan.enable = true;
     sshd.enable = false;
     systemd-boot.enable = true;
