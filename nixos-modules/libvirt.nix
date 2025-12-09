@@ -7,6 +7,7 @@
 
 let
   cfg = config.my.libvirt;
+  isDesktop = config.my.desktop.enable;
 in
 {
   options.my.libvirt.enable = lib.mkEnableOption "libvirt";
@@ -22,7 +23,7 @@ in
           vhostUserPackages = [ pkgs.virtiofsd ];
         };
       };
-      spiceUSBRedirection.enable = true;
+      spiceUSBRedirection.enable = isDesktop;
     };
 
     networking.firewall = {
@@ -33,9 +34,8 @@ in
       '';
     };
 
-    programs.dconf.enable = true;
-    users.users = lib.mkIf config.my.desktop.enable { moritz.extraGroups = [ "libvirtd" ]; };
-
-    environment.systemPackages = with pkgs; [ virt-manager ];
+    programs.dconf.enable = isDesktop;
+    users.users = lib.mkIf isDesktop { moritz.extraGroups = [ "libvirtd" ]; };
+    environment.systemPackages = lib.mkIf isDesktop (with pkgs; [ virt-manager ]);
   };
 }
