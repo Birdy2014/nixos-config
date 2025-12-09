@@ -17,6 +17,7 @@
   typescript-language-server,
   pyright,
   withAllTreesitterGrammars ? false,
+  waylandSupport ? true,
 }:
 
 let
@@ -33,6 +34,7 @@ let
   configBefore = config.configBefore;
 in
 wrapNeovimUnstable neovim-unwrapped {
+  inherit waylandSupport;
   vimAlias = true;
   viAlias = true;
   withPython3 = false;

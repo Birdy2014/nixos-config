@@ -19,6 +19,7 @@
         colorscheme = config.my.desktop.colorscheme;
         withLanguageServers = config.my.programs.neovim.full;
         withAllTreesitterGrammars = config.my.programs.neovim.full;
+        waylandSupport = config.my.desktop.enable;
       })
       ripgrep
       git
