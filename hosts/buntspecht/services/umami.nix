@@ -2,7 +2,8 @@
 
 {
   services.umami = {
-    enable = true;
+    # TODO: Enable after update to 3.0.2
+    enable = false;
     settings = {
       APP_SECRET_FILE = config.sops.secrets.umami-app-secret.path;
       PORT = 3010;
