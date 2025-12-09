@@ -218,20 +218,6 @@
         config = ./config/plugins/indent-o-matic.lua;
       }
       {
-        plugin = buildVimPlugin {
-          pname = "qalc.nvim";
-          version = "2025-03-09";
-          src = fetchFromGitHub {
-            owner = "Apeiros-46B";
-            repo = "qalc.nvim";
-            rev = "7697cff543b7089c858f3b26a013c1eb52fe86fa";
-            sha256 = "sha256-Qb254SyjhT4ao1BJ2r152Ca2B8IHikvnnO+9MQFj0vI=";
-          };
-          meta.homepage = "https://github.com/Apeiros-46B/qalc.nvim";
-        };
-        config = "require('qalc').setup{}";
-      }
-      {
         plugin = stdenvNoCC.mkDerivation {
           pname = "spell";
           version = "1.0";

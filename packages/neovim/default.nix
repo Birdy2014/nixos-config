@@ -8,7 +8,6 @@
   vimUtils,
   git,
   ripgrep,
-  libqalculate,
   colorscheme ? "catppuccin-frappe",
   withLanguageServers ? false,
   nixd,
@@ -45,7 +44,6 @@ wrapNeovimUnstable neovim-unwrapped {
       [
         git
         ripgrep
-        libqalculate
       ]
       ++ lib.optionals withLanguageServers [
         nixd
