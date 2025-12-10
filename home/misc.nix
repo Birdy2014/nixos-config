@@ -31,6 +31,12 @@
     gdb
     pkgsSelf.wine-sandbox
     kiwix-tools
+    socat
+    pciutils
+    usbutils
+    sshfs
+    binutils # for strings
+    jq
 
     # GUI
     pavucontrol

@@ -25,17 +25,11 @@
       git
       file
       psmisc
-      socat
-      pciutils
-      usbutils
       compsize
-      sshfs
       ldns # for drill
-      binutils # for strings
       nix-tree
       htop
       fd
-      jq
 
       man-pages
     ];
