@@ -45,7 +45,6 @@
     "usbhid"
     "sd_mod"
   ];
-  boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ "kvm-amd" ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -94,6 +93,8 @@
     openFirewall = true;
   };
 
+  hardware.amdgpu.initrd.enable = true;
+
   boot.kernelParams = [
     "amd_pstate=active"
 
@@ -102,6 +103,11 @@
 
     # The mitigations have a significant performance impact e.g. in cpu-bound games. (At least on my zen2 cpu)
     "mitigations=off"
+
+    # Disable simpledrm so that the amd gpu is always card0
+    # amdgpu must be in initrd!
+    # This also causes the screen to be black before amdgpu loads instead of a lower resolution console
+    "initcall_blacklist=simpledrm_platform_driver_init"
   ];
 
   boot.kernel.sysctl = {
@@ -115,16 +121,8 @@
     root = "/home/moritz/misc/nighttab-images";
   };
 
-  systemd.services.gpu-power-limit = {
-    script = ''
-      echo 253000000 > /sys/class/drm/card1/device/hwmon/hwmon0/power1_cap
-    '';
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
-  };
+  # amd gpu is always card0 when simpledrm is disabled
+  boot.kernel.sysfs.class.drm.card0.device.hwmon.hwmon0.power1_cap = 253000000;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
