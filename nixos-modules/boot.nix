@@ -70,9 +70,9 @@
     systemd.oomd.enable = false;
     services.earlyoom = {
       enable = true;
-      enableNotifications = true;
+      enableNotifications = config.my.desktop.enable;
     };
-    services.systembus-notify.enable = true;
+    services.systembus-notify.enable = config.my.desktop.enable;
 
     boot.loader = lib.mkIf config.my.systemd-boot.enable {
       efi = {
