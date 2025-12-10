@@ -4,6 +4,9 @@
   services.bind = {
     enable = true;
 
+    listenOn = [ "49.13.31.214" ];
+    listenOnIpv6 = [ "2a01:4f8:c012:2dfe::1" ];
+
     extraConfig = ''
       include "${config.sops.templates."bind-dnskey.conf".path}";
     '';

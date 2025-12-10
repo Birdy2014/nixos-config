@@ -84,6 +84,10 @@
     use-auth-secret = true;
     static-auth-secret-file = config.sops.secrets.coturn-auth-secret.path;
     realm = "matrix.mvogel.dev";
+    listening-ips = [
+      "49.13.31.214"
+      "2a01:4f8:c012:2dfe::1"
+    ];
   };
 
   networking.firewall.allowedTCPPorts = [
