@@ -1,13 +1,12 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 
 {
   options.my.desktop = {
-    enable = lib.mkEnableOption "the desktop and user 'moritz'";
+    enable = lib.mkEnableOption "the desktop module";
 
     colorscheme = lib.mkOption {
       type = lib.types.enum [
@@ -28,7 +27,7 @@
         "niri"
         "sway"
       ];
-      default = "sway";
+      default = "niri";
       description = "wayland compositor";
     };
 
@@ -47,10 +46,13 @@
     };
   };
 
-  config = lib.mkIf config.my.desktop.enable {
+  config = lib.mkIf (config.my.desktop.enable) {
     hardware.graphics.enable = true;
 
-    security.rtkit.enable = true;
+    security = {
+      rtkit.enable = true;
+      polkit.enable = true;
+    };
 
     services.pipewire = {
       enable = true;
@@ -62,93 +64,10 @@
 
     programs.dconf.enable = true;
 
-    security.polkit.enable = true;
-
-    services.gnome.gnome-keyring.enable = true;
-    security.pam.services.swaylock.enable = true;
-
     services.udisks2.enable = true;
-
-    # Needed for home-manager configured xdg-desktop-portal
-    environment.pathsToLink = [
-      "/share/xdg-desktop-portal"
-      "/share/applications"
-    ];
-
-    fonts = {
-      enableDefaultPackages = true;
-
-      fontDir.enable = true;
-
-      fontconfig = {
-        enable = true;
-
-        defaultFonts.serif = [
-          "NotoSerif Nerd Font"
-          "Noto Serif CJK JP"
-        ];
-        defaultFonts.sansSerif = [
-          "NotoSans Nerd Font"
-          "Noto Sans CJK JP"
-        ];
-        defaultFonts.monospace = [
-          "JetBrainsMono Nerd Font"
-          "Noto Sans Mono CJK JP"
-        ];
-        defaultFonts.emoji = [ "Noto Color Emoji" ];
-      };
-
-      packages = with pkgs; [
-        nerd-fonts.jetbrains-mono
-        nerd-fonts.noto
-        noto-fonts
-        noto-fonts-cjk-sans
-        noto-fonts-color-emoji
-        corefonts
-        vista-fonts
-      ];
-    };
-
-    services.syncthing = {
-      enable = true;
-      user = "moritz";
-      group = "users";
-      overrideFolders = false;
-      overrideDevices = false;
-      openDefaultPorts = true;
-      configDir = "${config.users.users.moritz.home}/.config/syncthing";
-      dataDir = "${config.users.users.moritz.home}/.local/state/syncthing";
-    };
-
-    services.keyd = {
-      enable = true;
-      keyboards.default = {
-        ids = [ "*" ];
-        settings.main = {
-          capslock = "esc";
-          rightmeta = "f13";
-
-          # The menu key is "compose", not "menu"
-          compose = "f13";
-
-          # Upper mouse side button
-          mouse2 = "overload(meta, mouse2)";
-        };
-      };
-    };
-
-    services.resolved.dnsovertls = "opportunistic";
 
     # Needed for mDNS
     networking.firewall.allowedUDPPorts = [ 5353 ];
     services.resolved.llmnr = "false";
-
-    # For accessing SMB shares with `gio mount`
-    services.gvfs.enable = true;
-    environment.systemPackages = [ pkgs.glib ];
-
-    programs.thunar.enable = true;
-    services.tumbler.enable = true;
-    programs.xfconf.enable = true;
   };
 }

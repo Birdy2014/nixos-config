@@ -4,6 +4,7 @@
   imports = [ ./filesystems.nix ];
 
   my = {
+    desktop.enable = true;
     sshd.enable = true;
     systemd-boot.enable = true;
     pull-deploy = {

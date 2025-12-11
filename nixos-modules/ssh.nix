@@ -30,7 +30,7 @@ in
       in
       {
         root.openssh.authorizedKeys.keys = keys;
-        moritz = lib.mkIf (config.my.desktop.enable) {
+        moritz = lib.mkIf config.my.home.enable {
           openssh.authorizedKeys.keys = keys;
         };
       };

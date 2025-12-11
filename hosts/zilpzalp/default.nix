@@ -17,6 +17,7 @@
       };
     };
     home = {
+      enable = true;
       stateVersion = "23.05";
       extraModules = [
         ./home/niri.nix

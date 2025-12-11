@@ -20,6 +20,7 @@
     };
     gaming.enable = true;
     home = {
+      enable = true;
       stateVersion = "23.05";
       max-volume = 40;
       extraModules = [
