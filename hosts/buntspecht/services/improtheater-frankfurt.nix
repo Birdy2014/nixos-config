@@ -10,6 +10,7 @@ let
 
   itf-config = {
     base_url = "https://${hostname}";
+    address = "127.0.0.1";
     port = 6314;
     data_directory = "/var/lib/improtheater-frankfurt";
 

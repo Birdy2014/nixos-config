@@ -2,35 +2,25 @@
   buildNpmPackage,
   fetchFromGitHub,
   nodePackages,
-  pkg-config,
-  vips,
   nodejs_20,
 }:
 
 buildNpmPackage {
   pname = "improtheater-frankfurt";
-  version = "2025-11-07";
+  version = "2025-12-12";
 
   src = fetchFromGitHub {
     owner = "Birdy2014";
     repo = "improtheater-frankfurt.de";
-    rev = "843c44925f8883ff58bbe499d7d7cf6caaa87414";
-    hash = "sha256-8P4JvwlmLPxO8sgoyeTcN7px4ZaYQcrUpnZR11MtsOA=";
+    rev = "1f22f6427e081a8955ebec0f901310a0bb075957";
+    hash = "sha256-bSPusIgCSeUbuMTEOoBVqW9fLIIKTlkLTSg7LiFvYxQ=";
   };
 
-  npmDepsHash = "sha256-e6KIwoJc5jx0nn3mg8d7pGPL0Iyocot/QP1wl0Fme+M=";
+  npmDepsHash = "sha256-OmU8pRmYrHXv6FeVqh17wAdqWtu8PkD7fhXLDUD9yuk=";
 
   nativeBuildInputs = [
-    # for bcrypt
-    nodePackages.node-pre-gyp
-
     # for sharp
-    pkg-config
-  ];
-
-  buildInputs = [
-    # for sharp
-    vips
+    nodePackages.node-gyp
   ];
 
   nodejs = nodejs_20;
