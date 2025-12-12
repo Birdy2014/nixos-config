@@ -1,10 +1,10 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   # Workaround for Creative Sound BlasterX G6
   systemd = {
     services.soundblaster-reset-usb = {
-      script = "${pkgs.usb-modeswitch}/bin/usb_modeswitch -v 0x041e -p 0x3256 --reset-usb";
+      script = "${lib.getExe' pkgs.usbutils "usbreset"} 041e:3256";
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "oneshot";
