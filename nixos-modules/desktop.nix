@@ -69,5 +69,10 @@
     # Needed for mDNS
     networking.firewall.allowedUDPPorts = [ 5353 ];
     services.resolved.llmnr = "false";
+
+    # silent boot
+    boot.consoleLogLevel = 3;
+    boot.kernelParams = [ "quiet" ];
+    boot.plymouth.enable = true;
   };
 }

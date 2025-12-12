@@ -12,6 +12,8 @@
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_12;
     boot.swraid.enable = lib.mkForce false;
 
+    boot.initrd.systemd.enable = true;
+
     powerManagement.cpuFreqGovernor = "schedutil";
 
     boot.kernel.sysctl = {
