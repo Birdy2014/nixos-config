@@ -41,8 +41,11 @@ vim.api.nvim_create_autocmd("BufWritePost", {
     group = vim.api.nvim_create_augroup("format-post", {}),
     callback = function(args)
         if vim.bo.filetype == "nix" then
-            -- TODO: Use `nix formatter build` to cache formatter
-            vim.system({ "nix", "fmt", args.file }):wait(10000)
+            if vim.g.nix_formatter_path == nil then
+                local formatter_output = vim.system({ "nix", "formatter", "build", "--no-link" }):wait(10000)
+                vim.g.nix_formatter_path = formatter_output.stdout:sub(1, -2)
+            end
+            vim.system({ vim.g.nix_formatter_path, args.file }):wait(1000)
             vim.cmd("e")
         end
     end,
