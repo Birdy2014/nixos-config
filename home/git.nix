@@ -9,7 +9,7 @@
         name = "Moritz Vogel";
         email = "moritzv7@gmail.com";
       };
-      alias.l = "log --all --graph --pretty='format:%C(yellow)%h%Creset %C(magenta)%aN%C(auto)%d%Creset %s %Cblue(%ah)'";
+      alias.l = "log --branches --graph --pretty='format:%C(yellow)%h%Creset %C(magenta)%aN%C(auto)%d%Creset %s %Cblue(%ah)'";
       branch.sort = "-committerdate";
       column.ui = "auto";
       core.autocrlf = "input";
