@@ -26,6 +26,7 @@
         TimeoutStartSec = "1min";
         Restart = "on-failure";
         RestartSec = "30";
+        RestartMode = "direct"; # only trigger onFailure after startlimit is hit
       };
     });
 }
