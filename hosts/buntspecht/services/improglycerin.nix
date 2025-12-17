@@ -20,6 +20,9 @@ in
     description = "improglycerin website";
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
+    onFailure = [ "notify-failure@%N.service" ];
+    startLimitBurst = 3;
+    startLimitIntervalSec = 30;
     environment.PORT = port;
     script =
       let
@@ -31,6 +34,9 @@ in
         ${lib.getExe pkgsSelf.improglycerin}
       '';
     serviceConfig = {
+      Restart = "on-failure";
+      RestartSec = "5";
+
       DynamicUser = true;
       EnvironmentFile = config.sops.templates."improglycerin-yesticket-api-key".path;
       Group = "improglycerin";

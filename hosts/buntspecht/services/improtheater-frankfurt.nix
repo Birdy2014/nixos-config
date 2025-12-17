@@ -58,12 +58,18 @@ in
     description = "Improtheater Frankfurt website";
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
+    onFailure = [ "notify-failure@%N.service" ];
+    startLimitBurst = 3;
+    startLimitIntervalSec = 30;
     environment = {
       NODE_ENV = "production";
       ITF_CONFIG_FILE = config-file;
     };
     script = "${pkgsSelf.improtheater-frankfurt}/bin/improtheater-frankfurt";
     serviceConfig = {
+      Restart = "on-failure";
+      RestartSec = "5";
+
       DynamicUser = true;
       Group = "itf";
       LockPersonality = true;
