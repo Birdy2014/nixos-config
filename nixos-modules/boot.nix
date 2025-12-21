@@ -12,7 +12,12 @@
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_12;
     boot.swraid.enable = lib.mkForce false;
 
-    boot.initrd.systemd.enable = true;
+    boot.initrd.systemd = {
+      enable = true;
+
+      # https://github.com/NixOS/nixpkgs/issues/250003#issuecomment-3179786204
+      settings.Manager.DefaultDeviceTimeoutSec = "infinity";
+    };
 
     powerManagement.cpuFreqGovernor = "schedutil";
 
