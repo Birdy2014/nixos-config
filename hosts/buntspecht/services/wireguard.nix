@@ -26,6 +26,36 @@ let
       pskFile = config.sops.secrets."wireguard/psk4".path;
       n = 4;
     }
+    {
+      publicKey = "EXdt+mzhl7+KXRhK8VzITEpULimExU7JMF4h2iSx3Dc=";
+      pskFile = config.sops.secrets."wireguard/psk5".path;
+      n = 5;
+    }
+    {
+      publicKey = "F8jmIU+pBhA+ppPLbbUWDMAjdOG+MTPeJguU1Kl4knM=";
+      pskFile = config.sops.secrets."wireguard/psk6".path;
+      n = 6;
+    }
+    {
+      publicKey = "66lTwaXHF5ldqQnbiT6MOPOzCB/maZDfto2DmXv3k1M=";
+      pskFile = config.sops.secrets."wireguard/psk7".path;
+      n = 7;
+    }
+    {
+      publicKey = "dkIEnQ/3vobv1kZf1J7aVDsDBEHuQgLyfxJjyA3/bi0=";
+      pskFile = config.sops.secrets."wireguard/psk8".path;
+      n = 8;
+    }
+    {
+      publicKey = "vHY40bUsVYp757N+SrZnThw1MwSsuxxcUP0SxLz3Un4=";
+      pskFile = config.sops.secrets."wireguard/psk9".path;
+      n = 9;
+    }
+    {
+      publicKey = "CxiiAu2vn0k/zVnuSOMJNEKYmpZI9hlOAtFaJzQIIBA=";
+      pskFile = config.sops.secrets."wireguard/psk10".path;
+      n = 10;
+    }
   ];
 
   vpnIp6Addr = n: "2a01:4f8:c012:2dfe:1::${myLib.zeroPad 4 (myLib.decToHex n)}";
