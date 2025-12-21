@@ -6,7 +6,6 @@
     ../../secrets/seidenschwanz.nix
     ./borg.nix
     ./btrbk.nix
-    ./ddclient.nix
     ./filesystems.nix
     ./hdd.nix
     ./initrd-ssh-zfs-unlock.nix
