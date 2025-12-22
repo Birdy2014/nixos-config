@@ -13,7 +13,6 @@
     ./postgresql.nix
     ./proxy.nix
     ./services
-    ./smartd.nix
     ./users.nix
     ./zfs.nix
   ];

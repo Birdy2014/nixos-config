@@ -9,7 +9,7 @@
         ${pkgs.curl}/bin/curl -s \
           -u ":$(< ${config.sops.secrets.ntfy-sender-token.path})" \
           -H "Title: $SMARTD_SUBJECT" \
-          -d "$SMARTD_FAILTYPE Device: $SMARTD_DEVICE Time: $SMARTD_TFIRST Message: $SMARTD_FULLMESSAGE" \
+          -d "Type: $SMARTD_FAILTYPE"$'\n'"Time: $SMARTD_TFIRST"$'\n'"$SMARTD_FULLMESSAGE" \
           https://ntfy.mvogel.dev/monitoring
       '';
     };

@@ -17,6 +17,7 @@
     ./podman.nix
     ./pull-deploy.nix
     ./scan.nix
+    ./smartd.nix
     ./ssh.nix
     ./tmux
     ./user.nix
