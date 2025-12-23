@@ -9,6 +9,7 @@
     ./cache.nix
     ./dashboard
     ./einkaufszettel.nix
+    ./home-assistant.nix
     ./immich.nix
     ./jellyfin.nix
     ./lldap.nix

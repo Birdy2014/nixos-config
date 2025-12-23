@@ -12,6 +12,7 @@
       improglycerin = callPackage ./improglycerin.nix { };
       improtheater-frankfurt = callPackage ./improtheater-frankfurt.nix { };
       imv = callPackage ./imv.nix { };
+      lldap-ha-auth = callPackage ./lldap-ha-auth { };
       lepton-firefox-theme = callPackage ./lepton-firefox-theme.nix { };
       lyrax-cursors = callPackage ./lyrax-cursors.nix { };
       neovim = callPackage ./neovim { };
