@@ -56,6 +56,9 @@
     package = pkgs.postgresql_15;
   };
 
+  # buntspecht is a vm
+  services.smartd.enable = lib.mkForce false;
+
   # Holding the spacebar doesn't seem to work on the hetzner console
   boot.loader.timeout = lib.mkForce 5;
 
