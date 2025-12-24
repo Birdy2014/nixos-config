@@ -7,6 +7,7 @@
     in
     {
       einkaufszettel = callPackage ./einkaufszettel.nix { };
+      geoblock = callPackage ./geoblock { };
       gruvbox-material-gtk = callPackage ./gruvbox-material-gtk.nix { };
       improglycerin = callPackage ./improglycerin.nix { };
       improtheater-frankfurt = callPackage ./improtheater-frankfurt.nix { };
@@ -25,6 +26,7 @@
       callPackage = nixpkgs.legacyPackages.aarch64-linux.callPackage;
     in
     {
+      geoblock = callPackage ./geoblock { };
       improglycerin = callPackage ./improglycerin.nix { };
       improtheater-frankfurt = callPackage ./improtheater-frankfurt.nix { };
       neovim = callPackage ./neovim { };

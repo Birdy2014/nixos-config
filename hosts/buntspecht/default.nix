@@ -12,6 +12,7 @@
     ../../secrets/buntspecht.nix
     ./borg.nix
     ./filesystems.nix
+    ./geoblock.nix
     ./network.nix
     ./services
   ];
