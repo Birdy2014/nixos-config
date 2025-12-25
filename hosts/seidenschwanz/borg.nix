@@ -17,7 +17,6 @@
       group = "root";
       paths = [
         "/etc/ssh"
-        "/root/wireguard"
         "/var/lib/authelia-main"
         "/var/lib/bitwarden_rs"
         "/var/lib/jellyfin"
