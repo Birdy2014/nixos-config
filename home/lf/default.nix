@@ -23,10 +23,7 @@
     keybindings = {
       "<enter>" = "shell";
 
-      P = "paste-overwrite";
-      "<c-c>" = "cancel-paste";
-
-      a = "push %mkdir<space>";
+      a = "push :create<space>";
 
       gi = ''$lf -remote "send $id cd /run/media/$USER"'';
       gs = ''$lf -remote "send $id cd /run/user/$UID/gvfs"'';
@@ -184,6 +181,17 @@
           [[ "$#" -eq 0 ]] && echo 'Not enough arguments'>&2
           IFS=' ' name="$*"
           touch "$name"
+        }}'';
+
+      create = ''
+        ''${{
+          IFS=' ' name="$*"
+          if [[ "''${name: -1}" == '/' ]]; then
+            mkdir -p "$name"
+          else
+            mkdir -p "$(dirname "$name")"
+            touch "$name"
+          fi
         }}'';
     };
 
