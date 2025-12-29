@@ -23,6 +23,7 @@
           secret "${config.sops.placeholder."bind-dnskey_seidenschwanz.mvogel.dev"}";
         };
       '';
+      owner = "named";
     };
   };
 }
