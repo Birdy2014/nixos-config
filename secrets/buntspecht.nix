@@ -18,6 +18,12 @@
         group = "itf";
       };
 
+      "itf/cf-turnstile-secret" = {
+        sopsFile = file;
+        owner = "itf";
+        group = "itf";
+      };
+
       improglycerin-yesticket-api-key = {
         sopsFile = file;
         owner = "improglycerin";

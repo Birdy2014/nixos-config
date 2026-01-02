@@ -13,6 +13,7 @@ let
     address = "127.0.0.1";
     port = 6314;
     data_directory = "/var/lib/improtheater-frankfurt";
+    cf_turnstile_secret_file = config.sops.secrets."itf/cf-turnstile-secret".path;
 
     email = {
       auth = {
