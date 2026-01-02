@@ -22,7 +22,10 @@
 
     timers.geoblock = {
       wantedBy = [ "timers.target" ];
-      timerConfig.OnCalendar = "*-*-* 0/12:00:00";
+      timerConfig = {
+        OnCalendar = "*-*-* 00:00:00";
+        RandomizedDelaySec = "2h";
+      };
     };
   };
 }
