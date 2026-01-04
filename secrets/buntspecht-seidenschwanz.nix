@@ -16,14 +16,11 @@
         };
       };
 
-    templates."bind-dnskey.conf" = {
-      content = ''
-        key "seidenschwanz.mvogel.dev" {
-          algorithm hmac-sha256;
-          secret "${config.sops.placeholder."bind-dnskey_seidenschwanz.mvogel.dev"}";
-        };
-      '';
-      owner = "named";
-    };
+    templates."bind-dnskey.conf".content = ''
+      key "seidenschwanz.mvogel.dev" {
+        algorithm hmac-sha256;
+        secret "${config.sops.placeholder."bind-dnskey_seidenschwanz.mvogel.dev"}";
+      };
+    '';
   };
 }

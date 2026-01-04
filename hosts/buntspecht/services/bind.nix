@@ -54,6 +54,8 @@
     };
   };
 
+  sops.templates."bind-dnskey.conf".owner = "named";
+
   networking.firewall = {
     allowedTCPPorts = [ 53 ];
     allowedUDPPorts = [ 53 ];
