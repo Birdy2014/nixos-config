@@ -220,12 +220,6 @@
               childBorder = color-urgent;
             };
           };
-
-          startup = [
-            {
-              command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-            }
-          ];
         };
 
         extraConfig =

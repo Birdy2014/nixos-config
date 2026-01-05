@@ -121,12 +121,6 @@
             "-f"
           ];
 
-          spawn-at-startup = [
-            {
-              command = [ "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1" ];
-            }
-          ];
-
           xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
 
           window-rules = [
