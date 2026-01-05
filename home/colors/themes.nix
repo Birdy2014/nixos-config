@@ -94,8 +94,6 @@
         gtk.enable = true;
       };
 
-      home.packages = [ pkgs.adw-gtk3 ];
-
       gtk =
         let
           # Reference: https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/css-variables.html
@@ -207,6 +205,8 @@
             size = 10;
           };
 
+          colorScheme = if cfg.isLight then "light" else "dark";
+
           gtk3.bookmarks = [
             "file://${config.home.homeDirectory}/Documents"
             "file://${config.home.homeDirectory}/Downloads"
@@ -218,7 +218,10 @@
           ];
 
           gtk3 = {
-            extraConfig.gtk-theme-name = if cfg.isLight then "adw-gtk3" else "adw-gtk3-dark";
+            theme = {
+              name = "adw-gtk3";
+              package = pkgs.adw-gtk3;
+            };
             extraCss =
               lib.concatLines (
                 lib.mapAttrsToList (
@@ -228,20 +231,25 @@
               + extraCss;
           };
 
-          gtk4.extraCss = ''
-            :root {
-            ${lib.concatLines (lib.mapAttrsToList (variable: value: "--${variable}: ${value};") cssVariables)}
-            }
+          gtk4 = {
+            theme = {
+              name = "adw-gtk3";
+              package = pkgs.adw-gtk3;
+            };
+            extraCss = ''
+              :root {
+              ${lib.concatLines (lib.mapAttrsToList (variable: value: "--${variable}: ${value};") cssVariables)}
+              }
 
-            ${extraCss}
-          '';
+              ${extraCss}
+            '';
+          };
         };
 
+      # prevent non-libadwaita gtk4 apps from loading default style
+      home.sessionVariables.GTK_THEME = "adw-gtk3";
+
       dconf.settings = {
-        "org/gnome/desktop/interface".color-scheme = if cfg.isLight then "prefer-light" else "prefer-dark";
-
-        "org/gnome/desktop/interface".gtk-theme = if cfg.isLight then "adw-gtk3" else "adw-gtk3-dark";
-
         # Remove close button in GTK CSD titlebar
         "org/gnome/desktop/wm/preferences".button-layout = "appmenu";
 
