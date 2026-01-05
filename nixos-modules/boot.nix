@@ -9,7 +9,7 @@
   options.my.systemd-boot.enable = lib.mkEnableOption "systemd-boot";
 
   config = {
-    boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_12;
+    boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_18;
     boot.swraid.enable = lib.mkForce false;
 
     boot.initrd.systemd = {
