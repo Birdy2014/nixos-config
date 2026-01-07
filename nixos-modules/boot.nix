@@ -81,6 +81,8 @@
     };
     services.systembus-notify.enable = config.my.desktop.enable;
 
+    services.chrony.enable = true;
+
     boot.loader = lib.mkIf config.my.systemd-boot.enable {
       efi = {
         canTouchEfiVariables = true;
