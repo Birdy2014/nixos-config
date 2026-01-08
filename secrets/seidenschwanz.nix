@@ -57,5 +57,7 @@
         owner = "vaultwarden";
         group = "vaultwarden";
       };
+
+      cache-private-key.sopsFile = file;
     };
 }

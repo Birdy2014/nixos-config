@@ -31,6 +31,10 @@
       mpv.enableExpensiveEffects = true;
     };
     libvirt.enable = true;
+    nix.useLocalCache = {
+      enable = true;
+      prefer = true;
+    };
     podman.enable = true;
     programs.neovim.full = true;
     scan.enable = true;

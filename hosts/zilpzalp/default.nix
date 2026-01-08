@@ -23,6 +23,7 @@
         ./home/niri.nix
       ];
     };
+    nix.useLocalCache.enable = true;
     podman.enable = true;
     programs.neovim.full = true;
     pull-deploy = {

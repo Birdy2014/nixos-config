@@ -5,6 +5,7 @@
 
   my = {
     desktop.enable = true;
+    nix.useLocalCache.enable = true;
     sshd.enable = true;
     pull-deploy = {
       enable = true;

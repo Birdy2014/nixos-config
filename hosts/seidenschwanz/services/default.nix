@@ -6,6 +6,7 @@
     ./authelia.nix
     ./blocky.nix
     ./borg-repos.nix
+    ./cache.nix
     ./dashboard
     ./einkaufszettel.nix
     ./immich.nix
