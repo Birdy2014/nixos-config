@@ -6,12 +6,17 @@
   my = {
     desktop.enable = true;
     sshd.enable = true;
-    systemd-boot.enable = true;
     pull-deploy = {
       enable = true;
       notify = true;
       laptopMode = true;
     };
+  };
+
+  boot.loader.limine = {
+    enable = true;
+    biosSupport = true;
+    biosDevice = "/dev/disk/by-id/ata-SanDisk_SSD_PLUS_240GB_19098C806775";
   };
 
   networking.networkmanager.enable = true;
