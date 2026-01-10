@@ -56,6 +56,11 @@ let
       pskFile = config.sops.secrets."wireguard/psk10".path;
       n = 10;
     }
+    {
+      publicKey = "EGGBwMhsSTWgjApiwkTftvjX8FVR3lGKQAoKFUsUyjk=";
+      pskFile = config.sops.secrets."wireguard/psk11".path;
+      n = 11;
+    }
   ];
 
   vpnIp6Addr = n: "2a01:4f8:c012:2dfe:1::${myLib.zeroPad 4 (myLib.decToHex n)}";
@@ -117,7 +122,8 @@ in
       ct state established,related accept
 
       define SERVERS = {
-        ${vpnIp6Addr 2}/128
+        ${vpnIp6Addr 2}/128,
+        ${vpnIp6Addr 11}/128
       }
 
       ip6 saddr ${vpnIp6Addr 0}/110 ip6 daddr $SERVERS accept

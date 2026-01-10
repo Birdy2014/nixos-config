@@ -46,7 +46,7 @@
         group = "systemd-network";
       };
     }
-    // lib.genAttrs (lib.genList (n: "wireguard/psk${toString (n + 3)}") 8) (_: {
+    // lib.genAttrs (lib.genList (n: "wireguard/psk${toString (n + 3)}") 9) (_: {
       sopsFile = file;
       owner = "systemd-network";
       group = "systemd-network";
