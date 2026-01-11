@@ -13,52 +13,42 @@ let
     # seidenschwanz
     {
       publicKey = "q8qzjVMDQHbhdw9m//d5iPdiqf1ZYtXY7jpllsaIgkQ=";
-      pskFile = config.sops.secrets."wireguard/psk2".path;
       n = 2;
     }
     {
       publicKey = "fV4pFC3gytY0x5QR1KokVqhQapbHn68cslyPQaxkAGk=";
-      pskFile = config.sops.secrets."wireguard/psk3".path;
       n = 3;
     }
     {
       publicKey = "K6i5rQwz8Yuhv0CDp8PhWPGYIcIjjXQl63G37nUvxGk=";
-      pskFile = config.sops.secrets."wireguard/psk4".path;
       n = 4;
     }
     {
       publicKey = "EXdt+mzhl7+KXRhK8VzITEpULimExU7JMF4h2iSx3Dc=";
-      pskFile = config.sops.secrets."wireguard/psk5".path;
       n = 5;
     }
     {
       publicKey = "F8jmIU+pBhA+ppPLbbUWDMAjdOG+MTPeJguU1Kl4knM=";
-      pskFile = config.sops.secrets."wireguard/psk6".path;
       n = 6;
     }
     {
       publicKey = "66lTwaXHF5ldqQnbiT6MOPOzCB/maZDfto2DmXv3k1M=";
-      pskFile = config.sops.secrets."wireguard/psk7".path;
       n = 7;
     }
     {
       publicKey = "dkIEnQ/3vobv1kZf1J7aVDsDBEHuQgLyfxJjyA3/bi0=";
-      pskFile = config.sops.secrets."wireguard/psk8".path;
       n = 8;
     }
     {
       publicKey = "vHY40bUsVYp757N+SrZnThw1MwSsuxxcUP0SxLz3Un4=";
-      pskFile = config.sops.secrets."wireguard/psk9".path;
       n = 9;
     }
     {
       publicKey = "CxiiAu2vn0k/zVnuSOMJNEKYmpZI9hlOAtFaJzQIIBA=";
-      pskFile = config.sops.secrets."wireguard/psk10".path;
       n = 10;
     }
     {
       publicKey = "EGGBwMhsSTWgjApiwkTftvjX8FVR3lGKQAoKFUsUyjk=";
-      pskFile = config.sops.secrets."wireguard/psk11".path;
       n = 11;
     }
   ];
@@ -87,13 +77,12 @@ in
         map (
           {
             publicKey,
-            pskFile,
             n,
             ...
           }:
           {
             PublicKey = publicKey;
-            PresharedKeyFile = lib.mkIf (pskFile != null) pskFile;
+            PresharedKeyFile = config.sops.secrets."wireguard/psk${toString n}".path;
             AllowedIPs = [ "${vpnIp6Addr n}/128" ];
           }
         ) peers
@@ -132,4 +121,12 @@ in
       log prefix "not forwarding packet"
     '';
   };
+
+  sops.secrets =
+    peers
+    |> lib.filter ({ n, ... }: n != 2) # psk2 is in secrets/buntspecht-seidenschwanz.nix
+    |> lib.map ({ n, ... }: "wireguard/psk${toString n}")
+    |> lib.flip lib.genAttrs (_: {
+      inherit (config.sops.secrets."wireguard/private-key-server") sopsFile owner group;
+    });
 }
