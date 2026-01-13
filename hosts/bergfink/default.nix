@@ -14,10 +14,16 @@
     };
   };
 
-  boot.loader.limine = {
-    enable = true;
-    biosSupport = true;
-    biosDevice = "/dev/disk/by-id/ata-SanDisk_SSD_PLUS_240GB_19098C806775";
+  boot.loader = {
+    limine = {
+      enable = true;
+      biosSupport = true;
+      biosDevice = "/dev/disk/by-id/ata-SanDisk_SSD_PLUS_240GB_19098C806775";
+      extraConfig = ''
+        quiet: yes
+      '';
+    };
+    timeout = 0;
   };
 
   networking.networkmanager.enable = true;
