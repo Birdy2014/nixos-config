@@ -44,6 +44,20 @@
     pkgs.mesa-demos
   ];
 
-  home-manager.users.moritz.wayland.windowManager.sway.extraConfig =
-    "output * bg ${pkgs.nixos-artwork.wallpapers.gear}/share/backgrounds/nixos/nix-wallpaper-gear.png fill";
+  home-manager.users.moritz =
+    let
+      wallpaper = "${pkgs.nixos-artwork.wallpapers.gear}/share/backgrounds/nixos/nix-wallpaper-gear.png";
+    in
+    {
+      wayland.windowManager.sway.extraConfig = "output * bg ${wallpaper} fill";
+      programs.niri.settings.spawn-at-startup = [
+        {
+          command = [
+            "swww"
+            "img"
+            wallpaper
+          ];
+        }
+      ];
+    };
 }
