@@ -126,6 +126,11 @@
     root = "/home/moritz/misc/nighttab-images";
   };
 
+  boot.plymouth = {
+    themePackages = [ (pkgs.catppuccin-plymouth.override { variant = "frappe"; }) ];
+    theme = "catppuccin-frappe";
+  };
+
   # amd gpu is always card0 when simpledrm is disabled
   boot.kernel.sysfs.class.drm.card0.device.hwmon.hwmon0.power1_cap = 253000000;
 
