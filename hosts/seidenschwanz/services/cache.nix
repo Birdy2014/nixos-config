@@ -10,4 +10,11 @@
 
   my.proxy.domains.cache.proxyPass =
     "http://${config.services.nix-serve.bindAddress}:${toString config.services.nix-serve.port}";
+
+  services.nginx.virtualHosts."cache.seidenschwanz.mvogel.dev".locations."/".extraConfig = ''
+    gzip on;
+    gzip_static on;
+    gzip_vary on;
+    gzip_types text/plain;
+  '';
 }
