@@ -14,6 +14,7 @@
                     <card-element logo="/svg/mealie.svg" title="Mealie" description="Rezepte" href="https://recipes.seidenschwanz.mvogel.dev"></card-element>
                     <card-element logo="/svg/paperless-ngx.svg" title="Paperless-ngx" description="Dokumente" href="https://paperless.seidenschwanz.mvogel.dev"></card-element>
                     <card-element logo="/svg/syncthing.svg" title="Syncthing" description="Dateisynchronisierung" href="https://syncthing.seidenschwanz.mvogel.dev"></card-element>
+                    <card-element logo="/svg/vaultwarden.svg" logo-light="/svg/vaultwarden-light.svg" title="Vaultwarden" description="Passwortmanager" href="https://vaultwarden.seidenschwanz.mvogel.dev"></card-element>
                     <card-element title="Einkaufszettel" description="" href="https://einkaufszettel.seidenschwanz.mvogel.dev"></card-element>
                     <card-element title="LLDAP" description="Account" href="https://ldap.seidenschwanz.mvogel.dev"></card-element>
                 </div>
@@ -90,7 +91,10 @@
             <a id="link">
                 <div id="card">
                     <div id="logo">
-                        <img id="logo-image" />
+                        <picture id="logo-picture">
+                            <source id="logo-image-light" media="(prefers-color-scheme: dark)" />
+                            <img id="logo-image" />
+                        </picture>
                     </div>
                     <div id="side">
                         <div id="title"></div>
@@ -121,7 +125,12 @@
                 margin: 10px;
             }
 
-            #logo-image {
+            #logo-picture {
+                height: 100%;
+                width: 100%;
+            }
+
+            #logo-picture > * {
                 height: 100%;
                 width: 100%;
                 object-fit: contain;
@@ -149,7 +158,7 @@
 
         <script>
             class CardElement extends HTMLElement {
-                static observedAttributes = [ "logo", "title", "description", "href" ]
+                static observedAttributes = [ "logo", "logo-light", "title", "description", "href" ]
 
                 constructor() {
                     super()
@@ -163,6 +172,9 @@
                     switch (name) {
                     case "logo":
                         this.root.querySelector("#logo-image").setAttribute("src", newValue)
+                        break
+                    case "logo-light":
+                        this.root.querySelector("#logo-image-light").setAttribute("srcset", newValue)
                         break
                     case "title":
                         this.root.querySelector("#title").innerText = newValue
