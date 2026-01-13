@@ -88,10 +88,13 @@
     };
 
     environmentVariables = {
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE = config.sops.secrets.ldap-admin-password.path;
+      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE = "%d/ldap_password";
     };
   };
 
+  systemd.services.authelia-main.serviceConfig.LoadCredential = [
+    "ldap_password:${config.sops.secrets.ldap-admin-password.path}"
+  ];
+
   my.proxy.domains.auth.proxyPass = "http://localhost:9091";
-  services.nginx.virtualHosts.auth.locations."/".recommendedProxySettings = true;
 }

@@ -6,13 +6,7 @@
       file = "/etc/nixos-secrets/seidenschwanz.yaml";
     in
     {
-      ldap-admin-password = {
-        sopsFile = file;
-        # Ugly workaround to let both paperless and authelia read the file.
-        owner = config.services.paperless.user;
-        group = config.services.authelia.instances.main.group;
-        mode = "0440";
-      };
+      ldap-admin-password.sopsFile = file;
 
       "recipes/secret-key".sopsFile = file;
 
