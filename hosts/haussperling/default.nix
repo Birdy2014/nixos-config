@@ -1,7 +1,8 @@
-{ lib, ... }:
+{ lib, modulesPath, ... }:
 
 {
   imports = [
+    (modulesPath + "/profiles/minimal.nix")
     ../../secrets/haussperling.nix
     ./network.nix
   ];

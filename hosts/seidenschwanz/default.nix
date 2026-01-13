@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, modulesPath, ... }:
 
 {
   imports = [
+    (modulesPath + "/profiles/minimal.nix")
     ../../secrets/buntspecht-seidenschwanz.nix
     ../../secrets/seidenschwanz.nix
     ./borg.nix

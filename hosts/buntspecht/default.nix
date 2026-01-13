@@ -8,6 +8,7 @@
 {
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
+    (modulesPath + "/profiles/minimal.nix")
     ../../secrets/buntspecht-seidenschwanz.nix
     ../../secrets/buntspecht.nix
     ./borg.nix
@@ -65,18 +66,6 @@
 
   # Too little ram. Remove after nix 2.30?
   boot.tmp.useTmpfs = lib.mkForce false;
-
-  # Reduce closure size
-  documentation.nixos.enable = false;
-  boot.enableContainers = false;
-  environment.stub-ld.enable = false;
-
-  xdg = {
-    autostart.enable = false;
-    icons.enable = false;
-    mime.enable = false;
-    sounds.enable = false;
-  };
 
   system.stateVersion = "23.05";
 }

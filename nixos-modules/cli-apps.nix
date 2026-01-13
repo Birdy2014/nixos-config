@@ -14,25 +14,24 @@
   };
 
   config = {
-    environment.systemPackages = with pkgs; [
-      (pkgsSelf.neovim.override {
-        colorscheme = config.my.desktop.colorscheme;
-        withLanguageServers = config.my.programs.neovim.full;
-        withAllTreesitterGrammars = config.my.programs.neovim.full;
-        waylandSupport = config.my.desktop.enable;
-      })
-      ripgrep
-      git
-      file
-      psmisc
-      compsize
-      ldns # for drill
-      nix-tree
-      htop
-      fd
-
-      man-pages
-    ];
+    environment.systemPackages =
+      with pkgs;
+      [
+        (pkgsSelf.neovim.override {
+          colorscheme = config.my.desktop.colorscheme;
+          withLanguageServers = config.my.programs.neovim.full;
+          withAllTreesitterGrammars = config.my.programs.neovim.full;
+          waylandSupport = config.my.desktop.enable;
+        })
+        ripgrep
+        git
+        file
+        psmisc
+        nix-tree
+        htop
+        fd
+      ]
+      ++ (lib.optionals config.documentation.man.enable [ man-pages ]);
 
     environment.variables = {
       EDITOR = "nvim";
