@@ -44,6 +44,8 @@
     pkgs.mesa-demos
   ];
 
+  boot.supportedFilesystems.zfs = lib.mkForce false;
+
   home-manager.users.moritz =
     let
       wallpaper = "${pkgs.nixos-artwork.wallpapers.gear}/share/backgrounds/nixos/nix-wallpaper-gear.png";
