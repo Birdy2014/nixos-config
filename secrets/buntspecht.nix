@@ -45,5 +45,7 @@
         owner = "systemd-network";
         group = "systemd-network";
       };
+
+      "bind-dnskey_mvogel.dev".sopsFile = file;
     };
 }
