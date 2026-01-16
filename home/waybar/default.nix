@@ -15,12 +15,12 @@
         colorizer = inputs.nix-colorizer;
         increaseChroma =
           hex:
-          colorizer.oklchToHex (
+          colorizer.oklch.to.hex (
             let
-              okclh = colorizer.hexToOklch hex;
+              okclh = colorizer.hex.to.oklch hex;
             in
             {
-              inherit (okclh) L h;
+              inherit (okclh) L h a;
               C = okclh.C + 5.0e-2;
             }
           );

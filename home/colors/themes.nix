@@ -65,26 +65,23 @@
     let
       cfg = config.my.theme;
 
-      colorizer = inputs.nix-colorizer;
-      darken = hex: percent: colorizer.oklchToHex (colorizer.darken (colorizer.hexToOklch hex) percent);
-      lighten = hex: percent: colorizer.oklchToHex (colorizer.lighten (colorizer.hexToOklch hex) percent);
-      complementary = hex: colorizer.oklchToHex (colorizer.complementary (colorizer.hexToOklch hex));
+      inherit (inputs.nix-colorizer.hex) complementary darken lighten;
     in
     {
       my.theme = {
-        accent-background = lib.mkDefault (darken cfg.accent 20);
+        accent-background = lib.mkDefault (darken cfg.accent 0.2);
 
         accent-complementary = lib.mkDefault (complementary cfg.accent-background);
-        error = lib.mkDefault (darken cfg.red 20);
+        error = lib.mkDefault (darken cfg.red 0.2);
 
-        light-black = lib.mkDefault (lighten cfg.black 10);
-        light-red = lib.mkDefault (lighten cfg.red 10);
-        light-green = lib.mkDefault (lighten cfg.green 10);
-        light-yellow = lib.mkDefault (lighten cfg.yellow 10);
-        light-blue = lib.mkDefault (lighten cfg.blue 10);
-        light-magenta = lib.mkDefault (lighten cfg.magenta 10);
-        light-cyan = lib.mkDefault (lighten cfg.cyan 10);
-        light-white = lib.mkDefault (lighten cfg.white 10);
+        light-black = lib.mkDefault (lighten cfg.black 0.1);
+        light-red = lib.mkDefault (lighten cfg.red 0.1);
+        light-green = lib.mkDefault (lighten cfg.green 0.1);
+        light-yellow = lib.mkDefault (lighten cfg.yellow 0.1);
+        light-blue = lib.mkDefault (lighten cfg.blue 0.1);
+        light-magenta = lib.mkDefault (lighten cfg.magenta 0.1);
+        light-cyan = lib.mkDefault (lighten cfg.cyan 0.1);
+        light-white = lib.mkDefault (lighten cfg.white 0.1);
       };
 
       home.pointerCursor = {
@@ -162,7 +159,7 @@
             sidebar-shade-color = "rgba(0, 0, 0, 0.36)";
             secondary-sidebar-bg-color = cfg.background-secondary;
             secondary-sidebar-fg-color = cfg.text;
-            secondary-sidebar-backdrop-color = darken cfg.background-secondary 20;
+            secondary-sidebar-backdrop-color = darken cfg.background-secondary 0.2;
             secondary-sidebar-shade-color = sidebar-shade-color;
           };
 
@@ -311,7 +308,7 @@
               );
 
             # TODO: Color naming; generalize colors together with gtk colors
-            accent-hover = lighten cfg.accent 10;
+            accent-hover = lighten cfg.accent 0.1;
             text-inactive = cfg.text-inactive;
             text-active = "#B8BB26";
             text-negative = cfg.error;

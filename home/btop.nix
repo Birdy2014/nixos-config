@@ -1,7 +1,6 @@
 {
   config,
   inputs,
-  myLib,
   ...
 }:
 
@@ -35,10 +34,7 @@
 
   xdg.configFile."btop/themes/custom.theme".text =
     let
-      colorizer = inputs.nix-colorizer;
-      mix =
-        hex1: hex2: ratio:
-        colorizer.oklchToHex (myLib.mix (colorizer.hexToOklch hex1) (colorizer.hexToOklch hex2) ratio);
+      inherit (inputs.nix-colorizer.hex) blend;
     in
     with config.my.theme;
     ''
@@ -93,17 +89,17 @@
 
       # Mem/Disk free meter
       theme[free_start]="${magenta}"
-      #theme[free_mid]="${mix magenta blue 0.5}"
+      #theme[free_mid]="${blend magenta blue 0.5}"
       theme[free_end]="${blue}"
 
       # Mem/Disk cached meter
       theme[cached_start]="${cyan}"
-      theme[cached_mid]="${mix cyan blue 0.5}"
+      theme[cached_mid]="${blend cyan blue 0.5}"
       theme[cached_end]="${blue}"
 
       # Mem/Disk available meter
       theme[available_start]="${yellow}"
-      theme[available_mid]="${mix yellow red 0.5}"
+      theme[available_mid]="${blend yellow red 0.5}"
       theme[available_end]="${red}"
 
       # Mem/Disk used meter
@@ -113,7 +109,7 @@
 
       # Download graph colors
       theme[download_start]="${yellow}"
-      theme[download_mid]="${mix yellow red 0.5}"
+      theme[download_mid]="${blend yellow red 0.5}"
       theme[download_end]="${red}"
 
       # Upload graph colors
@@ -123,7 +119,7 @@
 
       # Process box color gradient for threads, mem and cpu usage
       theme[process_start]="${cyan}"
-      theme[process_mid]="${mix cyan magenta 0.5}"
+      theme[process_mid]="${blend cyan magenta 0.5}"
       theme[process_end]="${magenta}"
     '';
 }

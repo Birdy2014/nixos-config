@@ -9,7 +9,6 @@ builtins.readDir ./.
       inherit inputs;
       myLib = import ../lib {
         inherit lib;
-        inherit (inputs) nix-colorizer;
       };
     };
     modules = [

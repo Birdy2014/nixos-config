@@ -1,4 +1,4 @@
-{ lib, nix-colorizer }:
+{ lib }:
 let
   hexDigitToDec =
     digit:
@@ -26,23 +26,11 @@ let
   decToHex = dec: if dec == 0 then "0" else (decToHexHelper dec);
 
   zeroPad = len: str: if len > (lib.stringLength str) then zeroPad len "0${str}" else str;
-
-  mix =
-    oklch1: oklch2: ratio:
-    let
-      interpolate = n: m: n * (1 - ratio) + m * ratio;
-    in
-    {
-      L = interpolate oklch1.L oklch2.L;
-      C = interpolate oklch1.C oklch2.C;
-      h = interpolate oklch1.h oklch2.h;
-    };
 in
 {
   inherit
     hexToDec
     decToHex
     zeroPad
-    mix
     ;
 }

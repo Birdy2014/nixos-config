@@ -13,7 +13,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-colorizer.url = "github:nutsalhan87/nix-colorizer/v0.2";
+    nix-colorizer.url = "github:nutsalhan87/nix-colorizer/v0.3.1";
 
     rycee-nur-expressions = {
       url = "gitlab:rycee/nur-expressions";
