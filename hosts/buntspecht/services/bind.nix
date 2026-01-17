@@ -48,9 +48,13 @@
                 SOA = {
                   nameServer = "ns1.mvogel.dev.";
                   adminEmail = "hostmaster.mvogel.dev.";
-                  serial = 2026011601;
+                  serial = 2026011701;
                 };
-                NS = [ "ns1.mvogel.dev." ];
+                NS = [
+                  "ns1.first-ns.de."
+                  "robotns2.second-ns.de."
+                  "robotns3.second-ns.com."
+                ];
                 A = [ "49.13.31.214" ];
                 AAAA = [ "2a01:4f8:c012:2dfe::1" ];
 
