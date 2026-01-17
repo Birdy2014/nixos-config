@@ -32,6 +32,13 @@
   services.desktopManager.plasma6.enable = true;
   services.displayManager.sddm.enable = true;
 
+  # remove unnecessary packages installed by services.desktopManager.plasma6.enable
+  environment.plasma6.excludePackages = [ pkgs.kdePackages.kwin-x11 ];
+  services.orca.enable = false;
+
+  # prevent rebuilding xwayland
+  programs.xwayland.package = pkgs.xwayland;
+
   environment.systemPackages = with pkgs; [
     libreoffice
     firefox
@@ -65,6 +72,7 @@
         password = "test";
       };
     };
+    boot.loader.limine.biosDevice = lib.mkForce "/dev/disk/by-id/virtio-root";
   };
 
   boot.initrd.availableKernelModules = [
