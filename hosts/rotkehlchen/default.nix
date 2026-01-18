@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgsUnstable, ... }:
 
 {
   imports = [
@@ -72,7 +72,7 @@
     # GUI
     gimp3
     mcomix
-    feishin
+    pkgsUnstable.feishin
 
     signal-desktop
     mumble
