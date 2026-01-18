@@ -81,7 +81,12 @@
     };
     services.systembus-notify.enable = config.my.desktop.enable;
 
-    services.chrony.enable = true;
+    services.chrony = {
+      enable = true;
+      extraConfig = ''
+        makestep 5 3
+      '';
+    };
 
     boot.loader = lib.mkIf config.my.systemd-boot.enable {
       efi = {
