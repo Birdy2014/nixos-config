@@ -64,7 +64,10 @@ in
     interfaces = [ "wlan" ];
   };
 
-  systemd.services.wpa_supplicant-wlan.script = lib.mkForce ''
-    wpa_supplicant -iwlan -c${config.sops.secrets."wpa-supplicant-config".path}
-  '';
+  systemd.services.wpa_supplicant-wlan = {
+    script = lib.mkForce ''
+      wpa_supplicant -iwlan -c${config.sops.secrets."wpa-supplicant-config".path}
+    '';
+    serviceConfig.Restart = "always";
+  };
 }
