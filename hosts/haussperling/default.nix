@@ -27,6 +27,11 @@
     cores = 1;
   };
 
+  services.nixos-pull-deploy.settings.build_remotes = [
+    "buildremote@mvogel.dev:46773"
+    "local"
+  ];
+
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
   boot.loader.grub.enable = false;

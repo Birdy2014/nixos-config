@@ -12,6 +12,7 @@
     ../../secrets/buntspecht-seidenschwanz.nix
     ../../secrets/buntspecht.nix
     ./borg.nix
+    ./build-remote.nix
     ./filesystems.nix
     ./geoblock.nix
     ./network.nix
