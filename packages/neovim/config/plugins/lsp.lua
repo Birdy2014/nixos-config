@@ -40,7 +40,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 vim.api.nvim_create_autocmd("BufWritePost", {
     group = vim.api.nvim_create_augroup("format-post", {}),
     callback = function(args)
-        if vim.bo.filetype == "nix" then
+        if vim.bo.filetype == "nix" and vim.fs.root(args.buf, "flake.nix") ~= nil then
             if vim.g.nix_formatter_path == nil or vim.fn.filereadable(vim.g.nix_formatter_path) == 0 then
                 local formatter_output = vim.system({ "nix", "formatter", "build", "--no-link" }):wait(10000)
                 vim.g.nix_formatter_path = formatter_output.stdout:sub(1, -2)
