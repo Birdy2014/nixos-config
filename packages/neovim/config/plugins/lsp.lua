@@ -142,7 +142,7 @@ direnv.setup({
             if vim.list_contains(config.filetypes, args.filetype) then
                 vim.lsp.start(config, {
                     bufnr = args.buffer,
-                    reuse_client = true,
+                    reuse_client = config.reuse_client,
                     _root_markers = config.root_markers
                 })
                 return
