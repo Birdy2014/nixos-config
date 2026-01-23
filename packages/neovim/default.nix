@@ -59,17 +59,20 @@ wrapNeovimUnstable neovim-unwrapped {
     lib.flatten (map ({ plugin, ... }: plugin) config.plugins)
   );
 
-  luaRcContent = lib.concatStringsSep "\n" (
-    (map builtins.readFile configBefore)
-    ++ (map (
-      { config, ... }:
-      ''
-        do
-      ''
-      + (if builtins.typeOf config == "path" then builtins.readFile config else config)
-      + ''
+  luaRcContent =
+    (
+      (map builtins.readFile configBefore)
+      ++ (map (
+        { config, ... }:
+        ''
+          do
+        ''
+        + (if builtins.typeOf config == "path" then builtins.readFile config else config)
+        + ''
 
-        end''
-    ) (lib.filter (x: lib.hasAttr "config" x) config.plugins))
-  );
+          end''
+      ) (lib.filter (x: lib.hasAttr "config" x) config.plugins))
+    )
+    |> lib.concatStringsSep "\n"
+    |> lib.replaceString "@CLANG_TOOLS@" (toString clang-tools);
 }

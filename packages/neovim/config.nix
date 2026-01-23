@@ -201,7 +201,23 @@
         config = ./config/plugins/blink.lua;
       }
       {
-        plugin = nvim-lspconfig;
+        plugin =
+          let
+            direnv-nvim = buildVimPlugin {
+              pname = "direnv-nvim";
+              version = "2025-10-07";
+              src = fetchFromGitHub {
+                owner = "actionshrimp";
+                repo = "direnv.nvim";
+                rev = "0d2edd378dbdf2c653869772d761ad914219ba9d";
+                hash = "sha256-p2im4nUV0n9HQsjCA9oGJvTADfKGlCEr/RYWGlUszuU=";
+              };
+            };
+          in
+          [
+            nvim-lspconfig
+            direnv-nvim
+          ];
         config = ./config/plugins/lsp.lua;
       }
       {

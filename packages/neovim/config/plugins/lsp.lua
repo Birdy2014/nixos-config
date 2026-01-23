@@ -94,7 +94,7 @@ vim.lsp.config.texlab = {
 }
 
 vim.lsp.config.clangd = {
-    cmd = { "clangd", "--header-insertion=never" },
+    cmd = { "@CLANG_TOOLS@/bin/clangd", "--header-insertion=never" },
 
     -- possible workaround for stuck diagnostics
     -- TODO: Is this still needed?
@@ -132,7 +132,24 @@ vim.lsp.config.clangd = {
     end,
 }
 
-vim.lsp.enable({ "clangd", "pyright", "rust_analyzer", "ts_ls", "bashls", "texlab", "nixd", "zls" })
+local enabled_lsps = { "clangd", "pyright", "rust_analyzer", "ts_ls", "bashls", "texlab", "nixd", "zls" }
+local direnv = require("direnv-nvim")
+direnv.setup({
+    async = true,
+    on_direnv_finished = function(args)
+        for _, lsp in ipairs(enabled_lsps) do
+            local config = vim.lsp.config[lsp]
+            if vim.list_contains(config.filetypes, args.filetype) then
+                vim.lsp.start(config, {
+                    bufnr = args.buffer,
+                    reuse_client = true,
+                    _root_markers = config.root_markers
+                })
+                return
+            end
+        end
+    end
+})
 
 vim.diagnostic.config({
     virtual_text = true,
