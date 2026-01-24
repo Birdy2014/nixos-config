@@ -4,6 +4,7 @@
   osConfig,
   lib,
   pkgs,
+  pkgsUnstable,
   ...
 }:
 
@@ -121,7 +122,8 @@
             "-f"
           ];
 
-          xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
+          # xwayland-satellite 0.7 can crash when steam starts, 0.8 fixes this
+          xwayland-satellite.path = lib.getExe pkgsUnstable.xwayland-satellite;
 
           window-rules = [
             {
