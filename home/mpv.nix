@@ -44,8 +44,6 @@
         };
         scripts = [
           pkgs.mpvScripts.mpris
-          pkgs.mpvScripts.thumbfast
-          pkgsSelf.mpv-thumbfast-vanilla-osc
         ];
       };
       config = {
@@ -54,7 +52,6 @@
         autofit-larger = "100%x100%";
         hwdec = "auto-safe";
         vo = "gpu-next";
-        osc = "no"; # Use thumbfast osc
         screenshot-format = "png";
         screenshot-template = "%F - [%P] (%#01n)";
 

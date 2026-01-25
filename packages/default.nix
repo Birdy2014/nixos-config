@@ -14,7 +14,6 @@
       imv = callPackage ./imv.nix { };
       lepton-firefox-theme = callPackage ./lepton-firefox-theme.nix { };
       lyrax-cursors = callPackage ./lyrax-cursors.nix { };
-      mpv-thumbfast-vanilla-osc = callPackage ./mpv-thumbfast-vanilla-osc.nix { };
       neovim = callPackage ./neovim { };
       playerctl-current = callPackage ./playerctl-current { };
       wine-sandbox = callPackage ./wine-sandbox { };
