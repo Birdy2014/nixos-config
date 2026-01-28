@@ -153,6 +153,7 @@
 
   xdg.configFile."tridactyl/tridactylrc".text = ''
     set smoothscroll true
+    set hintnames uniform
 
     bind / fillcmdline find
     bind ? fillcmdline find --reverse
