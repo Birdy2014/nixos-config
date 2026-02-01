@@ -20,7 +20,7 @@
     |> lib.flip lib.genAttrs (_: {
       onFailure = [ "notify-failure@%N.service" ];
       startLimitBurst = 3;
-      startLimitIntervalSec = 300;
+      startLimitIntervalSec = 1800; # 30min
       serviceConfig = {
         ExecStartPre = "${pkgs.coreutils}/bin/sleep 10";
         TimeoutStartSec = "1min";
