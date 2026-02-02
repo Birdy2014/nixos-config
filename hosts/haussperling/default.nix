@@ -11,7 +11,10 @@
   hardware.enableRedistributableFirmware = true;
 
   my = {
-    pull-deploy.enable = true;
+    pull-deploy = {
+      enable = true;
+      mainDeployMode = "reboot_on_kernel_change";
+    };
     sshd.enable = true;
   };
 
