@@ -37,17 +37,33 @@ vim.api.nvim_create_autocmd("LspAttach", {
 -- nixd and treefmt are pretty bad at integrating into neovim...
 -- When using vim.lsp.buf.format, it will just clear the current file,
 -- so this is the best I could come up with.
+vim.g.nix_formatter_path = ""
 vim.api.nvim_create_autocmd("BufWritePost", {
     group = vim.api.nvim_create_augroup("format-post", {}),
     callback = function(args)
-        if vim.bo.filetype == "nix" and vim.fs.root(args.buf, "flake.nix") ~= nil then
-            if vim.g.nix_formatter_path == nil or vim.fn.filereadable(vim.g.nix_formatter_path) == 0 then
-                local formatter_output = vim.system({ "nix", "formatter", "build", "--no-link" }):wait(10000)
-                vim.g.nix_formatter_path = formatter_output.stdout:sub(1, -2)
-            end
-            vim.system({ vim.g.nix_formatter_path, args.file }):wait(1000)
-            vim.cmd("e")
+        if
+            not (vim.bo.filetype == "nix" or vim.bo.filetype == "lua" or vim.bo.filetype == "python")
+            or vim.fs.root(args.buf, "flake.nix") == nil
+            or vim.g.nix_formatter_path == nil
+        then
+            return
         end
+
+        if vim.g.nix_formatter_path == "" or vim.fn.filereadable(vim.g.nix_formatter_path) == 0 then
+            local output = vim.system({ "nix", "formatter", "build", "--no-link" }):wait(10000)
+            if output.code == 1 and output.signal == 0 then
+                -- no formatter configured
+                vim.g.nix_formatter_path = nil
+                return
+            end
+            if output.code ~= 0 then
+                -- something else went wrong
+                return
+            end
+            vim.g.nix_formatter_path = output.stdout:sub(1, -2)
+        end
+        vim.system({ vim.g.nix_formatter_path, args.file }):wait(1000)
+        vim.cmd("e")
     end,
 })
 
@@ -143,12 +159,12 @@ direnv.setup({
                 vim.lsp.start(config, {
                     bufnr = args.buffer,
                     reuse_client = config.reuse_client,
-                    _root_markers = config.root_markers
+                    _root_markers = config.root_markers,
                 })
                 return
             end
         end
-    end
+    end,
 })
 
 vim.diagnostic.config({
