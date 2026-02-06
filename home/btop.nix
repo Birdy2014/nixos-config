@@ -25,7 +25,7 @@
 
       # disks
       use_fstab = false;
-      disks_filter = "/ /boot /run/media/moritz/archive /run/media/moritz/games";
+      disks_filter = "/ /boot /run/media/moritz/archive";
 
       # proc
       proc_per_core = true;
