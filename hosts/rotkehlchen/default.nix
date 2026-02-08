@@ -16,7 +16,6 @@
     desktop = {
       enable = true;
       colorscheme = "catppuccin-frappe";
-      compositor = "niri";
     };
     gaming.enable = true;
     home = {

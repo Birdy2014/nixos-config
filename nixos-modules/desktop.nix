@@ -22,15 +22,6 @@
       description = "Which colorscheme to use";
     };
 
-    compositor = lib.mkOption {
-      type = lib.types.enum [
-        "niri"
-        "sway"
-      ];
-      default = "niri";
-      description = "wayland compositor";
-    };
-
     screens = {
       primary = lib.mkOption {
         type = with lib.types; nullOr str;

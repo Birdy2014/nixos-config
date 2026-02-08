@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   osConfig,
   pkgs,
   ...
@@ -125,9 +126,9 @@
       [ -d "$HOME/.local/bin" ] && [[ $PATH == *"$HOME/.local/bin"* ]] || export PATH=$HOME/.local/bin:$PATH
     '';
 
-    loginExtra = ''
+    loginExtra = lib.mkIf osConfig.my.desktop.enable ''
       if [ "$TTY" = "/dev/tty1" ]; then
-        systemd-cat ${if osConfig.my.desktop.compositor == "sway" then "sway" else "niri-session"}
+        systemd-cat niri-session
         systemctl --user stop graphical-session.target
         exit
       fi
@@ -170,7 +171,7 @@
     enable = true;
     settings = {
       add_newline = false;
-      format = pkgs.lib.concatStrings [
+      format = lib.concatStrings [
         "$username"
         "$directory"
         "$hostname"

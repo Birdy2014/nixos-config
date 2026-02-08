@@ -12,10 +12,7 @@
   imports = [ (modulesPath + "/installer/cd-dvd/installation-cd-base.nix") ];
 
   my = {
-    desktop = {
-      enable = true;
-      compositor = "niri";
-    };
+    desktop.enable = true;
     home = {
       enable = true;
       stateVersion = config.system.stateVersion;

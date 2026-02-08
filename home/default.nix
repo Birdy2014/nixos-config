@@ -14,7 +14,6 @@
     ./git.nix
     ./gpg.nix
     ./imv.nix
-    ./kitty.nix
     ./lf
     ./misc.nix
     ./mpv.nix

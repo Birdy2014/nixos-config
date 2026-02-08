@@ -48,7 +48,6 @@
       pkgs.writeShellApplication {
         name = "lf-preview";
         runtimeInputs = with pkgs; [
-          kitty
           chafa
           highlight
           poppler-utils
@@ -196,14 +195,6 @@
     };
 
     extraConfig = ''
-      set cleaner ${
-        pkgs.writeShellApplication {
-          name = "lf-clean";
-          runtimeInputs = with pkgs; [ kitty ];
-          text = builtins.readFile ./clean.sh;
-        }
-      }/bin/lf-clean
-
       on-cd
     '';
   };

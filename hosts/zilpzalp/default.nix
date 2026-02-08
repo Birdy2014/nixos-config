@@ -10,7 +10,6 @@
   my = {
     desktop = {
       enable = true;
-      compositor = "niri";
       screens = {
         primary = "eDP-1";
         secondary = "HDMI-A-1";

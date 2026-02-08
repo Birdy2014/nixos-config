@@ -13,7 +13,7 @@
 {
   imports = [ inputs.niri-flake.homeModules.niri ];
 
-  config = lib.mkIf (osConfig.my.desktop.compositor == "niri") {
+  config = lib.mkIf osConfig.my.desktop.enable {
     programs.niri =
       let
         terminal = "foot";

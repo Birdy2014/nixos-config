@@ -5,8 +5,8 @@ set +e -u -o noclobber -o noglob -o nounset -o pipefail
 FILE_PATH="$(realpath "$1")"
 W=$2
 H=$3
-X=$4
-Y=$5
+# X=$4
+# Y=$5
 
 MAX_IMAGE_WIDTH=1280
 
@@ -16,11 +16,7 @@ tout() {
 
 display_image() {
     local image="$1"
-    if [[ "$TERM" =~ .*kitty.* ]]; then
-        kitten icat --silent --stdin no --transfer-mode memory --place "${W}x${H}@${X}x${Y}" "$image" < /dev/null > /dev/tty
-    else
-        chafa -c full --size "${W}x${H}" "$image" 2>/dev/null
-    fi
+    chafa -c full --size "${W}x${H}" "$image" 2>/dev/null
 }
 
 display_image_cache() {
