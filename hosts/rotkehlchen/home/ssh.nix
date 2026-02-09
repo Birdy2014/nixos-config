@@ -28,6 +28,12 @@
         user = "moritz";
       };
 
+      haussperling = {
+        hostname = "2a01:4f8:c012:2dfe:1::b";
+        user = "root";
+        proxyJump = "buntspecht";
+      };
+
       "*" = {
         serverAliveInterval = 20;
 
