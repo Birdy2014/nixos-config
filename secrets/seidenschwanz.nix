@@ -53,5 +53,7 @@
       };
 
       cache-private-key.sopsFile = file;
+
+      "borg/haussperling-key".sopsFile = file;
     };
 }

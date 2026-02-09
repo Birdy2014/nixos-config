@@ -4,6 +4,7 @@
   imports = [
     (modulesPath + "/profiles/minimal.nix")
     ../../secrets/haussperling.nix
+    ./borg-repos.nix
     ./network.nix
   ];
 

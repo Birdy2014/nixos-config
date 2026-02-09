@@ -6,30 +6,61 @@
 }:
 
 {
-  services.borgbackup.jobs.seidenschwanz-services =
-    let
-      # This directory must exist and be owned by postgres:postgres
-      dbBackupDir = "/var/backup/postgresqldump";
-      pg_dump = lib.getExe' config.services.postgresql.finalPackage "pg_dump";
-    in
-    {
+  services.borgbackup.jobs = {
+    seidenschwanz-services =
+      let
+        # This directory must exist and be owned by postgres:postgres
+        dbBackupDir = "/var/backup/postgresqldump";
+        pg_dump = lib.getExe' config.services.postgresql.finalPackage "pg_dump";
+      in
+      {
+        user = "root";
+        group = "root";
+        paths = [
+          "/etc/ssh"
+          "/var/lib/authelia-main"
+          "/var/lib/bitwarden_rs"
+          "/var/lib/jellyfin"
+          "/var/lib/paperless"
+          "/var/lib/syncthing"
+          "/var/lib/private/einkaufszettel"
+          "/var/lib/private/lldap"
+          "/var/lib/private/mealie"
+          dbBackupDir
+        ];
+        exclude = [ "/var/lib/jellyfin/transcodes" ];
+        compression = "zstd,10";
+        repo = "/zpool/backup/seidenschwanz-services";
+        encryption.mode = "none";
+        startAt = "*-*-* 00:00:00";
+        persistentTimer = true;
+        prune.keep = {
+          within = "1d"; # Keep all archives from the last day
+          daily = 7;
+          weekly = 4;
+          monthly = 6;
+        };
+        readWritePaths = [ dbBackupDir ];
+        preHook =
+          lib.concatMapStringsSep "\n"
+            (dbName: "${lib.getExe pkgs.sudo} -u postgres ${pg_dump} -f ${dbBackupDir}/${dbName} ${dbName}")
+            [
+              "immich"
+            ];
+      };
+
+    haussperling = {
       user = "root";
       group = "root";
       paths = [
-        "/etc/ssh"
-        "/var/lib/authelia-main"
         "/var/lib/bitwarden_rs"
-        "/var/lib/jellyfin"
         "/var/lib/paperless"
-        "/var/lib/syncthing"
         "/var/lib/private/einkaufszettel"
         "/var/lib/private/lldap"
-        "/var/lib/private/mealie"
-        dbBackupDir
       ];
-      exclude = [ "/var/lib/jellyfin/transcodes" ];
       compression = "zstd,10";
-      repo = "/zpool/backup/seidenschwanz-services";
+      repo = "borg@[2a01:4f8:c012:2dfe:1::b]:.";
+      environment.BORG_RSH = "ssh -i ${config.sops.secrets."borg/haussperling-key".path}";
       encryption.mode = "none";
       startAt = "*-*-* 00:00:00";
       persistentTimer = true;
@@ -39,12 +70,6 @@
         weekly = 4;
         monthly = 6;
       };
-      readWritePaths = [ dbBackupDir ];
-      preHook =
-        lib.concatMapStringsSep "\n"
-          (dbName: "${lib.getExe pkgs.sudo} -u postgres ${pg_dump} -f ${dbBackupDir}/${dbName} ${dbName}")
-          [
-            "immich"
-          ];
     };
+  };
 }
