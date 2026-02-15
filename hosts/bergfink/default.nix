@@ -43,6 +43,7 @@
     libreoffice
     firefox
     kdePackages.discover
+    bambu-studio
 
     (pkgs.mpv.override {
       scripts = [ pkgs.mpvScripts.modernx ];
