@@ -43,6 +43,7 @@
     libreoffice
     firefox
     kdePackages.discover
+    orca-slicer
 
     (pkgs.mpv.override {
       scripts = [ pkgs.mpvScripts.modernx ];
