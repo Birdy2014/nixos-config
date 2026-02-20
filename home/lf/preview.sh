@@ -26,7 +26,7 @@ display_image_cache() {
 cache_and_display_image() {
     local image="$1"
 
-    magick "${image}[0]" -geometry "$MAX_IMAGE_WIDTH"x\> "jpg:${FILE_CACHE_PATH}" && display_image_cache
+    magick "${image}[0]" -background '#000000' -alpha remove -geometry "$MAX_IMAGE_WIDTH"x\> "jpg:${FILE_CACHE_PATH}" && display_image_cache
 }
 
 display_text_cache() {
