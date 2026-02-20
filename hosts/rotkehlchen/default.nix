@@ -1,4 +1,9 @@
-{ pkgs, pkgsUnstable, ... }:
+{
+  lib,
+  pkgs,
+  pkgsUnstable,
+  ...
+}:
 
 {
   imports = [
@@ -40,6 +45,10 @@
     sshd.enable = false;
     systemd-boot.enable = true;
   };
+
+  # https://github.com/NixOS/nixpkgs/issues/280785
+  boot.initrd.systemd.enable = lib.mkForce false;
+  boot.plymouth.enable = lib.mkForce false;
 
   boot.initrd.availableKernelModules = [
     "nvme"
@@ -123,11 +132,6 @@
     enable = true;
     listen = "[::]:8787";
     root = "/home/moritz/misc/nighttab-images";
-  };
-
-  boot.plymouth = {
-    themePackages = [ (pkgs.catppuccin-plymouth.override { variant = "frappe"; }) ];
-    theme = "catppuccin-frappe";
   };
 
   # amd gpu is always card0 when simpledrm is disabled
