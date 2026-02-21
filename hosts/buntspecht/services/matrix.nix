@@ -28,8 +28,10 @@
 
       database.name = "psycopg2";
 
-      # Disable federation
-      federation_domain_whitelist = [ ];
+      federation_domain_whitelist = [
+        "fosn2.de"
+        "matrix.tu-darmstadt.de"
+      ];
 
       enable_registration = true;
       registration_requires_token = true;
