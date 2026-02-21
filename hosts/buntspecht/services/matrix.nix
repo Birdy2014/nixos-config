@@ -29,7 +29,7 @@
       database.name = "psycopg2";
 
       # Disable federation
-      federation_domain_whitelist = [ ];
+      federation_domain_whitelist = [ "matrix.fosn2.de" ];
 
       enable_registration = true;
       registration_requires_token = true;
