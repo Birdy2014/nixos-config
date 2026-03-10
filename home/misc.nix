@@ -17,7 +17,7 @@
   home.packages = with pkgs; [
     # CLI
     cifs-utils
-    unrar
+    libarchive
     unzip
     _7zz
     zip

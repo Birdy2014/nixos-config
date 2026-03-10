@@ -131,7 +131,7 @@ handle_mime() {
 
         application/vnd.rar|application/x-rar)
             # Avoid password prompt by providing empty password
-            tout unrar lb -p- -- "${FILE_PATH}" | cache_and_display_text
+            tout bsdtar -t -f "${FILE_PATH}" | cache_and_display_text
             exit 1;;
 
         ## Epub

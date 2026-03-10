@@ -58,7 +58,7 @@
           unzip
           gnutar
           _7zz
-          unrar
+          libarchive
           gnome-epub-thumbnailer
           f3d
         ];
@@ -98,13 +98,14 @@
       extract = ''
         ''${{
           set -f
+          new_directory="''${f%.*}"
           case $f in
             *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) ${pkgs.gnutar}/bin/tar --one-top-level -xjvf $f;;
             *.tar.gz|*.tgz) ${pkgs.gnutar}/bin/tar --one-top-level -xzvf $f;;
             *.tar.xz|*.txz) ${pkgs.gnutar}/bin/tar --one-top-level -xJvf $f;;
-            *.zip) ${pkgs.unzip}/bin/unzip -d ''${f%.*} $f;;
-            *.rar) ${pkgs.unrar}/bin/unrar x -y -op''${f%.*} -- $f;;
-            *.7z) ${pkgs._7zz}/bin/7zz -o''${f%.*} x $f;;
+            *.zip) ${pkgs.unzip}/bin/unzip -d "$new_directory" $f;;
+            *.rar) mkdir "$new_directory" && ${pkgs.libarchive}/bin/bsdtar -C "$new_directory" -x -f $f;;
+            *.7z) ${pkgs._7zz}/bin/7zz -o"$new_directory" x $f;;
             *.xz) ${pkgs.xz}/bin/unxz $f;;
           esac
         }}'';
