@@ -38,12 +38,48 @@
 
       turn_uris = [ "turn:matrix.mvogel.dev?transport=udp" ];
       turn_shared_secret_path = config.sops.secrets.coturn-auth-secret.path;
+
+      matrix_rtc.transports = [
+        {
+          type = "livekit";
+          livekit_service_url = "https://matrix.mvogel.dev/livekit/jwt";
+        }
+      ];
     };
   };
 
   environment.systemPackages = [ pkgs.synadm ];
 
   services.postgresql.enable = true;
+
+  services.livekit = {
+    enable = true;
+    keyFile = config.sops.secrets.livekit-keyfile.path;
+    settings = {
+      bind_addresses = [ "::1" ];
+      rtc.use_external_ip = true;
+      room.auto_create = false;
+      turn =
+        let
+          acmeDirectory = config.security.acme.certs."matrix.mvogel.dev".directory;
+        in
+        {
+          enabled = true;
+          domain = "matrix.mvogel.dev";
+          external_tls = false;
+          tls_port = 5350;
+          udp_port = 3479;
+          cert_file = "${acmeDirectory}/fullchain.pem";
+          key_file = "${acmeDirectory}/key.pem";
+        };
+    };
+  };
+
+  services.lk-jwt-service = {
+    enable = true;
+    livekitUrl = "wss://matrix.mvogel.dev/livekit/sfu";
+    keyFile = config.sops.secrets.livekit-keyfile.path;
+  };
 
   services.nginx = {
     enable = true;
@@ -58,9 +94,29 @@
         {
           enableACME = true;
           forceSSL = true;
-          locations."/".extraConfig = "return 404;";
-          locations."/_matrix" = proxy;
-          locations."/_synapse/client" = proxy;
+          locations = {
+            "/".extraConfig = "return 404;";
+            "/_matrix" = proxy;
+            "/_synapse/client" = proxy;
+            "/livekit/jwt/" = {
+              proxyPass = "http://[::1]:${toString config.services.lk-jwt-service.port}/";
+              recommendedProxySettings = true;
+            };
+            "/livekit/sfu/" = {
+              proxyPass = "http://[::1]:${toString config.services.livekit.settings.port}/";
+              recommendedProxySettings = true;
+              proxyWebsockets = true;
+              extraConfig = ''
+                proxy_send_timeout 120;
+                proxy_read_timeout 120;
+                proxy_buffering off;
+
+                proxy_set_header Accept-Encoding gzip;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "upgrade";
+              '';
+            };
+          };
         };
       "mvogel.dev" =
         let
@@ -76,10 +132,20 @@
           };
           locations."/.well-known/matrix/client".extraConfig = mkWellKnown {
             "m.homeserver".base_url = "https://matrix.mvogel.dev/";
+            "org.matrix.msc4143.rtc_foci" = [
+              {
+                type = "livekit";
+                livekit_service_url = "https://matrix.mvogel.dev/livekit/jwt";
+              }
+            ];
           };
         };
     };
   };
+
+  systemd.services.nginx.serviceConfig.SupplementaryGroups = [ "acme" ];
+  systemd.services.livekit.serviceConfig.SupplementaryGroups = [ "acme" ];
+  security.acme.certs."matrix.mvogel.dev".group = "acme";
 
   services.coturn = {
     enable = true;
@@ -92,22 +158,33 @@
     ];
   };
 
-  networking.firewall.allowedTCPPorts = [
-    3478
-    5349
-    5349
-    5350
-  ];
-  networking.firewall.allowedUDPPorts = [
-    3478
-    5349
-    5349
-    5350
-  ];
-  networking.firewall.allowedUDPPortRanges = [
-    {
-      from = 49152;
-      to = 65535;
-    }
-  ];
+  networking.firewall = {
+    allowedTCPPorts = [
+      config.services.coturn.listening-port
+      config.services.coturn.alt-listening-port
+      config.services.coturn.tls-listening-port
+      config.services.coturn.alt-tls-listening-port
+      config.services.livekit.settings.turn.tls_port
+    ];
+    allowedUDPPorts = [
+      config.services.coturn.listening-port
+      config.services.coturn.alt-listening-port
+      config.services.coturn.tls-listening-port
+      config.services.coturn.alt-tls-listening-port
+      config.services.livekit.settings.turn.udp_port
+    ];
+    allowedUDPPortRanges = [
+      # coturn
+      {
+        from = config.services.coturn.min-port;
+        to = config.services.coturn.max-port;
+      }
+
+      # livekit
+      {
+        from = config.services.livekit.settings.rtc.port_range_start;
+        to = config.services.livekit.settings.rtc.port_range_end;
+      }
+    ];
+  };
 }

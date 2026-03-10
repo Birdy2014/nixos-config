@@ -47,5 +47,7 @@
       };
 
       "bind-dnskey_mvogel.dev".sopsFile = file;
+
+      livekit-keyfile.sopsFile = file;
     };
 }
