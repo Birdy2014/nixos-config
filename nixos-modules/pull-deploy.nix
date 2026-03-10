@@ -126,7 +126,7 @@ in
     systemd.services.nixos-pull-deploy = {
       onFailure = [ "notify-failure@%N.service" ];
       serviceConfig = lib.mkIf cfg.laptopMode {
-        CPUQuota = "50%";
+        CPUQuota = "100%";
         ExecCondition = acPowerCondition;
       };
     };
