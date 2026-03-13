@@ -28,4 +28,15 @@
   sops.templates."mealie-ldap-admin-password.env".content = ''
     LDAP_QUERY_PASSWORD=${config.sops.placeholder.ldap-admin-password}
   '';
+
+  # mealie sometimes fails when starting for the first time with this error:
+  # ValueError: Could not find a default download directory
+  systemd.services.mealie = {
+    startLimitBurst = 3;
+    startLimitIntervalSec = 1800; # 30min
+    serviceConfig = {
+      Restart = "on-failure";
+      RestartSec = "30";
+    };
+  };
 }
