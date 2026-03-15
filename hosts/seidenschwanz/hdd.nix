@@ -11,15 +11,15 @@
       # In milliseconds
 
       # Discs rotating at full speed
-      idle_a = "100";
+      idle_a = "1000";
 
       # Heads are unloaded to drive ramp
       # Discs rotating at full speed
-      idle_b = "120000";
+      idle_b = "600000";
 
       # Heads are unloaded to drive ramp
       # Drive speed reduced to a lower RPM
-      idle_c = "600000";
+      idle_c = "1800000";
 
       # Heads are unloaded to drive ramp
       # Drive motor is spun down
