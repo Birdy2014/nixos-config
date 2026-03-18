@@ -43,6 +43,7 @@
     documentation = {
       info.enable = false;
       dev.enable = true;
+      doc.enable = false;
     };
 
     security.pam.services.systemd-run0.enable = true;
