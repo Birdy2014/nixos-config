@@ -23,7 +23,7 @@
   };
 
   systemd.services =
-    lib.genAttrs [ "paperless-web" "paperless-scheduler" "paperless-task-queue" ]
+    lib.genAttrs [ "paperless-web" "paperless-scheduler" "paperless-task-queue" "paperless-consumer" ]
       (_: {
         serviceConfig.LoadCredential = [
           "ldap_password:${config.sops.secrets.ldap-admin-password.path}"
