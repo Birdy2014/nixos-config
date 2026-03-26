@@ -18,6 +18,7 @@
       sixel = true;
       mouse = true;
       period = 1;
+      watch = true;
     };
 
     keybindings = {
