@@ -18,17 +18,6 @@
 
   plugins =
     let
-      kanso-nvim = buildVimPlugin {
-        pname = "kanso-nvim";
-        version = "2025-07-25";
-        src = fetchFromGitHub {
-          owner = "webhooked";
-          repo = "kanso.nvim";
-          rev = "925b8a210027ec51959697250c1cd9f56d17f6cd";
-          hash = "sha256-gNef33nCJvrjaMCldjRm+5OKxltmDg3UnPd3cFsVO20=";
-        };
-      };
-
       colorschemes = {
         gruvbox-material-dark = [
           {
@@ -70,13 +59,13 @@
         ];
         kanso-mist = [
           {
-            plugin = kanso-nvim;
+            plugin = vimPlugins.kanso-nvim;
             config = ''vim.cmd.colorscheme("kanso-mist")'';
           }
         ];
         kanso-pearl = [
           {
-            plugin = kanso-nvim;
+            plugin = vimPlugins.kanso-nvim;
             config = ''
               require('kanso').setup({
                 foreground = "contrast",
@@ -147,16 +136,7 @@
         config = ./config/plugins/nvim-tree.lua;
       }
       {
-        plugin = buildVimPlugin {
-          pname = "multicursor-nvim";
-          version = "2025-05-13";
-          src = fetchFromGitHub {
-            owner = "jake-stewart";
-            repo = "multicursor.nvim";
-            rev = "c731e52cee7b69fa05915affb09ba65e7cd31fa9";
-            hash = "sha256-rw7jE89Lj5F7bOCAx/rMO+Dpswfg9ohKDyQ3RJtaa3I=";
-          };
-        };
+        plugin = multicursor-nvim;
         config = ./config/plugins/multicursor.lua;
       }
 
