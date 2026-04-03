@@ -12,8 +12,8 @@ buildNpmPackage {
   src = fetchFromGitHub {
     owner = "Birdy2014";
     repo = "improtheater-frankfurt.de";
-    rev = "70fe472e4fe3e1c42540a633cb366072f30bedd5";
-    hash = "sha256-TxzDj2DnKeBLgJpyb1wytHEmx5fsS1MSmGgaAeONU7g=";
+    rev = "8a7f1a52b9cade222ba914c7a3863e71f4f7905b";
+    hash = "sha256-TVQCqDaIbeZb9IEKuBmGV/Rvd4JXzaF64mCI51oZdVM=";
   };
 
   npmDepsHash = "sha256-hsUiaBIeaNUiFLEBwOk/+0h5G/MCjA5574ASY+UMrp4=";
