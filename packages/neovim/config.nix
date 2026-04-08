@@ -57,20 +57,23 @@
             config = ''vim.cmd.colorscheme("catppuccin-latte")'';
           }
         ];
-        kanso-mist = [
+        onedark-dark = [
           {
-            plugin = vimPlugins.kanso-nvim;
-            config = ''vim.cmd.colorscheme("kanso-mist")'';
+            plugin = vimPlugins.onedark-nvim;
+            config = ''
+              require("onedark").setup({ style = "dark" })
+              require("onedark").load()
+              vim.api.nvim_set_hl(0, "BufferCurrent", { fg = "#ffffff" })
+            '';
           }
         ];
-        kanso-pearl = [
+        onedark-darker = [
           {
-            plugin = vimPlugins.kanso-nvim;
+            plugin = vimPlugins.onedark-nvim;
             config = ''
-              require('kanso').setup({
-                foreground = "contrast",
-              })
-              vim.cmd.colorscheme("kanso-pearl")
+              require("onedark").setup({ style = "darker" })
+              require("onedark").load()
+              vim.api.nvim_set_hl(0, "BufferCurrent", { fg = "#ffffff" })
             '';
           }
         ];

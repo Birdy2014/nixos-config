@@ -20,7 +20,7 @@
   my = {
     desktop = {
       enable = true;
-      colorscheme = "catppuccin-frappe";
+      colorscheme = "onedark-dark";
     };
     gaming.enable = true;
     home = {

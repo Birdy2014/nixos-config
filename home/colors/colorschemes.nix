@@ -1,7 +1,7 @@
 { osConfig, ... }:
 
 # colorschemes to maybe add:
-# - onedark
+# - onedark light
 # - tokyo night
 
 {
@@ -161,77 +161,50 @@
           light-white = "#5c5f77";
         };
 
-        kanso-mist = rec {
-          accent = green;
+        onedark-dark = rec {
+          accent = "#d19a66";
           accent-text = "#000000";
-
-          background-primary = "#393B44";
-          background-secondary = "#2a2c35";
-          background-tertiary = "#22262D";
-          text = "#f2f1ef";
-          text-inactive = "#C5C9C7";
-
-          black = "#22262d";
-          light-black = "#5C6066";
-
-          red = "#c4746e";
-          light-red = "#e46876";
-
-          green = "#8a9a7b";
-          light-green = "#87a987";
-
-          yellow = "#c4b28a";
-          light-yellow = "#e6c384";
-
-          blue = "#8ba4b0";
-          light-blue = "#7fb4ca";
-
-          magenta = "#a292a3";
-          light-magenta = "#938aa9";
-
-          cyan = "#8ea4a2";
-          light-cyan = "#7aa89f";
-
-          white = "#a4a7a4";
-          light-white = "#C5C9C7";
-        };
-
-        kanso-pearl = rec {
-          isLight = true;
-
-          accent = light-green;
-          accent-text = "#ffffff";
           accent-complementary = blue;
 
-          background-primary = "#f2f1ef";
-          background-secondary = "#e2e1df";
-          background-tertiary = "#dddddb";
-          text = black;
-          text-inactive = "#545464";
+          background-primary = "#393f4a";
+          background-secondary = "#282c34";
+          background-tertiary = "#21252b";
+          text = "#abb2bf";
+          text-inactive = light-black;
 
-          black = "#14171d";
-          light-black = "#8a8980";
+          black = "#181a1f";
+          light-black = "#5c6370";
 
-          red = "#D72436";
-          light-red = "#E42D2C";
+          red = "#e86671";
+          green = "#98c379";
+          yellow = "#e5c07b";
+          blue = "#61afef";
+          magenta = "#c678dd";
+          cyan = "#56b6c2";
+          white = "#ebd09c";
+        };
 
-          green = "#5E8F2F";
-          light-green = "#5B9945";
+        onedark-darker = rec {
+          accent = "#cc9057";
+          accent-text = "#000000";
+          accent-complementary = blue;
 
-          yellow = "#656720";
-          light-yellow = "#72612B";
+          background-primary = "#30363f";
+          background-secondary = "#282c34";
+          background-tertiary = "#1f2329";
+          text = "#a0a8b7";
+          text-inactive = light-black;
 
-          blue = "#2A73B1";
-          light-blue = "#469FD3";
+          black = "#0e1013";
+          light-black = "#535965";
 
-          magenta = "#C04062";
-          light-magenta = "#44418F";
-
-          cyan = "#3E8366";
-          light-cyan = "#428F6A";
-
-          white = "#545464";
-          light-white = "#43436c";
+          red = "#e55561";
+          green = "#8ebd6b";
+          yellow = "#e2b86b";
+          blue = "#4fa6ed";
+          magenta = "#bf68d9";
+          cyan = "#48b0bd";
+          white = "#e8c88c";
         };
       };
     in
