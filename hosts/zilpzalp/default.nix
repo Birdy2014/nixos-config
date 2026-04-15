@@ -4,6 +4,7 @@
   imports = [
     ../../secrets/zilpzalp.nix
     ./borg.nix
+    ./btrbk.nix
     ./filesystems.nix
   ];
 
