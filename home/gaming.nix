@@ -2,6 +2,7 @@
   osConfig,
   lib,
   pkgs,
+  pkgsUnstable,
   ...
 }:
 
@@ -82,6 +83,25 @@
         ];
         extraRoBinds = [ "/run/media/moritz/games/ps3" ];
         extraDevBinds = [
+          "/dev/input"
+          "/dev/uinput"
+        ];
+      };
+
+      eden = {
+        applications = [ pkgsUnstable.eden ];
+        allowDesktop = true;
+        allowX11 = true;
+        extraBinds = [
+          "$HOME/.config/eden"
+          "$HOME/.local/share/eden"
+          "$HOME/.cache/eden"
+          "/run/media/moritz/games/switch"
+          "/sys/class/input"
+          "/sys/devices"
+        ];
+        # eden uses hidrw to connect to joycons via bluetooth (hid_nintendo must not be running!)
+        extraDevBinds = (lib.genList (x: "/dev/hidraw${toString x}") 14) ++ [
           "/dev/input"
           "/dev/uinput"
         ];
