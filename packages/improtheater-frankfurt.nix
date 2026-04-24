@@ -7,16 +7,16 @@
 
 buildNpmPackage {
   pname = "improtheater-frankfurt";
-  version = "2026-03-31";
+  version = "2026-04-24";
 
   src = fetchFromGitHub {
     owner = "Birdy2014";
     repo = "improtheater-frankfurt.de";
-    rev = "8a7f1a52b9cade222ba914c7a3863e71f4f7905b";
-    hash = "sha256-TVQCqDaIbeZb9IEKuBmGV/Rvd4JXzaF64mCI51oZdVM=";
+    rev = "b0599467bac763608585949b73f142dea7ee9a86";
+    hash = "sha256-YjWnRKwGxBkAZAmHv2d44A8DKopfruycT1PfLi4guqc=";
   };
 
-  npmDepsHash = "sha256-hsUiaBIeaNUiFLEBwOk/+0h5G/MCjA5574ASY+UMrp4=";
+  npmDepsHash = "sha256-4UjAVYqxd6puWYDCMVAiVQMCb51ihR3wirpgVLEoIzI=";
 
   nativeBuildInputs = [
     # for sharp
@@ -24,8 +24,6 @@ buildNpmPackage {
   ];
 
   nodejs = nodejs_20;
-
-  dontNpmBuild = true;
 
   # Reduce closure size
   postInstall = ''
