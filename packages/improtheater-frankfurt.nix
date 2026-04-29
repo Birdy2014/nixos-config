@@ -2,18 +2,18 @@
   buildNpmPackage,
   fetchFromGitHub,
   nodePackages,
-  nodejs_20,
+  nodejs_24,
 }:
 
 buildNpmPackage {
   pname = "improtheater-frankfurt";
-  version = "2026-04-24";
+  version = "2026-04-29";
 
   src = fetchFromGitHub {
     owner = "Birdy2014";
     repo = "improtheater-frankfurt.de";
-    rev = "b0599467bac763608585949b73f142dea7ee9a86";
-    hash = "sha256-YjWnRKwGxBkAZAmHv2d44A8DKopfruycT1PfLi4guqc=";
+    rev = "263c43d5768da09669df5e8fad704d55068b3e8c";
+    hash = "sha256-UXtMkU2ZxaItrGXYvxHwYYGUg58iiwvQouzg5GNs1CQ=";
   };
 
   npmDepsHash = "sha256-4UjAVYqxd6puWYDCMVAiVQMCb51ihR3wirpgVLEoIzI=";
@@ -23,7 +23,7 @@ buildNpmPackage {
     nodePackages.node-gyp
   ];
 
-  nodejs = nodejs_20;
+  nodejs = nodejs_24;
 
   # Reduce closure size
   postInstall = ''
