@@ -50,19 +50,29 @@ vim.api.nvim_create_autocmd("BufWritePost", {
         end
 
         if vim.g.nix_formatter_path == "" or vim.fn.filereadable(vim.g.nix_formatter_path) == 0 then
-            local output = vim.system({ "nix", "formatter", "build", "--no-link" }):wait(10000)
-            if output.code == 1 and output.signal == 0 then
-                -- no formatter configured
-                vim.g.nix_formatter_path = nil
-                return
-            end
-            if output.code ~= 0 then
-                -- something else went wrong
-                return
-            end
-            vim.g.nix_formatter_path = output.stdout:sub(1, -2)
+            vim.notify("Building nix formatter...", vim.log.levels.INFO)
+            vim.system({ "nix", "formatter", "build", "--no-link" }, { timeout = 20000 }, function(output)
+                if output.code == 1 and output.signal == 0 then
+                    -- no formatter configured
+                    vim.g.nix_formatter_path = nil
+                    vim.notify("No nix formatter available", vim.log.levels.WARN)
+                    return
+                end
+                if output.code ~= 0 then
+                    -- something else went wrong
+                    vim.notify("Building nix formatter failed.", vim.log.levels.ERROR)
+                    return
+                end
+                vim.g.nix_formatter_path = output.stdout:sub(1, -2)
+                vim.notify("Done building nix formatter.", vim.log.levels.INFO)
+            end)
+            vim.wait(5000, function()
+                return vim.g.nix_formatter_path ~= ""
+            end)
         end
-        vim.system({ vim.g.nix_formatter_path, args.file }):wait(1000)
+        if vim.fn.filereadable(vim.g.nix_formatter_path) == 1 then
+            vim.system({ vim.g.nix_formatter_path, args.file }):wait(1000)
+        end
         vim.cmd("e")
     end,
 })
