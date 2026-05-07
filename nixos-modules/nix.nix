@@ -68,6 +68,8 @@
       system.flake = inputs.self;
     };
 
+    nix.channel.enable = false;
+
     system.tools.nixos-option.enable = false;
 
     _module.args =
