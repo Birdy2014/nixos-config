@@ -77,20 +77,11 @@ set("n", "<leader>a", mc.alignCursors)
 -- set("x", "S", mc.splitCursors)
 
 -- Append/insert for each line of visual selections.
--- TODO: Do I need this? / Use a different key
--- set("x", "I", mc.insertVisual)
--- set("x", "A", mc.appendVisual)
+set("x", "I", mc.insertVisual)
+set("x", "A", mc.appendVisual)
 
 -- match new cursors within visual selections by regex.
 set("x", "M", mc.matchCursors, "Add cursors based on regex match")
-
--- Rotate visual selection contents.
-set("x", "<leader>t", function()
-    mc.transposeCursors(1)
-end)
-set("x", "<leader>T", function()
-    mc.transposeCursors(-1)
-end)
 
 -- Jumplist support
 set({ "x", "n" }, "<c-i>", mc.jumpForward)
