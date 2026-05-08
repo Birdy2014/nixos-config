@@ -88,6 +88,19 @@
       '';
     };
 
+    # Mitigate Dirty Frag
+    # https://discourse.nixos.org/t/is-nixos-affected-by-dirty-frag/77479/2
+    boot.extraModprobeConfig = ''
+      install esp4 ${pkgs.coreutils}/bin/false
+      install esp6 ${pkgs.coreutils}/bin/false
+      install rxrpc ${pkgs.coreutils}/bin/false
+    '';
+    boot.blacklistedKernelModules = [
+      "esp4"
+      "esp6"
+      "rxrpc"
+    ];
+
     boot.loader = lib.mkIf config.my.systemd-boot.enable {
       efi = {
         canTouchEfiVariables = true;
