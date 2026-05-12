@@ -51,7 +51,6 @@
     foliate
     kiwix
     zotero
-    bitwarden-desktop
   ];
 
   i18n.inputMethod = {
