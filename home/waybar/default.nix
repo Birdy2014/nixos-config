@@ -154,7 +154,7 @@
         network = {
           interval = 10;
           format-wifi = "{essid} ({signalStrength:>3}%) 󰖩";
-          format-ethernet = "{ifname} 󰌘 {bandwidthDownOctets:>3} 󰇚 {bandwidthUpOctets:>3} 󰕒";
+          format-ethernet = "{ifname} 󰌘 ";
           format-linked = "{ifname} (No IP) 󰌚";
           format-disconnected = "Disconnected 󰌙";
           format-tooltip = "{ifname} {ipaddr} {bandwidthDownOctets} 󰇚 {bandwidthUpOctets} 󰕒";
