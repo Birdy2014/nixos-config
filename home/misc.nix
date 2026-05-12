@@ -48,10 +48,22 @@
     libreoffice
     thunderbird
     element-desktop
-    foliate
     kiwix
     zotero
   ];
+
+  my.bubblewrap.foliate = {
+    applications = [ pkgs.foliate ];
+    allowDesktop = true;
+    allowX11 = true;
+    extraBinds = [
+      "$HOME/.local/share/com.github.johnfactotum.Foliate"
+      "$HOME/.cache/com.github.johnfactotum.Foliate"
+    ];
+    extraRoBinds = [ "/run/media/moritz/archive/Archiv/Bücher" ];
+    # foliate seems to be broken on niri/wayland
+    extraEnv.GDK_BACKEND = "x11";
+  };
 
   i18n.inputMethod = {
     enable = true;
