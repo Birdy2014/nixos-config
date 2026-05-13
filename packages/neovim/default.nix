@@ -74,5 +74,5 @@ wrapNeovimUnstable neovim-unwrapped {
       ) (lib.filter (x: lib.hasAttr "config" x) config.plugins))
     )
     |> lib.concatStringsSep "\n"
-    |> lib.replaceString "@CLANG_TOOLS@" (toString clang-tools);
+    |> lib.replaceString "@CLANG_TOOLS@" (if withLanguageServers then toString clang-tools else "");
 }
