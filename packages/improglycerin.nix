@@ -3,10 +3,18 @@
   buildNpmPackage,
   fetchFromGitHub,
   nodejs_24,
-  google-fonts,
   makeWrapper,
 }:
 
+let
+  roboto-fonts = fetchFromGitHub {
+    owner = "google";
+    repo = "fonts";
+    rev = "d5ea3092960d3d5db0b7a9890c828bafbf159c51";
+    hash = "sha256-D6mDh0sT8Q7eyeXvOf1wuTevteP7Z3J+r9LXUHzwRnk=";
+    rootDir = "ofl/roboto";
+  };
+in
 buildNpmPackage rec {
   pname = "improglycerin";
   version = "2026-04-29";
@@ -29,9 +37,7 @@ buildNpmPackage rec {
   '';
 
   preBuild = ''
-    cp "${
-      google-fonts.override { fonts = [ "Roboto" ]; }
-    }/share/fonts/truetype/Roboto[wdth,wght].ttf" "public/Roboto.ttf"
+    cp "${roboto-fonts}/Roboto[wdth,wght].ttf" "public/Roboto.ttf"
   '';
 
   nativeBuildInputs = [ makeWrapper ];
