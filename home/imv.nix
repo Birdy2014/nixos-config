@@ -1,9 +1,16 @@
-{ pkgsSelf, ... }:
+{ pkgs, ... }:
 
 {
   programs.imv = {
     enable = true;
-    package = pkgsSelf.imv;
+    package = pkgs.imv.overrideAttrs (old: {
+      patches = (old.patches or [ ]) ++ [
+        (pkgs.fetchpatch {
+          url = "https://github.com/Birdy2014/imv/commit/3af0fdda375226718d11396e6df93393d57812b2.patch";
+          hash = "sha256-hNC3TEkqKnlpoAP8B8J3qRlmfznD65bl84Fi6pkQJcw=";
+        })
+      ];
+    });
 
     settings = {
       options.overlay_font = "monospace:10";
