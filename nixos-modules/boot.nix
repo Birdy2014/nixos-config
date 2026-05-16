@@ -37,6 +37,9 @@
       # Workaround for paperless-ngx build, maybe useful for other applications?
       "fs.inotify.max_user_instances" = 1024;
       "fs.inotify.max_user_watches" = 524288;
+
+      # Mitigate CVE-2026-46333 (fixed in 6.18.31)
+      "kernel.yama.ptrace_scope" = 3;
     };
 
     boot.kernelParams = [
