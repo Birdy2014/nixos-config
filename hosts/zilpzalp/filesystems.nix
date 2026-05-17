@@ -68,7 +68,7 @@
   swapDevices = [ { device = "/swap/swapfile"; } ];
 
   boot.resumeDevice = "/dev/mapper/nixos-root";
-  boot.kernelParams = [ "resume_offset=533760" ];
+  boot.kernelParams = [ "resume_offset=4257263" ];
 
   services.fstrim.enable = true;
 }
