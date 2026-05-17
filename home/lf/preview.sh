@@ -149,10 +149,6 @@ handle_extension() {
             # Sometimes mp3 files are not recognized for some reason
             preview_audio
             ;;
-
-        *.stl|*.obj|*.fbx)
-            f3d --verbose=quiet --ambient-occlusion --up +Z --output "$FILE_CACHE_PATH" "$FILE_PATH" && display_image_cache
-            exit 1;;
     esac
 }
 

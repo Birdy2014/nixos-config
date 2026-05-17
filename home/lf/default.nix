@@ -61,7 +61,6 @@
           _7zz
           libarchive
           gnome-epub-thumbnailer
-          f3d
         ];
         text = builtins.readFile ./preview.sh;
       }
