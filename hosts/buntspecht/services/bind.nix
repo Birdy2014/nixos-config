@@ -119,7 +119,7 @@
     "bind-dnskey_mvogel.dev.conf" = {
       # The key name is what hetzner expects
       content = ''
-        key "mvogel.dev.2a01:4f8:c012:2dfe::1" {
+        key "mvogel.dev.2a01-04f8-c012-2dfe-0000-0000-0000-0001" {
           algorithm hmac-sha256;
           secret "${config.sops.placeholder."bind-dnskey_mvogel.dev"}";
         };
