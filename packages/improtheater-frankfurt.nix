@@ -12,11 +12,11 @@ buildNpmPackage {
   src = fetchFromGitHub {
     owner = "Birdy2014";
     repo = "improtheater-frankfurt.de";
-    rev = "62b8bb45b581a6180130960358f90063898b0a14";
-    hash = "sha256-zpRoeUz5/esvRd8okX9zFVwKN5FsIv2fIBffrPUMHzo=";
+    rev = "ff28262da5a3a8c61daef5a6d09a508af4e56eec";
+    hash = "sha256-fntyZQNmhYQyVUcUqQTndhclgryWIxTKA6JEKnZ8+j8=";
   };
 
-  npmDepsHash = "sha256-4UjAVYqxd6puWYDCMVAiVQMCb51ihR3wirpgVLEoIzI=";
+  npmDepsHash = "sha256-9n3UYAJFOCEEGH68ufS/fWSq0i2L/BMldYv5959xW9c=";
 
   nativeBuildInputs = [
     # for sharp
