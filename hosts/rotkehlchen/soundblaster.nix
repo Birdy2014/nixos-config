@@ -4,12 +4,16 @@
   # Workaround for Creative Sound BlasterX G6
   systemd = {
     services.soundblaster-reset-usb = {
-      script = "${lib.getExe' pkgs.usbutils "usbreset"} 041e:3256";
+      script = ''
+        sleep 2 # May prevent this servie failing?
+        ${lib.getExe' pkgs.usbutils "usbreset"} 041e:3256
+      '';
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
       };
+      restartIfChanged = false;
     };
 
     user.services.soundblaster-set-alsa-options = {
@@ -45,8 +49,9 @@
 
   boot.extraModprobeConfig = ''
     options snd_usb_audio id=G6 index=0
-    options snd_hda_intel id=HDMI,Generic index=1,2 enable=0,0
   '';
+
+  boot.blacklistedKernelModules = [ "snd_hda_intel" ];
 
   # Fix crackling
   boot.kernelParams = [ "usbcore.autosuspend=-1" ];
