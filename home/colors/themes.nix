@@ -216,7 +216,7 @@
 
           gtk3 = {
             theme = {
-              name = "adw-gtk3";
+              name = if cfg.isLight then "adw-gtk3" else "adw-gtk3-dark";
               package = pkgs.adw-gtk3;
             };
             extraCss =
@@ -230,7 +230,7 @@
 
           gtk4 = {
             theme = {
-              name = "adw-gtk3";
+              name = if cfg.isLight then "adw-gtk3" else "adw-gtk3-dark";
               package = pkgs.adw-gtk3;
             };
             extraCss = ''
@@ -244,7 +244,7 @@
         };
 
       # prevent non-libadwaita gtk4 apps from loading default style
-      home.sessionVariables.GTK_THEME = "adw-gtk3";
+      home.sessionVariables.GTK_THEME = if cfg.isLight then "adw-gtk3" else "adw-gtk3-dark";
 
       dconf.settings = {
         # Remove close button in GTK CSD titlebar
