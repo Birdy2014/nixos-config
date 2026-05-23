@@ -22,11 +22,11 @@ buildNpmPackage rec {
   src = fetchFromGitHub {
     owner = "Birdy2014";
     repo = "improglycerin.de";
-    rev = "8ad48545c0e307ffd610bd59fcd221525e8a5697";
-    hash = "sha256-bYFTQpNXOtnxQEAfwrcnGGC90WR6gcGTDfw51KyA5v8=";
+    rev = "5b1f6a55168ce2ee0663b010ec1dcecad24472fa";
+    hash = "sha256-2seVXRckPR+xJONtkVLf26yz1iaBJZ/HNhv/Bji+OmY=";
   };
 
-  npmDepsHash = "sha256-7xxhsQQ6e9nnSLG1nlUna6Vkvq/cX+37wHqaWCMZT5M=";
+  npmDepsHash = "sha256-8pd96M4FtTZbCQCgQFu3315Zxq2xeXhXpTwsVKKyD08=";
 
   nodejs = nodejs_24;
 
