@@ -5,7 +5,7 @@
     enable = true;
     enableDefaultConfig = false;
 
-    matchBlocks = {
+    settings = {
       seidenschwanz = {
         hostname = "fd00:90::10";
         user = "root";

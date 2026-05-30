@@ -8,7 +8,7 @@
 {
   boot.supportedFilesystems = [ "zfs" ];
 
-  boot.zfs.package = pkgs.zfs_2_4;
+  boot.zfs.forceImportRoot = false;
 
   services.zfs = {
     autoScrub = {

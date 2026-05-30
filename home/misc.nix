@@ -40,7 +40,7 @@
 
     # GUI
     pavucontrol
-    helvum
+    crosspipe
     obsidian
     zathura
     neovide

@@ -1,8 +1,8 @@
 {
   buildNpmPackage,
   fetchFromGitHub,
-  nodePackages,
   nodejs_24,
+  node-gyp,
 }:
 
 buildNpmPackage {
@@ -20,7 +20,7 @@ buildNpmPackage {
 
   nativeBuildInputs = [
     # for sharp
-    nodePackages.node-gyp
+    node-gyp
   ];
 
   nodejs = nodejs_24;

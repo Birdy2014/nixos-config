@@ -103,7 +103,7 @@ in
       }
     ];
 
-    services.resolved.dnsovertls = "opportunistic";
+    services.resolved.settings.Resolve.DNSOverTLS = "opportunistic";
 
     services.gnome.gnome-keyring.enable = true;
     security.pam.services.swaylock.enable = true;

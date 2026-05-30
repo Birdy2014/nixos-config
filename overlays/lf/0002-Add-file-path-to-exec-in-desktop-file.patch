@@ -1,7 +1,7 @@
-From 0b866ebda4072fd04deea28231cfca6a13e425c9 Mon Sep 17 00:00:00 2001
+From 0b85dedb08bfb727c20512c2f8631b6414ebf311 Mon Sep 17 00:00:00 2001
 From: Moritz Vogel <moritzv7@gmail.com>
 Date: Thu, 13 Jun 2024 01:22:31 +0200
-Subject: [PATCH 2/2] Add file path to exec in desktop file
+Subject: [PATCH 2/3] Add file path to exec in desktop file
 
 ---
  lf.desktop | 2 +-
@@ -20,5 +20,5 @@ index e41e56a..f94d884 100644
  Categories=ConsoleOnly;System;FileTools;FileManager
  MimeType=inode/directory;
 -- 
-2.50.1
+2.51.2
 

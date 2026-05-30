@@ -2,7 +2,6 @@
   lib,
   osConfig,
   pkgs,
-  pkgsSelf,
   ...
 }:
 
@@ -37,8 +36,8 @@
     in
     {
       enable = true;
-      package = pkgs.mpv-unwrapped.wrapper {
-        mpv = pkgs.mpv-unwrapped.override {
+      package = pkgs.mpv.override {
+        mpv-unwrapped = pkgs.mpv-unwrapped.override {
           vapoursynthSupport = enableExpensive;
           vapoursynth = (pkgs.vapoursynth.withPlugins [ pkgs.vapoursynth-mvtools ]);
         };

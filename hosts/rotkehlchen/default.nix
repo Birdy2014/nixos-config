@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  pkgsUnstable,
   ...
 }:
 
@@ -80,14 +79,11 @@
     # GUI
     gimp3
     mcomix
-    pkgsUnstable.feishin
+    feishin
 
     signal-desktop
     mumble
   ];
-
-  programs.adb.enable = true;
-  users.users.moritz.extraGroups = [ "adbusers" ];
 
   # Needed for ddcutil
   hardware.i2c.enable = true;

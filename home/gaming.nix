@@ -2,7 +2,6 @@
   osConfig,
   lib,
   pkgs,
-  pkgsUnstable,
   ...
 }:
 
@@ -89,7 +88,7 @@
       };
 
       eden = {
-        applications = [ pkgsUnstable.eden ];
+        applications = [ pkgs.eden ];
         allowDesktop = true;
         allowX11 = true;
         extraBinds = [

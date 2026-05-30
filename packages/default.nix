@@ -3,7 +3,12 @@
 {
   x86_64-linux =
     let
-      callPackage = nixpkgs.legacyPackages.x86_64-linux.callPackage;
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+        # allowUnfree needed for vimPlugins.barbar-nvim
+        config.allowUnfree = true;
+      };
+      callPackage = pkgs.callPackage;
     in
     {
       einkaufszettel = callPackage ./einkaufszettel.nix { };
@@ -21,7 +26,11 @@
 
   aarch64-linux =
     let
-      callPackage = nixpkgs.legacyPackages.aarch64-linux.callPackage;
+      pkgs = import nixpkgs {
+        system = "aarch64-linux";
+        config.allowUnfree = true;
+      };
+      callPackage = pkgs.callPackage;
     in
     {
       geoblock = callPackage ./geoblock { };

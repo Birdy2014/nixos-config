@@ -93,6 +93,7 @@
     in
     {
       enable = true;
+      configPath = ".mozilla/firefox"; # TODO: migrate to new default
       nativeMessagingHosts = with pkgs; [
         tridactyl-native
       ];

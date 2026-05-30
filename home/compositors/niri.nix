@@ -4,7 +4,6 @@
   osConfig,
   lib,
   pkgs,
-  pkgsUnstable,
   ...
 }:
 
@@ -123,7 +122,7 @@
           ];
 
           # xwayland-satellite 0.7 can crash when steam starts, 0.8 fixes this
-          xwayland-satellite.path = lib.getExe pkgsUnstable.xwayland-satellite;
+          xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
 
           window-rules = [
             {
@@ -204,7 +203,7 @@
 
           layer-rules = [
             {
-              matches = [ { namespace = "^swww-daemon$"; } ];
+              matches = [ { namespace = "^awww-daemon$"; } ];
               place-within-backdrop = true;
             }
           ];
@@ -424,19 +423,13 @@
             command = "${pkgs.swaylock}/bin/swaylock -f";
           }
         ];
-      events = [
-        {
-          event = "before-sleep";
-          command = "${pkgs.swaylock}/bin/swaylock -f";
-        }
-        {
-          event = "lock";
-          command = "${pkgs.swaylock}/bin/swaylock -f";
-        }
-      ];
+      events = {
+        before-sleep = "${pkgs.swaylock}/bin/swaylock -f";
+        lock = "${pkgs.swaylock}/bin/swaylock -f";
+      };
     };
 
-    services.swww.enable = true;
+    services.awww.enable = true;
 
     systemd.user.services.niri-process-adjustments = {
       Unit = {

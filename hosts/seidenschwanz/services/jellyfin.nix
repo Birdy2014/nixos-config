@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   boot.kernelParams = [ "i915.enable_guc=3" ];
@@ -16,7 +16,7 @@
 
   systemd.services.jellyfin.serviceConfig = {
     ProtectHome = true; # make home directories inaccessible
-    ProtectSystem = "strict"; # make nearly everything read-only
+    ProtectSystem = lib.mkForce "strict"; # make nearly everything read-only
     ReadOnlyPaths = [ "/zpool/encrypted/media" ];
     StateDirectory = "jellyfin"; # services.jellyfin.dataDir is /var/lib/jellyfin
     CacheDirectory = "jellyfin"; # services.jellyfin.cacheDir is /var/cache/jellyfin

@@ -23,7 +23,6 @@
   nixpkgs.hostPlatform = "x86_64-linux";
 
   networking.networkmanager.enable = true;
-  networking.wireless.enable = false;
   services.resolved.enable = true;
 
   isoImage.squashfsCompression = "zstd -Xcompression-level 15";
@@ -52,7 +51,7 @@
       programs.niri.settings.spawn-at-startup = [
         {
           command = [
-            "swww"
+            "awww"
             "img"
             wallpaper
           ];

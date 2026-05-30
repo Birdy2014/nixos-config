@@ -17,6 +17,7 @@
     userDirs = {
       enable = true;
       createDirectories = true;
+      setSessionVariables = true;
     };
 
     terminal-exec = {

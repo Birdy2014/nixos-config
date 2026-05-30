@@ -4,6 +4,7 @@
   programs.yazi = {
     enable = true;
     enableZshIntegration = true;
+    shellWrapperName = "yy";
 
     plugins.smart-enter = pkgs.yaziPlugins.smart-enter;
 

@@ -59,7 +59,7 @@
 
     # Needed for mDNS
     networking.firewall.allowedUDPPorts = [ 5353 ];
-    services.resolved.llmnr = "false";
+    services.resolved.settings.Resolve.LLMNR = "false";
 
     # silent boot
     boot.consoleLogLevel = 3;

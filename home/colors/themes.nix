@@ -269,11 +269,11 @@
 
           # Needed for file picker to work
           kio
-          # qt5; copied from https://github.com/NixOS/nixpkgs/blob/2c1ba84cf12458211553686755392dde5436e66e/nixos/modules/services/desktop-managers/plasma6.nix
+          # qt5; copied from https://github.com/NixOS/nixpkgs/blob/59ac5638f006c4dc9dce8cae092580f2d85dfc91/nixos/modules/services/desktop-managers/plasma6.nix
           (
             let
-              kioPluginPath = "${pkgs.plasma5Packages.qtbase.qtPluginPrefix}/kf5/kio";
-              inherit (pkgs.plasma5Packages) kio;
+              kioPluginPath = "${pkgs.libsForQt5.qtbase.qtPluginPrefix}/kf5/kio";
+              inherit (pkgs.libsForQt5.__internalKF5) kio;
             in
             pkgs.runCommand "kio5-plugins-only" { } ''
               mkdir -p $out/${kioPluginPath}

@@ -17,7 +17,7 @@ in
         KbdInteractiveAuthentication = false;
 
         # Needed for dircolors to work in foot when connecting over ssh
-        AcceptEnv = "COLORTERM";
+        AcceptEnv = [ "COLORTERM" ];
       };
     };
 
