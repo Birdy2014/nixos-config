@@ -44,6 +44,10 @@
       info.enable = false;
       dev.enable = true;
       doc.enable = false;
+      man.cache = {
+        enable = true;
+        generateAtRuntime = true;
+      };
     };
 
     security.pam.services.systemd-run0.enable = true;
