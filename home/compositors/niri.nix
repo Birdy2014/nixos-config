@@ -161,14 +161,7 @@
               open-focused = false;
             }
             {
-              matches = [
-                { app-id = "^Element$"; }
-                {
-                  # Element is currently buggy
-                  app-id = "^electron$";
-                  title = "^Element";
-                }
-              ];
+              matches = [ { app-id = "^element$"; } ];
               open-on-workspace = "05";
               default-column-width.proportion = 1. / 2.;
               open-focused = false;
