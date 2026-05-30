@@ -12,7 +12,6 @@
     ./config/basic.lua
     ./config/autocmds.lua
     ./config/diagnostic-sort.lua
-    ./config/related-information-workaround.lua
     ./config/keymap.lua
   ];
 
