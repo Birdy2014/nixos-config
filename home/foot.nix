@@ -6,15 +6,7 @@
     settings =
       let
         color = lib.removePrefix "#";
-      in
-      {
-        main = {
-          font = "monospace:size=10:weight=medium";
-          font-bold = "monospace:size=10:weight=bold";
-          initial-window-size-pixels = "720x480";
-          resize-by-cells = false;
-          resize-keep-grid = false;
-        };
+
         colors = with config.my.theme; {
           background = color background-secondary;
           foreground = color text;
@@ -38,6 +30,18 @@
           bright6 = color light-cyan;
           bright7 = color light-white;
         };
+      in
+      {
+        main = {
+          font = "monospace:size=10:weight=medium";
+          font-bold = "monospace:size=10:weight=bold";
+          initial-window-size-pixels = "720x480";
+          resize-by-cells = false;
+          resize-keep-grid = false;
+          initial-color-theme = if config.my.theme.isLight then "light" else "dark";
+        };
+        colors-dark = colors;
+        colors-light = colors;
         key-bindings = {
           clipboard-copy = "Control+Shift+c";
           clipboard-paste = "Control+Shift+v";
