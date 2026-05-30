@@ -158,6 +158,14 @@ vim.lsp.config.clangd = {
     end,
 }
 
+function start_config(bufnr, config)
+    vim.lsp.start(config, {
+        bufnr = bufnr,
+        reuse_client = config.reuse_client,
+        _root_markers = config.root_markers,
+    })
+end
+
 local enabled_lsps = { "clangd", "pyright", "rust_analyzer", "ts_ls", "bashls", "texlab", "nixd", "zls" }
 local direnv = require("direnv-nvim")
 direnv.setup({
@@ -166,11 +174,15 @@ direnv.setup({
         for _, lsp in ipairs(enabled_lsps) do
             local config = vim.lsp.config[lsp]
             if vim.list_contains(config.filetypes, args.filetype) then
-                vim.lsp.start(config, {
-                    bufnr = args.buffer,
-                    reuse_client = config.reuse_client,
-                    _root_markers = config.root_markers,
-                })
+                if type(config.root_dir) == "function" then
+                    config.root_dir(args.buffer, function(root_dir)
+                        config.root_dir = root_dir
+                        vim.schedule(function()
+                            start_config(args.buffer, config)
+                        end)
+                    end)
+                end
+                start_config(args.buffer, config)
                 return
             end
         end
