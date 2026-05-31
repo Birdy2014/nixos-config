@@ -34,6 +34,9 @@
         include "${config.sops.templates."bind-dnskey_mvogel.dev.conf".path}";
       '';
 
+      # Fails because it can't read the sops template files
+      checkConfig = false;
+
       zones =
         let
           inherit (inputs.dns.util.${pkgs.stdenv.hostPlatform.system}) writeZone;
