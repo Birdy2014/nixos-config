@@ -21,7 +21,6 @@
         "192.168.90.1"
         "fe80::1eed:6fff:fe98:ee7e"
       ];
-      domains = [ "fritz.box" ];
       dns = [
         "fd00:90::10#seidenschwanz.mvogel.dev"
         "192.168.90.10#seidenschwanz.mvogel.dev"
