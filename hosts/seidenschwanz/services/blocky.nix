@@ -74,8 +74,6 @@
 
         customDNS.mapping = {
           "seidenschwanz.mvogel.dev" = "fd00:90::10";
-          "fritz.box" = "fd00:90::1eed:6fff:fe98:ee7e";
-          "rotkehlchen.fritz.box" = "fd00:90::4247:4a9a:1e40:eeb6";
           "rotkehlchen.mvogel.dev" = "fd00:90::4247:4a9a:1e40:eeb6";
         };
       };
