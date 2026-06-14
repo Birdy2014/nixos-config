@@ -127,6 +127,12 @@
           search.force = true;
           userChrome = ''
             @import "${pkgsSelf.lepton-firefox-theme}/userChrome.css";
+
+            /* https://github.com/black7375/Firefox-UI-Fix/issues/1174#issuecomment-4591791673 */
+            #tab-preview-panel {
+              --arrowpanel-background: Menu;
+              --arrowpanel-color: MenuText;
+            }
           '';
           userContent = ''
             @import "${pkgsSelf.lepton-firefox-theme}/userContent.css";
