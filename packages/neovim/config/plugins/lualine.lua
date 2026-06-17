@@ -38,6 +38,7 @@ lualine.setup({
                     return "@" .. recording_register
                 end,
             },
+            "lsp_status",
             "encoding",
             "fileformat",
             "filetype",
