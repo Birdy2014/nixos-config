@@ -29,7 +29,6 @@
     bashmount
     pkgsSelf.playerctl-current
     gdb
-    pkgsSelf.wine-sandbox
     kiwix-tools
     socat
     pciutils

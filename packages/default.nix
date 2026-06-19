@@ -20,7 +20,6 @@
       lyrax-cursors = callPackage ./lyrax-cursors.nix { };
       neovim = callPackage ./neovim { };
       playerctl-current = callPackage ./playerctl-current { };
-      wine-sandbox = callPackage ./wine-sandbox { };
       xdg-open = callPackage ./xdg-open { };
     };
 
