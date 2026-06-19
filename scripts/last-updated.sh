@@ -2,12 +2,6 @@
 
 set -eu
 
-JQ="$(nix build --no-link --print-out-paths nixpkgs#jq^bin)"
-
-jq() {
-    "$JQ"/bin/jq "$@"
-}
-
 timestamps="$(nix eval --json system#nixosConfigurations.rotkehlchen._module.specialArgs.inputs --apply 'inputs: (builtins.attrValues (builtins.mapAttrs (name: value: { inherit name; timestamp = value.lastModified; }) inputs))')"
 
 echo Flake last updated on: "$(git -C /etc/nixos log -1 --pretty='format:%ar' flake.lock)"
