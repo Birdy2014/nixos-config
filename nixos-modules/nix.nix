@@ -39,9 +39,9 @@
         let
           order = if config.my.nix.useLocalCache.prefer then "10" else "50";
         in
-        lib.mkIf config.my.nix.useLocalCache.enable ([
+        lib.mkIf config.my.nix.useLocalCache.enable [
           "https://cache.seidenschwanz.mvogel.dev?priority=${order}"
-        ]);
+        ];
     };
 
     # Makes system derivation depend on the flake input sources.
