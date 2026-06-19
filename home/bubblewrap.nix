@@ -170,11 +170,8 @@ let
         else
           [
             "--ro-bind"
-            "${sandboxConfig.customMesaPkgsSet.mesa.drivers}"
+            "${sandboxConfig.customMesaPkgsSet.mesa}"
             "/run/opengl-driver"
-            "--ro-bind"
-            "${sandboxConfig.customMesaPkgsSet.pkgsi686Linux.mesa.drivers}"
-            "/run/opengl-driver-32"
           ];
 
       # Order binds by their specificity
