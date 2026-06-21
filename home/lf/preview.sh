@@ -124,14 +124,9 @@ handle_mime() {
             tout tar -tf "${FILE_PATH}" | cache_and_display_text && exit 1
             exit 1;;
 
-        application/x-7z-compressed)
+        application/x-7z-compressed|application/vnd.rar|application/x-rar)
             # Avoid password prompt by providing empty password
             tout 7zz l -ba -p -- "${FILE_PATH}" | awk '{$1=$2=$3=$4=$5=""; print $0}' | grep -o '\S.*' | cache_and_display_text
-            exit 1;;
-
-        application/vnd.rar|application/x-rar)
-            # Avoid password prompt by providing empty password
-            tout bsdtar -t -f "${FILE_PATH}" | cache_and_display_text
             exit 1;;
 
         ## Epub

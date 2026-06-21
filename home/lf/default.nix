@@ -59,7 +59,6 @@
           unzip
           gnutar
           _7zz
-          libarchive
           gnome-epub-thumbnailer
         ];
         text = builtins.readFile ./preview.sh;
@@ -104,8 +103,7 @@
             *.tar.gz|*.tgz) ${pkgs.gnutar}/bin/tar --one-top-level -xzvf $f;;
             *.tar.xz|*.txz) ${pkgs.gnutar}/bin/tar --one-top-level -xJvf $f;;
             *.zip) ${pkgs.unzip}/bin/unzip -d "$new_directory" $f;;
-            *.rar) mkdir "$new_directory" && ${pkgs.libarchive}/bin/bsdtar -C "$new_directory" -x -f $f;;
-            *.7z) ${pkgs._7zz}/bin/7zz -o"$new_directory" x $f;;
+            *.7z|*.rar) ${pkgs._7zz}/bin/7zz -o"$new_directory" x $f;;
             *.xz) ${pkgs.xz}/bin/unxz $f;;
           esac
         }}'';
