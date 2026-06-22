@@ -7,10 +7,7 @@
 }:
 
 {
-  home = {
-    homeDirectory = "/home/moritz";
-    preferXdgDirectories = true;
-  };
+  home.preferXdgDirectories = true;
 
   xdg = {
     enable = true;
