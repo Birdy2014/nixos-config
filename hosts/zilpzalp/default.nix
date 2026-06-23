@@ -33,6 +33,7 @@
     };
     sshd.enable = true;
     systemd-boot.enable = true;
+    boot.tmp-noexec = false;
   };
 
   boot.initrd.availableKernelModules = [

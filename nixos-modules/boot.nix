@@ -6,7 +6,15 @@
 }:
 
 {
-  options.my.systemd-boot.enable = lib.mkEnableOption "systemd-boot";
+  options.my = {
+    systemd-boot.enable = lib.mkEnableOption "systemd-boot";
+
+    boot.tmp-noexec = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Mount /tmp as noexec";
+    };
+  };
 
   config = {
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_18;
@@ -55,8 +63,8 @@
         "nosuid"
         "nodev"
         "size=50%"
-        "noexec"
-      ];
+      ]
+      ++ lib.optional config.my.boot.tmp-noexec "noexec";
     };
 
     services.dbus.implementation = "broker";
