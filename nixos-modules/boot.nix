@@ -16,6 +16,15 @@
     };
   };
 
+  # Allow more retries for luks password
+  options.boot.initrd.luks.devices = lib.mkOption {
+    type = lib.types.attrsOf (
+      lib.types.submodule {
+        config.crypttabExtraOpts = [ "tries=5" ];
+      }
+    );
+  };
+
   config = {
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_18;
     boot.swraid.enable = lib.mkForce false;
