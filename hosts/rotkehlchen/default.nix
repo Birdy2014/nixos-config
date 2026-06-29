@@ -82,16 +82,10 @@
     feishin
 
     signal-desktop
-    mumble
   ];
 
   # Needed for ddcutil
   hardware.i2c.enable = true;
-
-  services.hardware.openrgb = {
-    enable = true;
-    motherboard = "amd";
-  };
 
   services.printing.enable = true;
 

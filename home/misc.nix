@@ -6,8 +6,6 @@
 }:
 
 {
-  services.easyeffects.enable = true;
-
   services.gnome-keyring.enable = true;
 
   nix.gc = {
@@ -17,7 +15,6 @@
   home.packages = with pkgs; [
     # CLI
     cifs-utils
-    libarchive
     unzip
     _7zz
     zip
@@ -30,11 +27,9 @@
     pkgsSelf.playerctl-current
     gdb
     kiwix-tools
-    socat
     pciutils
     usbutils
     sshfs
-    binutils # for strings
     jq
 
     # GUI
