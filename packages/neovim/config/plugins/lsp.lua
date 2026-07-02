@@ -181,6 +181,7 @@ direnv.setup({
                             start_config(args.buffer, config)
                         end)
                     end)
+                    return
                 end
                 start_config(args.buffer, config)
                 return
