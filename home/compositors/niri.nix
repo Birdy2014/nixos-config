@@ -46,10 +46,13 @@
             };
           };
 
-          outputs."PNP(AOC) U34G2G4R3 0x00001553".mode = {
-            height = 1440;
-            width = 3440;
-            refresh = 120.0;
+          outputs."PNP(AOC) U34G2G4R3 0x00001553" = {
+            mode = {
+              height = 1440;
+              width = 3440;
+              refresh = 120.0;
+            };
+            layout.default-column-width.proportion = 1. / 3.;
           };
 
           workspaces = lib.listToAttrs (
@@ -70,7 +73,13 @@
 
           hotkey-overlay.skip-at-startup = true;
 
-          gestures.hot-corners.enable = false;
+          # Why do these have to be set?
+          gestures.hot-corners = {
+            bottom-left = false;
+            bottom-right = false;
+            top-left = false;
+            top-right = false;
+          };
 
           screenshot-path = "${config.xdg.userDirs.pictures}/screenshots/%Y-%m-%d_%H-%M-%S.png";
 
@@ -101,7 +110,7 @@
               { proportion = 3. / 4.; }
             ];
 
-            default-column-width.proportion = 1. / 3.;
+            default-column-width.proportion = 1. / 2.;
 
             struts.right = 8;
 

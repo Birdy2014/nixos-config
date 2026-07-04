@@ -26,7 +26,8 @@
     };
 
     niri-flake = {
-      url = "github:sodiboo/niri-flake";
+      # https://github.com/sodiboo/niri-flake/pull/1548
+      url = "github:sodiboo/niri-flake/very-refactor";
       inputs = {
         nixpkgs.follows = "nixpkgs-unstable";
         nixpkgs-stable.follows = "nixpkgs";
