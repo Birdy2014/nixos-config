@@ -13,7 +13,6 @@
     ./kdeconnect.nix
     ./network.nix
     ./smb-shares.nix
-    ./soundblaster.nix
   ];
 
   my = {
