@@ -13,6 +13,14 @@
         { command = [ "thunderbird" ]; }
         { command = [ (lib.getExe pkgs.networkmanagerapplet) ]; }
       ];
+      window-rules = [
+        {
+          matches = [ { app-id = "^element$"; } ];
+          open-on-workspace = "05";
+          open-maximized = true;
+          open-focused = false;
+        }
+      ];
     };
   };
 }
