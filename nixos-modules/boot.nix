@@ -11,7 +11,7 @@
 
     boot.tmp-noexec = lib.mkOption {
       type = lib.types.bool;
-      default = true;
+      default = !config.my.desktop.enable;
       description = "Mount /tmp as noexec";
     };
   };
