@@ -25,55 +25,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
                     if
                         (client.name == "clangd" and vim.uv.fs_stat(".clang-format"))
                         or client.name == "rust_analyzer"
+                        or (client.name == "nixd" and vim.fn.executable("nixfmt") == 1)
                     then
                         vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
                     end
                 end,
             })
         end
-    end,
-})
-
--- nixd and treefmt are pretty bad at integrating into neovim...
--- When using vim.lsp.buf.format, it will just clear the current file,
--- so this is the best I could come up with.
-vim.g.nix_formatter_path = ""
-vim.api.nvim_create_autocmd("BufWritePost", {
-    group = vim.api.nvim_create_augroup("format-post", {}),
-    callback = function(args)
-        if
-            not (vim.bo.filetype == "nix" or vim.bo.filetype == "lua" or vim.bo.filetype == "python")
-            or vim.fs.root(args.buf, "flake.nix") == nil
-            or vim.g.nix_formatter_path == nil
-        then
-            return
-        end
-
-        if vim.g.nix_formatter_path == "" or vim.fn.filereadable(vim.g.nix_formatter_path) == 0 then
-            vim.notify("Building nix formatter...", vim.log.levels.INFO)
-            vim.system({ "nix", "formatter", "build", "--no-link" }, { timeout = 20000 }, function(output)
-                if output.code == 1 and output.signal == 0 then
-                    -- no formatter configured
-                    vim.g.nix_formatter_path = nil
-                    vim.notify("No nix formatter available", vim.log.levels.WARN)
-                    return
-                end
-                if output.code ~= 0 then
-                    -- something else went wrong
-                    vim.notify("Building nix formatter failed.", vim.log.levels.ERROR)
-                    return
-                end
-                vim.g.nix_formatter_path = output.stdout:sub(1, -2)
-                vim.notify("Done building nix formatter.", vim.log.levels.INFO)
-            end)
-            vim.wait(5000, function()
-                return vim.g.nix_formatter_path ~= ""
-            end)
-        end
-        if vim.fn.filereadable(vim.g.nix_formatter_path) == 1 then
-            vim.system({ vim.g.nix_formatter_path, args.file }):wait(1000)
-        end
-        vim.cmd("e")
     end,
 })
 
@@ -156,6 +114,14 @@ vim.lsp.config.clangd = {
             end
         end
     end,
+}
+
+vim.lsp.config.nixd = {
+    settings = {
+        formatting = {
+            command = { "nixfmt" },
+        },
+    },
 }
 
 function start_config(bufnr, config)
