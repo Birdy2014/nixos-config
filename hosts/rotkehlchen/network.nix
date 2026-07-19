@@ -28,6 +28,8 @@
       networkConfig = {
         IPv6PrivacyExtensions = true;
         MulticastDNS = true;
+        DNSOverTLS = true;
+        DNSSEC = true;
       };
     };
   };
