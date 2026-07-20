@@ -23,7 +23,7 @@
     systemd-boot.enable = true;
     pull-deploy = {
       enable = true;
-      mainDeployMode = "reboot_on_kernel_change";
+      rebootOnKernelChange = true;
     };
   };
 

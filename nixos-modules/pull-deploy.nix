@@ -83,10 +83,14 @@ in
       type = lib.types.enum [
         "boot"
         "switch"
-        "reboot_on_kernel_change"
       ];
       default = if cfg.laptopMode then "boot" else "switch";
       description = "How to deploy from the main branch";
+    };
+    rebootOnKernelChange = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Whether the system should reboot if the kernel changed";
     };
     laptopMode = lib.mkOption {
       type = lib.types.bool;
@@ -117,8 +121,16 @@ in
         hook = "${hook}/bin/hook.sh";
 
         deploy_modes = {
-          main = cfg.mainDeployMode;
-          testing = "switch";
+          main = {
+            normal = cfg.mainDeployMode;
+            kernel_changed = if cfg.rebootOnKernelChange then "reboot" else cfg.mainDeployMode;
+            inhibited = if cfg.rebootOnKernelChange then "reboot" else cfg.mainDeployMode;
+          };
+          testing = {
+            normal = "switch";
+            kernel_changed = if cfg.rebootOnKernelChange then "reboot" else "switch";
+            inhibited = if cfg.rebootOnKernelChange then "reboot" else "boot";
+          };
         };
       };
     };
