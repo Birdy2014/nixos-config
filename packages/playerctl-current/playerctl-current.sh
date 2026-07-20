@@ -14,6 +14,7 @@ main() {
     mapfile -t players < <(playerctl --list-all)
 
     selected_player=""
+    previous_player=$(<"$PLAYER_FILE")
 
     for player in "${players[@]}"; do
         current_status="$(playerctl --player "$player" status 2>&1)"
@@ -22,9 +23,12 @@ main() {
             echo -n "$selected_player" > "$PLAYER_FILE"
             break
         fi
+
+        if [[ "$player" = "$previous_player" ]]; then
+            selected_player="$player"
+        fi
     done
 
-    [[ -z "$selected_player" ]] && selected_player=$(<"$PLAYER_FILE")
     [[ -z "$selected_player" ]] && selected_player="${players[0]}"
 
     playerctl --player "$selected_player" "$@"
