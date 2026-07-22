@@ -10,19 +10,19 @@
 
       # In milliseconds
 
-      # Discs rotating at full speed
-      idle_a = "1000";
+      # Reduced electronics
+      idle_a = "600000";
 
-      # Heads are unloaded to drive ramp
-      # Discs rotating at full speed
-      idle_b = "600000";
+      # Heads unloaded.
+      # Disks spinning at full RPM.
+      idle_b = "1800000";
 
-      # Heads are unloaded to drive ramp
-      # Drive speed reduced to a lower RPM
-      idle_c = "1800000";
+      # Heads unloaded.
+      # Disks spinning at reduced RPM.
+      idle_c = "3600000";
 
-      # Heads are unloaded to drive ramp
-      # Drive motor is spun down
+      # Heads unloaded.
+      # Motor stopped (disks not spinning).
       standby_z = "disable";
     in
     {
