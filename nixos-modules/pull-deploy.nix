@@ -115,7 +115,7 @@ in
       };
       settings = {
         origin = {
-          url = "https://codeberg.org/fitis/nixos-config";
+          url = "https://github.com/Birdy2014/nixos-config";
           main = "main";
         };
         hook = "${hook}/bin/hook.sh";
