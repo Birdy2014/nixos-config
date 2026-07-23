@@ -34,10 +34,6 @@ let
 in
 wrapNeovimUnstable neovim-unwrapped {
   inherit waylandSupport;
-  vimAlias = true;
-  viAlias = true;
-  withPython3 = false;
-  withRuby = false;
 
   wrapperArgs = "--prefix PATH : ${
     lib.makeBinPath (
