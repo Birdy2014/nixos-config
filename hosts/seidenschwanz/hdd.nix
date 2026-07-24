@@ -11,7 +11,7 @@
       # In milliseconds
 
       # Reduced electronics
-      idle_a = "600000";
+      idle_a = "1000"; # Highest possible value
 
       # Heads unloaded.
       # Disks spinning at full RPM.
