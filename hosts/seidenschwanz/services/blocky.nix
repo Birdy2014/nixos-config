@@ -74,7 +74,7 @@
 
         customDNS.mapping = {
           "seidenschwanz.mvogel.dev" = "fd00:90::10";
-          "rotkehlchen.mvogel.dev" = "fd00:90::4247:4a9a:1e40:eeb6";
+          "rotkehlchen.mvogel.dev" = "fd00:90::21";
         };
 
         conditional.mapping = {
