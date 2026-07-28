@@ -6,6 +6,7 @@
     ./bash.nix
     ./boot.nix
     ./borg.nix
+    ./btrfs-snapshot.nix
     ./cli-apps.nix
     ./console.nix
     ./desktop.nix

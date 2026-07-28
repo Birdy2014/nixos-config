@@ -8,7 +8,7 @@
   imports = [
     ../../secrets/rotkehlchen.nix
     ./borg.nix
-    ./btrbk.nix
+    ./btrfs-snapshot.nix
     ./filesystems.nix
     ./kdeconnect.nix
     ./network.nix

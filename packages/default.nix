@@ -11,6 +11,7 @@
       callPackage = pkgs.callPackage;
     in
     {
+      btrfs-snapshot = callPackage ./btrfs-snapshot { };
       einkaufszettel = callPackage ./einkaufszettel.nix { };
       geoblock = callPackage ./geoblock { };
       gruvbox-material-gtk = callPackage ./gruvbox-material-gtk.nix { };

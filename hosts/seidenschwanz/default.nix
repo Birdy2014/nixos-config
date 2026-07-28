@@ -6,7 +6,7 @@
     ../../secrets/buntspecht-seidenschwanz.nix
     ../../secrets/seidenschwanz.nix
     ./borg.nix
-    ./btrbk.nix
+    ./btrfs-snapshot.nix
     ./filesystems.nix
     ./hdd.nix
     ./initrd-ssh-zfs-unlock.nix
