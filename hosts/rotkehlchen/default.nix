@@ -26,6 +26,7 @@
       stateVersion = "23.05";
       max-volume = 40;
       extraModules = [
+        ./home/flake-update.nix
         ./home/niri.nix
         ./home/sandboxes.nix
         ./home/ssh.nix
