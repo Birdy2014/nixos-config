@@ -33,6 +33,11 @@ let
     env
     "\$${env}"
   ];
+  mkEnv = env: value: [
+    "--setenv"
+    env
+    value
+  ];
 
   defaultArgs = {
     common =
@@ -45,9 +50,14 @@ let
           "/etc"
           "/run/systemd/resolve"
         ];
+        envs = [
+          "HOME"
+          "LANG"
+          "TERM"
+          "XDG_CONFIG_HOME"
+        ];
       in
-      (lib.concatMap mkRoBind binds)
-      ++ [
+      [
         "--proc"
         "/proc"
         "--dev"
@@ -58,18 +68,14 @@ let
         "--unshare-user"
         "--unshare-uts"
         "--unshare-cgroup"
-        "--setenv"
-        "NIXOS_XDG_OPEN_USE_PORTAL"
-        "1"
-      ];
+      ]
+      ++ (lib.concatMap mkRoBind binds)
+      ++ (lib.concatMap mkEnvBind envs)
+      ++ (mkEnv "NIXOS_XDG_OPEN_USE_PORTAL" "1");
 
     desktopCommon =
       let
         envs = [
-          "HOME"
-          "PATH"
-          "LANG"
-          "TERM"
           "XDG_RUNTIME_DIR"
           "XDG_SESSION_TYPE"
           "XDG_DATA_DIRS"
@@ -133,18 +139,19 @@ let
         "--bind"
         dir
         "$HOME"
-        "--chdir"
-        "$HOME"
       ];
       mkTmpHomeBind = [
         "--tmpfs"
-        "$HOME"
-        "--chdir"
         "$HOME"
       ];
 
       commonArgs =
         defaultArgs.common
+        ++ (
+          mkEnv "PATH"
+          <| lib.concatStringsSep ":"
+          <| (lib.map (package: "${package}/bin") sandboxConfig.applications) ++ [ "$PATH" ]
+        )
         ++ (
           if !sandboxConfig.persistentHome then mkTmpHomeBind else mkHomeBind sandboxConfig.persistentHomeDir
         );
@@ -215,13 +222,7 @@ let
         ++ (lib.optionals sandboxConfig.unshareNet defaultArgs.unshareNet)
         ++ (lib.concatLists binds)
         ++ (lib.concatMap mkEnvBind sandboxConfig.extraEnvBinds)
-        ++ (lib.concatLists (
-          lib.mapAttrsToList (name: value: [
-            "--setenv"
-            name
-            value
-          ]) sandboxConfig.extraEnv
-        ));
+        ++ (lib.concatLists (lib.mapAttrsToList mkEnv sandboxConfig.extraEnv));
     in
     pkgs.runCommand "bubblewrap-wrapped-${sandboxName}"
       {
@@ -246,9 +247,6 @@ let
               ${pkgs.gettext}/bin/envsubst '$executable' <<'  _EOF' | sed -r 's/^ {4}//' >"$executable_out_path"
                 #! ${pkgs.runtimeShell} -e
                 ${lib.optionalString sandboxConfig.persistentHome ''mkdir -p "${sandboxConfig.persistentHomeDir}"''}
-                export PATH="${
-                  lib.concatStringsSep ":" (lib.map (package: "${package}/bin") sandboxConfig.applications)
-                }:$PATH"
                 exec ${pkgs.bubblewrap}/bin/bwrap ${
                   lib.concatStringsSep " " (map (arg: ''"${arg}"'') args)
                 } "$executable" "$@"
