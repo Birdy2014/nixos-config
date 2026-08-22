@@ -89,8 +89,6 @@
 
   services.printing.enable = true;
 
-  services.fwupd.enable = true;
-
   programs.ausweisapp = {
     enable = true;
     openFirewall = true;
