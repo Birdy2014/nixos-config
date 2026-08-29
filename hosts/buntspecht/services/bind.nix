@@ -51,7 +51,7 @@
                 SOA = {
                   nameServer = "ns1.mvogel.dev.";
                   adminEmail = "hostmaster.mvogel.dev.";
-                  serial = 2026011701;
+                  serial = 2026083001;
                 };
                 NS = [
                   "ns1.first-ns.de."
@@ -62,6 +62,9 @@
                 AAAA = [ "2a01:4f8:c012:2dfe::1" ];
 
                 MX = lib.genList (n: mx.mx 20 "mxext${toString (n + 1)}.mailbox.org.") 3;
+                TXT = [
+                  (spf.strict [ "include:mailbox.org" ])
+                ];
 
                 subdomains = {
                   _dmarc.TXT = [ "v=DMARC1;p=reject;rua=mailto:postmaster@mvogel.dev" ];
