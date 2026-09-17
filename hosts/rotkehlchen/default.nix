@@ -122,8 +122,8 @@
     root = "/home/moritz/misc/nighttab-images";
   };
 
-  # amd gpu is always card0 when simpledrm is disabled
-  boot.kernel.sysfs.class.drm.card0.device.hwmon.hwmon0.power1_cap = 253000000;
+  hardware.amdgpu.overdrive.enable = true;
+  services.lact.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
