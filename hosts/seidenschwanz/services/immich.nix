@@ -7,6 +7,11 @@
     mediaLocation = "/zpool/encrypted/immich";
   };
 
+  # TODO (NixOS 26.11): Remove when updated
+  nixpkgs.config.permittedInsecurePackages = [
+    "immich-2.7.5"
+  ];
+
   users.users.immich.extraGroups = [
     "video"
     "render"
