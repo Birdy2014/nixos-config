@@ -21,5 +21,17 @@
       };
 
       seidenschwanz-smb-password.sopsFile = file;
+
+      "wireguard/private-key-client" = {
+        sopsFile = file;
+        owner = "systemd-network";
+        group = "systemd-network";
+      };
+
+      "wireguard/psk12" = {
+        sopsFile = file;
+        owner = "systemd-network";
+        group = "systemd-network";
+      };
     };
 }

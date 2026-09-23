@@ -13,6 +13,7 @@
     ./kdeconnect.nix
     ./network.nix
     ./smb-shares.nix
+    ./wireguard.nix
   ];
 
   my = {

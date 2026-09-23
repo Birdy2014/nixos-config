@@ -10,8 +10,8 @@ let
   server-port = 49626;
 
   peers = [
-    # seidenschwanz
     {
+      # seidenschwanz
       publicKey = "q8qzjVMDQHbhdw9m//d5iPdiqf1ZYtXY7jpllsaIgkQ=";
       n = 2;
     }
@@ -50,6 +50,11 @@ let
     {
       publicKey = "EGGBwMhsSTWgjApiwkTftvjX8FVR3lGKQAoKFUsUyjk=";
       n = 11;
+    }
+    {
+      # rotkehlchen
+      publicKey = "f+3qvTxbKoQGCoP/5YiNMF8chC5htsHHsG4GrZu6liQ=";
+      n = 12;
     }
   ];
 
