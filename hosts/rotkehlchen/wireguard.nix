@@ -5,9 +5,6 @@
   ...
 }:
 
-let
-  vpnIp6Addr = n: "2a01:4f8:c012:2dfe:1::${myLib.zeroPad 4 (myLib.decToHex n)}";
-in
 {
   environment.systemPackages = [ pkgs.wireguard-tools ];
 
@@ -24,7 +21,7 @@ in
         {
           PublicKey = "YnAMHrnVHWl22Q9Bn4gdWzEs//Z8l83ac5AEdliaD1U=";
           PresharedKeyFile = config.sops.secrets."wireguard/psk12".path;
-          AllowedIPs = [ "${vpnIp6Addr 0}/110" ];
+          AllowedIPs = [ "${myLib.vpnIp6Addr 0}/110" ];
           Endpoint = "mvogel.dev:49626";
           # buntspecht might send a request at any time, so connection must be kept open
           PersistentKeepalive = 25;
@@ -34,8 +31,8 @@ in
 
     networks."50-wg-client" = {
       matchConfig.Name = "wg-client";
-      address = [ "${vpnIp6Addr 12}/128" ];
-      routes = [ { Destination = "${vpnIp6Addr 0}/110"; } ];
+      address = [ "${myLib.vpnIp6Addr 12}/128" ];
+      routes = [ { Destination = "${myLib.vpnIp6Addr 0}/110"; } ];
     };
   };
 
@@ -43,10 +40,10 @@ in
 
   networking.firewall = {
     extraInputRules = ''
-      iifname wg-client ip6 saddr ${vpnIp6Addr 0}/110 accept
+      iifname wg-client ip6 saddr ${myLib.vpnIp6Addr 0}/110 accept
       iifname wg-client drop
 
-      ip6 saddr ${vpnIp6Addr 0}/110 drop
+      ip6 saddr ${myLib.vpnIp6Addr 0}/110 drop
     '';
   };
 }

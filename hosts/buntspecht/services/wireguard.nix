@@ -57,8 +57,6 @@ let
       n = 12;
     }
   ];
-
-  vpnIp6Addr = n: "2a01:4f8:c012:2dfe:1::${myLib.zeroPad 4 (myLib.decToHex n)}";
 in
 {
   environment.systemPackages = [ pkgs.wireguard-tools ];
@@ -88,7 +86,7 @@ in
           {
             PublicKey = publicKey;
             PresharedKeyFile = config.sops.secrets."wireguard/psk${toString n}".path;
-            AllowedIPs = [ "${vpnIp6Addr n}/128" ];
+            AllowedIPs = [ "${myLib.vpnIp6Addr n}/128" ];
           }
         ) peers
       );
@@ -96,19 +94,19 @@ in
 
     networks."50-wg-server" = {
       matchConfig.Name = "wg-server";
-      address = [ "${vpnIp6Addr 1}/110" ];
+      address = [ "${myLib.vpnIp6Addr 1}/110" ];
       networkConfig.IPv6Forwarding = true;
-      routes = [ { Destination = "${vpnIp6Addr 0}/110"; } ];
+      routes = [ { Destination = "${myLib.vpnIp6Addr 0}/110"; } ];
     };
   };
 
   networking.nftables.enable = true;
   networking.firewall = {
     extraInputRules = ''
-      iifname wg-server ip6 saddr ${vpnIp6Addr 0}/110 accept
+      iifname wg-server ip6 saddr ${myLib.vpnIp6Addr 0}/110 accept
       iifname wg-server drop
 
-      ip6 saddr ${vpnIp6Addr 0}/110 drop
+      ip6 saddr ${myLib.vpnIp6Addr 0}/110 drop
     '';
 
     filterForward = true;
@@ -116,12 +114,13 @@ in
       ct state established,related accept
 
       define SERVERS = {
-        ${vpnIp6Addr 2}/128,
-        ${vpnIp6Addr 11}/128
+        ${myLib.vpnIp6Addr 2}/128,
+        ${myLib.vpnIp6Addr 11}/128,
+        ${myLib.vpnIp6Addr 12}/128
       }
 
-      ip6 saddr ${vpnIp6Addr 0}/110 ip6 daddr $SERVERS accept
-      ip6 saddr $SERVERS ip6 daddr ${vpnIp6Addr 0}/110 accept
+      ip6 saddr ${myLib.vpnIp6Addr 0}/110 ip6 daddr $SERVERS accept
+      ip6 saddr $SERVERS ip6 daddr ${myLib.vpnIp6Addr 0}/110 accept
 
       log prefix "not forwarding packet"
     '';

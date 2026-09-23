@@ -12,7 +12,6 @@
     ./initrd-ssh-zfs-unlock.nix
     ./network.nix
     ./postgresql.nix
-    ./proxy.nix
     ./services
     ./users.nix
     ./zfs.nix

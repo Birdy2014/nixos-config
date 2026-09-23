@@ -26,11 +26,14 @@ let
   decToHex = dec: if dec == 0 then "0" else (decToHexHelper dec);
 
   zeroPad = len: str: if len > (lib.stringLength str) then zeroPad len "0${str}" else str;
+
+  vpnIp6Addr = n: "2a01:4f8:c012:2dfe:1::${zeroPad 4 (decToHex n)}";
 in
 {
   inherit
     hexToDec
     decToHex
     zeroPad
+    vpnIp6Addr
     ;
 }

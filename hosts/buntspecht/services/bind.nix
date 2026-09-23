@@ -2,6 +2,7 @@
   config,
   inputs,
   lib,
+  myLib,
   pkgs,
   ...
 }:
@@ -32,6 +33,7 @@
       extraConfig = ''
         include "${config.sops.templates."bind-dnskey_seidenschwanz.mvogel.dev.conf".path}";
         include "${config.sops.templates."bind-dnskey_mvogel.dev.conf".path}";
+        include "${config.sops.templates."bind-dnskey_rotkehlchen.mvogel.dev.conf".path}";
       '';
 
       # Fails because it can't read the sops template files
@@ -51,7 +53,7 @@
                 SOA = {
                   nameServer = "ns1.mvogel.dev.";
                   adminEmail = "hostmaster.mvogel.dev.";
-                  serial = 2026083001;
+                  serial = 2026092301;
                 };
                 NS = [
                   "ns1.first-ns.de."
@@ -69,7 +71,7 @@
                 subdomains = {
                   _dmarc.TXT = [ "v=DMARC1;p=reject;rua=mailto:postmaster@mvogel.dev" ];
                   acme.NS = [ "ns1.mvogel.dev." ];
-                  inherit seidenschwanz;
+                  inherit seidenschwanz rotkehlchen;
                   matrix = buntspecht;
                   ns1 = buntspecht;
                   ntfy = buntspecht;
@@ -91,7 +93,7 @@
               };
 
               seidenschwanz = {
-                AAAA = [ "2a01:4f8:c012:2dfe:1::2" ];
+                AAAA = [ (myLib.vpnIp6Addr 2) ];
 
                 subdomains = {
                   "_acme-challenge".CNAME = [ "seidenschwanz.acme.mvogel.dev." ];
@@ -99,7 +101,21 @@
                 // (
                   lib.attrNames inputs.self.nixosConfigurations.seidenschwanz.config.my.proxy.domains
                   |> lib.flip lib.genAttrs (_: {
-                    AAAA = [ "2a01:4f8:c012:2dfe:1::2" ];
+                    AAAA = [ (myLib.vpnIp6Addr 2) ];
+                  })
+                );
+              };
+
+              rotkehlchen = {
+                AAAA = [ (myLib.vpnIp6Addr 12) ];
+
+                subdomains = {
+                  "_acme-challenge".CNAME = [ "rotkehlchen.acme.mvogel.dev." ];
+                }
+                // (
+                  lib.attrNames inputs.self.nixosConfigurations.rotkehlchen.config.my.proxy.domains
+                  |> lib.flip lib.genAttrs (_: {
+                    AAAA = [ (myLib.vpnIp6Addr 12) ];
                   })
                 );
               };
@@ -115,7 +131,12 @@
 
           "acme.mvogel.dev" = {
             master = true;
-            extraConfig = "allow-update { key seidenschwanz.mvogel.dev.; };";
+            extraConfig = ''
+              allow-update {
+                key seidenschwanz.mvogel.dev.;
+                key rotkehlchen.mvogel.dev.;
+              };
+            '';
             file = "/var/db/bind/acme.mvogel.dev";
           };
         };
@@ -138,6 +159,16 @@
         key "seidenschwanz.mvogel.dev" {
           algorithm hmac-sha256;
           secret "${config.sops.placeholder."bind-dnskey_seidenschwanz.mvogel.dev"}";
+        };
+      '';
+      owner = "named";
+    };
+
+    "bind-dnskey_rotkehlchen.mvogel.dev.conf" = {
+      content = ''
+        key "rotkehlchen.mvogel.dev" {
+          algorithm hmac-sha256;
+          secret "${config.sops.placeholder."bind-dnskey_rotkehlchen.mvogel.dev"}";
         };
       '';
       owner = "named";

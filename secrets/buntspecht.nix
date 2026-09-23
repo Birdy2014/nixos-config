@@ -48,6 +48,8 @@
 
       "bind-dnskey_mvogel.dev".sopsFile = file;
 
+      "bind-dnskey_rotkehlchen.mvogel.dev".sopsFile = file;
+
       livekit-keyfile.sopsFile = file;
     };
 }

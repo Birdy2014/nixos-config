@@ -33,5 +33,7 @@
         owner = "systemd-network";
         group = "systemd-network";
       };
+
+      "bind-dnskey_rotkehlchen.mvogel.dev".sopsFile = file;
     };
 }

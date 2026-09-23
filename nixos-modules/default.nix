@@ -16,6 +16,7 @@
     ./nix.nix
     ./notify-failure.nix
     ./podman.nix
+    ./proxy.nix
     ./pull-deploy.nix
     ./scan.nix
     ./smartd.nix
