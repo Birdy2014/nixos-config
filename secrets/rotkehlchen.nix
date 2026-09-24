@@ -35,5 +35,7 @@
       };
 
       "bind-dnskey_rotkehlchen.mvogel.dev".sopsFile = file;
+
+      "open-webui-secrets".sopsFile = file;
     };
 }

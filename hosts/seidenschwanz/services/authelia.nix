@@ -12,14 +12,25 @@
       access_control.default_policy = "one_factor";
 
       identity_providers.oidc = {
-        authorization_policies.immich = {
-          default_policy = "deny";
-          rules = [
-            {
-              subject = "group:immich";
-              policy = "one_factor";
-            }
-          ];
+        authorization_policies = {
+          immich = {
+            default_policy = "deny";
+            rules = [
+              {
+                subject = "group:immich";
+                policy = "one_factor";
+              }
+            ];
+          };
+          open-webui = {
+            default_policy = "deny";
+            rules = [
+              {
+                subject = "group:open-webui";
+                policy = "one_factor";
+              }
+            ];
+          };
         };
 
         clients = [
@@ -42,6 +53,33 @@
             userinfo_signed_response_alg = "none";
             token_endpoint_auth_method = "client_secret_post";
             consent_mode = "implicit";
+          }
+          {
+            client_id = "hCbASFUm5FjbrxGM_KHaq1By_U0tYuwZDS_ZDKL5K4LcMmNpFZsmDnpXP5CNmS6XM1471O-N";
+            client_name = "Open WebUI";
+            client_secret = "$pbkdf2-sha512$310000$ZwjCrOZbb7uB5TTh.lOILA$dYix6YK/1VuncgtVN9ia1jZRxdfvVsKPfm5nCv0j.A6Fvneaw64zgUUcLwMSIpwkzMBiMVLxp5jmMOyeCEVTmg";
+            public = false;
+            authorization_policy = "open-webui";
+            require_pkce = true;
+            pkce_challenge_method = "S256";
+            redirect_uris = [
+              "https://open-webui.rotkehlchen.mvogel.dev/oauth/oidc/callback"
+            ];
+            scopes = [
+              "openid"
+              "profile"
+              "groups"
+              "email"
+            ];
+            response_types = [
+              "code"
+            ];
+            grant_types = [
+              "authorization_code"
+            ];
+            access_token_signed_response_alg = "none";
+            userinfo_signed_response_alg = "none";
+            token_endpoint_auth_method = "client_secret_basic";
           }
         ];
       };

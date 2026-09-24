@@ -53,7 +53,7 @@
                 SOA = {
                   nameServer = "ns1.mvogel.dev.";
                   adminEmail = "hostmaster.mvogel.dev.";
-                  serial = 2026092301;
+                  serial = 2026092401;
                 };
                 NS = [
                   "ns1.first-ns.de."

@@ -11,6 +11,7 @@
     ./btrfs-snapshot.nix
     ./filesystems.nix
     ./kdeconnect.nix
+    ./llm.nix
     ./network.nix
     ./smb-shares.nix
     ./wireguard.nix
