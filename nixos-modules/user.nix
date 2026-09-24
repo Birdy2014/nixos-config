@@ -5,6 +5,7 @@
   pkgs,
   pkgsSelf,
   pkgsUnstable,
+  jail,
   inputs,
   ...
 }:
@@ -63,6 +64,7 @@ in
           myLib
           pkgsSelf
           pkgsUnstable
+          jail
           ;
       };
       users.moritz = {

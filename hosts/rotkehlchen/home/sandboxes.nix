@@ -1,28 +1,44 @@
-{ pkgs, ... }:
+{
+  jail,
+  pkgs,
+  ...
+}:
 
 {
-  my.bubblewrap = {
-    spotify = {
-      applications = [ pkgs.spotify ];
-      allowDesktop = true;
-      unshareNet = false;
-      extraBinds = [
-        "$HOME/.config/spotify"
-        "$HOME/.cache/spotify"
-      ];
-    };
+  home.packages = [
+    (jail "spotify" pkgs.spotify (
+      with jail.combinators;
+      [
+        gui
+        gpu
+        network
+        (readwrite-xdg "spotify")
+        notifications
 
-    vesktop = {
-      applications = [ pkgs.vesktop ];
-      allowDesktop = true;
-      unshareNet = false;
-      extraBinds = [
-        "$HOME/.config/vesktop"
-      ];
-      extraRoBinds = [
-        # Needed to be able to share files in the home directory
-        "$HOME"
-      ];
-    };
-  };
+        (dbus {
+          own = [
+            "org.mpris.MediaPlayer2.spotify"
+          ];
+          talk = [
+            "org.freedesktop.ScreenSaver"
+            "org.gnome.SettingsDaemon.MediaKeys"
+            "org.kde.StatusNotifierWatcher"
+          ];
+        })
+      ]
+    ))
+
+    (jail "vesktop" pkgs.vesktop (
+      with jail.combinators;
+      [
+        gui
+        gpu
+        network
+        theme
+        notifications
+        (readonly (noescape "~/.config/vesktop"))
+        (readwrite-xdg "vesktop")
+      ]
+    ))
+  ];
 }

@@ -11,6 +11,7 @@
     ./console.nix
     ./desktop.nix
     ./gaming.nix
+    ./jail-nix.nix
     ./libvirt.nix
     ./locale.nix
     ./nix.nix

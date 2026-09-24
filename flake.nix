@@ -47,6 +47,8 @@
       url = "github:nix-community/dns.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    jail-nix.url = "sourcehut:~alexdavid/jail.nix";
   };
 
   outputs =
