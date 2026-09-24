@@ -36,19 +36,11 @@
       client_max_body_size 20M;
     '';
 
-    locations = {
-      # Is this necessary?
-      "/".extraConfig = ''
-        # Disable buffering when the nginx proxy gets very resource heavy upon streaming
-        proxy_buffering off;
-      '';
-
-      # Required for jellyfin-mpv-shim
-      "/socket" = {
-        recommendedProxySettings = true;
-        proxyWebsockets = true;
-        proxyPass = "http://127.0.0.1:8096";
-      };
+    # Required for jellyfin-mpv-shim
+    locations."/socket" = {
+      recommendedProxySettings = true;
+      proxyWebsockets = true;
+      proxyPass = "http://127.0.0.1:8096";
     };
   };
 }

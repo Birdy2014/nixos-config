@@ -108,5 +108,8 @@
     environmentFile = config.sops.secrets."open-webui-secrets".path;
   };
 
-  my.proxy.domains.open-webui.proxyPass = "http://localhost:1111";
+  my.proxy.domains.open-webui = {
+    proxyPass = "http://localhost:1111";
+    proxyWebsockets = true;
+  };
 }

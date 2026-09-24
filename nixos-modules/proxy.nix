@@ -44,6 +44,9 @@ in
         locations."/" = {
           inherit (domainConfig) proxyPass proxyWebsockets;
           recommendedProxySettings = true;
+          extraConfig = ''
+            proxy_buffering off;
+          '';
         };
       }) cfg.domains;
     };
