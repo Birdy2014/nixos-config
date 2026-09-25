@@ -22,15 +22,6 @@
               }
             ];
           };
-          open-webui = {
-            default_policy = "deny";
-            rules = [
-              {
-                subject = "group:open-webui";
-                policy = "one_factor";
-              }
-            ];
-          };
         };
 
         clients = [
@@ -59,7 +50,7 @@
             client_name = "Open WebUI";
             client_secret = "$pbkdf2-sha512$310000$ZwjCrOZbb7uB5TTh.lOILA$dYix6YK/1VuncgtVN9ia1jZRxdfvVsKPfm5nCv0j.A6Fvneaw64zgUUcLwMSIpwkzMBiMVLxp5jmMOyeCEVTmg";
             public = false;
-            authorization_policy = "open-webui";
+            authorization_policy = "one_factor";
             require_pkce = true;
             pkce_challenge_method = "S256";
             redirect_uris = [
