@@ -1,7 +1,7 @@
 { pkgs, inputs, ... }:
 
-{
-  _module.args.jail = inputs.jail-nix.lib.extend {
+let
+  jail = inputs.jail-nix.lib.extend {
     inherit pkgs;
     additionalCombinators =
       builtinCombinators: with builtinCombinators; {
@@ -58,5 +58,37 @@
             )
           );
       };
+  };
+
+  addDesktopFiles =
+    name: unjailed: jailed:
+    pkgs.symlinkJoin {
+      inherit name;
+      paths = [
+        jailed
+        (pkgs.runCommand "${name}-resources"
+          {
+            nativeBuildInputs = [
+              pkgs.coreutils
+              pkgs.gnused
+            ];
+          }
+          ''
+            mkdir -p $out
+            [ -d ${unjailed}/share ] && cp --no-preserve=mode -r ${unjailed}/share $out
+            if [ -d "${unjailed}/share/applications" ] && [ "$(ls $out/share/applications | wc -l)" -gt 0 ]; then
+              sed -Ei 's|(^[[:space:]]*Exec[[:space:]]*=[[:space:]]*)([^ ]*/)?([^ /]*)|\1'${jailed}'/bin/\3|g' $out/share/applications/*
+            fi
+          ''
+        )
+      ];
+    };
+in
+{
+  _module.args.jail = {
+    __functor =
+      _: name: unjailed: combinators:
+      addDesktopFiles name unjailed (jail name unjailed combinators);
+    combinators = jail.combinators;
   };
 }
