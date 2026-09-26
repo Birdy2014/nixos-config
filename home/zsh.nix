@@ -2,7 +2,7 @@
   config,
   lib,
   osConfig,
-  pkgs,
+  pkgsUnstable,
   ...
 }:
 
@@ -120,6 +120,8 @@
       }
 
       bindkey '^R' history-incremental-pattern-search-backward
+
+      eval "$(${lib.getExe pkgsUnstable.deja} init zsh)"
     '';
 
     envExtra = ''
@@ -144,27 +146,7 @@
       ZSH_AUTOSUGGEST_COMPLETION_IGNORE = " #nix [a-z]# *";
     };
 
-    autosuggestion = {
-      enable = true;
-      strategy = [
-        "history"
-        "completion"
-      ];
-    };
     syntaxHighlighting.enable = true;
-
-    plugins = [
-      {
-        name = "per-directory-history";
-        file = "per-directory-history.zsh";
-        src = pkgs.fetchFromGitHub {
-          owner = "jimhester";
-          repo = "per-directory-history";
-          rev = "0687bbfd736da566472a6d67c2b45c501b73d405";
-          sha256 = "sha256-7Z0qaDhgopKt9BDKSqdziw9jsVgiLLafs30wPPbz+oo=";
-        };
-      }
-    ];
   };
 
   programs.starship = {
