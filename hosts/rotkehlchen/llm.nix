@@ -33,7 +33,7 @@
       in
       {
         "*" = {
-          # https://github.com/ggml-org/llama.cpp/discussions/23470?utm_source=chatgpt.com
+          # https://github.com/ggml-org/llama.cpp/discussions/23470
           cache-type-k = "q5_1";
           cache-type-v = "q5_1";
 
@@ -44,12 +44,6 @@
           mmproj-offload = false;
         };
 
-        # Qwen 3.6
-        "Cyber-Tiel-Coder-35B-A3B-UD-IQ4_XS" = qwen3Options // {
-          model = "${dir}/Cyber-Tiel-Coder-35B-A3B-MTP-UD-IQ4_XS.gguf";
-          spec-type = "draft-mtp";
-        };
-
         # Qwen 3.8
         "Qwen3.8-27B-UD-IQ4_XS" = qwen3Options // modelMmprojOptions "Qwen3.8-27B-UD-IQ4_XS" "mmproj-BF16";
         "orcarouter_Qwen3.8-27B-Uncensored-IQ4_XS" =
@@ -57,22 +51,10 @@
           // modelMmprojOptions "orcarouter_Qwen3.8-27B-Uncensored-IQ4_XS" "mmproj-orcarouter_Qwen3.8-27B-Uncensored-bf16";
         "Swift-Qwen3.8-27B-IQ4_XS" =
           qwen3Options // modelMmprojOptions "Swift-Qwen3.8-27B-IQ4_XS" "mmproj-Swift-Qwen3.8-27B-F16";
-        "Swift-Qwen3.8-27B-Uncensored-UD-Q4_K_S" =
-          qwen3Options
-          // modelMmprojOptions "Swift-Qwen3.8-27B-Uncensored-Dynamic-MTP-UD-Q4_K_S" "mmproj-BF16";
-        "Qwen3.8-27B-GSQ-RCO-IQ3_S-mtp" =
-          qwen3Options
-          // modelMmprojOptions "Qwen3.8-27B-GSQ-RCO-IQ3_S-mtp" "mmproj-Qwen3.8-27B-BF16"
-          // {
-            spec-type = "draft-mtp";
-          };
 
         # Gemma 4
         "gemma-4-26B-A4B-it-UD-IQ4_XS" =
           gemma4Options // modelMmprojOptions "gemma-4-26B-A4B-it-UD-IQ4_XS" "mmproj-BF16";
-        "Huihui-gemma-4-26B-A4B-it-qat-q4_0-abliterated-Q4_K" =
-          gemma4Options
-          // modelMmprojOptions "Huihui-gemma-4-26B-A4B-it-qat-q4_0-unquantized-abliterated-Q4_K" "mmproj-model-bf16";
       };
   };
 
