@@ -12,6 +12,6 @@ in
       remotePlay.openFirewall = true;
     };
 
-    boot.blacklistedKernelModules = [ "hid_nintendo" ];
+    boot.kernelModules = [ "ntsync" ];
   };
 }
