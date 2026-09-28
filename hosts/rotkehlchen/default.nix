@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  pkgsUnstable,
   ...
 }:
 
@@ -82,6 +83,7 @@
     gimp3
     mcomix
     feishin
+    pkgsUnstable.jellyfin-mpv-shim
 
     signal-desktop
   ];
