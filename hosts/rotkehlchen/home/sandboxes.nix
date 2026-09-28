@@ -31,12 +31,10 @@
     (jail "vesktop" pkgs.vesktop (
       with jail.combinators;
       [
-        gui
+        desktop
         gpu
         network
-        theme
         notifications
-        (readonly (noescape "~/.config/vesktop"))
         (readwrite-xdg "vesktop")
       ]
     ))

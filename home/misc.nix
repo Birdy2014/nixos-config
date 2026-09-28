@@ -1,4 +1,5 @@
 {
+  jail,
   osConfig,
   pkgs,
   pkgsSelf,
@@ -44,20 +45,27 @@
     element-desktop
     kiwix
     zotero
-  ];
 
-  my.bubblewrap.foliate = {
-    applications = [ pkgs.foliate ];
-    allowDesktop = true;
-    allowX11 = true;
-    extraBinds = [
-      "$HOME/.local/share/com.github.johnfactotum.Foliate"
-      "$HOME/.cache/com.github.johnfactotum.Foliate"
-    ];
-    extraRoBinds = [ "/run/media/moritz/archive/Archiv/Bücher" ];
-    # foliate seems to be broken on niri/wayland
-    extraEnv.GDK_BACKEND = "x11";
-  };
+    (jail "foliate" pkgs.foliate (
+      with jail.combinators;
+      [
+        desktop
+        gpu
+        (readwrite-xdg "com.github.johnfactotum.Foliate")
+        (readonly "/run/media/moritz/archive/Archiv/Bücher")
+
+        (dbus {
+          own = [
+            "com.github.johnfactotum.Foliate"
+          ];
+        })
+
+        # foliate seems to be broken on niri/wayland
+        (set-env "GDK_BACKEND" "x11")
+        unsafe-x11
+      ]
+    ))
+  ];
 
   i18n.inputMethod = {
     enable = true;

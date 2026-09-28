@@ -3,7 +3,6 @@
 {
   imports = [
     ./btop.nix
-    ./bubblewrap.nix
     ./colors
     ./compositors
     ./direnv.nix

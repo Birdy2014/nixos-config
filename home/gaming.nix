@@ -1,4 +1,5 @@
 {
+  jail,
   osConfig,
   lib,
   pkgs,
@@ -7,104 +8,87 @@
 
 {
   config = lib.mkIf osConfig.my.gaming.enable {
-    my.bubblewrap = {
-      steam = {
-        applications = [
-          pkgs.steam
-          pkgs.protontricks
-        ];
-        persistentHome = true;
-        allowDesktop = true;
-        allowX11 = true;
-        unshareIpc = false;
-        unshareNet = false;
-        extraBinds = [
-          "/run/media/moritz/games/Steam-Linux"
-          "/run/media/moritz/games/Steam-Images"
-          "/sys/class/input"
-        ];
-        extraDevBinds = (lib.genList (x: "/dev/hidraw${toString x}") 13) ++ [
-          "/dev/input"
-          "/dev/uinput"
-        ];
-      };
+    home.packages = [
+      (jail "steam" pkgs.steam (
+        with jail.combinators;
+        [
+          (persist-home "steam")
+          desktop
+          gpu
+          unsafe-x11
+          network
+          notifications
+          gamepads
+          (share-ns "ipc")
+          (readwrite "/run/media/moritz/games/Steam-Linux")
+          (readwrite "/run/media/moritz/games/Steam-Images")
+          (dbus {
+            own = [ "com.steampowered.*" ];
+          })
+        ]
+      ))
 
-      prismlauncher = {
-        applications = [ pkgs.prismlauncher ];
-        allowDesktop = true;
-        allowX11 = true;
-        unshareNet = false;
-        extraBinds = [ "$HOME/.local/share/PrismLauncher" ];
-        extraRoBinds = [ "$HOME/Downloads" ];
-      };
+      (jail "heroic" pkgs.heroic (
+        with jail.combinators;
+        [
+          (persist-home "heroic")
+          desktop
+          gpu
+          unsafe-x11
+          network
+          notifications
+          gamepads
+          (readwrite "/run/media/moritz/games/Heroic")
+        ]
+      ))
 
-      heroic = {
-        applications = [ pkgs.heroic ];
-        allowDesktop = true;
-        allowX11 = true;
-        unshareNet = false;
-        persistentHome = true;
-        extraBinds = [
-          "/run/media/moritz/games/Heroic"
-          "/sys/class/input"
-        ];
-        extraDevBinds = [
-          "/dev/input"
-          "/dev/uinput"
-        ];
-      };
+      (jail "prismlauncher" pkgs.prismlauncher (
+        with jail.combinators;
+        [
+          desktop
+          gpu
+          unsafe-x11
+          network
+          (readwrite-xdg "PrismLauncher")
+          (readonly (noescape "~/Downloads"))
+        ]
+      ))
 
-      dolphin-emu = {
-        applications = [ pkgs.dolphin-emu ];
-        allowDesktop = true;
-        allowX11 = true;
-        extraBinds = [
-          "$HOME/.config/dolphin-emu"
-          "$HOME/.local/share/dolphin-emu"
-          "$HOME/.cache/dolphin-emu"
-        ];
-        extraRoBinds = [
-          "/run/media/moritz/games/wii"
-          "/run/media/moritz/games/gc"
-        ];
-        extraDevBinds = [
-          "/dev/input"
-          "/dev/uinput"
-        ];
-      };
+      (jail "dolphin-emu" pkgs.dolphin-emu (
+        with jail.combinators;
+        [
+          desktop
+          gpu
+          unsafe-x11
+          gamepads
+          (readwrite-xdg "dolphin-emu")
+          (readonly "/run/media/moritz/games/wii")
+          (readonly "/run/media/moritz/games/gc")
+        ]
+      ))
 
-      rpcs3 = {
-        applications = [ pkgs.rpcs3 ];
-        allowDesktop = true;
-        extraBinds = [
-          "$HOME/.config/rpcs3"
-          "$HOME/.cache/rpcs3"
-        ];
-        extraRoBinds = [ "/run/media/moritz/games/ps3" ];
-        extraDevBinds = [
-          "/dev/input"
-          "/dev/uinput"
-        ];
-      };
+      (jail "rpcs3" pkgs.rpcs3 (
+        with jail.combinators;
+        [
+          desktop
+          gpu
+          gamepads
+          (readwrite-xdg "rpcs3")
+          (readonly "/run/media/moritz/games/ps3")
+        ]
+      ))
 
-      eden = {
-        applications = [ pkgs.eden ];
-        allowDesktop = true;
-        allowX11 = true;
-        extraBinds = [
-          "$HOME/.config/eden"
-          "$HOME/.local/share/eden"
-          "$HOME/.cache/eden"
-          "/run/media/moritz/games/switch"
-          "/sys/class/input"
-          "/sys/devices"
-        ];
-        # eden uses hidrw to connect to joycons via bluetooth (hid_nintendo must not be running!)
-        extraDevBinds = (lib.genList (x: "/dev/hidraw${toString x}") 14) ++ [
-          "/dev/input"
-          "/dev/uinput"
-        ];
-      };
-    };
+      (jail "eden" pkgs.eden (
+        with jail.combinators;
+        [
+          desktop
+          gpu
+          unsafe-x11
+          gamepads
+          (readwrite-xdg "eden")
+          (readwrite "/run/media/moritz/games/switch")
+        ]
+      ))
+    ];
   };
 }
