@@ -176,6 +176,12 @@
       custom.lf = {
         when = ''test -n "$lf"'';
         format = "via [lf](bold green) ";
+
+        # https://github.com/starship/starship/issues/4341
+        shell = [
+          "sh"
+          "--norc"
+        ];
       };
     };
   };
