@@ -40,6 +40,8 @@
 
         bootstrapDns.upstream = "tcp-tls:1.1.1.1#one.one.one.one";
 
+        dnssec.validate = true;
+
         caching = {
           minTime = "5m";
           maxTime = "30m";
