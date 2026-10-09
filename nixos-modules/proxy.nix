@@ -25,6 +25,11 @@ in
             default = false;
             description = "enable proxyWebsockets";
           };
+          clientMaxBodySize = lib.mkOption {
+            type = lib.types.str;
+            default = "10m";
+            description = "Set client_max_body_size";
+          };
         };
       }
     );
@@ -48,6 +53,9 @@ in
             proxy_buffering off;
           '';
         };
+        extraConfig = ''
+          client_max_body_size ${domainConfig.clientMaxBodySize};
+        '';
       }) cfg.domains;
     };
 

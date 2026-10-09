@@ -28,19 +28,15 @@
     7359
   ];
 
-  my.proxy.domains.jellyfin.proxyPass = "http://127.0.0.1:8096";
+  my.proxy.domains.jellyfin = {
+    proxyPass = "http://127.0.0.1:8096";
+    clientMaxBodySize = "20M";
+  };
 
-  services.nginx.virtualHosts.jellyfin = {
-    extraConfig = ''
-      ## The default `client_max_body_size` is 10M, this might not be enough for some posters, etc.
-      client_max_body_size 20M;
-    '';
-
-    # Required for jellyfin-mpv-shim
-    locations."/socket" = {
-      recommendedProxySettings = true;
-      proxyWebsockets = true;
-      proxyPass = "http://127.0.0.1:8096";
-    };
+  # Required for jellyfin-mpv-shim
+  services.nginx.virtualHosts.jellyfin.locations."/socket" = {
+    recommendedProxySettings = true;
+    proxyWebsockets = true;
+    proxyPass = "http://127.0.0.1:8096";
   };
 }

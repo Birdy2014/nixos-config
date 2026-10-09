@@ -86,5 +86,6 @@
   my.proxy.domains.open-webui = {
     proxyPass = "http://localhost:1111";
     proxyWebsockets = true;
+    clientMaxBodySize = "100M";
   };
 }

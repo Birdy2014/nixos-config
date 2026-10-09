@@ -20,9 +20,6 @@
   my.proxy.domains.immich = {
     proxyPass = with config.services.immich; "http://${host}:${toString port}";
     proxyWebsockets = true;
+    clientMaxBodySize = "50000M";
   };
-
-  services.nginx.virtualHosts.immich.extraConfig = ''
-    client_max_body_size 50000M;
-  '';
 }
