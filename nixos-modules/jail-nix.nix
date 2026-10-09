@@ -52,10 +52,19 @@ let
             ]
             ++ (
               [
-                "NIXOS_OZONE_WL"
+                # XDG
+                "XDG_DATA_DIRS"
+                "XDG_CURRENT_DESKTOP"
+                "XDG_CONFIG_HOME"
+                "XDG_DATA_HOME"
+                "XDG_SESSION_TYPE"
+
+                # GTK
+                "GTK_THEME"
+
+                # QT
                 "QT_QPA_PLATFORMTHEME"
                 "PLASMA_INTEGRATION_USE_PORTAL"
-                "XDG_DATA_DIRS"
                 "QT_PLUGIN_PATH"
               ]
               |> map fwd-env
@@ -69,9 +78,7 @@ let
                 "$XDG_CONFIG_HOME/gtk-4.0/settings.ini"
                 "$XDG_CONFIG_HOME/gtk-4.0/gtk.css"
                 "$XDG_DATA_HOME/icons"
-
-                # Needed for qt theming to work
-                "/etc/profiles/per-user/moritz/lib"
+                "/etc/profiles/per-user/moritz"
               ]
               |> map (name: "\"${name}\"")
               |> map noescape
