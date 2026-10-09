@@ -267,9 +267,6 @@ def main(args):
 def open_directly(arg: str) -> OpenSuccess:
     desktop_entries = get_file_associations(arg)
     if len(desktop_entries) == 0:
-        send_notification(
-            "Failed to open file", f"Could not find association for {arg}"
-        )
         return OpenSuccess.ERROR
 
     selected_entry = (
@@ -284,7 +281,6 @@ def open_directly(arg: str) -> OpenSuccess:
     return OpenSuccess.SUCCESS
 
 
-# TODO: Check if open was successfull to only display an error if both methods were unsuccessfull
 def open_xdg_portal(arg: str) -> OpenSuccess:
     session_bus = dbus.SessionBus()
     proxy = session_bus.get_object(
