@@ -38,7 +38,7 @@ let
         && [[ -e '${config.sops.secrets.ntfy-sender-token.path}' ]]; then
         curl -s \
           -u ":$(< ${config.sops.secrets.ntfy-sender-token.path})" \
-          -H "Title: deployment on $(hostname) failed" \
+          -H "Title: deployment on $(</etc/hostname) failed" \
           -d "type: $DEPLOY_TYPE\ncommit: $DEPLOY_COMMIT\nmode: $DEPLOY_MODE" \
           https://ntfy.mvogel.dev/monitoring
       fi
