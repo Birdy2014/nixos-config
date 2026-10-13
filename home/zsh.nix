@@ -42,7 +42,7 @@
     };
 
     enableCompletion = true;
-    completionInit = ''
+    completionInit = /* zsh */ ''
       autoload -Uz compinit
       compinit
       zstyle ':completion:*' menu yes select
@@ -63,9 +63,12 @@
 
       # Cancel completion with escape
       bindkey -M menuselect '^[' undo
+
+      # Cycle suggestions in reverse with shift-tab
+      bindkey -M menuselect '^[[Z' reverse-menu-complete
     '';
 
-    initContent = ''
+    initContent = /* zsh */ ''
       autoload -Uz tetriscurses
 
       function set_terminal_title() {
@@ -124,11 +127,11 @@
       eval "$(${lib.getExe pkgsUnstable.deja} init zsh)"
     '';
 
-    envExtra = ''
+    envExtra = /* zsh */ ''
       [ -d "$HOME/.local/bin" ] && [[ $PATH == *"$HOME/.local/bin"* ]] || export PATH=$HOME/.local/bin:$PATH
     '';
 
-    loginExtra = lib.mkIf osConfig.my.desktop.enable ''
+    loginExtra = lib.mkIf osConfig.my.desktop.enable /* zsh */ ''
       if [ "$TTY" = "/dev/tty1" ]; then
         systemd-cat niri-session
         systemctl --user stop graphical-session.target
@@ -139,11 +142,8 @@
     localVariables = {
       KEYTIMEOUT = 1;
 
-      # Local History
-      HISTORY_BASE = "${config.xdg.dataHome}/zsh/history";
-
-      # Autosuggestion
-      ZSH_AUTOSUGGEST_COMPLETION_IGNORE = " #nix [a-z]# *";
+      # Bind Deja cycle key to ctrl-tab, so that it doesn't block tab completion
+      DEJA_CYCLE_KEY = "^[[27;5;9~";
     };
 
     syntaxHighlighting.enable = true;
