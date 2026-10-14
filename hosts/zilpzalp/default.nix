@@ -59,6 +59,7 @@
   services.resolved.enable = true;
 
   services.thermald.enable = true;
+  services.tuned.enable = true;
 
   environment.systemPackages = with pkgs; [ nvtopPackages.intel ];
 
