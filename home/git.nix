@@ -24,6 +24,12 @@
       push.autoSetupRemote = true;
       tag.sort = "version:refname";
     };
+
+    signing = {
+      format = "ssh";
+      key = "~/.ssh/id_ed25519";
+      signByDefault = false;
+    };
   };
 
   programs.delta = {
