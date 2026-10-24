@@ -123,11 +123,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791591819,
-        "narHash": "sha256-jHJ3HvYfoimu4KVqnq+I7qt6fr8hbmLCMfHNU+eVPXM=",
+        "lastModified": 1792883618,
+        "narHash": "sha256-OOmOnuiR+3TJSa03Bp3W5jWmEpEs5uGKivAEGJy6h2w=",
         "owner": "Birdy2014",
         "repo": "nixos-pull-deploy",
-        "rev": "39970cd121ddd3ccbd79ed6025e2cab63792ac5b",
+        "rev": "7e516eac9b577d884ce65a1884d04b4734f5ee9a",
         "type": "github"
       },
       "original": {

@@ -117,6 +117,10 @@ in
         origin = {
           url = "https://github.com/Birdy2014/nixos-config";
           main = "main";
+          ssh_signing_pubkeys = [
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDLLJBuP4oFr53Ql22/AcE+4SnLxX8JPep5GTL+g+4Bo moritz@rotkehlchen"
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPjS0nhYzcYMwJymBTmy7aDhJ3Phm2kJd/ySjO0wRlW9 moritz@zilpzalp"
+          ];
         };
         hook = "${hook}/bin/hook.sh";
 
