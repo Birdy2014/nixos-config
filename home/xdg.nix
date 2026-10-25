@@ -30,6 +30,7 @@
         "text/html" = "firefox.desktop";
 
         "image/" = "imv-dir.desktop";
+        "image/x-xcf" = "gimp.desktop";
 
         "video/" = "mpv.desktop";
 
