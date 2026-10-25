@@ -167,7 +167,7 @@
               open-focused = false;
             }
             {
-              matches = [ { app-id = "^element$"; } ];
+              matches = [ { app-id = "^element-desktop$"; } ];
               open-on-workspace = "05";
               default-column-width.proportion = 1. / 2.;
               open-focused = false;
