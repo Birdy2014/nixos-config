@@ -135,7 +135,7 @@
             "org.matrix.msc4143.rtc_foci" = [
               {
                 type = "livekit";
-                livekit_service_url = "https://matrix.mvogel.dev/livekit/jwt";
+                url = "wss://matrix.mvogel.dev/livekit/sfu";
               }
             ];
           };
