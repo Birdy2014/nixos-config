@@ -26,6 +26,8 @@
         }
       ];
 
+      max_upload_size = "50M";
+
       database.name = "psycopg2";
 
       federation_domain_whitelist = [
@@ -89,6 +91,9 @@
           proxy = {
             proxyPass = "http://[::1]:6167";
             recommendedProxySettings = true;
+            extraConfig = ''
+              client_max_body_size ${config.services.matrix-synapse.settings.max_upload_size};
+            '';
           };
         in
         {
