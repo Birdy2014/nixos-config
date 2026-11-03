@@ -39,7 +39,10 @@ let
         curl -s \
           -u ":$(< ${config.sops.secrets.ntfy-sender-token.path})" \
           -H "Title: deployment on $(</etc/hostname) failed" \
-          -d "type: $DEPLOY_TYPE\ncommit: $DEPLOY_COMMIT\nmode: $DEPLOY_MODE" \
+          -d "type: $DEPLOY_TYPE
+      commit: $DEPLOY_COMMIT
+      message: $DEPLOY_COMMIT_MESSAGE
+      mode: $DEPLOY_MODE" \
           https://ntfy.mvogel.dev/monitoring
       fi
 
