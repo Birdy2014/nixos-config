@@ -98,6 +98,11 @@
     openFirewall = true;
   };
 
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
+
   hardware.amdgpu.initrd.enable = true;
 
   boot.kernelParams = [
