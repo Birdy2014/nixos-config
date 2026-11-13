@@ -9,24 +9,13 @@
 {
   config = lib.mkIf osConfig.my.gaming.enable {
     home.packages = [
-      (jail "steam" pkgs.steam (
-        with jail.combinators;
-        [
-          (persist-home "steam")
-          desktop
-          gpu
-          unsafe-x11
-          network
-          notifications
-          gamepads
-          (share-ns "ipc")
-          (readwrite "/run/media/moritz/games/Steam-Linux")
-          (readwrite "/run/media/moritz/games/Steam-Images")
-          (dbus {
-            own = [ "com.steampowered.*" ];
-          })
-        ]
-      ))
+      (pkgs.steam.override {
+        extraBwrapArgs = [
+          "--bind ~/.local/share/jail.nix/home/steam ~"
+          "--setenv NIXOS_XDG_OPEN_USE_PORTAL 1"
+          "--ro-bind $XDG_DATA_HOME/icons $XDG_DATA_HOME/icons"
+        ];
+      })
 
       (jail "heroic" pkgs.heroic (
         with jail.combinators;

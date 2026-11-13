@@ -1,5 +1,4 @@
 {
-  jail,
   osConfig,
   pkgs,
   pkgsSelf,
@@ -32,6 +31,7 @@
     usbutils
     sshfs
     jq
+    pkgs.steam.run-free
 
     # GUI
     pavucontrol
@@ -46,25 +46,10 @@
     kiwix
     zotero
 
-    (jail "foliate" pkgs.foliate (
-      with jail.combinators;
-      [
-        desktop
-        gpu
-        (readwrite-xdg "com.github.johnfactotum.Foliate")
-        (readonly "/run/media/moritz/archive/Archiv/Bücher")
-
-        (dbus {
-          own = [
-            "com.github.johnfactotum.Foliate"
-          ];
-        })
-
-        # foliate seems to be broken on niri/wayland
-        (set-env "GDK_BACKEND" "x11")
-        unsafe-x11
-      ]
-    ))
+    (pkgs.runCommand "foliate" { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''
+      makeWrapper ${lib.getExe pkgs.foliate} $out/bin/foliate \
+        --set GDK_BACKEND x11
+    '')
   ];
 
   i18n.inputMethod = {
