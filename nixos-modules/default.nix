@@ -14,6 +14,7 @@
     ./jail-nix.nix
     ./libvirt.nix
     ./locale.nix
+    ./mitigations.nix
     ./nix.nix
     ./notify-failure.nix
     ./podman.nix
