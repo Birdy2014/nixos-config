@@ -7,16 +7,16 @@
 
 buildNpmPackage {
   pname = "improtheater-frankfurt";
-  version = "2026-10-26";
+  version = "2026-11-18";
 
   src = fetchFromGitHub {
     owner = "Birdy2014";
     repo = "improtheater-frankfurt.de";
-    rev = "27309febf8f050ae15043634fb0801afc1b0342d";
-    hash = "sha256-/oX4vhyn/Tjf0Y9332LoHKuTqDP381MDrSnivjtd+9Q=";
+    rev = "34c7e33920babe06780a166016c096ea53b2b524";
+    hash = "sha256-cZ6okFs/Lv10S5WRrjG6lbeR2WXd1XswezOFNibJ5Lc=";
   };
 
-  npmDepsHash = "sha256-SxCbBNAEypX+66dvFMByhXEUk4kH78gHmaglDU11Bkw=";
+  npmDepsHash = "sha256-wU7ZzA3od2LwqRNuFhEkiWxEbo0fWpRJtg7rPBjvaH0=";
 
   nativeBuildInputs = [
     # for sharp
