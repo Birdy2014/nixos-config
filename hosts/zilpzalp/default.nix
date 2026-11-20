@@ -48,6 +48,9 @@
   hardware.cpu.intel.updateMicrocode = true;
   hardware.graphics.extraPackages = with pkgs; [ intel-vaapi-driver ];
 
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   boot.blacklistedKernelModules = [
