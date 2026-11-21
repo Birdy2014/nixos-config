@@ -49,6 +49,9 @@
     (pkgs.runCommand "foliate" { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''
       makeWrapper ${lib.getExe pkgs.foliate} $out/bin/foliate \
         --set GDK_BACKEND x11
+
+      mkdir -p $out/share/applications/
+      cp ${pkgs.foliate}/share/applications/com.github.johnfactotum.Foliate.desktop $out/share/applications/
     '')
   ];
 
