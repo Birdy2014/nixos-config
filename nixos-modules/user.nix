@@ -175,9 +175,5 @@ in
       configDir = "${config.users.users.moritz.home}/.config/syncthing";
       dataDir = "${config.users.users.moritz.home}/.local/state/syncthing";
     };
-
-    # For accessing SMB shares with `gio mount`
-    services.gvfs.enable = true;
-    environment.systemPackages = [ pkgs.glib ];
   };
 }
