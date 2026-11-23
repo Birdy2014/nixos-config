@@ -41,6 +41,11 @@
       turn_uris = [ "turn:matrix.mvogel.dev?transport=udp" ];
       turn_shared_secret_path = config.sops.secrets.coturn-auth-secret.path;
 
+      experimental_features = {
+        msc4143_enabled = true;
+        msc4222_enabled = true;
+      };
+
       matrix_rtc.transports = [
         {
           type = "livekit";
@@ -82,6 +87,7 @@
     livekitUrl = "wss://matrix.mvogel.dev/livekit/sfu";
     keyFile = config.sops.secrets.livekit-keyfile.path;
   };
+  systemd.services.lk-jwt-service.environment.LIVEKIT_FULL_ACCESS_HOMESERVERS = "mvogel.dev";
 
   services.nginx = {
     enable = true;
@@ -140,7 +146,7 @@
             "org.matrix.msc4143.rtc_foci" = [
               {
                 type = "livekit";
-                url = "wss://matrix.mvogel.dev/livekit/sfu";
+                livekit_service_url = "https://matrix.mvogel.dev/livekit/jwt";
               }
             ];
           };
