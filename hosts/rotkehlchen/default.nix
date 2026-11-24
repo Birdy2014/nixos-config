@@ -123,6 +123,9 @@
   boot.kernel.sysctl = {
     # Improve performance in some broken windows games
     "kernel.split_lock_mitigate" = 0;
+
+    # Allow profiling for processes of same user
+    "kernel.perf_event_paranoid" = 1;
   };
 
   services.static-web-server = {
