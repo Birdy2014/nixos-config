@@ -11,6 +11,7 @@
           background = color background-secondary;
           foreground = color text;
           cursor = "${color background-secondary} ${color text}";
+          alpha = 0.9;
 
           regular0 = color black;
           regular1 = color red;
